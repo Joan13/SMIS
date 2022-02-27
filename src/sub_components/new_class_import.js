@@ -240,8 +240,8 @@ for(let i in this.state.classe) {
                  resolve(data);
              }
 
-             fileReader.onerror=(error) => {
-                 reject(error)
+             fileReader.onerror=(err) => {
+                 reject(err)
              }
         });
 
