@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/elite/static/css/main.69c8de27.chunk.css",
+    "main.js": "/elite/static/js/main.9df1697e.chunk.js",
+    "main.js.map": "/elite/static/js/main.9df1697e.chunk.js.map",
+    "runtime-main.js": "/elite/static/js/runtime-main.806bb051.js",
+    "runtime-main.js.map": "/elite/static/js/runtime-main.806bb051.js.map",
+    "static/js/2.968a7eb6.chunk.js": "/elite/static/js/2.968a7eb6.chunk.js",
+    "static/js/2.968a7eb6.chunk.js.map": "/elite/static/js/2.968a7eb6.chunk.js.map",
+    "static/js/3.458e2702.chunk.js": "/elite/static/js/3.458e2702.chunk.js",
+    "static/js/3.458e2702.chunk.js.map": "/elite/static/js/3.458e2702.chunk.js.map",
+    "index.html": "/elite/index.html",
+    "static/css/main.69c8de27.chunk.css.map": "/elite/static/css/main.69c8de27.chunk.css.map",
+    "static/js/2.968a7eb6.chunk.js.LICENSE.txt": "/elite/static/js/2.968a7eb6.chunk.js.LICENSE.txt",
+    "static/media/armoirie_rdc.076a1eee.png": "/elite/static/media/armoirie_rdc.076a1eee.png",
+    "static/media/flag_drc.201bde9e.jpg": "/elite/static/media/flag_drc.201bde9e.jpg",
+    "static/media/logo_elite.4b5eadca.png": "/elite/static/media/logo_elite.4b5eadca.png",
+    "static/media/yambi_red.2f940178.png": "/elite/static/media/yambi_red.2f940178.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.806bb051.js",
+    "static/js/2.968a7eb6.chunk.js",
+    "static/css/main.69c8de27.chunk.css",
+    "static/js/main.9df1697e.chunk.js"
+  ]
+}
