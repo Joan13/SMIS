@@ -47,6 +47,7 @@ export const mapStateToProps = (state) => {
         can_load_class: state.can_load_class,
         reussites: state.reussites,
         doubles: state.doubles,
+        fiche_tab:state.fiche_tab,
         echecs: state.echecs,
         abandon: state.abandon,
         val: state.val,

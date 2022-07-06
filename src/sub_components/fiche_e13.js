@@ -1,7 +1,9 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
+import { mapStateToProps } from '../store/state_props';
 import { home_redirect } from "./../global_vars";
+import { connect } from 'react-redux';
 
-export default class FicheE13 extends Component {
+class FicheE13 extends Component {
 
     intervalID = 0;
 
@@ -9,154 +11,154 @@ export default class FicheE13 extends Component {
         super(props);
 
         this.state = {
-            classe: [],
-            autres: [],
-            pupils_marks: [],
-            courses: [],
-            pupils: [],
-            pupil: [],
-            url_server: "",
+            // classe: [],
+            // autres: [],
+            // pupils_marks: [],
+            // courses: [],
+            // pupils: [],
+            // pupil: [],
+            // url_server: "",
             periode: "*",
-            num: 0,
-            pupil_id: 1,
-            should_fetch_marks: false,
-            can_mount: 0,
-            autres: [],
-            conduites: [],
-            school_name_uc: "",
+            // num: 0,
+            // pupil_id: 1,
+            // should_fetch_marks: false,
+            // can_mount: 0,
+            // autres: [],
+            // conduites: [],
+            // school_name_uc: "",
         }
 
-        this.open_class = this.open_class.bind(this);
+        // this.open_class = this.open_class.bind(this);
     }
 
-    refresh_class() {
+    // refresh_class() {
 
-        let classe = sessionStorage.getItem('classeYambiSMIS');
-        let url_server = sessionStorage.getItem('yambi_smis_url_server');
-        classe = JSON.parse(classe);
-        this.setState({
-            classe: classe,
-            title_main: classe.class_id + " " + classe.section_id + " " + classe.order_id,
-            loading_middle: true,
-            url_server: url_server,
-        });
+    //     let classe = sessionStorage.getItem('classeYambiSMIS');
+    //     let url_server = sessionStorage.getItem('yambi_smis_url_server');
+    //     classe = JSON.parse(classe);
+    //     this.setState({
+    //         classe: classe,
+    //         title_main: classe.class_id + " " + classe.section_id + " " + classe.order_id,
+    //         loading_middle: true,
+    //         url_server: url_server,
+    //     });
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
+    //     let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
-        fetch(BaseURL, {
-            method: 'POST',
-            body: JSON.stringify({
-                cycle_id: classe.cycle,
-                class_id: classe.class,
-                order_id: classe.order,
-                section_id: classe.section,
-                option_id: classe.option,
-                school_year: classe.school_year,
-            })
-        })
-            .then((response) => response.json())
-            .then((response) => {
-                this.setState({
-                    pupils_marks: response.pupils_marks,
-                    courses: response.courses,
-                    pupils: response.pupils,
-                    loading_middle: false,
-                })
-            })
-            .catch((error) => {
-                alert(error.toString());
-                // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
-            });
-    }
+    //     fetch(BaseURL, {
+    //         method: 'POST',
+    //         body: JSON.stringify({
+    //             cycle_id: classe.cycle,
+    //             class_id: classe.class,
+    //             order_id: classe.order,
+    //             section_id: classe.section,
+    //             option_id: classe.option,
+    //             school_year: classe.school_year,
+    //         })
+    //     })
+    //         .then((response) => response.json())
+    //         .then((response) => {
+    //             this.setState({
+    //                 pupils_marks: response.pupils_marks,
+    //                 courses: response.courses,
+    //                 pupils: response.pupils,
+    //                 loading_middle: false,
+    //             })
+    //         })
+    //         .catch((error) => {
+    //             alert(error.toString());
+    //             // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
+    //         });
+    // }
 
-    open_class() {
-        this.setState({ can_mount: this.state.can_mount + 1 });
+    // open_class() {
+    //     this.setState({ can_mount: this.state.can_mount + 1 });
 
-        let classe = sessionStorage.getItem('classeYambiSMIS');
-        let url_server = sessionStorage.getItem('yambi_smis_url_server');
-        classe = JSON.parse(classe);
-        this.setState({
-            classe: classe,
-            title_main: classe.class_id + " " + classe.section_id + " " + classe.order_id,
-            loading_middle: true,
-            url_server: url_server,
-        });
+    //     let classe = sessionStorage.getItem('classeYambiSMIS');
+    //     let url_server = sessionStorage.getItem('yambi_smis_url_server');
+    //     classe = JSON.parse(classe);
+    //     this.setState({
+    //         classe: classe,
+    //         title_main: classe.class_id + " " + classe.section_id + " " + classe.order_id,
+    //         loading_middle: true,
+    //         url_server: url_server,
+    //     });
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
+    //     let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
-        fetch(BaseURL, {
-            method: 'POST',
-            body: JSON.stringify({
-                cycle_id: classe.cycle,
-                class_id: classe.class,
-                order_id: classe.order,
-                section_id: classe.section,
-                option_id: classe.option,
-                school_year: classe.school_year,
-            })
-        })
-            .then((response) => response.json())
-            .then((response) => {
-                this.setState({
-                    pupils_marks: response.pupils_marks,
-                    courses: response.courses,
-                    pupils: response.pupils,
-                    loading_middle: false,
-                    pupil_id: response.first_pupil,
-                    autres: response.autres,
-                    school_name_uc: response.autres.school_name.toUpperCase(),
-                    conduites: response.conduites,
-                })
-            })
-            .catch((error) => {
-                alert(error.toString());
-                // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
-            });
-    }
+    //     fetch(BaseURL, {
+    //         method: 'POST',
+    //         body: JSON.stringify({
+    //             cycle_id: classe.cycle,
+    //             class_id: classe.class,
+    //             order_id: classe.order,
+    //             section_id: classe.section,
+    //             option_id: classe.option,
+    //             school_year: classe.school_year,
+    //         })
+    //     })
+    //         .then((response) => response.json())
+    //         .then((response) => {
+    //             this.setState({
+    //                 pupils_marks: response.pupils_marks,
+    //                 courses: response.courses,
+    //                 pupils: response.pupils,
+    //                 loading_middle: false,
+    //                 pupil_id: response.first_pupil,
+    //                 autres: response.autres,
+    //                 school_name_uc: response.autres.school_name.toUpperCase(),
+    //                 conduites: response.conduites,
+    //             })
+    //         })
+    //         .catch((error) => {
+    //             alert(error.toString());
+    //             // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
+    //         });
+    // }
 
-    edit_marks(pupil_id, course_id, period, marks) {
+    // edit_marks(pupil_id, course_id, period, marks) {
 
-        for (let i in this.state.pupils_marks) {
-            if (this.state.pupils_marks[i].pupil == pupil_id && this.state.pupils_marks[i].course == course_id && this.state.pupils_marks[i].school_period == period) {
-                this.state.pupils_marks[i].main_marks = marks;
-                this.setState({ should_fetch_marks: true });
-            } else {
-                this.setState({ should_fetch_marks: true });
-            }
-        }
+    //     for (let i in this.state.pupils_marks) {
+    //         if (this.state.pupils_marks[i].pupil == pupil_id && this.state.pupils_marks[i].course == course_id && this.state.pupils_marks[i].school_period == period) {
+    //             this.state.pupils_marks[i].main_marks = marks;
+    //             this.setState({ should_fetch_marks: true });
+    //         } else {
+    //             this.setState({ should_fetch_marks: true });
+    //         }
+    //     }
 
-        let BaseURL = "http://" + this.state.url_server + "/yambi_class_SMIS/API/insert_marks.php";
+    //     let BaseURL = "http://" + this.state.url_server + "/yambi_class_SMIS/API/insert_marks.php";
 
-        fetch(BaseURL,
-            {
-                method: 'POST',
-                body: JSON.stringify({
-                    pupil_id: pupil_id,
-                    course_id: course_id,
-                    periode: period,
-                    school_year: this.state.classe.school_year,
-                    main_marks: marks,
-                    cycle: this.state.classe.cycle,
-                    class_id: this.state.classe.class,
-                    section_id: this.state.classe.section,
-                    option_id: this.state.classe.option
-                })
-            })
-            .then((response) => response.json())
-            .then((response) => {
+    //     fetch(BaseURL,
+    //         {
+    //             method: 'POST',
+    //             body: JSON.stringify({
+    //                 pupil_id: pupil_id,
+    //                 course_id: course_id,
+    //                 periode: period,
+    //                 school_year: this.state.classe.school_year,
+    //                 main_marks: marks,
+    //                 cycle: this.state.classe.cycle,
+    //                 class_id: this.state.classe.class,
+    //                 section_id: this.state.classe.section,
+    //                 option_id: this.state.classe.option
+    //             })
+    //         })
+    //         .then((response) => response.json())
+    //         .then((response) => {
 
-                if (this.state.should_fetch_marks) {
-                    this.refresh_class();
-                }
+    //             if (this.state.should_fetch_marks) {
+    //                 this.refresh_class();
+    //             }
 
-            })
-            .catch((error) => {
-                // Alert.alert(strings.error, strings.connection_failed);
-                // alert(error.toString())
-                this.setState({ loading_class: false, pupils_see: false });
-            });
+    //         })
+    //         .catch((error) => {
+    //             // Alert.alert(strings.error, strings.connection_failed);
+    //             // alert(error.toString())
+    //             this.setState({ loading_class: false, pupils_see: false });
+    //         });
 
-    }
+    // }
 
     findPupil(pupil_id) {
 
@@ -175,10 +177,10 @@ export default class FicheE13 extends Component {
         let main_marks = 0;
         let total_marks = 0;
 
-        for (let i in this.state.pupils_marks) {
-            if (this.state.pupils_marks[i].pupil == pupil_id && this.state.pupils_marks[i].school_period == periode) {
-                main_marks = main_marks + parseInt(this.state.pupils_marks[i].main_marks);
-                total_marks = total_marks + parseInt(this.state.pupils_marks[i].total_marks);
+        for (let i in this.props.classe.data.pupils_marks) {
+            if (this.props.classe.data.pupils_marks[i].pupil == pupil_id && this.props.classe.data.pupils_marks[i].school_period == periode) {
+                main_marks = main_marks + parseInt(this.props.classe.data.pupils_marks[i].main_marks);
+                total_marks = total_marks + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
             }
         }
 
@@ -197,10 +199,10 @@ export default class FicheE13 extends Component {
         let main_marks = 0;
         let total_marks = 0;
 
-        for (let i in this.state.pupils_marks) {
-            if (this.state.pupils_marks[i].pupil == pupil_id && (this.state.pupils_marks[i].school_period == periode1 || this.state.pupils_marks[i].school_period == periode2 || this.state.pupils_marks[i].school_period == periode3)) {
-                main_marks = main_marks + parseInt(this.state.pupils_marks[i].main_marks);
-                total_marks = total_marks + parseInt(this.state.pupils_marks[i].total_marks);
+        for (let i in this.props.classe.data.pupils_marks) {
+            if (this.props.classe.data.pupils_marks[i].pupil == pupil_id && (this.props.classe.data.pupils_marks[i].school_period == periode1 || this.props.classe.data.pupils_marks[i].school_period == periode2 || this.props.classe.data.pupils_marks[i].school_period == periode3)) {
+                main_marks = main_marks + parseInt(this.props.classe.data.pupils_marks[i].main_marks);
+                total_marks = total_marks + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
             }
         }
 
@@ -220,16 +222,16 @@ export default class FicheE13 extends Component {
         let main_marks = 0;
         let total_marks = 0;
 
-        for (let i in this.state.pupils_marks) {
-            if (this.state.pupils_marks[i].pupil == pupil_id) {
-                main_marks = main_marks + parseInt(this.state.pupils_marks[i].main_marks);
-                total_marks = total_marks + parseInt(this.state.pupils_marks[i].total_marks);
+        for (let i in this.props.classe.data.pupils_marks) {
+            if (this.props.classe.data.pupils_marks[i].pupil == pupil_id) {
+                main_marks = main_marks + parseInt(this.props.classe.data.pupils_marks[i].main_marks);
+                total_marks = total_marks + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
             }
         }
 
         if (main_marks != 0) {
             pourcentage = (main_marks * 100) / total_marks;
-            return (pourcentage).toString().substr(0, 4);
+            return (Math.round(pourcentage).toString().substr(0, 2));
         } else {
             return "";
         }
@@ -241,10 +243,10 @@ export default class FicheE13 extends Component {
         let main_marks = 0;
         let total_marks = 0;
 
-        for (let i in this.state.pupils_marks) {
-            if (this.state.pupils_marks[i].pupil == pupil_id) {
-                main_marks = main_marks + parseInt(this.state.pupils_marks[i].main_marks);
-                total_marks = total_marks + parseInt(this.state.pupils_marks[i].total_marks);
+        for (let i in this.props.classe.data.pupils_marks) {
+            if (this.props.classe.data.pupils_marks[i].pupil == pupil_id) {
+                main_marks = main_marks + parseInt(this.props.classe.data.pupils_marks[i].main_marks);
+                total_marks = total_marks + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
             }
         }
 
@@ -259,52 +261,73 @@ export default class FicheE13 extends Component {
 
     }
 
-    render_period_conduite(pupil_id, periode) {
-        let main_conduite = "";
+    // render_period_conduite(pupil_id, periode) {
+    //     let main_conduite = "";
 
-        for (let i in this.state.conduites) {
-            if (this.state.conduites[i].pupil_id == pupil_id && this.state.conduites[i].periode == periode) {
-                main_conduite = this.state.conduites[i].main_conduite;
-            }
-        }
+    //     for (let i in this.state.conduites) {
+    //         if (this.state.conduites[i].pupil_id == pupil_id && this.state.conduites[i].periode == periode) {
+    //             main_conduite = this.state.conduites[i].main_conduite;
+    //         }
+    //     }
 
-        if (main_conduite == "") {
-            return "-";
-        } else if (main_conduite == "1") {
-            return "E";
-        } else if (main_conduite == "2") {
-            return "TB";
-        } else if (main_conduite == "3") {
-            return "B";
-        } else if (main_conduite == "4") {
-            return "AB";
-        } else if (main_conduite == "5") {
-            return "M";
-        } else {
-            return "MA";
-        }
-    }
+    //     if (main_conduite == "") {
+    //         return "-";
+    //     } else if (main_conduite == "1") {
+    //         return "E";
+    //     } else if (main_conduite == "2") {
+    //         return "TB";
+    //     } else if (main_conduite == "3") {
+    //         return "B";
+    //     } else if (main_conduite == "4") {
+    //         return "AB";
+    //     } else if (main_conduite == "5") {
+    //         return "M";
+    //     } else {
+    //         return "MA";
+    //     }
+    // }
 
     componentDidMount() {
-        this.open_class();
+        // this.open_class();
 
-        if (this.state.can_mount < 5) {
-            this.intervalID = setInterval(() => {
-                let classe = sessionStorage.getItem('classeYambiSMIS');
-                classe = JSON.parse(classe);
+        // if (this.state.can_mount < 5) {
+        //     this.intervalID = setInterval(() => {
+        //         let classe = sessionStorage.getItem('classeYambiSMIS');
+        //         classe = JSON.parse(classe);
 
-                if (classe.id_classes !== this.state.classe.id_classes) {
-                    this.open_class();
-                    console.log("Can mount");
-                }
-            }, 500);
+        //         if (classe.id_classes !== this.state.classe.id_classes) {
+        //             this.open_class();
+        //             console.log("Can mount");
+        //         }
+        //     }, 500);
 
-            this.setState({ can_mount: this.state.can_mount + 1 });
-        }
+        //     this.setState({ can_mount: this.state.can_mount + 1 });
+        // }
     }
 
-    componentWillUnmount() {
-        clearInterval(this.intervalID);
+    maxima_generaux() {
+        const periode = 4;
+        let return_value = 0;
+
+        for (let i in this.props.classe.data.courses) {
+            if (this.props.classe.data.courses[i].considered !== "5" && periode !== 2) {
+                return_value = return_value + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
+            }
+
+            if (this.props.classe.data.courses[i].considered !== "5" && periode === 2) {
+                return_value = return_value + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
+            }
+
+            if (this.props.classe.data.courses[i].considered === "5" && periode === 2) {
+                return_value = return_value;
+            }
+
+            if (this.props.classe.data.courses[i].considered === "5" && periode !== 2) {
+                return_value = return_value + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
+            }
+    }
+
+        return return_value * 8;
     }
 
     printContent(divName) {
@@ -316,8 +339,8 @@ export default class FicheE13 extends Component {
 
         document.body.innerHTML = originalContents;
         // window.location.reload();
-        window.location.href = "http://" + this.state.url_server + "/cirezi2/";
-        window.location.replace("http://" + this.state.url_server + "/cirezi2/");
+        window.location.href = "http://" + this.props.url_server + home_redirect;
+        window.location.replace("http://" + this.props.url_server + home_redirect);
     }
 
     render() {
@@ -364,9 +387,8 @@ export default class FicheE13 extends Component {
                                     <table className="full-table-liste">
                                         <caption style={{ color: 'transparent' }}>
                                             <h4>
-                                                FICHE E13
-                                                <br />
-                                                {this.state.classe.class_id + " " + this.state.classe.section_id + " " + this.state.classe.order_id}
+                                                FICHE E13 <br />
+                                                {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.cycle_id + " " + this.props.classe.order_id}
                                             </h4>
                                         </caption>
                                         <thead>
@@ -374,58 +396,58 @@ export default class FicheE13 extends Component {
                                                 <th style={{ width: 30, textAlign: 'center' }}>No</th>
                                                 <th style={{ paddingLeft: 10, textAlign: 'left' }}>NOMS ET POSTNOM / PRENOM</th>
                                                 <th style={{ width: 50, textAlign: 'center' }}> S </th>
-                                                <th style={{ width: 100, textAlign: 'center' }}><input className="input-no-borderr" /></th>
-                                                <th style={{ width: 50, textAlign: 'center' }}><input className="input-no-borderr" /></th>
+                                                <th style={{ width: 100, textAlign: 'center' }}><input value={this.maxima_generaux()} className="input-no-borderr" /></th>
+                                                <th style={{ width: 50, textAlign: 'center' }}><input value="%" className="input-no-borderr" /></th>
                                             </tr>
                                         </thead>
-                                        {this.state.pupils.map((pupil, index) => {
+                                        {this.props.classe.pupils.map((pupil, index) => {
                                             return (
                                                 <tbody>
                                                     <tr>
                                                         <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                        <td style={{ paddingLeft: 10 }}>{pupil.first_name + " " + pupil.second_name + " " + pupil.last_name}</td>
+                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
 
                                                         <td style={{ width: 50, textAlign: 'center' }}>
-                                                            {pupil.gender === "1" ? "M" : "F"}
+                                                            {pupil.pupil.gender === "1" ? "M" : "F"}
                                                         </td>
 
                                                         <td style={{ width: 50, textAlign: 'center' }}>
-                                                        {this.render_total_main_marks(pupil.pupil_id)}
+                                                            {this.render_total_main_marks(pupil.pupil.pupil_id)}
                                                         </td>
 
                                                         {this.state.periode === "P1" ?
                                                             <td style={{ width: 50, textAlign: 'center' }}>
-                                                                {this.render_period_marks(pupil.pupil_id, 1)}
+                                                                {this.render_period_marks(pupil.pupil.pupil_id, 1)}
                                                             </td> : null}
 
                                                         {this.state.periode === "P2" ?
                                                             <td style={{ width: 50, textAlign: 'center' }}>
-                                                                {this.render_period_marks(pupil.pupil_id, 2)}
+                                                                {this.render_period_marks(pupil.pupil.pupil_id, 2)}
                                                             </td> : null}
 
                                                         {this.state.periode === "S1" ?
                                                             <td style={{ width: 50, textAlign: 'center' }}>
-                                                                {this.render_semester_marks(pupil.pupil_id, 1, 2, 10)}
+                                                                {this.render_semester_marks(pupil.pupil.pupil_id, 1, 2, 10)}
                                                             </td> : null}
 
                                                         {this.state.periode === "P3" ?
                                                             <td style={{ width: 50, textAlign: 'center' }}>
-                                                                {this.render_period_marks(pupil.pupil_id, 3)}
+                                                                {this.render_period_marks(pupil.pupil.pupil_id, 3)}
                                                             </td> : null}
 
                                                         {this.state.periode === "P4" ?
                                                             <td style={{ width: 50, textAlign: 'center' }}>
-                                                                {this.render_period_marks(pupil.pupil_id, 4)}
+                                                                {this.render_period_marks(pupil.pupil.pupil_id, 4)}
                                                             </td> : null}
 
                                                         {this.state.periode === "S2" ?
                                                             <td style={{ width: 50, textAlign: 'center' }}>
-                                                                {this.render_semester_marks(pupil.pupil_id, 3, 4, 11)}
+                                                                {this.render_semester_marks(pupil.pupil.pupil_id, 3, 4, 11)}
                                                             </td> : null}
 
                                                         {this.state.periode === "*" ?
                                                             <td style={{ width: 50, textAlign: 'center' }}>
-                                                                {this.render_total_marks(pupil.pupil_id)}
+                                                                {this.render_total_marks(pupil.pupil.pupil_id)}
                                                             </td> : null}
 
                                                     </tr>
@@ -440,7 +462,7 @@ export default class FicheE13 extends Component {
                                         <caption>
                                             <h4 style={{ color: 'transparent' }}>
                                                 FICHE E13<br />
-                                                {this.state.classe.class_id + " " + this.state.classe.section_id + " " + this.state.classe.order_id}
+                                                {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.order_id}
                                             </h4>
                                         </caption>
                                         <thead>
@@ -511,3 +533,5 @@ export default class FicheE13 extends Component {
         )
     }
 }
+
+export default connect(mapStateToProps)(FicheE13);

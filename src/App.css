@@ -43,6 +43,10 @@ input::-webkit-inner-spin-button {
   margin-bottom: 10px;
 }
 
+.red {
+  color: red,
+}
+
 .icon-div-input {
   margin-top: 4px;
 }
@@ -153,7 +157,7 @@ h5 {
 }
 
 .main-middle-page {
-  background-color: white;
+  /* background-color: #780006; */
   width: 75%;
   position: fixed;
   left: 25%;
@@ -164,8 +168,12 @@ h5 {
 }
 
 .sub-div-main {
-  margin-left: 20px;
-  margin-right: 20px;
+  background-color: #680006;
+  display: flex;
+  /* flex-wrap: nowrap; */
+  /* width:100%; */
+  padding-left: 20px;
+  padding-right: 20px;
   /* border-top: 1px solid rgba(0, 0, 0, 0.2); */
 }
 
@@ -711,23 +719,23 @@ h5 {
 
 .menu-right {
   position: fixed;
+  /* background-color: green; */
   top: 110px;
   bottom: 30px;
   right: 0px;
   width: 20%;
-  border-left: 1px solid rgba(0, 0, 0, 0.2);
+  /* border-left: 1px solid rgba(0, 0, 0, 0.2); */
   padding-left: 10px;
   overflow-y: auto;
 }
 
 .center-fixed {
   position: fixed;
-  top: 105px;
+  /* background-color: aqua; */
+  top: 110px;
   bottom: 30px;
-  width: 51%;
-  padding-right: 20px;
+  width: 54.3%;
   left: 25%;
-  padding-left: 20px;
   overflow-y: auto;
   overflow-x: none;
   word-wrap: break-word;
@@ -1133,6 +1141,17 @@ h5 {
   margin-right: 20px;
   color: rgb(0, 80, 180);
   cursor: pointer;
+}
+
+.add-minuss {
+  margin-right: 10px;
+  color: rgb(0, 80, 180);
+  cursor: pointer;
+  border:rgba(0, 0, 0, 0.5);
+}
+
+.add-minuss:hover {
+  text-decoration: underline;
 }
 
 .add-minus:hover {

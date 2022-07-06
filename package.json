@@ -1,25 +1,27 @@
 {
   "name": "yambi_smis",
-  "homepage": "elite",
+  "homepage": "wima",
   "version": "0.1.0",
   "private": false,
   "productName": "Yambi SMIS",
   "dependencies": {
     "@material-ui/core": "^4.12.1",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "react": "^17.0.2",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^14.2.1",
+    "electron-is-dev": "^2.0.0",
+    "react": "^18.2.0",
     "react-charts": "^2.0.0-beta.7",
-    "react-dom": "^17.0.2",
-    "react-icons": "^4.2.0",
-    "react-redux": "^7.2.4",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
+    "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.5",
+    "react-icons": "^4.4.0",
+    "react-redux": "^8.0.2",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "^5.0.1",
     "read-excel-file": "^5.2.25",
-    "redux": "^4.1.1",
-    "web-vitals": "^1.1.2",
-    "xlsx": "^0.17.4"
+    "redux": "^4.2.0",
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -46,6 +48,6 @@
     ]
   },
   "devDependencies": {
-    "electron": "^16.0.4"
+    "electron": "^19.0.7"
   }
 }

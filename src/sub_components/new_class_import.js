@@ -5,7 +5,7 @@ import { FiBarChart, FiCalendar, FiClipboard, FiLogOut, FiMinimize2, FiPaperclip
 import modalView from '../includes/modal';
 import readXlsxFile from 'read-excel-file';
 import * as XLSX from 'xlsx';
-const input = document.getElementById('classe'); 
+const input = document.getElementById('classe');
 
 export default class NewClasseImport extends React.Component {
 
@@ -49,7 +49,7 @@ export default class NewClasseImport extends React.Component {
             perm_number: "",
             nationality: "",
             statut_scolaire: "0",
-            classe:[],
+            classe: [],
         }
     }
 
@@ -106,147 +106,183 @@ export default class NewClasseImport extends React.Component {
                 })
             })
                 .then((response) => response.json())
-                .then((response) => {
-                    
-                })
+                .then((response) => { })
                 .catch((error) => {
                     console.log(error.toString());
                     this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
                 });
         }
 
-for(let i in this.state.classe) {
+        for (let i in this.state.classe) {
+            if (this.state.first_name === "" || this.state.second_name === "" || this.state.cycle_school_pupil === "" || this.state.school_year_pupil === "" || this.state.class_school_pupil === "") {
+                this.setState({ modal_title: "Information erreur", modal_main_text: "Vous devez renseigner tous les champs obligatoires avant la validation. Ce sont l'identité de base de l'élève et son orientation scolaire.", modal_view: true, loading_middle: false });
+            } else {
+                this.setState({
+                    loading_middle: true,
+                });
 
-    if (this.state.first_name === "" || this.state.second_name === "" || this.state.cycle_school_pupil === "" || this.state.school_year_pupil === "" || this.state.class_school_pupil === "") {
-        this.setState({ modal_title: "Information erreur", modal_main_text: "Vous devez renseigner tous les champs obligatoires avant la validation. Ce sont l'identité de base de l'élève et son orientation scolaire.", modal_view: true, loading_middle: false });
-    } else {
-    this.setState({
-        loading_middle: true,
-    });
+                let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/new_pupil_classe.php";
 
-    let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/new_pupil_classe.php";
+                let nom = this.state.classe[i].Nom;
+                let postnom = this.state.classe[i].Postnom;
+                let prenom = this.state.classe[i].Prenom;
+                let pnumero0 = this.state.classe[i].Pnumero0;
+                let pnumero1 = this.state.classe[i].Pnumero1;
+                let pnumero2 = this.state.classe[i].Pnumero2;
+                let pnumero3 = this.state.classe[i].Pnumero3;
+                let pnumero4 = this.state.classe[i].Pnumero4;
+                let pnumero5 = this.state.classe[i].Pnumero5;
+                let pnumero6 = this.state.classe[i].Pnumero6;
+                let pnumero7 = this.state.classe[i].Pnumero7;
+                let pnumero8 = this.state.classe[i].Pnumero8;
+                let pnumero9 = this.state.classe[i].Pnumero9;
+                let pnumero10 = this.state.classe[i].Pnumero10;
+                let pnumero11 = this.state.classe[i].Pnumero11;
+                let pnumero12 = this.state.classe[i].Pnumero12;
 
-    let nom = this.state.classe[i].Nom;
-    let postnom = this.state.classe[i].Postnom;
-    let prenom = this.state.classe[i].Prenom;
-    // let namee = nom.trim();
-    let name = nom.substring(nom.indexOf(" ") + 1);
-    // let name1 = postnom.substring(postnom.indexOf(" ") + 1);
+                let address = this.state.classe[i].Adresse;
+                let Lnaissance = this.state.classe[i].Lnaissance;
+                let Dnaissance = this.state.classe[i].Dnaissance;
+                let nationality = this.state.classe[i].Nat;
 
-    // console.log(postnom);
-    // if(prenom ==undefined){
-    //     console.log("ok");
-    // }
+                if (pnumero0 === undefined) { pnumero0 = '' }
+                if (pnumero1 === undefined) { pnumero1 = '' }
+                if (pnumero2 === undefined) { pnumero2 = '' }
+                if (pnumero3 === undefined) { pnumero3 = '' }
+                if (pnumero4 === undefined) { pnumero4 = '' }
+                if (pnumero5 === undefined) { pnumero5 = '' }
+                if (pnumero6 === undefined) { pnumero6 = '' }
+                if (pnumero7 === undefined) { pnumero7 = '' }
+                if (pnumero8 === undefined) { pnumero8 = '' }
+                if (pnumero9 === undefined) { pnumero9 = '' }
+                if (pnumero10 === undefined) { pnumero10 = '' }
+                if (pnumero11 === undefined) { pnumero11 = '' }
+                if (pnumero12 === undefined) { pnumero12 = '' }
 
-    if(postnom == undefined || postnom  =="") {
-        nom = nom.replace(name,"");
-        postnom = name;
-        // console.log(nom + " " +postnom);
-    }
+                if (address === undefined) { address = '' }
+                if (Lnaissance === undefined) { Lnaissance = '' }
+                if (Dnaissance === undefined) { Dnaissance = '' }
+                if (nationality === undefined) { nationality = '' }
 
-    if(prenom == undefined ||prenom=="") {
-        // postnom = postnom.replace(postnom,"");
-        // prenom = name1;
-        // console.log(nom + " " +postnom+" "+prenom);
+                let permanent_number = pnumero0 + pnumero1 + pnumero2 + pnumero3 + pnumero4 + pnumero5 + pnumero6 + pnumero7 + pnumero8 + pnumero9 + pnumero10 + pnumero11 + pnumero12;
+                // let namee = nom.trim();
+                let name = nom.substring(nom.indexOf(" ") + 1);
+                // let name1 = postnom.substring(postnom.indexOf(" ") + 1);
 
-        prenom = "";
-    }
+                // console.log(postnom);
+                // if(prenom ==undefined){
+                //     console.log("ok");
+                // }
 
-    // console.log(postnom)
+                if (postnom === undefined || postnom === "") {
+                    nom = nom.replace(name, "");
+                    postnom = name;
+                    // console.log(nom + " " +postnom);
+                }
 
-    fetch(BaseURL, {
-        method: 'POST',
-        body: JSON.stringify({
-            first_name_pupil: nom,
-            second_name_pupil: postnom,
-            last_name_pupil: prenom,
-            gender_pupil: "0",
-            birth_date_pupil: this.state.birth_date_pupil,
-            birth_place_pupil: this.state.birth_place_pupil,
-            father_name: this.state.father_name,
-            mother_name: this.state.mother_name,
-            parents_alive: this.state.parents_alive,
-            parents_state: this.state.parents_state,
-            lives_with: this.state.lives_with,
-            father_work_pupil: this.state.father_work_pupil,
-            mother_work_pupil: this.state.mother_work_pupil,
-            cycle_school_pupil: this.state.cycle_school_pupil,
-            class_school_pupil: this.state.class_school_pupil,
-            class_order_pupil: this.state.class_order_pupil,
-            class_section_pupil: this.state.class_section_pupil,
-            class_option_pupil: this.state.class_option_pupil,
-            school_year_pupil: this.state.school_year_pupil,
-            email_address_pupil: this.state.email_address_pupil,
-            physical_address_pupil: this.state.physical_address_pupil,
-            contact_1_pupil: this.state.contact_1_pupil,
-            contact_2_pupil: this.state.contact_2_pupil,
-            contact_3_pupil: this.state.contact_3_pupil,
-            contact_4_pupil: this.state.contact_4_pupil,
-            id_number: this.state.id_number,
-            perm_number: this.state.perm_number,
-            nationality: this.state.nationality,
-            statut_scolaire: this.state.statut_scolaire,
-        })
-    })
-        .then((response) => response.json())
-        .then((response) => {
-            this.setState({ modal_title: "Information Succès", modal_main_text: "Vous venez d'enregistrer une nouvelle classe. Vous pourrez editer ses informations au moment voulu.", modal_view: true, loading_middle: false });
-            this.setState({
-                first_name_pupil: "",
-                second_name_pupil: "",
-                last_name_pupil: "",
-                gender_pupil: "",
-                birth_date_pupil: "",
-                birth_place_pupil: "",
-                father_name: "",
-                mother_name: "",
-                lives_with: "0",
-                parents_alive: "0",
-                parents_state: "0",
-                father_work_pupil: "",
-                mother_work_pupil: "",
-                email_address_pupil: "",
-                physical_address_pupil: "",
-                contact_1_pupil: "",
-                contact_2_pupil: "",
-                contact_3_pupil: "",
-                contact_4_pupil: "",
-                id_number: "",
-                perm_number: "",
-                nationality: "",
-                statut_scolaire: "0"
-            })
-        })
-        .catch((error) => {
-            console.log(error.toString());
-            this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
-        });
-    }
-}
+                if (prenom === undefined || prenom === "") {
+                    // postnom = postnom.replace(postnom,"");
+                    // prenom = name1;
+                    // console.log(nom + " " +postnom+" "+prenom);
+
+                    prenom = "";
+                }
+
+                // console.log(postnom)
+
+                fetch(BaseURL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        first_name_pupil: nom,
+                        second_name_pupil: postnom,
+                        last_name_pupil: prenom,
+                        gender_pupil: "0",
+                        birth_date_pupil: Dnaissance,
+                        birth_place_pupil: Lnaissance,
+                        father_name: this.state.father_name,
+                        mother_name: this.state.mother_name,
+                        parents_alive: this.state.parents_alive,
+                        parents_state: this.state.parents_state,
+                        lives_with: this.state.lives_with,
+                        father_work_pupil: this.state.father_work_pupil,
+                        mother_work_pupil: this.state.mother_work_pupil,
+                        cycle_school_pupil: this.state.cycle_school_pupil,
+                        class_school_pupil: this.state.class_school_pupil,
+                        class_order_pupil: this.state.class_order_pupil,
+                        class_section_pupil: this.state.class_section_pupil,
+                        class_option_pupil: this.state.class_option_pupil,
+                        school_year_pupil: this.state.school_year_pupil,
+                        email_address_pupil: this.state.email_address_pupil,
+                        physical_address_pupil: address,
+                        contact_1_pupil: this.state.contact_1_pupil,
+                        contact_2_pupil: this.state.contact_2_pupil,
+                        contact_3_pupil: this.state.contact_3_pupil,
+                        contact_4_pupil: this.state.contact_4_pupil,
+                        id_number: this.state.id_number,
+                        perm_number: permanent_number,
+                        nationality: nationality,
+                        statut_scolaire: this.state.statut_scolaire,
+                    })
+                })
+                    .then((response) => response.json())
+                    .then((response) => {
+                        this.setState({ modal_title: "Information Succès", modal_main_text: "Vous venez d'enregistrer une nouvelle classe. Vous pourrez editer ses informations au moment voulu.", modal_view: true, loading_middle: false });
+                        this.setState({
+                            first_name_pupil: "",
+                            second_name_pupil: "",
+                            last_name_pupil: "",
+                            gender_pupil: "",
+                            birth_date_pupil: "",
+                            birth_place_pupil: "",
+                            father_name: "",
+                            mother_name: "",
+                            lives_with: "0",
+                            parents_alive: "0",
+                            parents_state: "0",
+                            father_work_pupil: "",
+                            mother_work_pupil: "",
+                            email_address_pupil: "",
+                            physical_address_pupil: "",
+                            contact_1_pupil: "",
+                            contact_2_pupil: "",
+                            contact_3_pupil: "",
+                            contact_4_pupil: "",
+                            id_number: "",
+                            perm_number: "",
+                            nationality: "",
+                            statut_scolaire: "0"
+                        })
+                    })
+                    .catch((error) => {
+                        console.log(error.toString());
+                        this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
+                    });
+            }
+        }
     };
 
-    uploadClasse =(file)=> {
+    uploadClasse = (file) => {
 
-        const promise =new Promise((resolve,reject) =>{
-             const fileReader = new FileReader();
-             fileReader.readAsArrayBuffer(file);
-             fileReader.onload=(e)=>{
-                 const bufferArray=e.target.result;
-                 const wb=XLSX.read(bufferArray,{type:"buffer"});
-                 const wsname = wb.SheetNames[0];
-                 const ws=wb.Sheets[wsname];
-                 const data = XLSX.utils.sheet_to_json(ws);
+        const promise = new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsArrayBuffer(file);
+            fileReader.onload = (e) => {
+                const bufferArray = e.target.result;
+                const wb = XLSX.read(bufferArray, { type: "buffer" });
+                const wsname = wb.SheetNames[0];
+                const ws = wb.Sheets[wsname];
+                const data = XLSX.utils.sheet_to_json(ws);
 
-                 resolve(data);
-             }
+                resolve(data);
+            }
 
-             fileReader.onerror=(err) => {
-                 reject(err)
-             }
+            fileReader.onerror = (err) => {
+                reject(err)
+            }
         });
 
-        promise.then((data)=>{
-            this.setState({classe:data});
+        promise.then((data) => {
+            this.setState({ classe: data });
         });
     }
 
@@ -357,28 +393,28 @@ for(let i in this.state.classe) {
                 </table>
 
 
-                {this.state.classe.map((eleve,index)=>{
-                    return(
-                        <table style={{width:'100%',backgroundColor:'white'}} key={index}>
-                        <tbody>
-                        <tr>
-                        <td style={{width:50}}>{index+1}</td>
-                            <td style={{width:'27%'}}>{eleve.Nom}</td>
-                            <td style={{width:'27%'}}>{eleve.Postnom}</td>
-                            <td style={{width:'27%'}}>{eleve.Prenom}</td>
-                            <td style={{width:100}}>{eleve.Sexe}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                {this.state.classe.map((eleve, index) => {
+                    return (
+                        <table style={{ width: '100%', backgroundColor: 'white' }} key={index}>
+                            <tbody>
+                                <tr>
+                                    <td style={{ width: 50 }}>{index + 1}</td>
+                                    <td style={{ width: '27%' }}>{eleve.Nom}</td>
+                                    <td style={{ width: '27%' }}>{eleve.Postnom}</td>
+                                    <td style={{ width: '27%' }}>{eleve.Prenom}</td>
+                                    <td style={{ width: 100 }}>{eleve.Sexe}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     )
                 })}
 
-                <div style={{textAlign:'center',paddingTop:50,paddingBottom:50}}>
-                <div style={{textAlign:'center',paddingTop:0,paddingBottom:25,color:'black',marginLeft:50,marginRight:50}}>
-Uploader un fichier Excel contenant les noms des élèves de la classe. Renseignez aussi les identités de la classe afin de procéder à l'enregistrement des élèves un à un. Les noms entrés devront s'afficher dans un tableau ci-haut. Sinon, assurez-vous de bien uploader le fichier avant la validation.
-                </div>
-                <input style={{display:'none'}} type="file" id="classe" onChange={(data) => this.uploadClasse(data.target.files[0])} />
-                <label className='button-primary' style={{paddingLeft:25,paddingRight:25}} for="classe">Uploader le fichier Excel (au format .xlsx)</label>
+                <div style={{ textAlign: 'center', paddingTop: 50, paddingBottom: 50 }}>
+                    <div style={{ textAlign: 'center', paddingTop: 0, paddingBottom: 25, color: 'black', marginLeft: 50, marginRight: 50 }}>
+                        Uploader un fichier Excel contenant les noms des élèves de la classe. Renseignez aussi les identités de la classe afin de procéder à l'enregistrement des élèves un à un. Les noms entrés devront s'afficher dans un tableau ci-haut. Sinon, assurez-vous de bien uploader le fichier avant la validation.
+                    </div>
+                    <input style={{ display: 'none' }} type="file" id="classe" onChange={(data) => this.uploadClasse(data.target.files[0])} />
+                    <label className='button-primary' style={{ paddingLeft: 25, paddingRight: 25 }} for="classe">Uploader le fichier Excel (au format .xlsx)</label>
                 </div>
 
                 {this.state.modal_view ?

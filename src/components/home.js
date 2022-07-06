@@ -27,6 +27,7 @@ import ViewPupil from '../sub_components/view_pupil';
 import { mapStateToProps } from '../store/state_props';
 import MenuHome from '../sub_components/menu_home';
 import NewClasseImport from '../sub_components/new_class_import';
+import SettingsBulletins from '../sub_pages/settings_bulletins';
 
 class Home extends Component {
 
@@ -206,28 +207,28 @@ class Home extends Component {
 
     collect_data() {
 
-        this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
-        let data = this.props.annee_scolaire.year_id;
-        let url_server = sessionStorage.getItem('yambi_smis_url_server');
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/collect_data.php";
+        // this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
+        // let data = this.props.annee_scolaire.year_id;
+        // let url_server = sessionStorage.getItem('yambi_smis_url_server');
+        // let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/collect_data.php";
 
-        fetch(BaseURL, {
-            method: 'POST',
-            body: JSON.stringify({
-                annee: data,
-            })
-        })
-            .then((response) => response.json())
-            .then((response) => {
+        // fetch(BaseURL, {
+        //     method: 'POST',
+        //     body: JSON.stringify({
+        //         annee: data,
+        //     })
+        // })
+        //     .then((response) => response.json())
+        //     .then((response) => {
 
-            setTimeout(() => {
-                this.sync_data(response);
-            },2000);
+        //     setTimeout(() => {
+        //         this.sync_data(response);
+        //     },2000);
 
-            })
-            .catch((error) => {
-                this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, is_loading_home: false, loading_middle: false });
-            });
+        //     })
+        //     .catch((error) => {
+        //         this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, is_loading_home: false, loading_middle: false });
+        //     });
     }
 
     sync_data(data) {
@@ -258,36 +259,51 @@ class Home extends Component {
 
     get_synthese_marks(periode) {
 
-        this.setState({
-            loading_middle: true,
-            middle_func: 4,
-            class_open: false,
-            class_loading: 0
-        });
+        // this.setState({
+        //     loading_middle: true,
+        //     middle_func: 4,
+        //     class_open: false,
+        //     class_loading: 0
+        // });
+
+        this.props.dispatch({ type: "SET_CLASSE_OPEN", payload: false });
+        this.props.dispatch({ type: "SET_LOADING_MIDDLE", payload: true });
+        // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
 
         let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/get_synthese.php";
 
         fetch(BaseURL, {
             method: 'POST',
             body: JSON.stringify({
-                annee: this.state.annee,
+                annee: this.props.annee,
                 periode: periode
             })
         })
             .then((response) => response.json())
             .then((response) => {
-                this.setState({
-                    classes_synthese: response.classes,
-                    loading_middle: false,
-                    all_pupils: response.all_pupils,
-                    nbr_ee: response.nbr_ee,
-                    nbr_tb: response.nbr_tb,
-                    nbr_bb1: response.nbr_bb1,
-                    nbr_bb2: response.nbr_bb2,
-                    nbr_me: response.nbr_me,
-                    nbr_ma: response.nbr_ma,
-                    nbr_classes: response.nbr_classes
-                })
+                // this.setState({
+                //     classes_synthese: response.classes,
+                //     loading_middle: false,
+                //     all_pupils: response.all_pupils,
+                //     nbr_ee: response.nbr_ee,
+                //     nbr_tb: response.nbr_tb,
+                //     nbr_bb1: response.nbr_bb1,
+                //     nbr_bb2: response.nbr_bb2,
+                //     nbr_me: response.nbr_me,
+                //     nbr_ma: response.nbr_ma,
+                //     nbr_classes: response.nbr_classes
+                // })
+
+                this.props.dispatch({ type: "SET_CLASSES_SYNTHESE", payload: response.classes });
+                this.props.dispatch({ type: "SET_LOADING_MIDDLE", payload: false });
+                this.props.dispatch({ type: "SET_ALL_PUPILS", payload: response.all_pupils });
+                this.props.dispatch({ type: "SET_NBR_EE", payload: response.nbr_ee });
+                this.props.dispatch({ type: "SET_NBR_TB", payload: response.nbr_tb });
+                this.props.dispatch({ type: "SET_NBR_BB1", payload: response.nbr_bb1 });
+                this.props.dispatch({ type: "SET_NBR_BB2", payload: response.nbr_bb2 });
+                this.props.dispatch({ type: "SET_NBR_ME", payload: response.nbr_me });
+                this.props.dispatch({ type: "SET_NBR_MA", payload: response.nbr_ma });
+                this.props.dispatch({ type: "SET_NBR_CLASSES", payload: response.nbr_classes });
             })
             .catch((error) => {
                 // alert(error.toString());
@@ -354,25 +370,36 @@ class Home extends Component {
 };
 
     request_synthese_change(periode) {
-        this.setState({ periode_syhntese: periode });
+        // this.setState({ periode_syhntese: periode });
+        this.props.dispatch({ type: "SET_PERIODE_FULL", payload: periode });
+        this.props.dispatch({ type: "SET_TITLE", payload: "Fiche synthèse des résultats / " });
         if (periode === "1") {
-            this.setState({ periode_full: "DE LA 1ère PÉRIODE" });
+            this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DE LA 1ère PÉRIODE" });
+            // this.setState({ periode_full: "DE LA 1ère PÉRIODE" });
         } else if (periode === "2") {
-            this.setState({ periode_full: "DE LA 2e PÉRIODE" });
+            this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DE LA 2e PÉRIODE" });
+            // this.setState({ periode_full: "DE LA 2e PÉRIODE" });
         } else if (periode === "3") {
-            this.setState({ periode_full: "DE LA 3e PÉRIODE" });
+            this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DE LA 3e PÉRIODE" });
+            // this.setState({ periode_full: "DE LA 3e PÉRIODE" });
         } else if (periode === "4") {
-            this.setState({ periode_full: "DE LA 4e PÉRIODE" });
+            this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DE LA 4e PÉRIODE" });
+            // this.setState({ periode_full: "DE LA 4e PÉRIODE" });
         } else if (periode === "10") {
-            this.setState({ periode_full: "DES EXAMENS DU 1er SEMESTRE" });
+            this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DES EXAMENS DU PREMIER SEMESTRE" });
+            // this.setState({ periode_full: "DES EXAMENS DU 1er SEMESTRE" });
         } else if (periode === "11") {
-            this.setState({ periode_full: "DES EXAMENS DU 2e SEMESTRE" });
+            this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DES EXAMENS DU DEUXIÈME SEMESTRE" });
+            // this.setState({ periode_full: "DES EXAMENS DU 2e SEMESTRE" });
         } else if (periode === "40") {
-            this.setState({ periode_full: "DU PREMIER SEMESTRE" });
+            this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DU PREMIER SEMESTRE" });
+            // this.setState({ periode_full: "DU PREMIER SEMESTRE" });
         } else if (periode === "50") {
-            this.setState({ periode_full: "DU SECOND SEMESTRE" });
+            this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DU DEUXIÈME SEMESTRE" });
+            // this.setState({ periode_full: "DU SECOND SEMESTRE" });
         } else if (periode === "12") {
-            this.setState({ periode_full: "DE FIN D'ANNÉE" });
+            this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DE FIN D'ANNÉE" });
+            // this.setState({ periode_full: "DE FIN D'ANNÉE" });
         }
 
         this.get_synthese_marks(periode);
@@ -385,7 +412,7 @@ class Home extends Component {
                     <select
                         onChange={(val) => this.request_synthese_change(val.target.value)}
                         style={{ color: 'rgba(0, 80, 180)' }}
-                        value={this.state.periode_syhntese}
+                        value={this.props.periode_syhntese}
                         className="select-no-border">
                         <option value="12">Synthèse des résultats de fin d'année</option>
                         <option>- - - - - - - - - - - -</option>
@@ -409,15 +436,15 @@ class Home extends Component {
 
                 <div id="print-synthese">
                     <div>
-                        <strong>{(this.state.autres.school_name + "").toUpperCase()}</strong><br />
-                        <strong>{this.state.autres.school_bp}</strong><br />
-                        <strong>Commune: {this.state.autres.school_commune}</strong>
+                        <strong>{(this.props.autres.school_name + "").toUpperCase()}</strong><br />
+                        <strong>{this.props.autres.school_bp}</strong><br />
+                        <strong>Commune: {this.props.autres.school_commune}</strong>
                     </div>
 
                     <div className="float-right-div">
-                        <strong>Année scolaire : {this.state.annee_scolaire.year_name}</strong>
+                        <strong>Année scolaire : {this.props.annee_scolaire.year_name}</strong>
                     </div>
-                    <h3>SYNTHÈSE DES RÉSULTATS {this.state.periode_full}</h3>
+                    <h3>SYNTHÈSE DES RÉSULTATS {this.props.periode_full}</h3>
                     <table className="full-table-liste-markss" style={{ marginTop: 10 }}>
                         <thead>
                             <tr>
@@ -442,7 +469,7 @@ class Home extends Component {
                                 <th style={{ textAlign: 'center' }}>MA</th>
                             </tr>
                         </thead>
-                        {this.state.classes_synthese.map((classe, index) => {
+                        {this.props.classes_synthese.map((classe, index) => {
                             return (
                                 <tbody>
                                     <tr>
@@ -465,38 +492,38 @@ class Home extends Component {
                         <tfoot>
                             <tr>
                                 <td rowSpan="2" style={{ textAlign: 'center', fontWeight: 'bold' }}>+</td>
-                                <td rowSpan="2" style={{ paddingLeft: 10, fontWeight: 'bold' }}>{this.state.nbr_classes}</td>
-                                <td rowSpan="2" style={{ textAlign: 'center', fontWeight: 'bold' }}>{this.state.all_pupils}</td>
-                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{this.state.nbr_ee}</td>
-                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{this.state.nbr_tb}</td>
-                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{this.state.nbr_bb1}</td>
-                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{this.state.nbr_bb2}</td>
-                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{this.state.nbr_me}</td>
-                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{this.state.nbr_ma}</td>
+                                <td rowSpan="2" style={{ paddingLeft: 10, fontWeight: 'bold' }}>{this.props.nbr_classes}</td>
+                                <td rowSpan="2" style={{ textAlign: 'center', fontWeight: 'bold' }}>{this.props.all_pupils}</td>
+                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{this.props.nbr_ee}</td>
+                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{this.props.nbr_tb}</td>
+                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{this.props.nbr_bb1}</td>
+                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{this.props.nbr_bb2}</td>
+                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{this.props.nbr_me}</td>
+                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{this.props.nbr_ma}</td>
                                 <td rowSpan="2" style={{ textAlign: 'center', fontWeight: 'bold' }}></td>
                                 <td rowSpan="2" style={{ textAlign: 'center', fontWeight: 'bold' }}></td>
                                 <td rowSpan="2" style={{ textAlign: 'center', fontWeight: 'bold' }}></td>
                             </tr>
                             <tr>
-                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{((parseInt(this.state.nbr_ee) * 100) / this.state.all_pupils).toString().substr(0, 4)}</td>
-                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{((parseInt(this.state.nbr_tb) * 100) / this.state.all_pupils).toString().substr(0, 4)}</td>
-                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{((parseInt(this.state.nbr_bb1) * 100) / this.state.all_pupils).toString().substr(0, 4)}</td>
-                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{((parseInt(this.state.nbr_bb2) * 100) / this.state.all_pupils).toString().substr(0, 4)}</td>
-                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{((parseInt(this.state.nbr_me) * 100) / this.state.all_pupils).toString().substr(0, 4)}</td>
-                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{((parseInt(this.state.nbr_ma) * 100) / this.state.all_pupils).toString().substr(0, 4)}</td>
+                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{((parseInt(this.props.nbr_ee) * 100) / this.props.all_pupils).toString().substr(0, 4)}</td>
+                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{((parseInt(this.props.nbr_tb) * 100) / this.props.all_pupils).toString().substr(0, 4)}</td>
+                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{((parseInt(this.props.nbr_bb1) * 100) / this.props.all_pupils).toString().substr(0, 4)}</td>
+                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{((parseInt(this.props.nbr_bb2) * 100) / this.props.all_pupils).toString().substr(0, 4)}</td>
+                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{((parseInt(this.props.nbr_me) * 100) / this.props.all_pupils).toString().substr(0, 4)}</td>
+                                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{((parseInt(this.props.nbr_ma) * 100) / this.props.all_pupils).toString().substr(0, 4)}</td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
 
-                {this.state.periode_synthese === "12" ?
+                {this.props.periode_synthese === "12" ?
                     <>
                         <h3>Application</h3>
                         <div style={{ paddingLeft: 25 }}>
-                            <FaCheck />    Le taux de réussite est de {this.state.reussites}/{this.state.all_pupils}, soit {((parseInt(this.state.reussites) * 100) / this.state.all_pupils).toString().substr(0, 4)}<br />
-                            <FaCheck />    Le taux de redoublement est de {this.state.doubles}/{this.state.all_pupils}, soit {((parseInt(this.state.doubles) * 100) / this.state.all_pupils).toString().substr(0, 4)}<br />
-                            <FaCheck />    Le taux d'échec est de {this.state.echecs}/{this.state.all_pupils}, soit {((parseInt(this.state.echecs) * 100) / this.state.all_pupils).toString().substr(0, 4)}<br />
-                            <FaCheck />    La déperdition est de {this.state.abandon}/{this.state.all_pupils}, soit {((parseInt(this.state.abandon) * 100) / this.state.all_pupils).toString().substr(0, 4)}
+                            <FaCheck />    Le taux de réussite est de {this.props.reussites}/{this.props.all_pupils}, soit {((parseInt(this.props.reussites) * 100) / this.props.all_pupils).toString().substr(0, 4)}<br />
+                            <FaCheck />    Le taux de redoublement est de {this.props.doubles}/{this.props.all_pupils}, soit {((parseInt(this.props.doubles) * 100) / this.props.all_pupils).toString().substr(0, 4)}<br />
+                            <FaCheck />    Le taux d'échec est de {this.props.echecs}/{this.props.all_pupils}, soit {((parseInt(this.props.echecs) * 100) / this.props.all_pupils).toString().substr(0, 4)}<br />
+                            <FaCheck />    La déperdition est de {this.props.abandon}/{this.props.all_pupils}, soit {((parseInt(this.props.abandon) * 100) / this.props.all_pupils).toString().substr(0, 4)}
                         </div>
                     </> : null}
 
@@ -755,14 +782,19 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
     }
 
     fetch_synthese() {
-        this.setState({
-            middle_func: 4,
-            marks_tab: "",
-            title_main: "Fiche synthèse des résultats",
-            allow_right_menu: false,
-            classe: [],
-            allow_right_menu_pupils: false
-        });
+        // this.setState({
+        //     middle_func: 4,
+        //     marks_tab: "",
+        //     title_main: "Fiche synthèse des résultats",
+        //     allow_right_menu: false,
+        //     classe: [],
+        //     allow_right_menu_pupils: false
+        // });
+        this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Fiche synthèse des résultats" });
+        this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 4 });
+        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
+        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
+        this.props.dispatch({ type: "SET_CLASSE", payload: [] });
         this.get_synthese_marks(this.state.periode_synthese);
     }
 
@@ -813,8 +845,20 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
         this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: menu_left });
     }
 
-    render() {
+    set_page1(middle_func,fiche_tab,marks_tab,menu_left,menu_pupils) {
+        // this.setState({ middle_func: 7, marks_tab: "", allow_right_menu: true })
 
+        // this.props.dispatch({ type: "SET_CLASSE", payload: [] });
+        // this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Nouvel(le) élève | " });
+        // this.props.dispatch({ type: "SET_CLASSE_OPEN", payload: false });
+        // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: menu_pupils });
+        this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: middle_func });
+        this.props.dispatch({ type: "SET_FICHES_TAB", payload: fiche_tab });
+        this.props.dispatch({ type: "SET_MARKS_TAB", payload: marks_tab });
+        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: menu_left });
+    }
+
+    render() {
         if (this.state.redirectToReferrer || sessionStorage.getItem('assemble_user_data')) { }
         else { return (<Redirect to={'/signin'} />) }
 
@@ -824,7 +868,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
 
                 <div>
                     <div className="top-bar-app">
-                        <FaFolder color="black" size={22} style={{ marginRight: 10, marginLeft: 20 }} color="orange" />
+                        <FaFolder color="orange" size={22} style={{ marginRight: 10, marginLeft: 20 }} />
                         <h1>{this.props.school_name_abb}<span style={{ color: 'gray', fontSize: 17 }}> / Dossiers / {this.props.annee_scolaire.year_name} </span></h1>
 
                         <div className="float-menu-topbar">
@@ -871,7 +915,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                 className="user-home">
                                 <FaUser
                                     // color="rgb(0, 80, 180)"
-                                    color="rgb(0, 0, 0)"
+                                    color="black"
                                     size={25} />
                             </span>
                             <FaCircle style={{ marginLeft: -13, marginBottom: -13, paddingTop: 20 }} size={13} color="rgb(0, 180, 0)" />
@@ -916,7 +960,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                     Uploader une classe</span>
 
                                 <span
-                                    // onClick={() => this.fetch_synthese()} 
+                                    onClick={() => this.fetch_synthese()} 
                                     style={{ color: 'rgba(0, 80, 180)' }}
                                     className={`select-no-border ${this.props.middle_func === 4 ? "select-no-border-bold" : ""}`}>
                                     <span className="divider-menu-topbar"></span>
@@ -943,7 +987,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                         <div className="float-left-image">
                                             {this.props.class_loading === classe.id_classes ?
                                                 <CircularProgress size={22} /> :
-                                                <FaFolder color="black" size={22} color="orange" />}
+                                                <FaFolder color="orange" size={22} />}
                                         </div>
                                         <strong>{classe.class_id} {classe.section_id} {classe.order_id}</strong>
                                         <span style={{ backgroundColor: this.color_body(classe.pupils_count), color: 'white', paddingLeft: 5, paddingRight: 5, paddingTop: 2, paddingBottom: 2, marginTop: -5 }} className="float-class-pupils">{classe.pupils_count}</span>
@@ -971,69 +1015,75 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                 </div>
                                 :
                                 <div>
-                                    <div>
+                                    <div className="center-fixed">
+                                    <div style={{paddingLeft:20,paddingRight:10}}>
                                         {this.props.middle_func === 1 ?
-                                            <div id="liste-nomminative" className="center-fixed">
+                                            <div id="liste-nomminative">
                                                 <ListeNomminative />
                                             </div>
                                             : null}
 
                                         {this.props.middle_func === 11 ?
-                                            <div id="view_pupil" className="center-fixed">
+                                            <div id="view_pupil">
                                                 <ViewPupil />
                                             </div>
                                             : null}
 
                                             {this.props.middle_func === 12 ?
-                                            <div id="stats_caisse" className="center-fixed">
+                                            <div id="stats_caisse">
                                                 <StatistiquesCaisse />
                                             </div>
                                             : null}
 
                                             {this.props.middle_func === 13 ?
-                                            <div id="class-import" className="center-fixed">
+                                            <div id="class-import">
                                                 <NewClasseImport />
                                             </div>
                                             : null}
 
+                                            {this.props.middle_func === 14 ?
+                                            <div id="class-import">
+                                                <SettingsBulletins />                                            </div>
+                                            : null}
+
                                         {this.props.middle_func === 5 ?
-                                            <div id="fiches" className="center-fixed">
+                                            <div id="fiches">
                                                 {this.state.fiches_tab === "FI" ?
                                                     <div id="fiche-identity">
-                                                        {ficheidentites(this.state.classe, this.state.autres, this.state.pupils)}
+                                                        {/* {ficheidentites(this.state.classe, this.state.autres, this.state.pupils)} */}
                                                     </div> : null}
 
-                                                {this.state.fiches_tab === "FO" ?
+                                                {this.props.fiches_tab === "FO" ?
                                                     <div id="fiche-observation">
-                                                        {<FicheObservationPoints />}
+                                                        {/* {<FicheObservationPoints />} */}
                                                     </div> : null}
 
-                                                {this.state.fiches_tab === "E13" ?
+                                                {this.props.fiches_tab === "E13" ?
                                                     <div id="fiche-e133">
-                                                        {<FicheE13 />}
+                                                        <FicheE13 />
                                                     </div> : null}
 
-                                                {this.state.fiches_tab === "E80" ?
+                                                {this.props.fiches_tab === "E80" ?
                                                     <div id="fiche-e800">
-                                                        {<FicheE80 />}
+                                                        {/* {<FicheE80 />} */}
                                                     </div> : null}
                                             </div>
                                             : null}
 
                                         {this.props.middle_func === 9 ?
-                                            <div className="center-fixed">
+                                            <div>
                                                 <Courses />
                                             </div>
                                             : null}
 
                                         {this.props.middle_func === 8 ?
-                                            <div className="center-fixed">
+                                            <div>
                                                 <PaiementsClasse />
                                             </div>
                                             : null}
 
                                             {this.props.middle_func === 0 ?
-                                            <div className="center-fixed">
+                                            <div>
                                                 <MenuHome />
                                             </div>
                                             : null}
@@ -1065,16 +1115,17 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                             : null}
 
                                         {this.props.middle_func === 7 ?
-                                            <div id="liste-bulletins" className="center-fixed">
+                                            <div id="liste-bulletins">
                                                 {/* {listeNomminative(this.state.classe, this.state.autres, this.state.pupils)} */}
                                                 <Bulletins />
                                             </div>
                                             : null}
+                                            </div>
                                     </div>
                                     {this.props.allow_right_menu ?
                                         <div className="menu-right">
                                             <div>
-                                                Classe : {this.props.classe.class_id} {this.props.classe.section_id} {this.props.classe.order_id}<br />
+                                                <strong>Dossier : {this.props.classe.class_id} {this.props.classe.section_id} {this.props.classe.order_id}<br /></strong>
                                                 {/* {classOverview(this.state.classe, this.state.pupils, this.state.courses_count)} */}
                                                 <ClassOverView />
 
@@ -1117,12 +1168,11 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                                     <span className={`select-no-border ${this.props.middle_func === 2 ? "select-no-border-bold" : ""}`}>
                                                         <FaStarHalfAlt color="rgba(0, 80, 180)" style={{ marginRight: 7 }} />
                                                         <select
-                                                            value={this.state.marks_tab}
-                                                            onChange={(val) => 
-                                                                this.set_page(2,val.target.value,false, false)
+                                                            value={this.props.marks_tab}
+                                                            onChange={(val) => this.set_page(2,val.target.value,false, false)
                                                             // this.setState({ marks_tab: val.target.value, middle_func: 2, allow_right_menu: false })
                                                             }
-                                                            style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${this.props.middle_func === 2 ? "select-no-border-bold" : ""}`}>
+                                                            style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white' }} className={`select-no-border ${this.props.middle_func === 2 ? "select-no-border-bold" : ""}`}>
                                                             <option value="">Fiche des points de la classe</option>
                                                             <option value="FPE">Fiche des points par élève</option>
                                                             <option value="FPC">Fiche des points par cours</option>
@@ -1167,9 +1217,10 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                                     <span className={`select-no-border ${this.props.middle_func === 2 ? "select-no-border-bold" : ""}`}>
                                                         <FaStarHalfAlt color="rgba(0, 80, 180)" style={{ marginRight: 7 }} />
                                                         <select
-                                                            value={this.state.fiches_tab}
-                                                            onChange={(val) => this.setState({ fiches_tab: val.target.value, middle_func: 5, allow_right_menu: true, })}
-                                                            style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${this.props.middle_func === 5 ? "select-no-border-bold" : ""}`}>
+                                                            value={this.props.fiches_tab}
+                                                            onChange={(val) => this.set_page1(5,val.target.value,"",true,true)}
+                                                            // onChange={(val) => this.setState({ fiches_tab: val.target.value, middle_func: 5, allow_right_menu: true, })}
+                                                            style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white' }} className={`select-no-border ${this.props.middle_func === 5 ? "select-no-border-bold" : ""}`}>
                                                             <option value="">Sélectionner une fiche</option>
                                                             <option value="FI">Fiche des identités</option>
                                                             <option value="FO">Fiche d'observation</option>

@@ -5,7 +5,8 @@ import { home_redirect } from "./../global_vars";
 import { FiCheck, FiCircle } from 'react-icons/fi';
 import { FaCheck, FaCircle } from 'react-icons/fa';
 import { mapStateToProps } from '../store/state_props';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import BulletinsType2 from './bulletins_type2';
 
 let max = 0;
 let can_show = false;
@@ -316,6 +317,30 @@ class Bulletins extends React.Component {
         return return_value;
     }
 
+    maxima_gen(periode) {
+        let return_value = 0;
+
+        for (let i in this.props.classe.data.courses) {
+            if (this.props.classe.data.courses[i].considered !== "5" && periode !== 2) {
+                return_value = return_value + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
+            }
+
+            if (this.props.classe.data.courses[i].considered !== "5" && periode === 2) {
+                return_value = return_value + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
+            }
+
+            if (this.props.classe.data.courses[i].considered === "5" && periode === 2) {
+                return_value = return_value;
+            }
+
+            if (this.props.classe.data.courses[i].considered === "5" && periode !== 2) {
+                return_value = return_value + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
+            }
+        }
+
+        return return_value * periode;
+    }
+
     componentDidMount() {
 
         // if (this.state.can_mount < 5) {
@@ -392,12 +417,21 @@ class Bulletins extends React.Component {
         return fullTime;
     }
 
+    select_bulletins_type(type){
+        if (type === "1") {
+            this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 14 });
+        this.props.dispatch({ type: "SET_FICHES_TAB", payload: "" });
+        this.props.dispatch({ type: "SET_MARKS_TAB", payload: "" });
+        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
+        }
+    }
+
     render() {
         return (
             <div style={{ marginBottom: 50, paddingTop: 10 }}>
                 {this.props.classe.class === "6" ?
                     <>
-                    <div>
+                        <div>
                             Augmenter/diminuer la valeur de la colone Exétat (si elle ne correspond pas correctement); <br />Valeur courante : {this.state.valeur_colonne}<br />
                             <span onClick={() => this.setState({ valeur_colonne: this.state.valeur_colonne - 1 })} className="add-minus">Diminuer</span>
                             <span onClick={() => this.setState({ valeur_colonne: parseInt(this.state.valeur_colonne) + 1 })} className="add-minus">Augmenter</span><br /><br /><br />
@@ -414,8 +448,8 @@ class Bulletins extends React.Component {
                                 onChange={(text) => this.setState({ code_centre: text.target.value })}
                             />
                         </div><br /><br />
-                        </>
-                    
+                    </>
+
                     : null}
 
                 <div className="float-right-div">
@@ -432,11 +466,24 @@ class Bulletins extends React.Component {
                     <br /><br /><br />
                 </div>
 
+                <div className="float-right-div">
+
+                <select
+                                    onChange={(val) => this.select_bulletins_type(val.target.value)}
+                                    style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white' }} className="select-no-border-select">
+                                    <option value="0">Bulletins (type par défaut)</option>
+                                    <option value="1">Bulletins (type 2)</option>
+                                </select><br /><br />
+                </div>
+
                 <span onClick={() => this.printContent("bulletins-p")} className="add-minus" style={{ fontWeight: 'bold' }}>
                     IMPRIMER LES BULLETINS
                 </span><br /><br />
 
-                {this.props.classe.class === "6" ?
+                {this.props.classe.data.domains.length !== 0 ?
+                <BulletinsType2 />
+                :
+                this.props.classe.class === "6" ?
                     <div id="bulletins-p">
 
                         {this.props.classe.pupils.map((pupil, index) => {
@@ -541,7 +588,7 @@ class Bulletins extends React.Component {
                                                 <td style={{ textAlign: 'center', fontWeight: 'bold' }}>
                                                     <span>BULLETIN DE LA {this.props.classe.class_id} ANNÉE HUMANITÉ {this.props.classe.section_id.toUpperCase()}<span
                                                         style={{ color: 'transparent' }}>......</span>
-                                                        ANNEE SCOLAIRE {this.props.autres.annee}</span>
+                                                        ANNÉE SCOLAIRE {this.props.autres.annee}</span>
                                                 </td>
                                             </tr>
                                         </table>
@@ -672,6 +719,7 @@ class Bulletins extends React.Component {
 
                                                     <span className="underlined">Pour témoignage</span><br /><br />
                                                     Le .........../.........../...........<br /><br />
+                                                    {/* Le {this.find_date(this.props.autres.date_end + "")}<br/><br/> */}
 
 
                                                     LE CHEF D'ETABLISSEMENT<br /><br /><br />
@@ -728,7 +776,7 @@ class Bulletins extends React.Component {
                                                                         ]
                                                                         :
                                                                         [
-                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 4}</strong></td>]
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 4}</strong></td>]
                                                                 }
                                                                 <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
                                                                     <span style={{ color: 'black', color: 'transparent' }}>00</span>
@@ -739,30 +787,57 @@ class Bulletins extends React.Component {
                                                     ,
                                                     <tr key={index}>
                                                         <td className="td-border" style={{ fontSize: 11, paddingLeft: 10 }}>{course.course_name}</td>
-                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "1")}</span></td>
-                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "2")}</span></td>
+                                                        <td className={`td-border`} style={{ fontSize: 11, textAlign: 'center' }}>
+                                                            <span style={{ color: this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "1") < course.total_marks / 2 ? "red" : "" }}>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "1")}</span></td>
+                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}>
+                                                            <span style={{ color: this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "2") < course.total_marks / 2 ? "red" : "" }}>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "2")}</span></td>
 
                                                         {
                                                             course.considered !== "5" ?
-                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "10")}</strong></td>
+                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong
+                                                                    style={{ color: this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "10") < (course.total_marks * 2) / 2 ? "red" : "" }}>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "10")}</strong></td>
                                                                 : <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
                                                                     <span style={{ color: 'black', color: 'transparent' }}>00</span>
                                                                 </td>
                                                         }
 
-                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "1", "2", 10)}</strong></td>
-                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "3")}</span></td>
-                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "4")}</span></td>
+                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}>
+                                                            {course.considered !== "5" ?
+                                                                <strong
+                                                                    style={{ color: parseInt(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "1", "2", "10")) < parseInt((course.total_marks * 4) / 2) ? "red" : "" }}>{this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "1", "2", "10")}</strong>
+                                                                :
+                                                                <strong
+                                                                    style={{ color: parseInt(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "1", "2", "10")) < parseInt((course.total_marks)) ? "red" : "" }}>{this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "1", "2", "10")}</strong>}
+                                                        </td>
+
+                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}>
+                                                            <span style={{ color: this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "3") < course.total_marks / 2 ? "red" : "" }}>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "3")}</span></td>
+                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}>
+                                                            <span style={{ color: this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "4") < course.total_marks / 2 ? "red" : "" }}>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "4")}</span></td>
                                                         {
                                                             course.considered !== "5" ?
-                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "11")}</strong></td>
+                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong
+                                                                    style={{ color: this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "11") < (course.total_marks * 2) / 2 ? "red" : "" }}>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "11")}</strong></td>
                                                                 : <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
                                                                     <span style={{ color: 'black', color: 'transparent' }}>00</span>
                                                                 </td>
                                                         }
 
-                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "3", "4", 11)}</strong></td>
-                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "3", "4", 11)) + parseInt(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "1", "2", 10))}</strong></td>
+                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}>
+                                                            {course.considered !== "5" ?
+                                                                <strong style={{ color: parseInt(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "3", "4", "11")) < parseInt((course.total_marks * 4) / 2) ? "red" : "" }}>{this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "3", "4", "11")}</strong>
+                                                                :
+                                                                <strong style={{ color: parseInt(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "3", "4", "11")) < parseInt((course.total_marks)) ? "red" : "" }}>{this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "3", "4", "11")}</strong>}
+                                                        </td>
+
+                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}>
+                                                            {course.considered !== "5" ?
+                                                                <strong style={{ color: parseInt(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "3", "4", "11")) + parseInt(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "1", "2", "10")) < (course.total_marks * 8) / 2 ? "red" : "" }}>{parseInt(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "3", "4", "11")) + parseInt(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "1", "2", "10"))}</strong>
+                                                                :
+                                                                <strong style={{ color: parseInt(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "3", "4", "11")) + parseInt(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "1", "2", "10")) < (course.total_marks * 4) / 2 ? "red" : "" }}>{parseInt(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "3", "4", "11")) + parseInt(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "1", "2", "10"))}</strong>
+                                                            }
+
+                                                        </td>
                                                         <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
                                                             <span style={{ color: 'black', color: 'transparent' }}>00</span>
                                                         </td>
@@ -780,6 +855,16 @@ class Bulletins extends React.Component {
                                                 <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_generaux(pupil.pupil.pupil_id, 11)}</strong></td>
                                                 <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
                                                 <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 1)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 2)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 10)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
+
+                                                {/* <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(1)}</strong></td>
+                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(1)}</strong></td>
+                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(2)}</strong></td>
+                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(4)}</strong></td>
+                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(1)}</strong></td>
+                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(1)}</strong></td>
+                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(2)}</strong></td>
+                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(4)}</strong></td>
+                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(8)}</strong></td> */}
                                                 <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
                                                     <span style={{ color: 'black', color: 'transparent' }}>00</span>
                                                 </td>
@@ -959,9 +1044,9 @@ class Bulletins extends React.Component {
                                                 </td>
                                                 <td className="td-bizz-bottom40" style={{ width: '40%', textAlign: 'center' }}>
                                                     <span style={{ fontSize: 11 }}>
-                                                        <br /><span>Fait à </span><strong>{this.state.autres.school_city}</strong>, le <strong>{this.find_date(this.props.autres.date_end+"")}</strong><br />
+                                                        <br /><span>Fait à </span><strong>{"" + this.props.autres.school_city}</strong>, le <strong>{this.find_date(this.props.autres.date_end + "")}</strong><br />
                                                         <strong>LE CHEF D'ETABLISSEMENT</strong><br /><br /><br />
-                                                        <span>{this.state.autres.name_promoter}</span>
+                                                        <strong>{this.props.autres.name_promoter + ""}</strong>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -1064,8 +1149,8 @@ class Bulletins extends React.Component {
                                                 </td>
                                                 <td style={{ width: '50%', paddingLeft: 10, paddingBottom: 5 }} className="td-border">
                                                     <span className="span-block-header">ELEVE : </span><strong> {pupil.pupil.first_name.toUpperCase() + " " + pupil.pupil.second_name.toUpperCase() + " " + pupil.pupil.last_name}</strong><span style={{ marginLeft: 30 }}>SEXE : </span><strong>{pupil.pupil.gender === "1" ? "M" : "F"}</strong><br />
-                                                    <span className="span-block-header">NE (E) À : </span><strong> {pupil.pupil.birth_place}</strong> {pupil.pupil.birth_place === "" ? "" : ", LE"} 
-                                                    <strong>{this.find_date(pupil.pupil.birth_date+"")}</strong>
+                                                    <span className="span-block-header">NE (E) À : </span><strong> {pupil.pupil.birth_place}</strong> {pupil.pupil.birth_place === "" ? "" : ", LE"}
+                                                    <strong>{this.find_date(pupil.pupil.birth_date + "")}</strong>
                                                     <br />
                                                     <span className="span-block-header">CLASSE : </span><strong> {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.order_id}</strong><br />
                                                     <span className="span-block-header">
@@ -1096,7 +1181,7 @@ class Bulletins extends React.Component {
                                                 <td style={{ textAlign: 'center', fontWeight: 'bold' }}>
                                                     <span>BULLETIN DE LA {this.props.classe.class_id} ANNÉE HUMANITÉ {this.props.classe.section_id.toUpperCase()}<span
                                                         style={{ color: 'transparent' }}>......</span>
-                                                        ANNEE SCOLAIRE {this.props.annee_scolaire.year_name}</span>
+                                                        ANNÉE SCOLAIRE {this.props.annee_scolaire.year_name}</span>
                                                 </td>
                                             </tr>
                                         </table>
@@ -1185,6 +1270,7 @@ class Bulletins extends React.Component {
                                                 </td>
                                                 <td className="standard-td-top">SIGN. PROF.</td>
                                             </tr>
+
                                             {this.props.classe.courses.map((course, index) => {
 
                                                 can_show = false;
@@ -1238,7 +1324,7 @@ class Bulletins extends React.Component {
                                                                         ]
                                                                         :
                                                                         [
-                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 4}</strong></td>]
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 4}</strong></td>]
                                                                 }
 
                                                                 {/* <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 8}</strong></td> */}
@@ -1303,25 +1389,35 @@ class Bulletins extends React.Component {
                                                 <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_generaux(pupil.pupil.pupil_id, 11)}</strong></td>
                                                 <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
                                                 <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 1)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 2)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 10)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
+
+                                                {/* <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(1)}</strong></td>
+                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(1)}</strong></td>
+                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(2)}</strong></td>
+                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(4)}</strong></td>
+                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(1)}</strong></td>
+                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(1)}</strong></td>
+                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(2)}</strong></td>
+                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(4)}</strong></td>
+                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(8)}</strong></td> */}
                                                 <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
                                                     <span style={{ color: 'black', color: 'transparent' }}>00</span>
                                                 </td>
                                                 <td rowSpan="7" colSpan="2">
                                                     <div style={{ textAlign: 'center', fontSize: 11, marginTop: -5 }}>
                                                         <div style={{ textAlign: 'left', marginLeft: 20 }}>
-                                                        {this.findConseil(pupil.pupil.pupil_id) == "3" ?
-                                                        <><strong style={{ color: 'rgb(0, 40, 250)' }} className="okokkk"><FaCheck size={8} /> PASSE (I)<br /></strong></>:
-                                                        <><span>- PASSE (I)</span><br /></>}
+                                                            {this.findConseil(pupil.pupil.pupil_id) == "3" ?
+                                                                <><strong style={{ color: 'rgb(0, 40, 250)' }} className="okokkk"><FaCheck size={8} /> PASSE (I)<br /></strong></> :
+                                                                <><span>- PASSE (I)</span><br /></>}
 
-                                                        {this.findConseil(pupil.pupil.pupil_id) == "4" ?
-                                                        <><strong style={{ color: 'rgb(0, 40, 250)' }} className="okokkk"><FaCheck size={8} /> DOUBLE (I)<br /></strong></>:
-                                                        <><span>- DOUBLE (I)</span><br /></>}
-                                                            
-                                                        {this.findConseil(pupil.pupil.pupil_id) == "5" ?
-                                                        <><strong style={{ color: 'rgb(0, 40, 250)' }} className="okokkk"><FaCheck size={8} /> ORIENTÉ VERS (I)<br /></strong></>:
-                                                        <><span>- ORIENTÉ VERS (I)</span><br /></>}
+                                                            {this.findConseil(pupil.pupil.pupil_id) == "4" ?
+                                                                <><strong style={{ color: 'rgb(0, 40, 250)' }} className="okokkk"><FaCheck size={8} /> DOUBLE (I)<br /></strong></> :
+                                                                <><span>- DOUBLE (I)</span><br /></>}
+
+                                                            {this.findConseil(pupil.pupil.pupil_id) == "5" ?
+                                                                <><strong style={{ color: 'rgb(0, 40, 250)' }} className="okokkk"><FaCheck size={8} /> ORIENTÉ VERS (I)<br /></strong></> :
+                                                                <><span>- ORIENTÉ VERS (I)</span><br /></>}
                                                         </div>
-                                                        Le {this.find_date(this.props.autres.date_end+"")}<br />
+                                                        Le {this.find_date(this.props.autres.date_end + "")}<br />
                                                         Le chef d'Établissement<br /><br />
 
                                                         Sceau de l'École<br /><br />
@@ -1493,22 +1589,22 @@ class Bulletins extends React.Component {
                                                     <div style={{ fontSize: 11, textAlign: 'left', paddingRight: 10, width: '100%', paddingLeft: 10, paddingBottom: 0, paddingTop: 0 }}>
                                                         {this.findConseil(pupil.pupil.pupil_id) !== "6" ?
                                                             this.findConseil(pupil.pupil.pupil_id) > "2" ?
-                                                        <><strong style={{ color: 'rgb(0, 40, 250)' }} className="okokkk"><FaCheck size={8} /> L'élève ne pourra passer dans la classe supérieure s'il n'a subi avec succès un examen de repêchage en . . {this.render_courses_repechage(pupil.pupil.pupil_id)} (1)</strong><br /></>:
-                                                        <><span>- L'élève ne pourra passer dans la classe supérieure s'il n'a subi avec succès un examen de repêchage en . . <strong>{this.render_courses_repechage(pupil.pupil.pupil_id)}</strong> (1)</span><br /></>
-                                                        : <><span>- L'élève ne pourra passer dans la classe supérieure s'il n'a subi avec succès un examen de repêchage en . . <strong>{this.render_courses_repechage(pupil.pupil.pupil_id)}</strong> (1)</span><br /></>}
+                                                                <><strong style={{ color: 'rgb(0, 40, 250)' }} className="okokkk"><FaCheck size={8} /> L'élève ne pourra passer dans la classe supérieure s'il n'a subi avec succès un examen de repêchage en . . {this.render_courses_repechage(pupil.pupil.pupil_id)} (1)</strong><br /></> :
+                                                                <><span>- L'élève ne pourra passer dans la classe supérieure s'il n'a subi avec succès un examen de repêchage en . . <strong>{this.render_courses_repechage(pupil.pupil.pupil_id)}</strong> (1)</span><br /></>
+                                                            : <><span>- L'élève ne pourra passer dans la classe supérieure s'il n'a subi avec succès un examen de repêchage en . . <strong>{this.render_courses_repechage(pupil.pupil.pupil_id)}</strong> (1)</span><br /></>}
 
                                                         {this.findConseil(pupil.pupil.pupil_id) == "0" ?
-                                                        <><strong style={{ color: 'rgb(0, 40, 250)' }} className="okokkk"><FaCheck size={8} /> L'élève passe dans la classe supérieure (1)</strong><br /></>:
-                                                        <><span>- L'élève passe dans la classe supérieure (1)</span><br /></>}
+                                                            <><strong style={{ color: 'rgb(0, 40, 250)' }} className="okokkk"><FaCheck size={8} /> L'élève passe dans la classe supérieure (1)</strong><br /></> :
+                                                            <><span>- L'élève passe dans la classe supérieure (1)</span><br /></>}
 
                                                         {this.findConseil(pupil.pupil.pupil_id) == "1" ?
-                                                        <><strong style={{ color: 'rgb(0, 40, 250)' }} className="okokkk"><FaCheck size={8} /> L'élève double la classe (1)</strong><br /></>:
-                                                        <><span>- L'élève double la classe (1)</span><br /></>}
-                                                        
+                                                            <><strong style={{ color: 'rgb(0, 40, 250)' }} className="okokkk"><FaCheck size={8} /> L'élève double la classe (1)</strong><br /></> :
+                                                            <><span>- L'élève double la classe (1)</span><br /></>}
+
                                                         {this.findConseil(pupil.pupil.pupil_id) == "2" ?
-                                                        <><strong style={{ color: 'rgb(0, 40, 250)' }} className="okokkk"><FaCheck size={8} /> L'élève est orienté (e) vers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . (1)</strong><br /></>:
-                                                        <><span>- L'élève est orienté (e) vers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . (1)</span><br /></>}
-                                                        
+                                                            <><strong style={{ color: 'rgb(0, 40, 250)' }} className="okokkk"><FaCheck size={8} /> L'élève est orienté (e) vers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . (1)</strong><br /></> :
+                                                            <><span>- L'élève est orienté (e) vers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . (1)</span><br /></>}
+
                                                     </div>
                                                 </td>
                                             </tr>
@@ -1527,11 +1623,11 @@ class Bulletins extends React.Component {
                                                 </td>
                                                 <td className="td-bizz-bottom40" style={{ width: '40%', textAlign: 'center' }}>
                                                     <span style={{ fontSize: 11 }}>
-                                                        <br /><span>Fait à </span><strong>{this.state.autres.school_city}</strong>, 
-                                                        le <strong>{this.find_date(this.props.autres.date_end+"")}</strong>
+                                                        <br /><span>Fait à </span><strong>{"" + this.props.autres.school_city}</strong>,
+                                                        le <strong>{this.find_date(this.props.autres.date_end + "")}</strong>
                                                         <br />
                                                         <strong>LE CHEF D'ETABLISSEMENT</strong><br /><br /><br />
-                                                        <span>{this.state.autres.name_promoter}</span>
+                                                        <strong>{this.props.autres.name_promoter}</strong>
                                                     </span>
                                                 </td>
                                             </tr>

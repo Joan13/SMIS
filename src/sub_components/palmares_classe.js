@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { home_redirect } from '../global_vars';
 import Courses from './courses';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { mapStateToProps } from '../store/state_props';
 
 class PalmaresPupils extends Component {
@@ -149,7 +149,7 @@ class PalmaresPupils extends Component {
         let return_value = 0;
 
         for (let i in this.props.classe.data.pupils_marks) {
-            if (this.props.classe.data.pupils_marks[i].pupil == pupil_id && (this.props.classe.data.pupils_marks[i].school_period == periode1 || this.props.classe.data.pupils_marks[i].school_period == periode2 || this.props.classe.data.pupils_marks[i].school_period == periode3)) {
+            if (this.props.classe.data.pupils_marks[i].pupil === pupil_id && (this.props.classe.data.pupils_marks[i].school_period === periode1 || this.props.classe.data.pupils_marks[i].school_period === periode2 || this.props.classe.data.pupils_marks[i].school_period === periode3)) {
                 return_value = parseInt(return_value) + parseInt(this.props.classe.data.pupils_marks[i].main_marks);
             }
         }
@@ -163,11 +163,11 @@ class PalmaresPupils extends Component {
             return_value = parseInt(return_value) + parseInt(this.props.classe.data.courses[i].total_marks);
         }
 
-        if (periode == 10 || periode == 11) {
+        if (periode === 10 || periode === 11) {
             return parseInt(return_value) * 2;
-        } else if (periode == "12") {
+        } else if (periode === 12) {
             return parseInt(return_value) * 8;
-        } else if (periode == "40" || periode == "50") {
+        } else if (periode === 40 || periode === 50) {
             return parseInt(return_value) * 4;
         }
         else {
@@ -239,7 +239,7 @@ class PalmaresPupils extends Component {
 
     componentWillUnmount() {
         clearInterval(this.intervalID);
-            }
+    }
 
     render() {
         return (
@@ -377,7 +377,7 @@ class PalmaresPupils extends Component {
                                                                     <td style={{ textAlign: 'center' }}>{index + 1}</td>
                                                                     <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
                                                                     <td style={{ textAlign: 'center' }}>
-                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 1) * 100) / this.render_total_marks_courses(1)).toString().substr(0, 5)}
+                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 1) * 100) / this.render_total_marks_courses(1)).toString().substr(0, 4)}
                                                                     </td>
                                                                     <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                                 </tr>
@@ -398,7 +398,7 @@ class PalmaresPupils extends Component {
                                                                     <td style={{ textAlign: 'center' }}>{index + 1}</td>
                                                                     <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
                                                                     <td style={{ textAlign: 'center' }}>
-                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 2) * 100) / this.render_total_marks_courses(2)).toString().substr(0, 5)}
+                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 2) * 100) / this.render_total_marks_courses(2)).toString().substr(0, 4)}
                                                                     </td>
                                                                     <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                                 </tr>
@@ -419,7 +419,7 @@ class PalmaresPupils extends Component {
                                                                     <td style={{ textAlign: 'center' }}>{index + 1}</td>
                                                                     <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
                                                                     <td style={{ textAlign: 'center' }}>
-                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 10) * 100) / this.render_total_marks_courses(10)).toString().substr(0, 5)}
+                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 10) * 100) / this.render_total_marks_courses(10)).toString().substr(0, 4)}
                                                                     </td>
                                                                     <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                                 </tr>
@@ -441,7 +441,7 @@ class PalmaresPupils extends Component {
                                                                     <td style={{ textAlign: 'center' }}>{index + 1}</td>
                                                                     <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
                                                                     <td style={{ textAlign: 'center' }}>
-                                                                        {((parseInt(this.render_pupil_marks_trim(pupil.pupil.pupil_id, 1, 2, 10)) * 100) / this.render_total_marks_courses(40)).toString().substr(0, 5)}
+                                                                        {((parseInt(this.render_pupil_marks_trim(pupil.pupil.pupil_id, '1', '2', '10') * 100) / this.render_total_marks_courses(40)).toString().substr(0, 4))}
                                                                     </td>
                                                                     <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                                 </tr>
@@ -458,21 +458,21 @@ class PalmaresPupils extends Component {
                                                 this.props.classe.data.pupils.map((pupil, index) => {
                                                     if (place.pupil_id === pupil.pupil.pupil_id) {
 
-                                                        let pourcent_stage = ((this.render_pupil_marks(pupil.pupil.pupil_id, 3) * 100) / this.render_total_marks_courses(3)).toString().substr(0, 5);
-                                                        
+                                                        let pourcent_stage = ((this.render_pupil_marks(pupil.pupil.pupil_id, 3) * 100) / this.render_total_marks_courses(3)).toString().substr(0, 4);
+
                                                         if (pourcent_stage >= "60") {
                                                             return (
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                                    <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                    <td style={{ textAlign: 'center' }}>
-                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 3) * 100) / this.render_total_marks_courses(3)).toString().substr(0, 5)}
-                                                                    </td>
-                                                                    <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        )
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                        <td style={{ textAlign: 'center' }}>
+                                                                            {((this.render_pupil_marks(pupil.pupil.pupil_id, 3) * 100) / this.render_total_marks_courses(3)).toString().substr(0, 4)}
+                                                                        </td>
+                                                                        <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            )
                                                         }
 
                                                         return (
@@ -481,7 +481,7 @@ class PalmaresPupils extends Component {
                                                                     <td style={{ textAlign: 'center' }}>{index + 1}</td>
                                                                     <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
                                                                     <td style={{ textAlign: 'center' }}>
-                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 3) * 100) / this.render_total_marks_courses(3)).toString().substr(0, 5)}
+                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 3) * 100) / this.render_total_marks_courses(3)).toString().substr(0, 4)}
                                                                     </td>
                                                                     <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                                 </tr>
@@ -502,7 +502,7 @@ class PalmaresPupils extends Component {
                                                                     <td style={{ textAlign: 'center' }}>{index + 1}</td>
                                                                     <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
                                                                     <td style={{ textAlign: 'center' }}>
-                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 4) * 100) / this.render_total_marks_courses(4)).toString().substr(0, 5)}
+                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 4) * 100) / this.render_total_marks_courses(4)).toString().substr(0, 4)}
                                                                     </td>
                                                                     <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                                 </tr>
@@ -523,7 +523,7 @@ class PalmaresPupils extends Component {
                                                                     <td style={{ textAlign: 'center' }}>{index + 1}</td>
                                                                     <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
                                                                     <td style={{ textAlign: 'center' }}>
-                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 11) * 100) / this.render_total_marks_courses(11)).toString().substr(0, 5)}
+                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 11) * 100) / this.render_total_marks_courses(11)).toString().substr(0, 4)}
                                                                     </td>
                                                                     <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                                 </tr>
@@ -545,7 +545,7 @@ class PalmaresPupils extends Component {
                                                                     <td style={{ textAlign: 'center' }}>{index + 1}</td>
                                                                     <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
                                                                     <td style={{ textAlign: 'center' }}>
-                                                                    {((parseInt(this.render_pupil_marks_trim(pupil.pupil.pupil_id, 3, 4, 11)) * 100) / this.render_total_marks_courses(50)).toString().substr(0, 5)}
+                                                                        {((parseInt(this.render_pupil_marks_trim(pupil.pupil.pupil_id, '3', '4', '11')) * 100) / this.render_total_marks_courses(50)).toString().substr(0, 4)}
                                                                     </td>
                                                                     <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                                 </tr>

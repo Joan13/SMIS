@@ -28,7 +28,7 @@ const store = createStore(reducer);
 function App() {
   return (
     <Provider store={store}>
-      <Router basename="/elite">
+      <Router basename="/wima">
       <Switch>
         <Route path="/signin" exact>
           <Signin />
