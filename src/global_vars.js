@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { mapStateToProps } from "./store/state_props";
 
-export let home_redirect = "/wima";
+export let home_redirect = "/cirezi2";
 
 export function printContent(divName) {
 

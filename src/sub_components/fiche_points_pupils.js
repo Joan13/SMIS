@@ -202,7 +202,8 @@ class FichePointsPupils extends Component {
             });
     }
 
-    conseil_deliberation(pupil_id, main_conseil, school_year) {
+    conseil_deliberation(pupil_id, main_conseil) {
+        this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
 
         let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/conseil_deliberation.php";
 
@@ -212,7 +213,7 @@ class FichePointsPupils extends Component {
                 body: JSON.stringify({
                     pupil_id: pupil_id,
                     main_conseil: main_conseil,
-                    school_year: school_year,
+                    school_year: this.props.classe.school_year,
                 })
             })
             .then((response) => response.json())
@@ -223,6 +224,7 @@ class FichePointsPupils extends Component {
                 // }
 
                 // alert("ok");
+                this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
 
             })
             .catch((error) => {
@@ -633,17 +635,18 @@ class FichePointsPupils extends Component {
                 <h3>Conseil de délibération fin d'année</h3><br/>
                 <select
                 value={this.findConseil(this.state.pupil_id)}
-                onChange={(text) => this.conseil_deliberation(this.state.pupil_id, text.target.value, this.state.annee)}
+                onChange={(text) => this.conseil_deliberation(this.state.pupil_id, text.target.value)}
                 >
                     <option value="">Sélectionner la décision</option>
-                    <option value="0">L'élève passe dans la classe supérieure</option>
+                    <option value="0">L'élève passe dans la classe supérieure {this.state.pupil_id}</option>
                     <option value="1">L'élève double la classe</option>
                     <option value="2">L'élève est orienté ailleurs (a échoué)</option>
-                    <option value="6">Abandon</option>
                     <option value="">. . . . . . . . . . . . . . . . . . . .</option>
                     <option value="3">L'élève passe dans la classe supérieure</option>
                     <option value="4">L'élève double la classe</option>
                     <option value="5">L'élève est orienté ailleurs (a échoué)</option>
+                    <option value="">. . . . . . . . . . . . . . . . . . . .</option>
+                    <option value="6">Abandon</option>
                 </select>
 
                 <div className="float-right">

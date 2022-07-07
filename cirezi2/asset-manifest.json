@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/cirezi2/static/css/main.8b549ffe.css",
+    "main.js": "/cirezi2/static/js/main.29822e3d.js",
+    "static/js/787.8b78be84.chunk.js": "/cirezi2/static/js/787.8b78be84.chunk.js",
+    "static/media/logo_elite.png": "/cirezi2/static/media/logo_elite.4b5eadca8105d768cde7.png",
+    "static/media/armoirie_rdc.png": "/cirezi2/static/media/armoirie_rdc.076a1eee761b3c3caa0b.png",
+    "static/media/yambi_red.png": "/cirezi2/static/media/yambi_red.2f940178f78c579c6c2e.png",
+    "static/media/flag_drc.jpg": "/cirezi2/static/media/flag_drc.201bde9ef7a490de53e4.jpg",
+    "index.html": "/cirezi2/index.html",
+    "main.8b549ffe.css.map": "/cirezi2/static/css/main.8b549ffe.css.map",
+    "main.29822e3d.js.map": "/cirezi2/static/js/main.29822e3d.js.map",
+    "787.8b78be84.chunk.js.map": "/cirezi2/static/js/787.8b78be84.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8b549ffe.css",
+    "static/js/main.29822e3d.js"
+  ]
+}

@@ -396,8 +396,8 @@ class FicheE13 extends Component {
                                                 <th style={{ width: 30, textAlign: 'center' }}>No</th>
                                                 <th style={{ paddingLeft: 10, textAlign: 'left' }}>NOMS ET POSTNOM / PRENOM</th>
                                                 <th style={{ width: 50, textAlign: 'center' }}> S </th>
-                                                <th style={{ width: 100, textAlign: 'center' }}><input value={this.maxima_generaux()} className="input-no-borderr" /></th>
-                                                <th style={{ width: 50, textAlign: 'center' }}><input value="%" className="input-no-borderr" /></th>
+                                                <th style={{ width: 100, textAlign: 'center' }}><input placeholder={this.maxima_generaux()} className="input-no-borderr" /></th>
+                                                <th style={{ width: 50, textAlign: 'center' }}><input placeholder="%" className="input-no-borderr" /></th>
                                             </tr>
                                         </thead>
                                         {this.props.classe.pupils.map((pupil, index) => {
@@ -456,8 +456,9 @@ class FicheE13 extends Component {
                                         })}
                                     </table>
                                 </td>
-                                <td valign="top">
-                                    <span style={{ color: 'transparent' }}>guygyugu</span>
+                                <td valign="top" style={{height:'100%'}}>
+                                    <span style={{ color: 'transparent' }}>guygyugu</span><br/>
+                                    <span style={{ color: 'transparent' }}>guygyugu</span><br/>
                                     <table className="full-table-listee13">
                                         <caption>
                                             <h4 style={{ color: 'transparent' }}>

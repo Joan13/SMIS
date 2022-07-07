@@ -164,6 +164,12 @@ class ListeNomminative extends React.Component {
                 {this.props.classe.pupils_count === 0 ?
                     <>
                         <br /><br />
+
+                        <div>
+Cette classe est vide, elle ne contient pas d'élèves. Vous pouvez l'effacer si vous l'avez entrée par erreur.
+                        </div>
+
+                        <br/><br/>
                         <span
                             onClick={() => this.delete_class()}
                             className="add-minus" style={{ fontWeight: 'bold', color: 'red' }}>

@@ -168,7 +168,7 @@ h5 {
 }
 
 .sub-div-main {
-  background-color: #680006;
+  /* background-color: #680006; */
   display: flex;
   /* flex-wrap: nowrap; */
   /* width:100%; */
@@ -368,6 +368,10 @@ h5 {
   margin-top: 10px;
 }
 
+.minw {
+  min-width:150px;
+}
+
 .pointer {
   cursor: pointer;
 }
@@ -375,10 +379,12 @@ h5 {
 .progress-center {
   text-align: center;
   margin-top: 50%;
+  width:100%;
 }
 
 .progress-center-main {
   text-align: center;
+  margin-left: 40%;
   margin-top: 25%;
 }
 

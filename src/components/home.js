@@ -5,8 +5,8 @@ import { FaCircle, FaSearch, FaCheck, FaHome, FaUserPlus, FaClipboard, FaUsers, 
 import { FiLogOut, FiRefreshCcw } from 'react-icons/fi';
 import modalView from '../includes/modal';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Redirect } from 'react-router-dom';
-import ficheidentites from '../sub_components/fiche_identites';
+import { Navigate } from 'react-router-dom';
+import FicheIdentites from '../sub_components/fiche_identites';
 import FichePointsPupils from '../sub_components/fiche_points_pupils';
 import FichesPointsCourses from '../sub_components/fiche_points_courses';
 import PalmaresPupils from '../sub_components/palmares_classe';
@@ -610,6 +610,8 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
 }
                 }
 
+                // console.log(this.props.classe)
+
         // if (this.props.middle_func === 4 || this.props.middle_func === 6 || this.props.middle_func === 11 || this.props.middle_func === 12) {
             // this.setState({ middle_func: 1, allow_right_menu: true, });
             // this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
@@ -860,7 +862,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
 
     render() {
         if (this.state.redirectToReferrer || sessionStorage.getItem('assemble_user_data')) { }
-        else { return (<Redirect to={'/signin'} />) }
+        else { return (<Navigate to={'/signin'} />) }
 
         return (
             <div className="main-container">
@@ -1009,7 +1011,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                         <div className="sub-div-main">
 
                             {this.props.loading_middle ?
-                                <div className="progress-center-main">
+                                <div className="progress-center-main" style={{alignItems:'center'}}>
                                     <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
                                     Chargement des données...
                                 </div>
@@ -1048,9 +1050,9 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
 
                                         {this.props.middle_func === 5 ?
                                             <div id="fiches">
-                                                {this.state.fiches_tab === "FI" ?
+                                                {this.props.fiches_tab === "FI" ?
                                                     <div id="fiche-identity">
-                                                        {/* {ficheidentites(this.state.classe, this.state.autres, this.state.pupils)} */}
+                                                        {<FicheIdentites/>}
                                                     </div> : null}
 
                                                 {this.props.fiches_tab === "FO" ?

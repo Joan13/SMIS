@@ -1,5 +1,10 @@
+import { connect, useSelector } from 'react-redux';
 import {home_redirect} from '../global_vars'
-export default function ficheidentites(classe, autres, pupils) {
+import { mapStateToProps } from '../store/state_props';
+function FicheIdentites() {
+
+    const autres = useSelector(state=>state.autres);
+    const classe = useSelector(state=>state.classe);
 
     function printContent(divName) {
 
@@ -47,27 +52,29 @@ export default function ficheidentites(classe, autres, pupils) {
                                             <th style={{ textAlign: 'center' }}>Lieu naiss.</th>
                                             <th style={{ paddingLeft: 10, textAlign: 'left' }}>Date naiss.</th>
                                             <th style={{ paddingLeft: 10, textAlign: 'left' }}>Num. Id.</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'left' }}>Noms père</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'left' }}>Noms mère</th>
+                                            <th style={{ paddingLeft: 10, textAlign: 'left' }}>Num. permanent</th>
+                                            <th style={{ paddingLeft: 10, textAlign: 'left' }}>Noms du père</th>
+                                            <th style={{ paddingLeft: 10, textAlign: 'left' }}>Noms de la mère</th>
                                             <th style={{ paddingLeft: 10, textAlign: 'left' }}>Nationalité</th>
                                             <th style={{ paddingLeft: 10, textAlign: 'left' }}>Adresse</th>
                                         </tr>
                                     </thead>
-                                    {pupils.map((pupil, index) => (
+                                    {classe.pupils.map((pupil, index) => (
                                         <tbody key={index}>
                                             <tr>
                                                 <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                <td style={{ paddingLeft: 10 }}>{pupil.first_name}</td>
-                                                <td style={{ paddingLeft: 10 }}>{pupil.second_name}</td>
-                                                <td style={{ paddingLeft: 10 }}>{pupil.last_name}</td>
-                                                <td style={{ width: 50, textAlign: 'center' }}>{pupil.gender == "0" ? "F" : "M"} </td>
-                                                <td style={{ paddingLeft: 10 }}>{pupil.birth_place}</td>
-                                                <td style={{ paddingLeft: 10 }}>{pupil.birth_date}</td>
-                                                <td style={{ paddingLeft: 10 }}>{pupil.identification_number}</td>
-                                                <td style={{ paddingLeft: 10 }}>{pupil.father_names}</td>
-                                                <td style={{ paddingLeft: 10 }}>{pupil.mother_names}</td>
-                                                <td style={{ paddingLeft: 10 }}>{pupil.nationality}</td>
-                                                <td style={{ paddingLeft: 10 }}>{pupil.physical_address}</td>
+                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name}</td>
+                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.second_name}</td>
+                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.last_name}</td>
+                                                <td style={{ width: 50, textAlign: 'center' }}>{pupil.pupil.gender == "0" ? "F" : "M"} </td>
+                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.birth_place}</td>
+                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.birth_date}</td>
+                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.identification_number}</td>
+                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.permanent_number}</td>
+                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.father_names}</td>
+                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.mother_names}</td>
+                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.nationality}</td>
+                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.physical_address}</td>
                                             </tr>
                                         </tbody>
                                     ))}
@@ -83,3 +90,5 @@ export default function ficheidentites(classe, autres, pupils) {
         </div>
     )
 }
+
+export default connect(mapStateToProps)(FicheIdentites);

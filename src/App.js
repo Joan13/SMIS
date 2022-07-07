@@ -1,10 +1,10 @@
 import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Signin from './components/signin';
 import Home from './components/home';
 import { home_redirect } from './global_vars';
 import { Provider } from 'react-redux';
-import {createStore} from 'redux';
+import { createStore } from 'redux';
 import reducer from './store/reducer';
 
 // let initialState = {
@@ -28,19 +28,12 @@ const store = createStore(reducer);
 function App() {
   return (
     <Provider store={store}>
-      <Router basename="/wima">
-      <Switch>
-        <Route path="/signin" exact>
-          <Signin />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
-        <Route>
-          <Home />
-        </Route>
-      </Switch>
-    </Router>
+      <Router basename="/cirezi2">
+        <Routes>
+          <Route path="/signin" element={<Signin />} exact />
+          <Route path="/" element={ <Home />}/>
+        </Routes>
+      </Router>
     </Provider>
   );
 }

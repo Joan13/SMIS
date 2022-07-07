@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FaCheckCircle, FaEye, FaEyeSlash, FaLock, FaServer, FaUser } from 'react-icons/fa';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import logo from "./../../src/yambi_red.png"
 import modalView from '../includes/modal';
 import { Button, TextField, MenuItem, CircularProgress } from '@material-ui/core';
@@ -318,7 +318,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
     render() {
 
         if (this.state.redirectToReferrer && sessionStorage.getItem('assemble_user_data')) {
-            return (<Redirect to={'/'} />);
+            return (<Navigate to={'/'} />);
         }
         // else {
         //     return (<Redirect to={'/'}/>);
