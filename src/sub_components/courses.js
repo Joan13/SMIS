@@ -24,6 +24,7 @@ class Courses extends Component {
             can_mount: 0,
             being_modified: 0,
             text_course_name: "",
+            new_course_name:"",
         }
     }
 
@@ -65,6 +66,39 @@ class Courses extends Component {
                 alert(error.toString());
                 // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
             });
+    }
+
+    new_course() {
+
+        this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
+        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/new_course.php";
+
+        if(this.state.new_course_name !== "" && this.state.maxima_new_course !== "") {
+            fetch(BaseURL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    cycle_id: this.props.classe.cycle,
+                    class_id: this.props.classe.class,
+                    section_id: this.props.classe.section,
+                    option_id: this.props.classe.option,
+                    school_year: this.props.classe.school_year,
+                    course: this.state.new_course_name,
+                    maxima:this.state.maxima_new_course,
+                })
+            })
+                .then((response) => response.json())
+                .then((response) => {
+                    this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
+                    this.load_class_data(this.props.classe);
+                    this.setState({new_course_name:"",maxima_new_course:""});
+                })
+                .catch((error) => {
+                    alert(error.toString());
+                    // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
+                });
+        } else {
+            this.setState({ modal_title: "Information erreur", modal_main_text: "Entrer l'intitulé du cours et le maxima avant de procéder à l'enregistrement du cours.", modal_view: true, loading_middle: false });
+        }
     }
 
     open_class() {
@@ -351,7 +385,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
     render() {
         return (
             <div style={{ marginBottom: 50, paddingTop: 10 }} className="div-courses">
-                <h3>Cours</h3>
+                <h2>Cours</h2>
                 <div className="menu-float-right-normal">
                     <span style={{ marginLeft: 30 }} onClick={() => this.state.option_open ? this.setState({ option_open: false }) : this.setState({ option_open: true })}>Action</span>
                 </div>
@@ -394,7 +428,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                         >Oui</button>
                                         <button
                                         style={{ marginLeft: 5 }}
-                                        className={`button-primary-small-normal ${course.considered === "5"  ? "button-primary-small" : ""}`}
+                                        className={`button-primary-small-normal ${course.considered === '5'  ? "button-primary-small" : ""}`}
                                         onClick={(text) => this.course_ex_bulletin(course.course_id, "5")}
                                         >Non</button>
                                 </td>
@@ -407,6 +441,27 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                         </>
                     ))}
                 </table>
+
+                <div>
+                <h2>Entrer un nouveau cours pour cette classe la {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.cycle_id}</h2>
+                <br/><input
+                                    onChange={(text) => this.setState({ new_course_name: text.target.value })}
+                                    placeholder="Intitulé du cours"
+                                        value={ this.state.new_course_name}
+                                        className="input-normal" /><br/><br/>
+
+<input
+                                    onChange={(text) => this.setState({ maxima_new_course: text.target.value })}
+                                    type='number'
+                                    placeholder="Maxima"
+                                        value={ this.state.maxima_new_course}
+                                        className="input-normal" /><br/><br/>
+                                        
+                                        <button
+                                        className="button-primary-small"
+                                        onClick={(text) => this.new_course()}
+                                        >Enregistrer le cours</button>
+                </div>
 
                 {this.state.modal_view ?
                     <div className="main-div-modal">

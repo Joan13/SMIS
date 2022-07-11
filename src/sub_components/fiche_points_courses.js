@@ -189,6 +189,9 @@ class FichesPointsCourses extends Component {
 
     componentDidMount() {
 
+        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
+        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
+
         // if(this.state.can_mount < 4) {
         //     this.intervalID = setInterval(() => {
         //         let classe = sessionStorage.getItem('classeYambiSMIS');
@@ -203,13 +206,9 @@ class FichesPointsCourses extends Component {
         // }
     }
 
-    componentWillUnmount() {
-        clearInterval(this.intervalID);
-            }
-
     render() {
         return (
-            <div style={{ marginBottom: 50, paddingTop: 10 }}>
+            <div style={{ marginBottom: 50, paddingTop: 10,width:'100%' }}>
             <table style={{ width: '100%' }}>
                     <tbody>
                         <tr>
@@ -251,7 +250,7 @@ class FichesPointsCourses extends Component {
 
                 </div>
 
-                <table className="full-table-liste-markss" style={{ marginTop: 10 }}>
+                <table className="full-table-liste-markss" style={{ marginTop: 10, width:'100%' }}>
                     <thead>
                         <tr>
                             <th style={{ width: 30, textAlign: 'center' }}>No</th>
@@ -503,7 +502,7 @@ class FichesPointsCourses extends Component {
                     })}
                 </table>
                 </td>
-                            <td valign="top" style={{ paddingLeft: 30, width: 300 }}>
+                            <td valign="top" style={{ paddingLeft: 30, width: 100 }}>
                                 {/* <Courses /> */}
 
                                 <strong onClick={() => 

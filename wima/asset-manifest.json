@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/wima/static/css/main.29fd1218.css",
+    "main.js": "/wima/static/js/main.223ab8fb.js",
+    "static/js/787.8b78be84.chunk.js": "/wima/static/js/787.8b78be84.chunk.js",
+    "static/media/logo_elite.png": "/wima/static/media/logo_elite.4b5eadca8105d768cde7.png",
+    "static/media/armoirie_rdc.png": "/wima/static/media/armoirie_rdc.076a1eee761b3c3caa0b.png",
+    "static/media/yambi_red.png": "/wima/static/media/yambi_red.2f940178f78c579c6c2e.png",
+    "static/media/flag_drc.jpg": "/wima/static/media/flag_drc.201bde9ef7a490de53e4.jpg",
+    "index.html": "/wima/index.html",
+    "main.29fd1218.css.map": "/wima/static/css/main.29fd1218.css.map",
+    "main.223ab8fb.js.map": "/wima/static/js/main.223ab8fb.js.map",
+    "787.8b78be84.chunk.js.map": "/wima/static/js/787.8b78be84.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.29fd1218.css",
+    "static/js/main.223ab8fb.js"
+  ]
+}

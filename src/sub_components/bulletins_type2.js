@@ -589,7 +589,7 @@ class BulletinsType2 extends React.Component {
                                             </td>
                                             <td style={{ width: '50%', paddingLeft: 10, paddingBottom: 5 }} className="td-border">
                                                 <span className="span-block-header">ELEVE : </span><strong> {pupil.pupil.first_name.toUpperCase() + " " + pupil.pupil.second_name.toUpperCase() + " " + pupil.pupil.last_name}</strong><span style={{ marginLeft: 30 }}>SEXE : </span><strong>{pupil.pupil.gender === "1" ? "M" : "F"}</strong><br />
-                                                <span className="span-block-header">NE (E) À : </span><strong> {pupil.pupil.birth_place}</strong> {pupil.pupil.birth_place === "" ? "" : ", LE"}
+                                                <span className="span-block-header">NE (E) À : </span><strong> {pupil.pupil.birth_place}</strong> {pupil.pupil.birth_place === "" ? "" : ", LE "}
                                                 <strong>{this.find_date(pupil.pupil.birth_date + "")}</strong>
                                                 <br />
                                                 <span className="span-block-header">CLASSE : </span><strong> {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.order_id}</strong><br />
@@ -662,7 +662,7 @@ class BulletinsType2 extends React.Component {
 									MAX.<br />
 								</td> */}
 
-                                <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 5, paddingRight: 5 }} rowSpan="2" className="standard-td-top">
+                                <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 2, paddingRight: 2 }} rowSpan="2" className="standard-td-top">
                                                 MAX.
                                             </td>
                                             
@@ -670,43 +670,43 @@ class BulletinsType2 extends React.Component {
                                                 TRAVAUX JOURNAL.<br />
                                             </td>
 
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 5, paddingRight: 5 }} rowSpan="2" className="standard-td-top">
+                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 2, paddingRight: 2 }} rowSpan="2" className="standard-td-top">
                                                 MAX.
                                             </td>
 
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 5, paddingRight: 5 }} rowSpan="2" className="standard-td-top">
+                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 2, paddingRight: 2 }} rowSpan="2" className="standard-td-top">
                                                 COMPO<br />
                                                 SITION
                                             </td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 5, paddingRight: 5 }} rowSpan="2" className="standard-td-top">
+                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 2, paddingRight: 2 }} rowSpan="2" className="standard-td-top">
                                                 MAX.
                                             </td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 5, paddingRight: 5 }} rowSpan="2" className="standard-td-top">
+                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 2, paddingRight: 2 }} rowSpan="2" className="standard-td-top">
                                                 TO<br />
                                                 TAL
                                             </td>
 
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 5, paddingRight: 5 }} rowSpan="2" className="standard-td-top">
+                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 2, paddingRight: 2 }} rowSpan="2" className="standard-td-top">
                                                 MAX.
                                             </td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold' }} colSpan="2" className="standard-td-top">
                                                 TRAVAUX JOURNAL.<br />
                                             </td>
 
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 5, paddingRight: 5 }} rowSpan="2" className="standard-td-top">
+                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 2, paddingRight: 2 }} rowSpan="2" className="standard-td-top">
                                                 MAX.
                                             </td>
 
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 5, paddingRight: 5 }} rowSpan="2" className="standard-td-top">
+                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 2, paddingRight: 2 }} rowSpan="2" className="standard-td-top">
                                                 COMPO<br />
                                                 SITION
                                             </td>
 
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 5, paddingRight: 5 }} rowSpan="2" className="standard-td-top">
+                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 2, paddingRight: 2 }} rowSpan="2" className="standard-td-top">
                                                 MAX.
                                             </td>
 
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 5, paddingRight: 5 }} rowSpan="2" className="standard-td-top">
+                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 2, paddingRight: 2 }} rowSpan="2" className="standard-td-top">
                                                 TO<br />
                                                 TAL
                                             </td>
@@ -1165,6 +1165,32 @@ else {
                                     <table className="className_table">
                                         <tr>
                                             <td colSpan="4" style={{ width: '100%' }}>
+
+{this.props.classe.class === '2' ?
+<table style={{fontSize:10,borderCollapse:'collapse',marginLeft:15}}>
+<caption>(I) RÉSULTAT DE L'EXAMEN DE FIN DE CYCLE DE SECONDAIRE GÉNÉRAL</caption>
+<tr>
+    <th className="td-border" style={{textAlign:'left'}}>RÉSULTAT FINAL</th>
+    <th className="td-border" style={{paddingHorizontal:15,}}>POINTS OBTENUS</th>
+    <th className="td-border">MAXIMA</th>
+</tr>
+<tr>
+<td className="td-border">MOYENNE ÉCOLE</td>
+<td className="td-border"></td>
+<td className="td-border" style={{textAlign:'center'}}><strong>60</strong></td>
+</tr>
+<tr>
+<td className="td-border">MOYENNE EXAMEN DE FIN DE CYCLE</td>
+<td className="td-border"></td>
+<td className="td-border" style={{textAlign:'center'}}><strong>40</strong></td>
+</tr>
+<tr>
+<td className="td-border"><strong>TOTAL</strong></td>
+<td className="td-border"></td>
+<td className="td-border" style={{textAlign:'center'}}><strong>100</strong></td>
+</tr>
+</table>:null}
+
                                                 <div style={{ fontSize: 11, textAlign: 'left', paddingRight: 10, width: '100%', paddingLeft: 10, paddingBottom: 0, paddingTop: 0 }}>
                                                     {this.findConseil(pupil.pupil.pupil_id) !== "6" ?
                                                         this.findConseil(pupil.pupil.pupil_id) > "2" ?

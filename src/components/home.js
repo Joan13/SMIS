@@ -1174,7 +1174,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                                             onChange={(val) => this.set_page(2,val.target.value,false, false)
                                                             // this.setState({ marks_tab: val.target.value, middle_func: 2, allow_right_menu: false })
                                                             }
-                                                            style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white' }} className={`select-no-border ${this.props.middle_func === 2 ? "select-no-border-bold" : ""}`}>
+                                                            style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'transparent' }} className={`select-no-border ${this.props.middle_func === 2 ? "select-no-border-bold" : ""}`}>
                                                             <option value="">Fiche des points de la classe</option>
                                                             <option value="FPE">Fiche des points par élève</option>
                                                             <option value="FPC">Fiche des points par cours</option>
@@ -1222,7 +1222,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                                             value={this.props.fiches_tab}
                                                             onChange={(val) => this.set_page1(5,val.target.value,"",true,true)}
                                                             // onChange={(val) => this.setState({ fiches_tab: val.target.value, middle_func: 5, allow_right_menu: true, })}
-                                                            style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white' }} className={`select-no-border ${this.props.middle_func === 5 ? "select-no-border-bold" : ""}`}>
+                                                            style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'transparent' }} className={`select-no-border ${this.props.middle_func === 5 ? "select-no-border-bold" : ""}`}>
                                                             <option value="">Sélectionner une fiche</option>
                                                             <option value="FI">Fiche des identités</option>
                                                             <option value="FO">Fiche d'observation</option>

@@ -273,24 +273,6 @@ class PalmaresFinal extends Component {
                     <tbody>
                         <tr>
                             <td valign="top">
-                                {/* <div className="float-menu-right">
-                                    <select
-                                        onChange={(val) => this.assign_periode(val.target.value)}
-                                        style={{ color: 'rgba(0, 80, 180)' }}
-                                        value={this.state.periode}
-                                        className="select-no-border-select">
-                                        <option value="1">Première période</option>
-                                        <option value="2">Deuxième période</option>
-                                        <option value="3">Troisième période</option>
-                                        <option value="4">Quatrième période</option>
-                                        <option>- - - - - - - - - - - -</option>
-                                        <option value="10">Examen premier semestre</option>
-                                        <option value="11">Examen deuxième semestre</option>
-                                        <option>- - - - - - - - - - - -</option>
-                                        <option value="40">Premier semestre</option>
-                                        <option value="50">Deuxième semestre</option>
-                                    </select>
-                                </div> */}
 
                                 <div onClick={() => this.printContent("print-palmares")} className="span-blockk">
                                     IMPRIMER
@@ -298,7 +280,6 @@ class PalmaresFinal extends Component {
 
 
                                 <div id="print-palmares" style={{ marginTop: -20 }}>
-
                                     <div>
                                         <strong>{this.props.autres.school_name}</strong><br />
                                         <strong>{this.props.autres.school_bp}</strong><br />

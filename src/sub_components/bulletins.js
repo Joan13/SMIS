@@ -563,7 +563,7 @@ class Bulletins extends React.Component {
                                                 </td>
                                                 <td style={{ width: '50%', paddingLeft: 10, paddingBottom: 7 }} className="td-border">
                                                     <span className="span-block-header">ELEVE : </span><strong> {pupil.pupil.first_name.toUpperCase() + " " + pupil.pupil.second_name.toUpperCase() + " " + pupil.pupil.last_name}</strong><span style={{ marginLeft: 30 }}>SEXE : </span><strong>{pupil.pupil.gender === "1" ? "M" : "F"}</strong><br />
-                                                    <span className="span-block-header">NE (E) À : </span><strong> {pupil.pupil.birth_place}</strong> {pupil.birth_place === "" ? "" : ", LE"} <strong>{this.find_date(pupil.pupil.birth_date)}</strong><br />
+                                                    <span className="span-block-header">NE (E) À : </span><strong> {pupil.pupil.birth_place}</strong> {pupil.birth_place === "" ? "" : ", LE "} <strong>{this.find_date(pupil.pupil.birth_date)}</strong><br />
                                                     <span className="span-block-header">CLASSE : </span><strong> {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.order_id}</strong><br />
                                                     <span className="span-block-header" style={{ paddingTop: 5 }}>
                                                         <span>No PERM. : </span>
@@ -1151,7 +1151,7 @@ class Bulletins extends React.Component {
                                                 </td>
                                                 <td style={{ width: '50%', paddingLeft: 10, paddingBottom: 5 }} className="td-border">
                                                     <span className="span-block-header">ELEVE : </span><strong> {pupil.pupil.first_name.toUpperCase() + " " + pupil.pupil.second_name.toUpperCase() + " " + pupil.pupil.last_name}</strong><span style={{ marginLeft: 30 }}>SEXE : </span><strong>{pupil.pupil.gender === "1" ? "M" : "F"}</strong><br />
-                                                    <span className="span-block-header">NE (E) À : </span><strong> {pupil.pupil.birth_place}</strong> {pupil.pupil.birth_place === "" ? "" : ", LE"}
+                                                    <span className="span-block-header">NE (E) À : </span><strong> {pupil.pupil.birth_place}</strong> {pupil.pupil.birth_place === "" ? "" : ", LE "}
                                                     <strong>{this.find_date(pupil.pupil.birth_date + "")}</strong>
                                                     <br />
                                                     <span className="span-block-header">CLASSE : </span><strong> {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.order_id}</strong><br />
@@ -1771,7 +1771,7 @@ class Bulletins extends React.Component {
                                                 </td>
                                                 <td style={{ width: '50%', paddingLeft: 10, paddingBottom: 7 }} className="td-border">
                                                     <span className="span-block-header">ELEVE : </span><strong> {pupil.first_name.toUpperCase() + " " + pupil.second_name.toUpperCase() + " " + pupil.last_name}</strong><span style={{ marginLeft: 30 }}>SEXE : </span><strong>{this.state.gender === "1" ? "M" : "F"}</strong><br />
-                                                    <span className="span-block-header">NE (E) À : </span><strong> {pupil.birth_place}</strong> {pupil.birth_place === "" ? "" : ", LE"} <strong>{this.find_date(pupil.birth_date)}</strong><br />
+                                                    <span className="span-block-header">NE (E) À : </span><strong> {pupil.birth_place}</strong> {pupil.birth_place === "" ? "" : ", LE "} <strong>{this.find_date(pupil.birth_date)}</strong><br />
                                                     <span className="span-block-header">CLASSE : </span><strong> {this.state.classe.class_id + " " + this.state.classe.section_id + " " + this.state.classe.order_id}</strong><br />
                                                     <span className="span-block-header" style={{ paddingTop: 5 }}>
                                                         <span>No PERM. : </span>

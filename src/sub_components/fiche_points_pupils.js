@@ -351,7 +351,7 @@ class FichePointsPupils extends Component {
                                     </select>
                                 </div>
 
-                                <table className="full-table-liste-marks" style={{ marginTop: 10 }}>
+                                <table className="full-table-liste-marks" style={{ marginTop: 10, width:'100%' }}>
                                     <thead>
                                         <tr>
                                             <th style={{ width: 30, textAlign: 'center' }}>No</th>
@@ -638,7 +638,7 @@ class FichePointsPupils extends Component {
                 onChange={(text) => this.conseil_deliberation(this.state.pupil_id, text.target.value)}
                 >
                     <option value="">Sélectionner la décision</option>
-                    <option value="0">L'élève passe dans la classe supérieure {this.state.pupil_id}</option>
+                    <option value="0">L'élève passe dans la classe supérieure</option>
                     <option value="1">L'élève double la classe</option>
                     <option value="2">L'élève est orienté ailleurs (a échoué)</option>
                     <option value="">. . . . . . . . . . . . . . . . . . . .</option>
