@@ -6,6 +6,7 @@ import modalView from '../includes/modal';
 import { Button, TextField, MenuItem, CircularProgress } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../store/state_props';
+import { year } from '../global_vars';
 // import {ipcRenderer} from 'electron';
 
 class Signin extends Component {
@@ -483,7 +484,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
 
 
                     </div>
-                    <div style={{ marginTop: 100 }}><span style={{ color: 'rgba(0, 80, 180)' }}> Contact -</span> Tous droits réservés © Agisha Migani Joan - Yambi, Inc. 2018-2021</div>
+                    <div style={{ marginTop: 100 }}><span style={{ color: 'rgba(0, 80, 180)' }}> Contact -</span> Tous droits réservés © Agisha Migani Joan - Yambi, Inc. {year}</div>
                 </div><br /><br />
 
                 {this.state.modal_view ?

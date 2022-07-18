@@ -13,7 +13,7 @@ let can_show = false;
 
 class Bulletins extends React.Component {
 
-    intervalID = 0;
+    // intervalID = 0;
 
     constructor(props) {
         super(props);
@@ -358,10 +358,6 @@ class Bulletins extends React.Component {
         // console.log(this.props.classe.data.conduites)
     }
 
-    componentWillUnmount() {
-        clearInterval(this.intervalID);
-    }
-
     printContent(divName) {
 
         let printContents = document.getElementById(divName).innerHTML;
@@ -432,16 +428,17 @@ class Bulletins extends React.Component {
                 {this.props.classe.class === "6" ?
                     <>
                     
-                        <div>
+                        {/* <div>
                             Augmenter/diminuer la valeur de la colone Exétat (si elle ne correspond pas correctement); <br />Valeur courante : {this.state.valeur_colonne}<br />
                             <span onClick={() => this.setState({ valeur_colonne: this.state.valeur_colonne - 1 })} className="add-minus">Diminuer</span>
                             <span onClick={() => this.setState({ valeur_colonne: parseInt(this.state.valeur_colonne) + 1 })} className="add-minus">Augmenter</span><br /><br /><br />
-                        </div>
+                        </div> */}
 
 
                         <div>
                             Renseignez le code du centre avant l'impression des bulletins. Ceci peut varier d'une année à une autre.<br />
                             <input
+                            placeholder="Nombre des bulletins"
                                 type="number"
                                 style={{ width: 150 }}
                                 maxLength="5"

@@ -184,11 +184,11 @@ class Home extends Component {
                 this.props.dispatch({ type: "SET_PUPILS_SCHOOL", payload: response.pupils });
                 // this.props.dispatch({ type: "SET_PPS", payload: response.pupils });
 
-                this.setState({can_load_data:true});
+                // this.setState({can_load_data:true});
 
-                this.parse_classes(response.classes);
+                // this.parse_classes(response.classes);
 
-                this.setState({ modal_title: "Synchronisation des données", modal_main_text: "Pas de pannique ! Après un bon nombre d'enregistrements des informations dans le logiciel, souvenez-vous de les synchroniser au travers du bouton d'upload des données dans la topbar du logiciel.", modal_view: true });
+                // this.setState({ modal_title: "Synchronisation des données", modal_main_text: "Pas de pannique ! Après un bon nombre d'enregistrements des informations dans le logiciel, souvenez-vous de les synchroniser au travers du bouton d'upload des données dans la topbar du logiciel.", modal_view: true });
             })
             .catch((error) => {
 
@@ -831,7 +831,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
             this.get_general_info("");
         } else {
             this.parse_classes(this.props.classes);
-            this.setState({ modal_title: "Synchronisation des données", modal_main_text: "Pas de pannique ! Après un bon nombre d'enregistrements des informations dans le logiciel, souvenez-vous de les synchroniser au travers du bouton d'upload des données dans la topbar du logiciel.", modal_view: true });
+            // this.setState({ modal_title: "Synchronisation des données", modal_main_text: "Pas de pannique ! Après un bon nombre d'enregistrements des informations dans le logiciel, souvenez-vous de les synchroniser au travers du bouton d'upload des données dans la topbar du logiciel.", modal_view: true });
         }
     }
 

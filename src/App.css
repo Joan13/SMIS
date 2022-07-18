@@ -968,6 +968,7 @@ h5 {
   padding-left: 10px;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 5px;
+  width: '80%'
 }
 
 .input-normall {
@@ -985,6 +986,7 @@ h5 {
   display: block;
   padding-left: 12px;
   outline: none;
+  background-color: #FFFFFF;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   height: 40px;
@@ -992,7 +994,7 @@ h5 {
 
 .tables-new-pupil {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .tables-new-pupil td {

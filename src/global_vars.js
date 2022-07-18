@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
 import { mapStateToProps } from "./store/state_props";
 
-export let home_redirect = "/wima";
+export const home_redirect = "/wima";
+export const year = "2018 - 2022";
 
 export function printContent(divName) {
 
