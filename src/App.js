@@ -6,6 +6,7 @@ import { home_redirect } from './global_vars';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from './store/reducer';
+import Settings from './components/settings';
 
 // let initialState = {
 //   val: 42
@@ -31,6 +32,7 @@ function App() {
       <Router basename="/wima">
         <Routes>
           <Route path="/signin" element={<Signin />} exact />
+          <Route path="/settings" element={<Settings />} exact />
           <Route path="/" element={ <Home />}/>
         </Routes>
       </Router>

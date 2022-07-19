@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import Footer from '../includes/footer';
 import { FaCircle, FaSearch, FaCheck, FaHome, FaUserPlus, FaClipboard, FaUsers, FaFolder, FaUser, FaPaperclip, FaDatabase, FaStarHalfAlt, FaEdit, FaBell, FaCloudUploadAlt } from 'react-icons/fa';
-import { FiLogOut, FiRefreshCcw } from 'react-icons/fi';
+import {RiSettings4Fill} from 'react-icons/ri';
+import { FiLogOut, FiRefreshCcw, FiSettings } from 'react-icons/fi';
 import modalView from '../includes/modal';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import FicheIdentites from '../sub_components/fiche_identites';
 import FichePointsPupils from '../sub_components/fiche_points_pupils';
 import FichesPointsCourses from '../sub_components/fiche_points_courses';
@@ -830,7 +831,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
         if (this.props.can_mount_home) {
             this.get_general_info("");
         } else {
-            this.parse_classes(this.props.classes);
+            // this.parse_classes(this.props.classes);
             // this.setState({ modal_title: "Synchronisation des données", modal_main_text: "Pas de pannique ! Après un bon nombre d'enregistrements des informations dans le logiciel, souvenez-vous de les synchroniser au travers du bouton d'upload des données dans la topbar du logiciel.", modal_view: true });
         }
     }
@@ -898,6 +899,12 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                 className="user-home-tools">
                                 <FiRefreshCcw color="black" size={20} />
                             </span>
+
+                            <Link
+                                className="user-home-tools"
+                                to={"/settings"}>
+                                <RiSettings4Fill color="black" size={22} />
+                            </Link>
 
                             {this.state.logout_open ?
                                 <span onClick={() => this.logout_session()} className="user-home-tools" style={{ fontSize: 15 }}>

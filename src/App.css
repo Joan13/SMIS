@@ -354,6 +354,70 @@ h5 {
   font-size: 14px;
 }
 
+.tab-settings {
+  margin-right: 3%;
+  cursor: pointer;
+  font-size: 14px;
+  padding-bottom: 15px;
+  /* padding-right: 30px; */
+  margin-top: 10px;
+}
+
+.tab-settings-selected {
+  color: rgb(0, 80, 180);
+  margin-right: 3%;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 'bold';
+  padding-bottom: 15px;
+  /* padding-right: 30px; */
+  border-bottom: 3px solid rgb(0, 80, 180);
+}
+
+.header-settings {
+  width:100%;
+  background-color:white;
+  position: fixed;
+  top: 0px;
+  height: 90px;
+  color: black;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.body-settings {
+  width:90%;
+  background-color:white;
+  position: fixed;
+  top: 91px;
+  left: 10%;
+  bottom:30px;
+  color: black;
+}
+
+.menu-settings {
+  width:25%;
+  background-color:rgba(0, 0, 0, 0.05);
+  position: fixed;
+  top: 90px;
+  /* left: 10%; */
+  bottom:30px;
+  color: black;
+}
+
+.back-settings {
+  display: inline-block;
+  color: rgb(0,80,180);
+  font-size: 15px;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.title-settings {
+  font-weight: 'bold';
+  font-size: 23px;
+  display: inline-block;
+}
+
 .spann {
   margin-left: 25px;
   display: inline-block;
