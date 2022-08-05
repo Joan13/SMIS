@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FaCheckCircle, FaEye, FaEyeSlash, FaLock, FaServer, FaUser } from 'react-icons/fa';
 import { Navigate } from 'react-router-dom';
-import logo from "./../../src/yambi_red.png"
+import logo from "./../../src/assets/yambi_red.png"
 import modalView from '../includes/modal';
 import { Button, TextField, MenuItem, CircularProgress } from '@material-ui/core';
 import { connect } from 'react-redux';
@@ -333,20 +333,20 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                     <div className="title-big">School Managment Information System</div><br />
 
                     <div style={{ marginBottom: 40 }}>
-                        {this.state.connection_type === 0 ?
+                        {/* {this.state.connection_type === 0 ?
                             <span onClick={() => this.setState({ connection_type: 0 })} className="header-signin" style={{ fontWeight: 'bold' }}>Enseignant</span>
                             :
-                            <span onClick={() => this.setState({ connection_type: 0 })} className="header-signin">Enseignant</span>}
+                            <span onClick={() => this.setState({ connection_type: 0 })} className="header-signin">Enseignant</span>} */}
+
+                        {this.state.connection_type === 0 ?
+                            <span onClick={() => this.setState({ connection_type: 0 })} className="header-signin" style={{ fontWeight: 'bold' }}>Principal</span>
+                            :
+                            <span onClick={() => this.setState({ connection_type: 0 })} className="header-signin">Principal</span>}
 
                         {this.state.connection_type === 1 ?
-                            <span onClick={() => this.setState({ connection_type: 1 })} className="header-signin" style={{ fontWeight: 'bold' }}>Principal</span>
+                            <span onClick={() => this.setState({ connection_type: 1 })} className="header-signin" style={{ fontWeight: 'bold' }}>Parent (élève)</span>
                             :
-                            <span onClick={() => this.setState({ connection_type: 1 })} className="header-signin">Principal</span>}
-
-                        {this.state.connection_type === 2 ?
-                            <span onClick={() => this.setState({ connection_type: 2 })} className="header-signin" style={{ fontWeight: 'bold' }}>Parent (élève)</span>
-                            :
-                            <span onClick={() => this.setState({ connection_type: 2 })} className="header-signin">Parent (élève)</span>}
+                            <span onClick={() => this.setState({ connection_type: 1 })} className="header-signin">Parent (élève)</span>}
                     </div>
 
 
@@ -376,17 +376,19 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                 <FaLock style={{ marginBottom: -3 }} />
                                 <input
                                     placeholder="Mot de passe"
-                                    style={{ width: '75%', marginLeft: 10 }}
+                                    style={{ width: '77%', marginLeft: 10 }}
                                     className="input"
                                     type="text"
                                     value={this.state.password}
                                     onChange={(text) => this.setState({ password: text.target.value })} />
                                 {this.state.see_pass ?
                                     <button
+                                    style={{width:'10%'}}
                                         onClick={() => this.state.see_pass ? this.setState({ see_pass: false }) : this.setState({ see_pass: true })}
                                         className="no-decoration"><FaEye style={{ marginBottom: -3, marginLeft: 10 }} size={15} /></button>
                                     :
                                     <button
+                                    style={{width:'10%'}}
                                         onClick={() => this.state.see_pass ? this.setState({ see_pass: false }) : this.setState({ see_pass: true })}
                                         className="no-decoration"><FaEyeSlash style={{ marginBottom: -3, marginLeft: 10 }} size={15} /></button>}
                             </div>
@@ -395,17 +397,19 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                 <FaLock style={{ marginBottom: -3 }} />
                                 <input
                                     placeholder="Mot de passe"
-                                    style={{ width: '75%', marginLeft: 10 }}
+                                    style={{ width: '77%', marginLeft: 10 }}
                                     className="input"
                                     type="password"
                                     value={this.state.password}
                                     onChange={(text) => this.setState({ password: text.target.value })} />
                                 {this.state.see_pass ?
                                     <button
+                                    style={{width:'10%'}}
                                         onClick={() => this.state.see_pass ? this.setState({ see_pass: false }) : this.setState({ see_pass: true })}
                                         className="no-decoration"><FaEye style={{ marginBottom: -3, marginLeft: 10 }} size={15} /></button>
                                     :
                                     <button
+                                    style={{width:'10%'}}
                                         onClick={() => this.state.see_pass ? this.setState({ see_pass: false }) : this.setState({ see_pass: true })}
                                         className="no-decoration"><FaEyeSlash style={{ marginBottom: -3, marginLeft: 10 }} size={15} /></button>}
                             </div>}<br />
@@ -440,12 +444,18 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
 
 
                         {!this.state.is_loading ?
-                            <button
-                                onClick={() => this.signin()}
-                                className="button-primary" style={{ width: '100%' }}>Connexion</button> :
-                            <button className="button-primary" style={{ width: '100%', color: 'transparent', backgroundColor: 'transparent', cursor: 'progress' }}>Connexion</button>}
+                        <>
+                            <button onClick={() => this.signin()} className="button-primary" style={{ width: '100%' }}>Connexion</button> 
+                            <div style={{ marginTop: 10, textAlign: 'right', fontSize: 15 }}>Besoin d'aide ? <span onClick={() => this.state.aide ? this.setState({ aide: false }) : this.setState({ aide: true })} style={{ color: 'rgba(0, 80, 180)' }} className="pointer">Cliquez ici.</span></div>
+                        </>
+                                : null  }
 
-                        <div style={{ marginTop: 10, textAlign: 'right', fontSize: 15 }}>Besoin d'aide ? <span onClick={() => this.state.aide ? this.setState({ aide: false }) : this.setState({ aide: true })} style={{ color: 'rgba(0, 80, 180)' }} className="pointer">Cliquez ici.</span></div>
+                                {/* <div>
+                                <button className="button-primary" style={{ width: '100%', color: 'transparent', backgroundColor: 'transparent', cursor: 'progress' }}>Connexion</button>
+                                
+                                </div> */}
+                            
+
                         {this.state.aide ?
                             <div className="box-border">
                                 <div>
@@ -463,7 +473,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                         <strong> discipline@yambi.class</strong>
                                     </span><br />
                                     <span className="spann">
-                                        - Pour la section Finances :
+                                        - Pour la section Directeur des Finances :
                                         <strong> finances@yambi.class</strong>
                                     </span><br />
                                     <span className="spann">

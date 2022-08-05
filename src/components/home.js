@@ -29,6 +29,8 @@ import { mapStateToProps } from '../store/state_props';
 import MenuHome from '../sub_components/menu_home';
 import NewClasseImport from '../sub_components/new_class_import';
 import SettingsBulletins from '../sub_pages/settings_bulletins';
+import GestionPersonnel from '../sub_components/workers/gestion_personnel';
+import AddWorker from '../sub_components/workers/add_worker';
 
 class Home extends Component {
 
@@ -738,21 +740,22 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
     }
 
     new_pupil() {
-        // this.setState({
-        //     middle_func: 6,
-        //     marks_tab: "",
-        //     allow_right_menu: false,
-        //     allow_right_menu_pupils: true,
-        //     class_open: false,
-        //     classe: [],
-        //     title_main: "Nouvel(le) élève | ",
-        // });
 
         this.props.dispatch({ type: "SET_CLASSE", payload: [] });
         this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Nouvel(le) élève | " });
         this.props.dispatch({ type: "SET_CLASSE_OPEN", payload: false });
         this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
         this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 6 });
+        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
+    }
+
+    new_worker() {
+
+        this.props.dispatch({ type: "SET_CLASSE", payload: [] });
+        this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Ajouter membre du personnel" });
+        this.props.dispatch({ type: "SET_CLASSE_OPEN", payload: false });
+        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
+        this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 16 });
         this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
     }
 
@@ -953,12 +956,20 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                     <FaUserPlus style={{ marginRight: 5 }} />
                                     Uploader une classe</span> */}
 
-                                <span
+                                {this.props.middle_func === 15 ?
+                                    <span
+                                    onClick={() => this.new_worker()}
+                                    style={{ color: 'rgba(0, 80, 180)' }}
+                                    className={`select-no-border ${this.props.middle_func === 6 ? "select-no-border-bold" : ""}`}>
+                                    <FaUserPlus style={{ marginRight: 5 }} />
+                                    Nouveau membre</span>
+                                    :
+                                    <span
                                     onClick={() => this.new_pupil()}
                                     style={{ color: 'rgba(0, 80, 180)' }}
                                     className={`select-no-border ${this.props.middle_func === 6 ? "select-no-border-bold" : ""}`}>
                                     <FaUserPlus style={{ marginRight: 5 }} />
-                                    Nouveau</span>
+                                    Nouveau</span>}
 
                                 <span
                                    onClick={() => this.new_classe_import()} 
@@ -1050,8 +1061,18 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                             </div>
                                             : null}
 
+                                            {this.props.middle_func === 15 ?
+                                            <div id="gestion-personnel">
+                                                <GestionPersonnel />                                          </div>
+                                            : null}
+
+                                            {this.props.middle_func === 16 ?
+                                            <div id="add-worker">
+                                                <AddWorker />                                          </div>
+                                            : null}
+
                                             {this.props.middle_func === 14 ?
-                                            <div id="class-import">
+                                            <div id="settings-bulletins">
                                                 <SettingsBulletins />                                            </div>
                                             : null}
 
@@ -1298,7 +1319,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                                                 </div>
                                                             )
                                                         } else {
-                                                            if (index <= 24) {
+                                                            if (index < 50) {
                                                                 return (
                                                                     <div
                                                                         onClick={() => this.view_pupil(pupil)}
@@ -1311,7 +1332,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                                     })}
                                                 </div>
 
-                                                <table style={{ marginTop: 25, width: '100%' }}>
+                                                {/* <table style={{ marginTop: 25, width: '100%' }}>
                                                     <tfoot>
                                                         <tr>
                                                             <td style={{ color: 'rgb(0, 80, 180)' }}></td>
@@ -1322,7 +1343,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                                             </td>
                                                         </tr>
                                                     </tfoot>
-                                                </table>
+                                                </table> */}
 
                                             </div>
                                         </div>: null}

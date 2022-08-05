@@ -3,8 +3,6 @@ import { FaArrowDown, FaChevronDown, FaPrint } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { find_date, home_redirect } from '../global_vars';
 import { mapStateToProps } from '../store/state_props';
-import logo from "./../../src/logo_elite.png";
-
 class AllPupilPaiements extends Component {
 
     constructor(props) {

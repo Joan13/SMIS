@@ -652,7 +652,7 @@ class FichePointsPupils extends Component {
                 <div className="float-right">
                     <button
                     onClick={() => this.delete_marks(this.state.pupil_id, this.state.periode)}
-                    >Supprimer les points<br/>de la période courante<br/> pour cet(te) élève</button>
+                    >Supprimer les points<br/>de la période courante<br/> pour l'élève</button>
                 </div>
                 
             </div>

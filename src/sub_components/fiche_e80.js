@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import logo_armoiries from './../../src/armoirie_rdc.png';
+import logo_armoiries from './../../src/assets/armoirie_rdc.png';
 import { home_redirect } from "./../global_vars";
 
 export default class FicheE80 extends Component {

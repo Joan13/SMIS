@@ -3,9 +3,7 @@ import { Button, MenuItem, TextField } from '@material-ui/core';
 import { FaChevronDown, FaCircle, FaSearch, FaExpandAlt, FaCheck, FaToolbox, FaHome, FaTools, FaUserPlus, FaClipboard, FaCreativeCommonsSamplingPlus, FaUsers, FaFolder, FaUser, FaPaperclip, FaDatabase, FaStarHalfAlt, FaEdit, FaParagraph, FaChartBar, FaRegChartBar, FaChartLine, FaChartArea, FaChartPie, FaCalendar, FaNapster, FaComment, FaBell, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { FiBarChart, FiCalendar, FiClipboard, FiLogOut, FiMinimize2, FiPaperclip, FiRefreshCcw } from 'react-icons/fi';
 import modalView from '../includes/modal';
-import readXlsxFile from 'read-excel-file';
 import * as XLSX from 'xlsx';
-const input = document.getElementById('classe');
 
 export default class NewClasseImport extends React.Component {
 

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, option, TextField, Input } from '@material-ui/core';
-import { FaChevronDown, FaCircle, FaSearch, FaExpandAlt, FaCheck, FaToolbox, FaHome, FaTools, FaUserPlus, FaClipboard, FaCreativeCommonsSamplingPlus, FaUsers, FaFolder, FaUser, FaPaperclip, FaDatabase, FaStarHalfAlt, FaEdit, FaParagraph, FaChartBar, FaRegChartBar, FaChartLine, FaChartArea, FaChartPie, FaCalendar, FaNapster, FaComment, FaBell, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { FiBarChart, FiCalendar, FiClipboard, FiLogOut, FiMinimize2, FiPaperclip, FiRefreshCcw } from 'react-icons/fi';
+import { Button } from '@material-ui/core';
 import modalView from '../includes/modal';
+import { connect } from 'react-redux';
+import { mapStateToProps } from '../store/state_props';
 
-export default class NewPupil extends React.Component {
+class NewPupil extends React.Component {
 
     constructor(props) {
         super(props);
@@ -50,43 +50,9 @@ export default class NewPupil extends React.Component {
         }
     }
 
-    get_general_info(annee) {
-
-        let url_server = sessionStorage.getItem('yambi_smis_url_server');
-        this.setState({
-            loading_middle: true,
-        });
-
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_info_home.php";
-
-        fetch(BaseURL, {
-            method: 'POST',
-            body: JSON.stringify({
-                annee: annee,
-            })
-        })
-            .then((response) => response.json())
-            .then((response) => {
-                this.setState({
-                    annees: response.annees,
-                    class_numbers: response.class_numbers,
-                    orders: response.orders,
-                    sections: response.sections,
-                    options: response.options,
-                    cycles: response.cycles,
-                })
-
-                console.log(response.cycles)
-            })
-            .catch((error) => {
-                // alert(error.toString());
-                this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, is_loading_home: false, loading_middle: false });
-            });
-    };
-
     register_new_pupil() {
 
-        if (this.state.first_name == "" || this.state.second_name == "" || this.state.cycle_school_pupil == "" || this.state.school_year_pupil == "" || this.state.class_school_pupil == "") {
+        if (this.state.first_name === "" || this.state.second_name === "" || this.state.cycle_school_pupil === "" || this.state.school_year_pupil === "" || this.state.class_school_pupil === "") {
             this.setState({ modal_title: "Information erreur", modal_main_text: "Vous devez renseigner tous les champs obligatoires avant la validation. Ce sont l'identité de base de l'élève et son orientation scolaire.", modal_view: true, loading_middle: false });
         } else {
             let url_server = sessionStorage.getItem('yambi_smis_url_server');
@@ -166,10 +132,6 @@ export default class NewPupil extends React.Component {
         }
     };
 
-    componentDidMount() {
-        // this.get_general_info("");
-    }
-
     render() {
         return (
             <div className="center-fixeddd" style={{ paddingRight: 20 }}>
@@ -241,6 +203,7 @@ export default class NewPupil extends React.Component {
 
                         <tr>
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
+                            <span style={{color:'transparent'}}>.</span>
                                 <input
                                     onChange={(val) => this.setState({ birth_place_pupil: val.target.value })}
                                     placeholder="Lieu de naissance"
@@ -252,12 +215,13 @@ export default class NewPupil extends React.Component {
                                 />
                             </td>
                             <td style={{ paddingLeft: 0, textAlign: 'left' }}>
+                                Date de naissance<br/>
                                 <input
                                     onChange={(val) => this.setState({ birth_date_pupil: val.target.value })}
                                     // label="Le"
                                     className="input-normall"
                                     placeholder="Date de naissance"
-                                    type={this.state.date_type}
+                                    type='date'
                                     // onClick={this.setState({date_type:'date'})}
                                     value={this.state.birth_date_pupil}
                                     //                                     ref={input=>{
@@ -303,11 +267,10 @@ export default class NewPupil extends React.Component {
                                     className="select-normall"
                                     onChange={(val) => this.setState({ school_year_pupil: val.target.value })}
                                     placeholder="Année scolaire"
-                                    // variant="outlined"
                                     value={this.state.school_year_pupil}
                                     style={{ width: '100%', textAlign: 'left' }}>
                                     <option value="">Sélectionner l'année scolaire</option>
-                                    {this.state.annees.map((annee, index) => (
+                                    {this.props.annees.map((annee, index) => (
                                         <option value={annee.year_id} key={index}>{annee.year_name}</option>
                                     ))}
                                 </select>
@@ -317,11 +280,10 @@ export default class NewPupil extends React.Component {
                                     className="select-normall"
                                     onChange={(val) => this.setState({ cycle_school_pupil: val.target.value })}
                                     label="Cycle d'étude"
-                                    // variant="outlined"
                                     value={this.state.cycle_school_pupil}
                                     style={{ width: '100%', textAlign: 'left' }}>
                                     <option value="">Sélectionner le cycle</option>
-                                    {this.state.cycles.map((cycle, index) => (
+                                    {this.props.cycles.map((cycle, index) => (
                                         <option value={cycle.cycle_id} key={index}>{cycle.cycle_name}</option>
                                     ))}
                                 </select>
@@ -333,11 +295,10 @@ export default class NewPupil extends React.Component {
                                     className="select-normall"
                                     onChange={(val) => this.setState({ class_school_pupil: val.target.value })}
                                     placeholder="Classe"
-                                    // variant="outlined"
                                     value={this.state.class_school_pupil}
                                     style={{ width: '100%', textAlign: 'left' }}>
                                     <option value="">Séléctionner la classe</option>
-                                    {this.state.class_numbers.map((classe, index) => (
+                                    {this.props.class_numbers.map((classe, index) => (
                                         <option value={classe.class_id} key={index}>{classe.class_number}</option>
                                     ))}
                                 </select>
@@ -346,12 +307,10 @@ export default class NewPupil extends React.Component {
                                 <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ class_order_pupil: val.target.value })}
-                                    // label="Ordre de classe"
-                                    // variant="outlined"
                                     value={this.state.class_order_pupil}
                                     style={{ width: '100%', textAlign: 'left' }}>
                                     <option>Sélectionner l'ordre de classe</option>
-                                    {this.state.orders.map((order, index) => (
+                                    {this.props.orders.map((order, index) => (
                                         <option value={order.order_id} key={index}>{order.order_name}</option>
                                     ))}
                                 </select>
@@ -362,12 +321,10 @@ export default class NewPupil extends React.Component {
                                 <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ class_section_pupil: val.target.value })}
-                                    // label="Section"
                                     value={this.state.class_section_pupil}
-                                    // variant="outlined"
                                     style={{ width: '100%', textAlign: 'left' }}>
                                     <option>Séléctionner la section</option>
-                                    {this.state.sections.map((section, index) => (
+                                    {this.props.sections.map((section, index) => (
                                         <option value={section.section_id} key={index}>{section.section_name}</option>
                                     ))}
                                 </select>
@@ -376,12 +333,10 @@ export default class NewPupil extends React.Component {
                                 <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ class_option_pupil: val.target.value })}
-                                    // label="Option"
-                                    // variant="outlined"
                                     value={this.state.class_option_pupil}
                                     style={{ width: '100%', textAlign: 'left' }}>
                                     <option>Séléctionner l'option</option>
-                                    {this.state.options.map((option, index) => (
+                                    {this.props.options.map((option, index) => (
                                         <option value={option.option_id} key={index}>{option.option_name}</option>
                                     ))}
                                 </select>
@@ -447,7 +402,7 @@ export default class NewPupil extends React.Component {
                             <td style={{ paddingLeft: 0, textAlign: 'right' }}>
                                 <input
                                     onChange={(val) => this.setState({ mother_name: val.target.value })}
-                                    label="Noms de la mère"
+                                    placeholder="Noms de la mère"
                                     // variant="outlined"
                                     className="input-normall"
                                     value={this.state.mother_name}
@@ -614,3 +569,5 @@ export default class NewPupil extends React.Component {
         )
     }
 }
+
+export default connect(mapStateToProps)(NewPupil);

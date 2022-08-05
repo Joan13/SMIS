@@ -1,6 +1,6 @@
 import React from 'react';
-import logo_rdc from './../../src/flag_drc.jpg';
-import logo_armoiries from './../../src/armoirie_rdc.png';
+import logo_rdc from './../../src/assets/flag_drc.jpg';
+import logo_armoiries from './../../src/assets/armoirie_rdc.png';
 import { home_redirect } from "./../global_vars";
 import { FiCheck, FiCircle } from 'react-icons/fi';
 import { FaCheck, FaCircle } from 'react-icons/fa';
