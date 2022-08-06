@@ -269,6 +269,7 @@ class PalmaresFinal extends Component {
         return (
             <div style={{ paddingTop: 0 }} className="center-fixed">
 
+               {!this.props.loading_footer ?
                 <table style={{ width: '100%' }}>
                     <tbody>
                         <tr>
@@ -647,9 +648,7 @@ class PalmaresFinal extends Component {
                         </tr>
                     </tbody>
                 </table>
-
-
-                {/* <span onClick={() => window.print()}>Print</span> */}
+               :null}
 
             </div>
         )

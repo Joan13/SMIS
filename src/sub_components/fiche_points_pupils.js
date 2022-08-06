@@ -308,7 +308,9 @@ class FichePointsPupils extends Component {
 
     render() {
         return (
-            <div style={{ marginBottom: 50, paddingTop: 10 }}>
+            <div>
+                {!this.props.loading_footer ?
+                    <div style={{ marginBottom: 50, paddingTop: 10 }}>
                 <table style={{ width: '100%' }}>
                     <tbody>
                         <tr>
@@ -655,6 +657,8 @@ class FichePointsPupils extends Component {
                     >Supprimer les points<br/>de la période courante<br/> pour l'élève</button>
                 </div>
                 
+            </div>
+                :null}
             </div>
         )
     }

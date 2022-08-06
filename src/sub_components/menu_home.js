@@ -1,12 +1,35 @@
 import React from 'react';
 import { FaCalendarAlt, FaChartBar, FaFolder, FaPeopleArrows, FaPeopleCarry, FaSquarespace, FaUsers } from 'react-icons/fa';
 import { FiBarChart } from 'react-icons/fi';
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { mapStateToProps } from '../store/state_props';
 
 export default function MenuHome() {
 
     const dispatch = useDispatch();
+    const url_server = useSelector(state=>state.url_server);
+    const annee = useSelector(state=>state.annee);
+
+    const fetch_workers =()=> {
+        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/fetch_workers.php";
+
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                school_year: annee,
+            })
+        })
+            .then((response) => response.json())
+            .then((response) => {
+dispatch({type:"SET_WORKERS", payload:response.employees});
+            })
+            .catch((error) => {
+        //         setModal_title("Information erreur");
+        // setModal_main_text("Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.");
+        // setModal_view(true);
+        // setLoading_middle(false);
+            });
+    };
 
     const stats_caisse =()=> {
         dispatch({ type: "SET_MIDDLE_FUNC", payload: 12 });
@@ -16,6 +39,10 @@ export default function MenuHome() {
     const gestion_personnel =()=> {
         dispatch({ type: "SET_MIDDLE_FUNC", payload: 15 });
         dispatch({ type: "SET_TITLE_MAIN", payload: "Gestion du personnel" });
+        dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
+        dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
+
+        fetch_workers();
     }
 
         return (

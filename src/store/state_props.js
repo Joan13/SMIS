@@ -68,6 +68,9 @@ export const mapStateToProps = (state) => {
         montant_total: state.montant_total,
         pupils_count_paiements: state.pupils_count_paiements,
         loading_footer: state.loading_footer,
+        workers:state.workers,
+        timetable:state.timetable,
+        trics_timetable:state.trics_timetable,
     }
 }
 

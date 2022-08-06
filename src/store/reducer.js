@@ -68,11 +68,17 @@ const initialState = {
     montant_total: 0,
     pupils_count_paiements: 0,
     loading_footer: false,
+    workers: [],
+    trics_timetable: [],
+    timetable: [], 
+
 }
 
 const reducer = (state = initialState, action) => {
 
     switch (action.type) {
+        case "SET_WORKERS":
+            return { ...state, workers: action.payload }
         case "SET_LOADING_CLASS":
             return { ...state, loading_class: action.payload }
         case "SET_PUPILS_COUNT_PAIEMENTS":

@@ -245,7 +245,8 @@ class PalmaresPupils extends Component {
         return (
             <div style={{ paddingTop: 0 }} className="center-fixed">
 
-                <table style={{ width: '100%' }}>
+                {!this.props.loading_footer ?
+                    <table style={{ width: '100%' }}>
                     <tbody>
                         <tr>
                             <td valign="top">
@@ -564,9 +565,7 @@ class PalmaresPupils extends Component {
                         </tr>
                     </tbody>
                 </table>
-
-
-                {/* <span onClick={() => window.print()}>Print</span> */}
+                :null}
 
             </div>
         )

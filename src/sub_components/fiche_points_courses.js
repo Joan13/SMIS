@@ -209,7 +209,8 @@ class FichesPointsCourses extends Component {
     render() {
         return (
             <div style={{ marginBottom: 50, paddingTop: 10,width:'100%' }}>
-            <table style={{ width: '100%' }}>
+            {!this.props.loading_footer ?
+                <table style={{ width: '100%' }}>
                     <tbody>
                         <tr>
                             <td valign="top">
@@ -522,6 +523,7 @@ class FichesPointsCourses extends Component {
                         </tr>
                     </tbody>
                 </table>
+            :null}
             </div>
         )
     }

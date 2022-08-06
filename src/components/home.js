@@ -125,7 +125,9 @@ class Home extends Component {
 
         if (user === null) {}
         else {
-            if (user.poste === "1") {
+            if (user.poste === "0") {
+                this.props.dispatch({ type: "SET_POSTE", payload: "Admin" });
+            } else if (user.poste === "1") {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Promoteur" });
             } else if (user.poste === "2") {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Discipline" });
@@ -575,12 +577,12 @@ class Home extends Component {
 
 
 
-        // if (this.props.middle_func === 4 || this.props.middle_func === 6) {
+        if (this.props.middle_func === 15 || this.props.middle_func === 16 || this.props.middle_func === 17) {
         //     // this.setState({ middle_func: 1, allow_right_menu_pupils: false, allow_right_menu: true });
-        //     this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
+            this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
         // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
         //     this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
-        // }
+        }
 
         let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
@@ -598,7 +600,7 @@ class Home extends Component {
             .then((response) => response.json())
             .then((response) => {
 
-                this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
+                
         //         // this.props.dispatch({ type: "SET_LOADING_CLASS", payload: false});
         //         // this.props.dispatch({ type: "SET_COURSES", payload: response.courses });
         //         // this.props.dispatch({ type: "SET_AUTRES", payload: response.autres });
@@ -606,12 +608,19 @@ class Home extends Component {
 
                 // this.setState({can_load_data:false});
 
-                for(let i in this.props.classes) {
-if (this.props.classes[i].id_classes === classe.id_classes) {
-    this.props.classes[i].data = response;
-    // console.log(this.props.classes[i])
-}
-                }
+                let promise_classes = new Promise((resolve, reject)=>{
+                    for(let i in this.props.classes) {
+                        if (this.props.classes[i].id_classes === classe.id_classes) {
+                            this.props.classes[i].data = response;
+                            resolve();
+                        }
+                    }
+                }).then(()=>{});
+
+                promise_classes.finally(()=>{
+                    this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
+                    this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
+                });
 
                 // console.log(this.props.classe)
 
@@ -619,7 +628,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
             // this.setState({ middle_func: 1, allow_right_menu: true, });
             // this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
             // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
-            // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
+            
         // }
 
         // if (this.props.middle_func === 0 || this.props.middle_func === 6 || this.props.middle_func === 11) {
@@ -1152,7 +1161,29 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                             : null}
                                             </div>
                                     </div>
-                                    {this.props.allow_right_menu ?
+
+{this.props.middle_func === 15 || this.props.middle_func === 16 ?
+    <div className="menu-right">
+<h3>Membres du personnel</h3><br/>
+<div className="border-top-divider"></div>
+<strong className="block-menu-right-first" style={{ color: 'rgb(0, 0, 0)' }}>Corps Enseignant</strong>
+<div>
+                                                    {this.props.workers.map((employee, index) => {
+                                                            if (employee.poste === "5") {
+                                                                return (
+                                                                    <div
+                                                                        // onClick={() => this.view_pupil(pupil)}
+                                                                        key={index} className="pupils-list-home">
+                                                                        {index + 1}. {employee.first_name.toString().toUpperCase()} {employee.second_name.toString().toUpperCase()} {employee.last_name.toString().toUpperCase()} ({employee.gender === "1" ? "M" : "F"})
+                                                                    </div>
+                                                                )
+                                                            }
+                                                    })}
+                                                </div>
+</div>
+:null}
+
+                                    {this.props.allow_right_menu && this.props.class_open ?
                                         <div className="menu-right">
                                             <div>
                                                 <strong>Dossier : {this.props.classe.class_id} {this.props.classe.section_id} {this.props.classe.order_id}<br /></strong>
@@ -1310,7 +1341,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
 
                                                 <div>
                                                     {this.props.pupils_school.map((pupil, index) => {
-                                                        if (this.props.number_pupils_show) {
+                                                        {/* if (this.props.number_pupils_show) {
                                                             return (
                                                                 <div
                                                                     onClick={() => this.view_pupil(pupil)}
@@ -1318,7 +1349,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                                                     {index + 1}. {pupil.pupil.first_name.toString().toUpperCase(pupil)} {pupil.pupil.second_name.toString().toUpperCase()} {pupil.pupil.last_name.toString().toUpperCase()} ({pupil.pupil.gender === "1" ? "M" : "F"})
                                                                 </div>
                                                             )
-                                                        } else {
+                                                        } else { */}
                                                             if (index < 50) {
                                                                 return (
                                                                     <div
@@ -1328,7 +1359,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                                                     </div>
                                                                 )
                                                             }
-                                                        }
+                                                        {/* } */}
                                                     })}
                                                 </div>
 

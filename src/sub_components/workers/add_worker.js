@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import modalView from '../../includes/modal';
 
 export default function AddWorker(){
@@ -9,7 +9,6 @@ export default function AddWorker(){
     const [modal_title,setModal_title] = useState("");
     const [modal_main_text, setModal_main_text] = useState("");
     const [modal_view, setModal_view] = useState(false);
-    const url_server = useSelector(state=>state.url_server);
 
     const [first_name,setFirst_name] = useState("");
     const [second_name, setSecond_name] = useState("");
@@ -19,28 +18,34 @@ export default function AddWorker(){
     const [free_day_2,setFree_day_2] = useState("");
     const [poste,setPoste] = useState("");
 
-    const register_new_worker =()=> {
+    const annee = useSelector(state=>state.annee);
+    const dispatch = useDispatch();
+    const url_server = useSelector(state=>state.url_server);
 
-        if (first_name === "" || second_name === "" || poste === "") {
+    const add_worker =()=> {
+
+        if (first_name === "" || second_name === "" || poste === "" || gender === "") {
             setModal_title("Information erreur");
             setModal_main_text("Vous devez renseigner tous les champs obligatoires avant la validation. Ce sont l'identité de base de l'élève et son orientation scolaire.");
             setModal_view(true);
             setLoading_middle(false);
-        } else {
-            // let url_server = sessionStorage.getItem('yambi_smis_url_server');
-            //     setLoading_middle(true);
+        } 
+        else {
 
-            let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/new_worker.php";
+            let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/add_worker.php";
 
             fetch(BaseURL, {
                 method: 'POST',
                 body: JSON.stringify({
-                    first_name_pupil: first_name,
-                    second_name_pupil: second_name,
-                    last_name_pupil: last_name,
-                    gender_pupil: gender,
+                    first_name: first_name,
+                    second_name: second_name,
+                    last_name: last_name,
+                    gender: gender,
                     free_day_1: free_day_1,
-                    free_day_2: free_day_2
+                    free_day_2: free_day_2,
+                    poste: poste,
+                    user_name: first_name.toLocaleLowerCase().trim() + "." + second_name.toLocaleLowerCase().trim() + "@yambi.class",
+                    school_year: annee
                 })
             })
                 .then((response) => response.json())
@@ -53,36 +58,52 @@ export default function AddWorker(){
             setSecond_name("");
             setLast_name("");
             setGender("");
+            setPoste("");
             setFree_day_1("");
             setFree_day_2("");
-                    // this.setState({ modal_title: "Information Succès", modal_main_text: "Vous venez d'enregistrer un nouvel(le) élève. Vous pourrez editer ses informations au moment voulu.", modal_view: true, loading_middle: false });
-                    // this.setState({
-                    //     first_name: "",
-                    //     second_name: "",
-                    //     last_name: "",
-                    //     gender: "",
-                    //     free_day_2: "",
-                    //     free_day_1: "",
-                    // })
+
+            dispatch({type:"SET_WORKERS", payload:response.employees});
 
                 })
                 .catch((error) => {
-                    // alert(error.toString());
                     setModal_title("Information erreur");
             setModal_main_text("Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.");
             setModal_view(true);
             setLoading_middle(false);
-                    // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
                 });
         }
     };
+
+    const fetch_workers =()=> {
+
+            let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/fetch_workers.php";
+
+            fetch(BaseURL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    school_year: annee
+                })
+            })
+                .then((response) => response.json())
+                .then((response) => {
+                    
+dispatch({type:"SET_WORKERS", payload:response});
+
+                })
+                .catch((error) => {
+                    setModal_title("Information erreur");
+            setModal_main_text("Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.");
+            setModal_view(true);
+            setLoading_middle(false);
+                });
+        };
 
         return (
             <div className="center-fixeddd" style={{ paddingRight: 20 }}>
 
                 <div
                     className="save-pupil"
-                    onClick={() => this.register_new_pupil()}>
+                    onClick={() => add_worker()}>
                     Enregistrer l'employé(e)
                 </div>
 
@@ -114,7 +135,7 @@ export default function AddWorker(){
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
                                 <input
                                     onChange={(val) => setLast_name(val.target.value)}
-                                    placeholder="Prénom de l'élève"
+                                    placeholder="Prénom"
                                     className="input-normall"
                                     value={last_name}
                                     style={{ width: '96%' }}
@@ -128,6 +149,7 @@ export default function AddWorker(){
                                     variant="outlined"
                                     value={gender}
                                     style={{ width: '100%', textAlign: 'left' }}>
+                                    <option value="">Sélectionner le sexe</option>
                                     <option value="0">Féminin</option>
                                     <option value="1">Masculin</option>
                                 </select>
@@ -183,12 +205,13 @@ export default function AddWorker(){
                         </tr> */}
                     </tbody>
                 </table>
-
+                {first_name !== "" || second_name !== "" ?
                 <div>
-<strong>{first_name}{first_name !== "" || second_name !== "" ? "." : "" }{second_name}</strong>
+                <span>{first_name !== "" || second_name !== "" ? "Nom d'utilisateur" : "" }</span><br/>
+<strong>{first_name.toLowerCase().trim()}{first_name !== "" || second_name !== "" ? "." : "" }{second_name.toLowerCase().trim()}</strong>
 <strong>{first_name !== "" || second_name !== "" ? "@yambi.class" : "" }</strong>
 <br/><br/><br/>
-                </div>
+                </div>:null}
 
                 {/* <span className="title-background">II. DE L'ORIENTATION SCOLAIRE</span>
                 <table className="tables-new-pupil">
@@ -334,15 +357,16 @@ export default function AddWorker(){
                             <select
                                     className="select-normall"
                                     onChange={(val) => setPoste(val.target.value)}
-                                    value={free_day_1}
+                                    value={poste}
                                     style={{ width: '100%' }}>
-                                    <option value="">Ajouter le poste</option>
-                                    <option value="1">Promotor</option>
+                                    <option value="">Sélectionner le poste</option>
+                                    <option value="1">Promoteur / Préfet / Recteur</option>
                                     <option value="2">Directeur de discipline</option>
                                     <option value="3">Directeur des Financies/Économe</option>
                                     <option value="4">Secrétaire</option>
                                     <option value="5">Enseignant</option>
                                     <option value="6">Caissier/caissière</option>
+                                    <option value="0">Administrateur Logiciel</option>
                                 </select>
                             </td>
                             <td style={{ paddingLeft: 0, textAlign: 'right' }}>
@@ -364,13 +388,13 @@ export default function AddWorker(){
                             </td>
                         </tr>
                         <tr>
+<td colSpan={2} style={{color:'gray'}}>Jours de congé. Ajouter-en si l'employé(e) en a. Si il en a deux, compléter les deux journées.</td>
+                        </tr>
+                        <tr>
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
                                 <select
-                                    // select
                                     className="select-normall"
                                     onChange={(val) => setFree_day_1(val.target.value)}
-                                    // label="Vie des parents"
-                                    // variant="outlined"
                                     value={free_day_1}
                                     style={{ width: '100%' }}>
                                     <option value="">Journée pédagogique 1</option>
@@ -386,8 +410,6 @@ export default function AddWorker(){
                                 <select
                                     className="select-normall"
                                     onChange={(val) => setFree_day_2(val.target.value)}
-                                    // label="statut des parents"
-                                    // variant="outlined"
                                     value={free_day_2}
                                     style={{ width: '100%', textAlign: 'left' }}>
                                     <option value="">Journée pédagogique 2</option>

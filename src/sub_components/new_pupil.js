@@ -83,7 +83,7 @@ class NewPupil extends React.Component {
                     class_order_pupil: this.state.class_order_pupil,
                     class_section_pupil: this.state.class_section_pupil,
                     class_option_pupil: this.state.class_option_pupil,
-                    school_year_pupil: this.state.school_year_pupil,
+                    school_year_pupil: this.props.annee,
                     email_address_pupil: this.state.email_address_pupil,
                     physical_address_pupil: this.state.physical_address_pupil,
                     contact_1_pupil: this.state.contact_1_pupil,
@@ -263,7 +263,7 @@ class NewPupil extends React.Component {
                     <tbody>
                         <tr>
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
-                                <select
+                                {/* <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ school_year_pupil: val.target.value })}
                                     placeholder="Année scolaire"
@@ -273,9 +273,7 @@ class NewPupil extends React.Component {
                                     {this.props.annees.map((annee, index) => (
                                         <option value={annee.year_id} key={index}>{annee.year_name}</option>
                                     ))}
-                                </select>
-                            </td>
-                            <td style={{ paddingLeft: 0, textAlign: 'right' }}>
+                                </select> */}
                                 <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ cycle_school_pupil: val.target.value })}
@@ -288,10 +286,8 @@ class NewPupil extends React.Component {
                                     ))}
                                 </select>
                             </td>
-                        </tr>
-                        <tr>
-                            <td style={{ paddingRight: 0, textAlign: 'left' }}>
-                                <select
+                            <td style={{ paddingLeft: 0, textAlign: 'right' }}>
+                            <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ class_school_pupil: val.target.value })}
                                     placeholder="Classe"
@@ -303,8 +299,10 @@ class NewPupil extends React.Component {
                                     ))}
                                 </select>
                             </td>
-                            <td style={{ paddingLeft: 0, textAlign: 'right' }}>
-                                <select
+                        </tr>
+                        <tr>
+                            <td style={{ paddingRight: 0, textAlign: 'left' }}>
+                            <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ class_order_pupil: val.target.value })}
                                     value={this.state.class_order_pupil}
@@ -315,10 +313,8 @@ class NewPupil extends React.Component {
                                     ))}
                                 </select>
                             </td>
-                        </tr>
-                        <tr>
-                            <td style={{ paddingRight: 0, textAlign: 'left', width: '50%' }}>
-                                <select
+                            <td style={{ paddingLeft: 0, textAlign: 'right' }}>
+                            <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ class_section_pupil: val.target.value })}
                                     value={this.state.class_section_pupil}
@@ -329,8 +325,10 @@ class NewPupil extends React.Component {
                                     ))}
                                 </select>
                             </td>
-                            <td style={{ paddingLeft: 0, textAlign: 'right' }}>
-                                <select
+                        </tr>
+                        <tr>
+                            <td style={{ paddingRight: 0, textAlign: 'left', width: '50%' }}>
+                            <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ class_option_pupil: val.target.value })}
                                     value={this.state.class_option_pupil}
@@ -341,10 +339,8 @@ class NewPupil extends React.Component {
                                     ))}
                                 </select>
                             </td>
-                        </tr>
-                        <tr>
-                            <td style={{ paddingRight: 0, textAlign: 'left' }}>
-                                <select
+                            <td style={{ paddingLeft: 0, textAlign: 'right' }}>
+                            <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ statut_scolaire: val.target.value })}
                                     // label="Statut scolaire"
@@ -357,9 +353,14 @@ class NewPupil extends React.Component {
                                     <option value="1">Nouveau reddoublant (ND)</option>
                                 </select>
                             </td>
+                        </tr>
+                        {/* <tr>
+                            <td style={{ paddingRight: 0, textAlign: 'left' }}>
+                                
+                            </td>
                             <td style={{ paddingLeft: 0, textAlign: 'right' }}>
                             </td>
-                        </tr>
+                        </tr> */}
                         <tr>
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
                                 <input

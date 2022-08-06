@@ -324,8 +324,6 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
 
                 })
                 .catch((error) => {
-                    // Alert.alert(strings.error, strings.connection_failed);
-                    // alert(error.toString())
                     this.setState({ loading_class: false, pupils_see: false });
                 });
         } else {
