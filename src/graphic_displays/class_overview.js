@@ -1,3 +1,4 @@
+import { CircularProgress } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../store/state_props';
@@ -5,7 +6,9 @@ import { mapStateToProps } from '../store/state_props';
 class ClassOverView extends React.Component {
     render() {
         return (
-            <div style={{ paddingTop: 20 }}>
+            <div>
+                {!this.props.loadding_footer ?
+                    <div style={{ paddingTop: 20 }}>
                 <table className="table-graphics">
                     <tbody>
                         <tr>
@@ -55,7 +58,12 @@ class ClassOverView extends React.Component {
                         </tr>
                     </tfoot>
                 </table>
-
+            </div>
+            :
+            <div style={{textAlign:'center'}}>
+                <CircularProgress style={{ color: 'rgb(0, 80, 180)',width:20,height:20 }} />
+            </div>
+            }
             </div>
         )
     }

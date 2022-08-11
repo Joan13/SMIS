@@ -1,6 +1,8 @@
+import { Button, CircularProgress } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { format_date, find_date, find_date2 } from '../global_vars';
+import modalView from '../includes/modal';
 import { mapStateToProps } from '../store/state_props';
 
 class SettingsBulletins extends React.Component {
@@ -64,39 +66,45 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
 
         let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/new_domain.php";
 
-        fetch(BaseURL, {
-            method: 'POST',
-            body: JSON.stringify({
-                domain_name:this.state.domain_name,
-                cycle_id: this.props.classe.cycle,
-                class_id: this.props.classe.class,
-                order_id: this.props.classe.order,
-                section_id: this.props.classe.section,
-                option_id: this.props.classe.option,
-                school_year: this.props.classe.school_year,
+        if (this.state.domain_name !== "") {
+            fetch(BaseURL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    domain_name:this.state.domain_name,
+                    cycle_id: this.props.classe.cycle,
+                    class_id: this.props.classe.class,
+                    order_id: this.props.classe.order,
+                    section_id: this.props.classe.section,
+                    option_id: this.props.classe.option,
+                    school_year: this.props.classe.school_year,
+                })
             })
-        })
-            .then((response) => response.json())
-            .then((response) => {
-
-                this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
-                if (response === '1'){
-                    this.load_class_data(this.props.classe);
-                    this.setState({domain_name:""});
-                }
-
-            })
-            .catch((error) => {
-                console.log(error.toString());
-                this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
-                this.setState({ can_load_data:false,modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_class: false, class_loading: 0 });
-            });
+                .then((response) => response.json())
+                .then((response) => {
+    
+                    this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
+                    if (response === '1'){
+                        this.load_class_data(this.props.classe);
+                        this.setState({domain_name:""});
+                    }
+    
+                })
+                .catch((error) => {
+                    console.log(error.toString());
+                    this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
+                    this.setState({ can_load_data:false,modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_class: false, class_loading: 0 });
+                });
+        } else {
+            this.setState({ can_load_data:false,modal_title: "Information erreur", modal_main_text: "Impossible de procéder à l'enregistrement du domaine. Veuillez entrer le l'intitulé du domaine.", modal_view: true, loading_class: false, class_loading: 0 });
+        }
     }
 
     save_sub_domain() {
         this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
 
         let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/new_sub_domain.php";
+
+        if (this.state.sub_domain_name !== "" || this.state.domain_id){
 
         fetch(BaseURL, {
             method: 'POST',
@@ -133,7 +141,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                 course_7:"",
                 course_8:"",
             course_9:"",
-            course_10:"",});
+            course_10:""});
                 }
 
             })
@@ -142,14 +150,20 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                 this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
                 this.setState({ can_load_data:false,modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_class: false, class_loading: 0 });
             });
+        } else {
+            this.setState({ can_load_data:false,modal_title: "Information erreur", modal_main_text: "Impossible de procéder à l'enregistrement du sous-domaine. Veuillez entrer le l'intitulé du sous-domaine et sélectionner le domaine.", modal_view: true, loading_class: false, class_loading: 0 });
+        }
+
     }
 
 
     render() {
         return (
             <div>
+                {!this.props.loading_footer ?
                 <div>
-                <h2>Configurer nouveau format de bulletins pour la {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.cycle_id}</h2><br/>
+                <div>
+                <h3>Configurer nouveau format de bulletins pour la {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.cycle_id}</h3><br/>
                 <div>
                 <strong>Enregistrer un nouveau domaine</strong><br/><br/>
                     <input
@@ -158,7 +172,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                         style={{ width: 300 }}
                         onChange={(text) => this.setState({ domain_name: text.target.value })}
                     /><br/><br/>
-                    <span style={{ marginLeft: 20 }} onClick={() => this.save_domain()} className="add-minus">Enregistrer le domaine</span><br /><br/>
+                    <span style={{ marginLeft: 20 }} onClick={() => this.save_domain()} className="buttom-primary">Enregistrer le domaine</span><br /><br/>
                 </div>
 
 
@@ -233,6 +247,19 @@ type="number"
                 </div>
 
                 
+                {this.state.modal_view ?
+                    <div className="main-div-modal">
+                        {modalView(this.state.modal_title, this.state.modal_main_text)}
+                        <div className="sub-div-modal">
+                            <Button onClick={() => this.setState({ modal_view: false })} variant="outlined" style={{ color: 'black', borderWidth: 1, borderColor: 'rgba(0, 0, 0, 0.3)' }}>Fermer</Button>
+                        </div>
+                    </div> : null}
+                </div>
+                :
+                <div className="progress-center-progress">
+                                <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
+                                Chargement de la configuration des bulletins...
+                            </div>}
             </div>
         )
     }

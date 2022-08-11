@@ -1,4 +1,5 @@
 import { Button, CircularProgress } from '@material-ui/core';
+import { NumberToLetter } from 'convertir-nombre-lettre';
 import React, { Component } from 'react'
 import { FaCheckCircle, FaEdit } from 'react-icons/fa'
 import { connect } from 'react-redux'
@@ -37,6 +38,7 @@ class NewPaiements extends Component {
         let school_year = this.props.pupil.pupil.school_year;
         let pupil = this.props.pupil.pupil.pupil_id;
         let day = "";
+        let month = "";
 
         if ((date.getDate() + "").length === 1) {
             day = "0" + date.getDate();
@@ -44,7 +46,13 @@ class NewPaiements extends Component {
             day = date.getDate();
         }
 
-        date = day + "/" + parseInt(date.getMonth() + 1) + "/" + date.getFullYear();
+        if ((date.getMonth() + "").length === 1) {
+            month = "0" + parseInt(date.getMonth() + 1);
+        } else {
+            month = date.getMonth() + 1;
+        }
+
+        date = day + "/" + month + "/" + date.getFullYear();
 
         if (montant !== "" && libelle !== "") {
 
@@ -182,8 +190,11 @@ class NewPaiements extends Component {
                                                 Montant (en dollars US):<br />
                                                 <input
                                                     value={this.state.montant_paie}
-                                                    onChange={(value) => this.setState({ montant_paie: value.target.value })}
+                                                    onChange={(value) => {
+                                                        this.setState({ montant_paie: value.target.value });
+                                                        if(parseInt(value.target.value) >= 0)  this.setState({ montant_text_paie: NumberToLetter(value.target.value) })}}
                                                     placeholder="Ex: 130"
+                                                    maxLength={14}
                                                     className="input-montant"
                                                     type="number" />
                                             </td>
@@ -191,13 +202,15 @@ class NewPaiements extends Component {
 
                                         <tr>
                                             <td style={{ paddingTop: 10 }}>
-                                                Montant en toutes lettres:<br />
-                                                <input
+                                                {/* Montant en toutes lettres: */}
+                                                {this.state.montant_paie !== "" ?
+                                                <div><strong style={{color:'rgb(0, 80, 180)'}}>{this.state.montant_text_paie} </strong>dollars Américains<br/></div>:null}
+                                                {/* <input
                                                     value={this.state.montant_text_paie}
                                                     onChange={(value) => this.setState({ montant_text_paie: value.target.value })}
                                                     placeholder="Ex: Cent trente"
                                                     className="input-montant"
-                                                    type="text" />
+                                                    type="text" /> */}
                                             </td>
                                         </tr>
 

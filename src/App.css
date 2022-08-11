@@ -1,5 +1,5 @@
 body {
-  margin: 0px;
+  /* margin: 0px; */
   font-size: 13px;
 
   -webkit-touch-callout: none;
@@ -477,6 +477,12 @@ h5 {
 .progress-center {
   text-align: center;
   margin-top: 50%;
+  width: 100%;
+}
+
+.progress-center-progress {
+  text-align: center;
+  margin-top: 30%;
   width: 100%;
 }
 

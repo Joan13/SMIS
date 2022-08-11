@@ -1,12 +1,12 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Signin from './components/signin';
-import Home from './components/home';
+import Signin from './pages/signin';
+import Home from './pages/home';
+import Settings from './pages/settings';
 import { home_redirect } from './global_vars';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from './store/reducer';
-import Settings from './components/settings';
 
 // let initialState = {
 //   val: 42

@@ -3404,6 +3404,11 @@ convert-source-map@^1.4.0, convert-source-map@^1.6.0, convert-source-map@^1.7.0:
   dependencies:
     safe-buffer "~5.1.1"
 
+convertir-nombre-lettre@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/convertir-nombre-lettre/-/convertir-nombre-lettre-1.0.2.tgz#1051839397bee8d68969bfca9440cd5ccc8e9f6c"
+  integrity sha512-HPqznedT+IYRU3IMdTntcD5WLOYokTLFVGVmQY601E6XCQTTVapRDOR5fgu3ZZt77ZT9b4XxMf5UOncaDZQl9Q==
+
 cookie-signature@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"

@@ -71,13 +71,26 @@ class StatistiquesCaisse extends React.Component {
     }
 
     componentDidMount() {
-        this.generate_day_stats(new Date().getFullYear() + "-" + parseInt(new Date().getMonth() + 1) + "-" + new Date().getDate());
+        let date = new Date();
+        let day = "";
+        let month = "";
+        if ((date.getDate() + "").length === 1) {
+            day = "0" + date.getDate();
+        } else {
+            day = date.getDate();
+        }
+
+        if ((date.getMonth() + "").length === 1) {
+            month = "0" + parseInt(date.getMonth() + 1);
+        } else {
+            month = date.getMonth() + 1;
+        }
+        this.generate_day_stats(date.getFullYear() + "/" + month + "/" + day);
     }
 
     render() {
         return (
             <div>
-
                 <div>
                     <div className="border-bottom-blue">
                         <div style={{ marginBottom: 10, fontWeight: 'bold', marginTop: 10 }}>Paramètres de l'état de caisse</div>
@@ -88,13 +101,13 @@ class StatistiquesCaisse extends React.Component {
                                     <td style={{ width: "50%" }}>
                                         <div style={{ marginBottom: 10 }}>
                                             Montant initial de base par an par élève<br />
-                                            <input type="number" onChange={(text) => this.set_stats(text.target.value)} placeholder="Ex.: 420" />
+                                            <input type="number" className="input-normall" onChange={(text) => this.set_stats(text.target.value)} placeholder="Ex.: 420" />
                                         </div>
                                     </td>
                                     <td style={{ width: "50%" }}>
                                         <div style={{ marginBottom: 10 }}>
                                             Sélectionner une date<br />
-                                            <input type="date" onChange={(text) => this.generate_day_stats(text.target.value)} placeholder="Ex.: 420" />
+                                            <input type="date" className='input-normall' onChange={(text) => this.generate_day_stats(text.target.value)} placeholder="Ex.: 420" />
                                         </div>
                                     </td>
                                 </tr>
