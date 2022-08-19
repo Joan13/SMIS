@@ -1,9 +1,12 @@
 {
   "name": "yambi_smis",
   "homepage": "wima",
-  "version": "0.1.0",
+  "version": "8.4.2",
   "private": false,
-  "productName": "Yambi SMIS",
+  "app_full_name":"Yambi Class - School Management Information System - (SMIS)",
+  "branch":"stable",
+  "platform": "Web",
+  "productName": "Yambi Class SMIS",
   "dependencies": {
     "@material-ui/core": "^4.12.1",
     "@testing-library/jest-dom": "^5.16.4",

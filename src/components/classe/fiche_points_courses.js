@@ -22,6 +22,7 @@ class FichesPointsCourses extends Component {
             pupil_id: 1,
             should_fetch_marks: false,
             can_mount: 0,
+            course_id: null,
         }
     }
 
@@ -188,10 +189,6 @@ class FichesPointsCourses extends Component {
     }
 
     componentDidMount() {
-
-        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
-        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
-
         // if(this.state.can_mount < 4) {
         //     this.intervalID = setInterval(() => {
         //         let classe = sessionStorage.getItem('classeYambiSMIS');
@@ -202,7 +199,7 @@ class FichesPointsCourses extends Component {
         //         }
         //     }, 500);
 
-        //     this.setState({ can_mount: this.state.can_mount + 1 });
+            this.setState({ course_id:this.props.classe.courses[0].course_id });
         // }
     }
 
@@ -218,21 +215,9 @@ class FichesPointsCourses extends Component {
             <strong style={{ fontSize: 20 }}>{this.findCourse(this.state.course_id)}</strong>
                 
                 <div className="float-menu-right">
-                {/* <select
-                    onChange={(val) => this.setState({ course_id: val.target.value })}
-                    style={{ color: 'rgba(0, 80, 180)' }}
-                    value={this.state.course_id}
-                    className="select-no-border">
-                    {this.state.courses.map((course, index) => (
-                        <option key={course.course_id} value={course.course_id}>{course.course_name}</option>
-                    ))}
-                </select> */}
-
-                                                    
-
                 <select
                     onChange={(val) => this.setState({ periode: val.target.value })}
-                    style={{ color: 'rgba(0, 80, 180)' }}
+                    style={{ color: 'rgba(0, 80, 180)',backgroundColor:'white',textAlign:'right' }}
                     value={this.state.periode}
                     className="select-no-border-select">
                     <option value="*">Toutes les périodes</option>
@@ -255,7 +240,7 @@ class FichesPointsCourses extends Component {
                     <thead>
                         <tr>
                             <th style={{ width: 30, textAlign: 'center' }}>No</th>
-                            <th style={{ paddingLeft: 10, textAlign: 'left' }}>Cours</th>
+                            <th style={{ paddingLeft: 10, textAlign: 'left' }}>Noms des élèves</th>
                             {this.state.periode == "P1" ?
                                 <th style={{ width: 50, textAlign: 'center' }}>P1</th> :
                                 this.state.periode == "*" ?
@@ -503,7 +488,7 @@ class FichesPointsCourses extends Component {
                     })}
                 </table>
                 </td>
-                            <td valign="top" style={{ paddingLeft: 30, width: 100 }}>
+                            <td valign="top" style={{ paddingLeft: 30 }} className="td-pupils">
                                 {/* <Courses /> */}
 
                                 <strong onClick={() => 
@@ -516,8 +501,7 @@ class FichesPointsCourses extends Component {
 
                                 <h3>Liste des Cours</h3>
                                 {this.props.classe.data.courses.map((course, index) => (
-                                    <span 
-                                    onClick={() => this.setState({ course_id: course.course_id })} className={`list-pupils ${this.state.course_id === course.course_id ? "list-pupils-selected" : ""}`} key={course.course_id}>{index + 1} {course.course_name}</span>
+                                    <span style={{marginBottom:13}} onClick={() => this.setState({ course_id: course.course_id })} className={`list-pupils ${this.state.course_id === course.course_id ? "list-pupils-selected" : ""}`} key={course.course_id}>{index + 1}. {course.course_name.toUpperCase()}</span>
                                 ))}
                             </td>
                         </tr>

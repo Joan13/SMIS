@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/wima/static/css/main.faa134d9.css",
-    "main.js": "/wima/static/js/main.41f52c90.js",
+    "main.js": "/wima/static/js/main.03f23be1.js",
     "static/media/armoirie_rdc.png": "/wima/static/media/armoirie_rdc.076a1eee761b3c3caa0b.png",
     "static/media/yambi_red.png": "/wima/static/media/yambi_red.2f940178f78c579c6c2e.png",
     "static/media/flag_drc.jpg": "/wima/static/media/flag_drc.201bde9ef7a490de53e4.jpg",
     "index.html": "/wima/index.html",
     "main.faa134d9.css.map": "/wima/static/css/main.faa134d9.css.map",
-    "main.41f52c90.js.map": "/wima/static/js/main.41f52c90.js.map"
+    "main.03f23be1.js.map": "/wima/static/js/main.03f23be1.js.map"
   },
   "entrypoints": [
     "static/css/main.faa134d9.css",
-    "static/js/main.41f52c90.js"
+    "static/js/main.03f23be1.js"
   ]
 }

@@ -71,6 +71,7 @@ export const mapStateToProps = (state) => {
         workers:state.workers,
         timetable:state.timetable,
         trics_timetable:state.trics_timetable,
+        course:state.course,
     }
 }
 

@@ -71,7 +71,7 @@ const initialState = {
     workers: [],
     trics_timetable: [],
     timetable: [], 
-
+    course: [],
 }
 
 const reducer = (state = initialState, action) => {
@@ -79,6 +79,8 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_WORKERS":
             return { ...state, workers: action.payload }
+            case "SET_COURSE":
+            return { ...state, course: action.payload }
         case "SET_LOADING_CLASS":
             return { ...state, loading_class: action.payload }
         case "SET_PUPILS_COUNT_PAIEMENTS":

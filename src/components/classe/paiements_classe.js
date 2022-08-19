@@ -6,9 +6,6 @@ import { mapStateToProps } from '../../store/state_props';
 let paye = 0;
 
 class PaiementsClasse extends React.Component {
-
-
-
     constructor(props) {
         super(props);
 

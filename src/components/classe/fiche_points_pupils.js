@@ -322,19 +322,9 @@ class FichePointsPupils extends Component {
                                 </strong>
 
                                 <div className="float-menu-right">
-                                    {/* <select
-                        onChange={(val) => this.setState({ pupil_id: val.target.value })}
-                        style={{ color: 'rgba(0, 80, 180)' }}
-                        value={this.state.pupil_id}
-                        className="select-no-border">
-                        {this.state.pupils.map((pupil, index) => (
-                            <option key={pupil.pupil_id} value={pupil.pupil_id}>{index + 1} {pupil.first_name + " " + pupil.second_name + " " + pupil.last_name}</option>
-                        ))}
-                    </select> */}
-
                                     <select
                                         onChange={(val) => this.setState({ periode: val.target.value })}
-                                        style={{ color: 'rgba(0, 80, 180)', marginRight: 300 }}
+                                        style={{ color: 'rgba(0, 80, 180)',backgroundColor:'white',textAlign:'right' }}
                                         value={this.state.periode}
                                         className="select-no-border-select">
                                         <option value="*">Toutes les périodes</option>
@@ -428,7 +418,7 @@ class FichePointsPupils extends Component {
                                             <tbody>
                                                 <tr>
                                                     <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                    <td style={{ paddingLeft: 10 }}>{course.course_name} / {course.total_marks}</td>
+                                                    <td style={{ paddingLeft: 10 }}><strong>{course.course_name.toUpperCase()}</strong> /{course.total_marks}</td>
                                                     {this.state.periode == "P1" ?
                                                         <td style={{ width: 50, textAlign: 'center' }}>
                                                             <input className="input-marks"

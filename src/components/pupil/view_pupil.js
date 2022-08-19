@@ -4,9 +4,9 @@ import { FiEdit } from 'react-icons/fi';
 import { connect } from 'react-redux';
 import { home_redirect } from '../../global_vars';
 import { mapStateToProps } from '../../store/state_props';
-import NewPaiements from '../../sub_pages/new_paiements';
-import AllPaiementPupils from '../../sub_pages/all_paiements_pupil';
-import FraisDiversPupil from '../../sub_pages/frais_divers_pupil';
+import NewPaiements from '../paiements/new_paiements';
+import AllPaiementPupils from '../paiements/all_paiements_pupil';
+import FraisDiversPupil from '../paiements/frais_divers_pupil';
 import { CircularProgress } from '@material-ui/core';
 
 

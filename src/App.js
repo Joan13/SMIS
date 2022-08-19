@@ -1,8 +1,8 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Signin from './pages/signin';
 import Home from './pages/home';
 import Settings from './pages/settings';
+import Signin from './pages/signin';
 import { home_redirect } from './global_vars';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';

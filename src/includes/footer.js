@@ -1,24 +1,22 @@
 import { CircularProgress } from '@material-ui/core';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import { year } from '../global_vars';
 import { mapStateToProps } from '../store/state_props';
+import JSONPackageFile from '../../package.json';
+import { useSelector } from 'react-redux';
 
-class Footer extends Component {
-    render() {
-        return (
-            <>
-                {this.props.loading_footer ?
-                    <div className="information-footer">
-                        <CircularProgress size={20} color="inherit" style={{ marginRight: 20 }} />
-                        Chargement des données parallèles...
-                    </div> : null}
-                <div className="footer-rights">
-                    <span style={{ marginRight: 20 }}><span style={{ color: 'gray' }}>Yambi School Managment Information System / stable / version 3.4.6 - Web / </span>Tous droits réservés © Agisha Migani Joan - Yambi, Inc. {year}</span>
-                </div>
-            </>
-        )
-    }
+export default function Footer() {
+    const loading_footer = useSelector(state => state.loading_footer);
+    return (
+        <div>
+            {loading_footer ?
+                <div className="information-footer">
+                    <CircularProgress size={20} color="inherit" style={{ marginRight: 20 }} />
+                    Chargement des données parallèles...
+                </div> : null}
+            <div className="footer-rights">
+                <span style={{ marginRight: 20 }}><span style={{ color: 'gray' }}> {JSONPackageFile.app_full_name} / {JSONPackageFile.branch} / version {JSONPackageFile.version} - {JSONPackageFile.platform} / </span>Tous droits réservés © Agisha Migani Joan - Yambi, Inc. {year}</span>
+            </div>
+        </div>
+    )
 }
-
-export default connect(mapStateToProps)(Footer);
