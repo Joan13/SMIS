@@ -2,6 +2,9 @@ import React from 'react';
 import { FaClipboard, FaEdit, FaStarHalfAlt } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import ClassOverview from './class_overview';
+import { FcBusinessman, FcDataSheet, FcDocument, FcFile, FcGrid, FcList } from 'react-icons/fc';
+import { BiEdit } from 'react-icons/bi';
+import { TbReportMoney } from 'react-icons/tb';
 
 export default function RightClasseMenu() {
 
@@ -39,14 +42,21 @@ export default function RightClasseMenu() {
 
                             <div className="item-menu-right">
                                 <span onClick={() => set_page(1, "", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 1 ? "select-no-border-bold" : ""}`}>
-                                    <FaClipboard style={{ marginRight: 7 }} />
+                                    <FcList style={{ marginRight: 7 }} />
                                     Liste nomminative
                                 </span>
                             </div>
 
                             <div className="item-menu-right">
                                 <span onClick={() => set_page(9, "", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 9 ? "select-no-border-bold" : ""}`}>
-                                    <FaClipboard style={{ marginRight: 7 }} />
+                                    <FcBusinessman style={{ marginRight: 7 }} />
+                                    Cartes d'élève
+                                </span>
+                            </div>
+
+                            <div className="item-menu-right">
+                                <span onClick={() => set_page(9, "", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 9 ? "select-no-border-bold" : ""}`}>
+                                    <FcDocument style={{ marginRight: 7 }} />
                                     Cours
                                 </span>
                             </div>
@@ -55,28 +65,28 @@ export default function RightClasseMenu() {
 
                             <div className="item-menu-right">
                                 <span onClick={() => set_page(19, "", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 19 ? "select-no-border-bold" : ""}`}>
-                                    <FaEdit style={{ marginRight: 7 }} />
+                                    <BiEdit style={{ marginRight: 7 }} />
                                     Libéllés
                                 </span>
                             </div>
 
                             <div className="item-menu-right">
                                 <span onClick={() => set_page(2, "FPE", false, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 2 ? "select-no-border-bold" : ""}`}>
-                                    <FaEdit style={{ marginRight: 7 }} />
+                                    <BiEdit style={{ marginRight: 7 }} />
                                     Edition des points par élève
                                 </span>
                             </div>
 
                             <div className="item-menu-right">
                                 <span onClick={() => set_page(2, "FPC", false, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 2 ? "select-no-border-bold" : ""}`}>
-                                    <FaEdit style={{ marginRight: 7 }} />
+                                    <BiEdit style={{ marginRight: 7 }} />
                                     Edition des points par cours
                                 </span>
                             </div>
 
                             <div className="item-menu-right">
                                 <span onClick={() => set_page(2, "FPE", false, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 17 ? "select-no-border-bold" : ""}`}>
-                                    <FaEdit style={{ marginRight: 7 }} />
+                                    <BiEdit style={{ marginRight: 7 }} />
                                     Conduites
                                 </span>
                             </div>
@@ -120,28 +130,28 @@ export default function RightClasseMenu() {
 
                             <div className="item-menu-right">
                                 <span onClick={() => set_page(2, "NPC", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 20 ? "select-no-border-bold" : ""}`}>
-                                    <FaClipboard style={{ marginRight: 7 }} />
+                                    <FcDataSheet style={{ marginRight: 7 }} />
                                     Fiche des points
                                 </span>
                             </div>
 
                             <div className="item-menu-right">
                                 <span onClick={() => set_page(3, "", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 3 ? "select-no-border-bold" : ""}`}>
-                                    <FaClipboard style={{ marginRight: 7 }} />
+                                    <FcFile style={{ marginRight: 7 }} />
                                     Palmarès
                                 </span>
                             </div>
 
                             <div className="item-menu-right">
                                 <span onClick={() => set_page(10, "", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 10 ? "select-no-border-bold" : ""}`}>
-                                    <FaClipboard style={{ marginRight: 7 }} />
+                                    <FcFile style={{ marginRight: 7 }} />
                                     Palmarès final
                                 </span>
                             </div>
 
                             <div className="item-menu-right">
                                 <span onClick={() => set_page(7, "", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 7 ? "select-no-border-bold" : ""}`}>
-                                    <FaClipboard style={{ marginRight: 7 }} />
+                                    <FcGrid style={{ marginRight: 7 }} />
                                     Bulletins
                                 </span>
                             </div>
@@ -150,7 +160,7 @@ export default function RightClasseMenu() {
 
                             <div className="item-menu-right">
                                 <span className={`select-no-border ${middle_func === 2 ? "select-no-border-bold" : ""}`}>
-                                    <FaStarHalfAlt color="rgba(0, 80, 180)" style={{ marginRight: 7 }} />
+                                    <FcFile color="rgba(0, 80, 180)" style={{ marginRight: 7 }} />
                                     <select value={fiches_tab} onChange={(val) => set_page1(5, val.target.value, "", true, true)}
                                         style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'transparent' }} className={`select-no-border ${middle_func === 5 ? "select-no-border-bold" : ""}`}>
                                         <option value="">Sélectionner une fiche</option>
@@ -167,17 +177,17 @@ export default function RightClasseMenu() {
                             {/* {this.props.class_open ? */}
                             <div className="item-menu-right">
                                 <span onClick={() => this.paiements_classe()} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 8 ? "select-no-border-bold" : ""}`}>
-                                    <FaClipboard style={{ marginRight: 7 }} />
+                                    <TbReportMoney style={{ marginRight: 7 }} />
                                     Paiement des frais scolaires
                                 </span>
                             </div>
 
-                            <div className="item-menu-right">
+                            {/* <div className="item-menu-right">
                                 <span onClick={() => set_page1(21, '', "", true, true)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 21 ? "select-no-border-bold" : ""}`}>
                                     <FaClipboard style={{ marginRight: 7 }} />
                                     Gestion des dépenses
                                 </span>
-                            </div>
+                            </div> */}
                             {/* :null} */}
 
                             {/* <strong className="block-menu-right" style={{ marginTop: 10, color: 'rgb(0, 0, 0)' }}> Fiches brouillons</strong>

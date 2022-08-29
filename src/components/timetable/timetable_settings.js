@@ -7,14 +7,38 @@ export default function TimetableSettings() {
     const classe = useSelector(state => state.classe);
     const course = useSelector(state => state.course);
     const employees = useSelector(state => state.workers);
+    const url_server = useSelector(state => state.url_server);
+    const annee_scolaire = useSelector(state => state.annee_scolaire);
     const teachers = employees.filter(employee => employee.poste === "5");
+    const [trick_course, setTrick_course] = useState(0);
+    const [trick_course_successive,setTrick_course_successive] = useState(0);
+    const [worker,setWorker] = useState('');
 
-    const [before_break_1, setBefore_break_1] = useState(0);
-    const [before_break_2, setBefore_break_2] = useState(1);
-    const [after_break_1, setAfter_break_1] = useState(false);
-    const [after_break_2, setAfter_break_2] = useState(false);
-    const [before_4, setBefore_4] = useState(false);
-    const [before_5, setBefore_5] = useState(false);
+    const AssignCourseToProf = () => {
+        // dispatch({ type: "SET_SEARCHING_PUPIL", payload: true });
+        // dispatch({ type: "SET_NUMBER_PUPILS_SHOW", payload: false });
+        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/search_pupil.php";
+
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                annee: course.school_year,
+                worker: worker,
+                course: course.course_id,
+                trics_course: trick_course,
+                trick_course_successive: trick_course_successive,
+            })
+        })
+            .then((response) => response.json())
+            .then((response) => {
+
+                // dispatch({ type: "SET_SEARCHING_PUPIL", payload: false });
+                // dispatch({ type: "SET_PUPILS_SCHOOL", payload: response.pupils });
+                // dispatch({ type: "SET_PUPILS_COUNT", payload: response.pupils_count });
+
+            })
+            .catch((error) => { });
+    };
 
     return (
         <div>
@@ -24,6 +48,7 @@ export default function TimetableSettings() {
                 <tr>
                     <td valign='top'>
                         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                        <caption><strong style={{ fontSize: 16, marginBottom: 15 }}>Séléctionner l'enseignant</strong></caption>
                             <tr>
                                 <th style={{ width: 25, textAlign: 'left', paddingLeft: 5 }} className="td-border">N0</th>
                                 <th style={{ textAlign: 'left', paddingLeft: 10 }} className="td-border">Noms de l'enseignant</th>
@@ -45,21 +70,28 @@ export default function TimetableSettings() {
                                     <td style={{ paddingBottom: 10, paddingTop: 10, paddingLeft: 10 }} className="td-border">
                                         {employee.first_name.toString().toUpperCase()}  {employee.second_name.toString().toUpperCase()}  {employee.last_name.toString().toUpperCase()}  ({employee.gender === "1" ? "M" : "F"})
                                     </td>
+                                    <td style={{ width: 50,textAlign:'center' }} className="td-border">
+                                        <input type="checkbox"
+                                        style={{cursor:"pointer"}}
+                                        checked={worker === employee.worker_id ? true : false}
+                                        onChange={(value => worker === employee.worker_id ? setWorker(0) : setWorker(employee.worker_id))} />
+                                    </td>
                                 </tr>
                             ))}
                         </table>
                     </td>
                     <td valign='top' style={{ width: '50%' }}>
                         <div style={{ marginLeft: 20 }}>
-                            <strong style={{ fontSize: 16, marginBottom: 15 }}> {course.course_name}</strong>
+                            
                             <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+                            <caption><strong style={{ fontSize: 16, marginBottom: 15 }}> {course.course_name}</strong></caption>
                                 <tr>
                                     <td className="td-border" style={{ padding: 10 }}>De préférence avant la 4e heure</td>
                                     <td style={{ width: 50,textAlign:'center' }} className="td-border">
                                         <input type="checkbox"
                                         style={{cursor:"pointer"}}
-                                        checked={before_break_1 === 1 ? true : false}
-                                        onChange={(value => before_break_1 === 1 ? setBefore_break_1(0) : setBefore_break_1(1))} />
+                                        checked={trick_course === 1 ? true : false}
+                                        onChange={(value => trick_course === 1 ? setTrick_course(0) : setTrick_course(1))} />
                                     </td>
                                 </tr>
                                 <tr>
@@ -67,17 +99,17 @@ export default function TimetableSettings() {
                                     <td style={{ width: 50,textAlign:'center' }} className="td-border">
                                         <input type="checkbox"
                                         style={{cursor:"pointer"}}
-                                        checked={after_break_1 === 1 ? true : false}
-                                        onChange={(value => after_break_1 === 1 ? setAfter_break_1(0) : setAfter_break_1(1))} />
+                                        checked={trick_course === 2 ? true : false}
+                                        onChange={(value => trick_course === 2 ? setTrick_course(0) : setTrick_course(2))} />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="td-border" style={{ padding: 10 }}>De préférence avant la 4e heure</td>
+                                    <td className="td-border" style={{ padding: 10 }}>De préférence après la 4e heure</td>
                                     <td style={{ width: 50,textAlign:'center' }} className="td-border">
                                         <input type="checkbox"
                                         style={{cursor:"pointer"}}
-                                        checked={before_4 === 1 ? true : false}
-                                        onChange={(value => before_4 === 1 ? setBefore_4(0) : setBefore_4(1))} />
+                                        checked={trick_course === 3 ? true : false}
+                                        onChange={(value => trick_course === 3 ? setTrick_course(0) : setTrick_course(3))} />
                                     </td>
                                 </tr>
                                 <tr>
@@ -85,8 +117,8 @@ export default function TimetableSettings() {
                                     <td style={{ width: 50,textAlign:'center' }} className="td-border">
                                         <input type="checkbox"
                                         style={{cursor:"pointer"}}
-                                        checked={before_5 === 1 ? true : false}
-                                        onChange={(value => before_5 === 1 ? setBefore_5(0) : setBefore_5(1))} />
+                                        checked={trick_course === 4 ? true : false}
+                                        onChange={(value => trick_course === 4 ? setTrick_course(0) : setTrick_course(4))} />
                                     </td>
                                 </tr>
                                 <tr>
@@ -94,8 +126,8 @@ export default function TimetableSettings() {
                                     <td style={{ width: 50,textAlign:'center' }} className="td-border">
                                         <input type="checkbox"
                                         style={{cursor:"pointer"}}
-                                        checked={before_5 === 1 ? true : false}
-                                        onChange={(value => before_5 === 1 ? setBefore_5(0) : setBefore_5(1))} />
+                                        checked={trick_course === 5 ? true : false}
+                                        onChange={(value => trick_course === 5 ? setTrick_course(0) : setTrick_course(5))} />
                                     </td>
                                 </tr>
                                 <tr>
@@ -103,8 +135,8 @@ export default function TimetableSettings() {
                                     <td style={{ width: 50,textAlign:'center' }} className="td-border">
                                         <input type="checkbox"
                                         style={{cursor:"pointer"}}
-                                        checked={before_break_2 === 1 ? true : false}
-                                        onChange={(value => before_break_2 === 1 ? setBefore_break_2(0) : setBefore_break_2(1))} />
+                                        checked={trick_course === 6 ? true : false}
+                                        onChange={(value => trick_course === 6 ? setTrick_course(0) : setTrick_course(6))} />
                                     </td>
                                 </tr>
                                 <tr>
@@ -112,8 +144,26 @@ export default function TimetableSettings() {
                                     <td style={{ width: 50,textAlign:'center' }} className="td-border">
                                         <input type="checkbox"
                                         style={{cursor:"pointer"}}
-                                        checked={after_break_2 === 1 ? true : false}
-                                        onChange={(value => after_break_2 === 1 ? setAfter_break_2(0) : setAfter_break_2(1))} />
+                                        checked={trick_course === 7 ? true : false}
+                                        onChange={(value => trick_course === 7 ? setTrick_course(0) : setTrick_course(7))} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="td-border" style={{ padding: 10 }}>Réquerrir heures succéssives</td>
+                                    <td style={{ width: 50,textAlign:'center' }} className="td-border">
+                                        <input type="checkbox"
+                                        style={{cursor:"pointer"}}
+                                        checked={trick_course_successive === 1 ? true : false}
+                                        onChange={(value => trick_course_successive === 1 ? setTrick_course_successive(0) : setTrick_course_successive(1))} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="td-border" style={{ padding: 10 }}>Heure (s) par semaine</td>
+                                    <td style={{ width: 80,textAlign:'center' }} className="td-border">
+                                        <input type="number"
+                                        style={{width: 30,outline:'none'}}
+                                        // onChange={(value => trick_course_successive === 1 ? setTrick_course_successive(0) : setTrick_course_successive(1))} 
+                                        />
                                     </td>
                                 </tr>
                             </table>

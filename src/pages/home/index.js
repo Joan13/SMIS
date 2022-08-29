@@ -35,6 +35,8 @@ import EmployeesList from '../../components/workers/list_workers';
 import TimetableSettings from '../../components/timetable/timetable_settings';
 import CoursesTimetableConfigurator from '../../components/timetable/courses_timetable_config';
 import RightClasseMenu from '../../components/classe/right_menu';
+import { FcFolder, FcOpenedFolder } from 'react-icons/fc';
+import PupilsRightMenu from '../../components/classe/pupils_right_menu';
 
 class Home extends Component {
 
@@ -328,64 +330,6 @@ class Home extends Component {
             });
     };
 
-    searchPupil(name) {
-            this.props.dispatch({ type: "SET_SEARCHING_PUPIL", payload: true });
-        this.props.dispatch({ type: "SET_NUMBER_PUPILS_SHOW", payload: false });
-
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/search_pupil.php";
-
-        fetch(BaseURL, {
-            method: 'POST',
-            body: JSON.stringify({
-                annee: this.props.annee_scolaire.year_id,
-                name: name
-            })
-        })
-            .then((response) => response.json())
-            .then((response) => {
-
-                this.props.dispatch({ type: "SET_SEARCHING_PUPIL", payload: false });
-                // this.props.dispatch({ type: "SET_NUMBER_PUPILS_SHOW", payload: false });
-                this.props.dispatch({ type: "SET_PUPILS_SCHOOL", payload: response.pupils });
-                this.props.dispatch({ type: "SET_PUPILS_COUNT", payload: response.pupils_count });
-                
-            })
-            .catch((error) => {
-                // alert(error.toString());
-                console.log(error)
-                this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, is_loading_home: false, loading_middle: false, searching_pupil: false });
-            });
-    };
-
-    find_pupil(pupil) {
-
-        this.props.dispatch({ type: "SET_SEARCHING_PUPIL", payload: true });
-
-    let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
-
-    fetch(BaseURL, {
-        method: 'POST',
-        body: JSON.stringify({
-            pupil_id: pupil,
-        })
-    })
-        .then((response) => response.json())
-        .then((response) => {
-
-            this.props.dispatch({ type: "SET_SEARCHING_PUPIL", payload: false });
-            // this.props.dispatch({ type: "SET_NUMBER_PUPILS_SHOW", payload: false });
-            // this.props.dispatch({ type: "SET_PUPILS_SCHOOL", payload: response.pupils });
-            // this.props.dispatch({ type: "SET_PUPIL", payload: response.pupils_count });
-
-            this.props.dispatch({ type: "SET_PUPIL", payload: response.pupil });
-        })
-        .catch((error) => {
-            // alert(error.toString());
-            console.log(error)
-            this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, is_loading_home: false, loading_middle: false, searching_pupil: false });
-        });
-};
-
     request_synthese_change(periode) {
         // this.setState({ periode_syhntese: periode });
         this.props.dispatch({ type: "SET_PERIODE_FULL", payload: periode });
@@ -546,18 +490,6 @@ class Home extends Component {
 
             </div>
         )
-    }
-
-    view_pupil(pupil) {
-        this.props.dispatch({ type: "SET_NEW_PAIEMENT", payload: false });
-        this.props.dispatch({ type: "SET_CLASSE", payload: [] });
-        this.props.dispatch({ type: "SET_PAIEMENTS_FRAIS_DIVERS", payload: false });
-        this.props.dispatch({ type: "SET_ALL_PAIEMENTS", payload: true });
-        this.props.dispatch({ type: "SET_PUPIL", payload: pupil });
-        this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 11 });
-        this.props.dispatch({ type: "SET_TITLE_MAIN", payload: (pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name).toUpperCase() });
-
-        this.find_pupil(pupil.pupil.pupil_id);
     }
 
     color_body(number) {
@@ -823,7 +755,7 @@ class Home extends Component {
 
                 <div>
                     <div className="top-bar-app">
-                        <FaFolder color="orange" size={22} style={{ marginRight: 10, marginLeft: 20 }} />
+                        <FcOpenedFolder color="orange" size={22} style={{ marginRight: 10, marginLeft: 20 }} />
                         <h1>{this.props.school_name_abb}<span style={{ color: 'gray', fontSize: 17 }}> / Dossiers / {this.props.annee_scolaire.year_name} </span></h1>
 
                         <div className="float-menu-topbar">
@@ -963,7 +895,7 @@ class Home extends Component {
                                         <div className="float-left-image">
                                             {this.props.class_loading === classe.id_classes ?
                                                 <CircularProgress size={22} /> :
-                                                <FaFolder color="orange" size={22} />}
+                                                <FcFolder color="orange" size={22} />}
                                         </div>
                                         <strong>{classe.class_id} {classe.section_id} {classe.order_id}</strong>
                                         <span style={{ backgroundColor: this.color_body(classe.pupils_count), color: 'white', paddingLeft: 5, paddingRight: 5, paddingTop: 2, paddingBottom: 2, marginTop: -5 }} className="float-class-pupils">{classe.pupils_count}</span>
@@ -1129,60 +1061,8 @@ class Home extends Component {
                                         <RightClasseMenu/> : null}
 
                                     {this.props.allow_right_menu_pupils ?
-                                        <div className="menu-right">
-                                            <div>
-                                                <strong>Tous les élèves ({this.props.pupils_count})</strong>
-                                                <div style={{ marginTop: 10 }}>
-                                                    <div className="div-search">
-                                                        <FaSearch color="gray" />
-                                                        <input
-                                                            onChange={(val) => this.searchPupil(val.target.value)}
-                                                            className="input-search-pupil"
-                                                            placeholder="Recherchez un élève" />
-                                                    </div>
-                                                    {this.props.searching_pupil ?
-                                                        <CircularProgress size={20} style={{ color: "rgb(0, 80, 180)" }} /> : null}
-                                                </div>
-
-                                                <div>
-                                                    {this.props.pupils_school.map((pupil, index) => {
-                                                        {/* if (this.props.number_pupils_show) {
-                                                            return (
-                                                                <div
-                                                                    onClick={() => this.view_pupil(pupil)}
-                                                                    key={index} className="pupils-list-home">
-                                                                    {index + 1}. {pupil.pupil.first_name.toString().toUpperCase(pupil)} {pupil.pupil.second_name.toString().toUpperCase()} {pupil.pupil.last_name.toString().toUpperCase()} ({pupil.pupil.gender === "1" ? "M" : "F"})
-                                                                </div>
-                                                            )
-                                                        } else { */}
-                                                            if (index < 50) {
-                                                                return (
-                                                                    <div
-                                                                        onClick={() => this.view_pupil(pupil)}
-                                                                        key={index} className="pupils-list-home">
-                                                                        {index + 1}. {pupil.pupil.first_name.toString().toUpperCase()} {pupil.pupil.second_name.toString().toUpperCase()} {pupil.pupil.last_name.toString().toUpperCase()} ({pupil.pupil.gender === "1" ? "M" : "F"})
-                                                                    </div>
-                                                                )
-                                                            }
-                                                        {/* } */}
-                                                    })}
-                                                </div>
-
-                                                {/* <table style={{ marginTop: 25, width: '100%' }}>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <td style={{ color: 'rgb(0, 80, 180)' }}></td>
-                                                            <td style={{ color: 'rgb(0, 80, 180)', textAlign: 'right', paddingRight: 30 }}>
-                                                                <span onClick={() => this.setState({ number_pupils_show: true })} style={{ fontSize: 15 }} className="span-controllers-pupils">
-                                                                    Tout afficher
-                                                                </span>
-                                                            </td>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table> */}
-
-                                            </div>
-                                        </div>: null}
+                                                <PupilsRightMenu />
+                                        : null}
                                 </div>}
                         </div>
                     </div>
