@@ -37,6 +37,7 @@ import CoursesTimetableConfigurator from '../../components/timetable/courses_tim
 import RightClasseMenu from '../../components/classe/right_menu';
 import { FcFolder, FcOpenedFolder } from 'react-icons/fc';
 import PupilsRightMenu from '../../components/classe/pupils_right_menu';
+import PaiementCategories from '../../components/caisse/paiement_categories';
 
 class Home extends Component {
 
@@ -95,6 +96,7 @@ class Home extends Component {
             abandon: 0,
             pupil: [],
             can_load_data: false,
+            modal_paiement_categories:false,
         }
     }
 
@@ -665,6 +667,31 @@ class Home extends Component {
         this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
     }
 
+    paiement_categories() {
+        if (this.props.modal_paiement_categories === true)  {
+            this.props.dispatch({ type: "SET_MODAL_PAIEMENT_CATEGORIES", payload: false });
+        } else {
+            this.props.dispatch({ type: "SET_MODAL_PAIEMENT_CATEGORIES", payload: true });
+            this.fetch_paiement_categories();
+        }
+    }
+
+    fetch_paiement_categories() {
+        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/paiement_categories.php";
+
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                school_year: this.props.annee,
+            })
+        })
+            .then((response) => response.json())
+            .then((response) => {
+this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_categories});
+            })
+            .catch((error) => {});
+    };
+
     new_classe_import() {
         // this.setState({
         //     middle_func: 6,
@@ -852,6 +879,22 @@ class Home extends Component {
                                     className={`select-no-border ${this.props.middle_func === 22 ? "select-no-border-bold" : ""}`}>
                                     <FaUserPlus style={{ marginRight: 5 }} />
                                     Configuration des horaires</span>
+                                    :
+                                    this.props.middle_func === 12 ?
+                                    <>
+                                    {/* <span
+                                    // onClick={() => this.gestion_depenses()}
+                                    style={{ color: 'rgba(0, 80, 180)' }}
+                                    className={`select-no-border ${this.props.middle_func === 22 ? "select-no-border-bold" : ""}`}>
+                                    <FaUserPlus style={{ marginRight: 5 }} />
+                                    Gestion des dépenses</span> */}
+                                    <span
+                                    onClick={() => this.paiement_categories()}
+                                    style={{ color: 'rgba(0, 80, 180)' }}
+                                    className={`select-no-border ${this.props.middle_func === 22 ? "select-no-border-bold" : ""}`}>
+                                    <FaUserPlus style={{ marginRight: 5 }} />
+                                    Catégories de paiement</span>
+                                    </>
                                     :
                                     <span
                                     onClick={() => this.new_pupil()}
@@ -1068,6 +1111,8 @@ class Home extends Component {
                     </div>
 
                     <Footer />
+                    {this.props.modal_paiement_categories ?
+                        <PaiementCategories />:null}
 
                     {this.state.modal_view ?
                         <div className="main-div-modal">

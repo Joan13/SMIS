@@ -48,7 +48,9 @@ export default function RightClasseMenu() {
                             </div>
 
                             <div className="item-menu-right">
-                                <span onClick={() => set_page(9, "", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 9 ? "select-no-border-bold" : ""}`}>
+                                <span 
+                                // onClick={() => set_page(9, "", true, false)} 
+                                style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 9 ? "select-no-border-bold" : ""}`}>
                                     <FcBusinessman style={{ marginRight: 7 }} />
                                     Cartes d'élève
                                 </span>

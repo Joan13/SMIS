@@ -72,6 +72,8 @@ export const mapStateToProps = (state) => {
         timetable:state.timetable,
         trics_timetable:state.trics_timetable,
         course:state.course,
+        paiement_categories: state.paiement_categories,
+        modal_paiement_categories:state.modal_paiement_categories,
     }
 }
 

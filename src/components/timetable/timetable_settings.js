@@ -1,6 +1,7 @@
 import { Checkbox } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import ButtonNormal from '../includes/button_normal';
 
 export default function TimetableSettings() {
     const dispatch = useDispatch();
@@ -10,14 +11,14 @@ export default function TimetableSettings() {
     const url_server = useSelector(state => state.url_server);
     const annee_scolaire = useSelector(state => state.annee_scolaire);
     const teachers = employees.filter(employee => employee.poste === "5");
-    const [trick_course, setTrick_course] = useState(0);
-    const [trick_course_successive,setTrick_course_successive] = useState(0);
+    const [tricks_course, setTricks_course] = useState(0);
+    const [tricks_course_successive,setTricks_course_successive] = useState(0);
     const [worker,setWorker] = useState('');
+    const [hours_per_week,setHours_per_week] = useState(course.hours_per_week);
 
     const AssignCourseToProf = () => {
-        // dispatch({ type: "SET_SEARCHING_PUPIL", payload: true });
-        // dispatch({ type: "SET_NUMBER_PUPILS_SHOW", payload: false });
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/search_pupil.php";
+        dispatch({ type: "SET_LOADING_FOOTER", payload: true });
+        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/assign_course_prof.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -25,16 +26,15 @@ export default function TimetableSettings() {
                 annee: course.school_year,
                 worker: worker,
                 course: course.course_id,
-                trics_course: trick_course,
-                trick_course_successive: trick_course_successive,
+                tricks_course: tricks_course,
+                tricks_course_successive: tricks_course_successive,
+                hours_per_week: hours_per_week,
             })
         })
             .then((response) => response.json())
             .then((response) => {
 
-                // dispatch({ type: "SET_SEARCHING_PUPIL", payload: false });
-                // dispatch({ type: "SET_PUPILS_SCHOOL", payload: response.pupils });
-                // dispatch({ type: "SET_PUPILS_COUNT", payload: response.pupils_count });
+                dispatch({ type: "SET_LOADING_FOOTER", payload: false });
 
             })
             .catch((error) => { });
@@ -90,8 +90,8 @@ export default function TimetableSettings() {
                                     <td style={{ width: 50,textAlign:'center' }} className="td-border">
                                         <input type="checkbox"
                                         style={{cursor:"pointer"}}
-                                        checked={trick_course === 1 ? true : false}
-                                        onChange={(value => trick_course === 1 ? setTrick_course(0) : setTrick_course(1))} />
+                                        checked={tricks_course === 1 ? true : false}
+                                        onChange={(value => tricks_course === 1 ? setTricks_course(0) : setTricks_course(1))} />
                                     </td>
                                 </tr>
                                 <tr>
@@ -99,8 +99,8 @@ export default function TimetableSettings() {
                                     <td style={{ width: 50,textAlign:'center' }} className="td-border">
                                         <input type="checkbox"
                                         style={{cursor:"pointer"}}
-                                        checked={trick_course === 2 ? true : false}
-                                        onChange={(value => trick_course === 2 ? setTrick_course(0) : setTrick_course(2))} />
+                                        checked={tricks_course === 2 ? true : false}
+                                        onChange={(value => tricks_course === 2 ? setTricks_course(0) : setTricks_course(2))} />
                                     </td>
                                 </tr>
                                 <tr>
@@ -108,8 +108,8 @@ export default function TimetableSettings() {
                                     <td style={{ width: 50,textAlign:'center' }} className="td-border">
                                         <input type="checkbox"
                                         style={{cursor:"pointer"}}
-                                        checked={trick_course === 3 ? true : false}
-                                        onChange={(value => trick_course === 3 ? setTrick_course(0) : setTrick_course(3))} />
+                                        checked={tricks_course === 3 ? true : false}
+                                        onChange={(value => tricks_course === 3 ? setTricks_course(0) : setTricks_course(3))} />
                                     </td>
                                 </tr>
                                 <tr>
@@ -117,8 +117,8 @@ export default function TimetableSettings() {
                                     <td style={{ width: 50,textAlign:'center' }} className="td-border">
                                         <input type="checkbox"
                                         style={{cursor:"pointer"}}
-                                        checked={trick_course === 4 ? true : false}
-                                        onChange={(value => trick_course === 4 ? setTrick_course(0) : setTrick_course(4))} />
+                                        checked={tricks_course === 4 ? true : false}
+                                        onChange={(value => tricks_course === 4 ? setTricks_course(0) : setTricks_course(4))} />
                                     </td>
                                 </tr>
                                 <tr>
@@ -126,8 +126,8 @@ export default function TimetableSettings() {
                                     <td style={{ width: 50,textAlign:'center' }} className="td-border">
                                         <input type="checkbox"
                                         style={{cursor:"pointer"}}
-                                        checked={trick_course === 5 ? true : false}
-                                        onChange={(value => trick_course === 5 ? setTrick_course(0) : setTrick_course(5))} />
+                                        checked={tricks_course === 5 ? true : false}
+                                        onChange={(value => tricks_course === 5 ? setTricks_course(0) : setTricks_course(5))} />
                                     </td>
                                 </tr>
                                 <tr>
@@ -135,8 +135,8 @@ export default function TimetableSettings() {
                                     <td style={{ width: 50,textAlign:'center' }} className="td-border">
                                         <input type="checkbox"
                                         style={{cursor:"pointer"}}
-                                        checked={trick_course === 6 ? true : false}
-                                        onChange={(value => trick_course === 6 ? setTrick_course(0) : setTrick_course(6))} />
+                                        checked={tricks_course === 6 ? true : false}
+                                        onChange={(value => tricks_course === 6 ? setTricks_course(0) : setTricks_course(6))} />
                                     </td>
                                 </tr>
                                 <tr>
@@ -144,8 +144,8 @@ export default function TimetableSettings() {
                                     <td style={{ width: 50,textAlign:'center' }} className="td-border">
                                         <input type="checkbox"
                                         style={{cursor:"pointer"}}
-                                        checked={trick_course === 7 ? true : false}
-                                        onChange={(value => trick_course === 7 ? setTrick_course(0) : setTrick_course(7))} />
+                                        checked={tricks_course === 7 ? true : false}
+                                        onChange={(value => tricks_course === 7 ? setTricks_course(0) : setTricks_course(7))} />
                                     </td>
                                 </tr>
                                 <tr>
@@ -153,8 +153,8 @@ export default function TimetableSettings() {
                                     <td style={{ width: 50,textAlign:'center' }} className="td-border">
                                         <input type="checkbox"
                                         style={{cursor:"pointer"}}
-                                        checked={trick_course_successive === 1 ? true : false}
-                                        onChange={(value => trick_course_successive === 1 ? setTrick_course_successive(0) : setTrick_course_successive(1))} />
+                                        checked={tricks_course_successive === 1 ? true : false}
+                                        onChange={(value => tricks_course_successive === 1 ? setTricks_course_successive(0) : setTricks_course_successive(1))} />
                                     </td>
                                 </tr>
                                 <tr>
@@ -162,11 +162,12 @@ export default function TimetableSettings() {
                                     <td style={{ width: 80,textAlign:'center' }} className="td-border">
                                         <input type="number"
                                         style={{width: 30,outline:'none'}}
-                                        // onChange={(value => trick_course_successive === 1 ? setTrick_course_successive(0) : setTrick_course_successive(1))} 
-                                        />
+                                        value={hours_per_week}
+                                        onChange={(value => setHours_per_week(value.target.value))}  />
                                     </td>
                                 </tr>
                             </table>
+                            <ButtonNormal text="Enregistrer les modifications" onPress={()=>AssignCourseToProf()} style={{marginTop: 15,marginBottom: 20, width:'100%'}} />
                         </div>
                     </td>
                 </tr>

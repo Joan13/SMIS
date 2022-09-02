@@ -20,7 +20,7 @@ class NewPupil extends React.Component {
             first_name_pupil: "",
             second_name_pupil: "",
             last_name_pupil: "",
-            gender_pupil: "",
+            gender_pupil: "0",
             birth_date_pupil: "",
             birth_place_pupil: "",
             father_name: "",
@@ -35,7 +35,6 @@ class NewPupil extends React.Component {
             class_order_pupil: "0",
             class_section_pupil: "0",
             class_option_pupil: "0",
-            school_year_pupil: "",
             email_address_pupil: "",
             physical_address_pupil: "",
             contact_1_pupil: "",
@@ -47,12 +46,13 @@ class NewPupil extends React.Component {
             nationality: "",
             statut_scolaire: "0",
             date_type: 'text',
+            paiement_category: "",
         }
     }
 
     register_new_pupil() {
 
-        if (this.state.first_name === "" || this.state.second_name === "" || this.state.cycle_school_pupil === "" || this.state.school_year_pupil === "" || this.state.class_school_pupil === "") {
+        if (this.state.first_name === "" || this.state.second_name === "" || this.state.cycle_school_pupil === "" || this.state.class_school_pupil === "") {
             this.setState({ modal_title: "Information erreur", modal_main_text: "Vous devez renseigner tous les champs obligatoires avant la validation. Ce sont l'identité de base de l'élève et son orientation scolaire.", modal_view: true, loading_middle: false });
         } else {
             let url_server = sessionStorage.getItem('yambi_smis_url_server');
@@ -61,6 +61,7 @@ class NewPupil extends React.Component {
             });
 
             let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/new_pupil.php";
+            console.log(this.state.gender_pupil);
 
             fetch(BaseURL, {
                 method: 'POST',
@@ -94,6 +95,7 @@ class NewPupil extends React.Component {
                     perm_number: this.state.perm_number,
                     nationality: this.state.nationality,
                     statut_scolaire: this.state.statut_scolaire,
+                    paiement_category: this.state.paiement_category,
                 })
             })
                 .then((response) => response.json())
@@ -122,11 +124,10 @@ class NewPupil extends React.Component {
                         id_number: "",
                         perm_number: "",
                         nationality: "",
-                        statut_scolaire: "0"
+                        statut_scolaire: "0",
                     })
                 })
                 .catch((error) => {
-                    // alert(error.toString());
                     this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
                 });
         }
@@ -147,15 +148,6 @@ class NewPupil extends React.Component {
                     <tbody>
                         <tr>
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
-                                {/* <TextField
-                                    onChange={(val) => this.setState({ first_name_pupil: val.target.value })}
-                                    placeholder="Nom de l'élève"
-                                    label="Nom"
-                                    value={this.state.first_name_pupil}
-                                    variant="outlined"
-                                    style={{ width: '96%' }}
-                                /> */}
-
                                 <input
                                     onChange={(val) => this.setState({ first_name_pupil: val.target.value })}
                                     placeholder="Nom"
@@ -191,8 +183,6 @@ class NewPupil extends React.Component {
                                 <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ gender_pupil: val.target.value })}
-                                    placeholder="Sexe"
-                                    variant="outlined"
                                     value={this.state.gender_name_pupil}
                                     style={{ width: '100%', textAlign: 'left' }}>
                                     <option value="0">Féminin</option>
@@ -208,9 +198,7 @@ class NewPupil extends React.Component {
                                     onChange={(val) => this.setState({ birth_place_pupil: val.target.value })}
                                     placeholder="Lieu de naissance"
                                     className="input-normall"
-                                    // label="Né (e) à"
                                     value={this.state.birth_place_pupil}
-                                    // variant="outlined"
                                     style={{ width: '96%' }}
                                 />
                             </td>
@@ -218,18 +206,10 @@ class NewPupil extends React.Component {
                                 Date de naissance<br/>
                                 <input
                                     onChange={(val) => this.setState({ birth_date_pupil: val.target.value })}
-                                    // label="Le"
                                     className="input-normall"
                                     placeholder="Date de naissance"
                                     type='date'
-                                    // onClick={this.setState({date_type:'date'})}
                                     value={this.state.birth_date_pupil}
-                                    //                                     ref={input=>{
-                                    // if(input.focus()) {
-                                    //     console.log('focused')
-                                    // }
-                                    //                                     }}
-                                    // variant="outlined"
                                     style={{ width: '96%' }}
                                 />
                             </td>
@@ -240,19 +220,22 @@ class NewPupil extends React.Component {
                                 <input
                                     onChange={(val) => this.setState({ nationality: val.target.value })}
                                     placeholder="Nationalité"
-                                    // variant="outlined"
                                     className="input-normall"
                                     value={this.state.nationality}
                                     style={{ width: '96%' }}
                                 />
                             </td>
-                            <td style={{ paddingRight: 0, textAlign: 'left' }}>
-                                {/* <input
-            onChange={(val) => this.setState({ first_name_pupil: val.target.value })}
-            className="input-normall"
-            type="date"
-            placeholder="Date de naissance"
-             /> */}
+                            <td style={{ paddingLeft: 0, textAlign: 'right' }}>
+                                <select
+                                    className="select-normall"
+                                    onChange={(val) => this.setState({ paiement_category: val.target.value })}
+                                    value={this.state.paiement_category}
+                                    style={{ width: '100%', textAlign: 'left' }}>
+                                    <option value="">Catégorie de paiement</option>
+                                    {this.props.paiement_categories.map((category, index) => (
+                                        <option value={category.category_id} key={index}>{category.category_name}</option>
+                                    ))}
+                                </select>
                             </td>
                         </tr>
                     </tbody>
@@ -263,17 +246,6 @@ class NewPupil extends React.Component {
                     <tbody>
                         <tr>
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
-                                {/* <select
-                                    className="select-normall"
-                                    onChange={(val) => this.setState({ school_year_pupil: val.target.value })}
-                                    placeholder="Année scolaire"
-                                    value={this.state.school_year_pupil}
-                                    style={{ width: '100%', textAlign: 'left' }}>
-                                    <option value="">Sélectionner l'année scolaire</option>
-                                    {this.props.annees.map((annee, index) => (
-                                        <option value={annee.year_id} key={index}>{annee.year_name}</option>
-                                    ))}
-                                </select> */}
                                 <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ cycle_school_pupil: val.target.value })}
