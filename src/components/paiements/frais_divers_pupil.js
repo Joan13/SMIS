@@ -80,6 +80,26 @@ class AllPupilPaiements extends Component {
         window.location.replace("http://" + this.props.url_server + home_redirect);
     }
 
+    delete_recu(recu_id) {
+
+        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/delete_recu_frais_divers.php";
+
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                frais_divers_id: recu_id,
+            })
+        })
+            .then((response) => response.json())
+            .then((response) => {
+
+            })
+            .catch((error) => {
+                // alert(error.toString());
+                // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, is_loading_home: false, loading_middle: false });
+            });
+    };
+
 
     render() {
         return (
@@ -168,14 +188,14 @@ class AllPupilPaiements extends Component {
                             </div>
 
                             <div style={{ textAlign: 'left', marginTop:5 }}>
-                                {/* <span>
+                                <span>
                                     <FaChevronDown color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
                                     <span
-                                        // onClick={() => this.printContent("nomminative")} 
+                                        onClick={() => this.delete_recu(frais.frais_divers_id)} 
                                         className="add-minus">
                                         EFFACER CE REÇU
                                     </span>
-                                </span> */}
+                                </span>
 
                                 <span>
                                     <FaPrint color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />

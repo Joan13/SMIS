@@ -1,5 +1,6 @@
 import { Button } from '@material-ui/core';
 import React from 'react';
+import { FiPrinter } from 'react-icons/fi';
 import { connect } from 'react-redux';
 import { home_redirect } from '../../global_vars';
 import modalView from '../../includes/modal';
@@ -31,26 +32,26 @@ class ListeNomminative extends React.Component {
         this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
         this.props.dispatch({ type: "SET_TITLE_MAIN", payload: (pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name).toUpperCase() });
 
-    let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
+        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
 
-    fetch(BaseURL, {
-        method: 'POST',
-        body: JSON.stringify({
-            pupil_id: pupil.pupil.pupil_id,
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                pupil_id: pupil.pupil.pupil_id,
+            })
         })
-    })
-        .then((response) => response.json())
-        .then((response) => {
+            .then((response) => response.json())
+            .then((response) => {
 
-            this.props.dispatch({ type: "SET_SEARCHING_PUPIL", payload: false });
-            this.props.dispatch({ type: "SET_PUPIL", payload: response.pupil });
-        })
-        .catch((error) => {
-            // alert(error.toString());
-            console.log(error)
-            this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, is_loading_home: false, loading_middle: false, searching_pupil: false });
-        });
-};
+                this.props.dispatch({ type: "SET_SEARCHING_PUPIL", payload: false });
+                this.props.dispatch({ type: "SET_PUPIL", payload: response.pupil });
+            })
+            .catch((error) => {
+                // alert(error.toString());
+                console.log(error)
+                this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, is_loading_home: false, loading_middle: false, searching_pupil: false });
+            });
+    };
 
     printContent(divName) {
 
@@ -91,11 +92,11 @@ class ListeNomminative extends React.Component {
             .then((response) => response.json())
             .then((response) => {
 
-                this.setState({ 
-                    modal_title: "Information succès", 
-                    modal_main_text: "La classe a été effacée avec succès. Si vous voulez voir de changements immédiats, appuyez sur le boutton de rafraichissement de la page en rechargeant les données.", 
-                    modal_view: true, 
-                    loading_middle: false 
+                this.setState({
+                    modal_title: "Information succès",
+                    modal_main_text: "La classe a été effacée avec succès. Si vous voulez voir de changements immédiats, appuyez sur le boutton de rafraichissement de la page en rechargeant les données.",
+                    modal_view: true,
+                    loading_middle: false
                 });
 
             })
@@ -110,19 +111,17 @@ class ListeNomminative extends React.Component {
             <div style={{ marginBottom: 50, paddingTop: 0 }}>
 
                 {this.props.classe.pupils_count !== 0 ?
-                    <>
-                        <span onClick={() => this.printContent("nomminative")} className="add-minus" style={{ fontWeight: 'bold',float:'right' }}>
-                            IMPRIMER LA FICHE
-                        </span><br /><br />
-                    </> : 
+                    <div onClick={() => this.printContent("nomminative")} style={{ display: 'block', fontWeight: 'bold', float: 'right', marginBottom: -50, paddingTop: 3 }}>
+                        <span className="add-minus" style={{ marginRight: 3 }}><FiPrinter /> IMPRIMER LA FICHE</span>
+                    </div> :
                     <>
                         <br /><br />
 
                         <div>
-Cette classe est vide, elle ne contient pas d'élèves. Vous pouvez l'effacer si vous l'avez entrée par erreur.
+                            Cette classe est vide, elle ne contient pas d'élèves. Vous pouvez l'effacer si vous l'avez entrée par erreur.
                         </div>
 
-                        <br/><br/>
+                        <br /><br />
                         <span
                             onClick={() => this.delete_class()}
                             className="add-minus" style={{ fontWeight: 'bold', color: 'red' }}>
@@ -130,7 +129,7 @@ Cette classe est vide, elle ne contient pas d'élèves. Vous pouvez l'effacer si
                         </span><br /><br />
                     </>}
 
-                <div id="nomminative" style={{marginTop:-100}}>
+                <div id="nomminative" style={{ marginTop: 0 }}>
                     <table style={{ width: '100%' }}>
                         <tbody>
                             <tr>
@@ -175,13 +174,13 @@ Cette classe est vide, elle ne contient pas d'élèves. Vous pouvez l'effacer si
                     </table>
                 </div>
 
-                    {this.state.modal_view ?
-                        <div className="main-div-modal">
-                            {modalView(this.state.modal_title, this.state.modal_main_text)}
-                            <div className="sub-div-modal">
-                                <Button onClick={() => this.setState({ modal_view: false })} variant="outlined" style={{ color: 'black', borderWidth: 1, borderColor: 'rgba(0, 0, 0, 0.3)' }}>Fermer</Button>
-                            </div>
-                        </div> : null}
+                {this.state.modal_view ?
+                    <div className="main-div-modal">
+                        {modalView(this.state.modal_title, this.state.modal_main_text)}
+                        <div className="sub-div-modal">
+                            <Button onClick={() => this.setState({ modal_view: false })} variant="outlined" style={{ color: 'black', borderWidth: 1, borderColor: 'rgba(0, 0, 0, 0.3)' }}>Fermer</Button>
+                        </div>
+                    </div> : null}
 
             </div>
         )

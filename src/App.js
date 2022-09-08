@@ -29,7 +29,7 @@ const store = createStore(reducer);
 function App() {
   return (
     <Provider store={store}>
-      <Router basename="/wima">
+      <Router basename="/alfajiri">
         <Routes>
           <Route path="/signin" element={<Signin />} exact />
           <Route path="/settings" element={<Settings />} exact />

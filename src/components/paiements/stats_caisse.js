@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { format_date, find_date, find_date2 } from '../../global_vars';
 import { mapStateToProps } from '../../store/state_props';
+import PaiementsDay from './paiements_day';
 
 class StatistiquesCaisse extends React.Component {
 
@@ -46,6 +47,7 @@ class StatistiquesCaisse extends React.Component {
 
     generate_day_stats(date) {
         this.setState({ date: date });
+        this.props.dispatch({ type: "SET_DAY", payload: date });
 
         let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/stats_caisse.php";
 
@@ -60,14 +62,15 @@ class StatistiquesCaisse extends React.Component {
             .then((response) => response.json())
             .then((response) => {
 
-                this.setState({ makuta_day: response.paiements_day });
-                // alert(response.paiements_day);
+                this.setState({ 
+                    makuta_day: response.paiements_day, 
+                    paiements: response.paiements,
+                frais_divers: response.frais_divers });
+
+                this.props.dispatch({ type: "SET_PAIEMENTS_DAY", payload: response.paiements });
+                this.props.dispatch({ type: "SET_FRAIS_DIVERS_DAY", payload: response.frais_divers });
             })
-            .catch((error) => {
-                // Alert.alert(strings.error, strings.connection_failed);
-                // alert(error.toString())
-                this.setState({ loading_class: false, pupils_see: false });
-            });
+            .catch((error) => { });
     }
 
     componentDidMount() {
@@ -116,14 +119,14 @@ class StatistiquesCaisse extends React.Component {
                     </div>
 
                     <div style={{ marginTop: 70, marginBottom: 70, textAlign: 'center', fontWeight: 'bold', fontSize: 17 }}>
-                        Montant total perçu dans la journée du {find_date2(this.state.date)}<br />
+                        Montant total perçu dans la journée du {find_date2(this.props.day)}<br />
                         <strong style={{ color: "rgb(0, 80, 180)", fontSize: 22 }}>{this.state.makuta_day} dollars Américains</strong>
                     </div>
 
-
+<PaiementsDay />
                 </div>
 
-                <table style={{ width: "100%" }} className="table-border">
+                {/* <table style={{ width: "100%" }} className="table-border">
                     <thead>
                         <tr>
                             <td style={{ paddingTop: 20, paddingBottom: 20, textAlign: 'center', color: "rgba(0,80,180)", fontSize: 17 }} colSpan="3">
@@ -165,7 +168,7 @@ class StatistiquesCaisse extends React.Component {
                             <td style={{ paddingTop: 10, paddingBottom: 10, textAlign: 'center' }} colSpan="3"><strong style={{ color: 'rgb(0, 80, 180)', fontSize: 16 }}>Montant à totaliser {(this.props.pupils_count_paiements) * this.state.montant} dollars Américains</strong></td>
                         </tr>
                     </tfoot>
-                </table>
+                </table> */}
             </div>
         )
     }

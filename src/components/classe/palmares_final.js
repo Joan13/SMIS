@@ -267,10 +267,10 @@ class PalmaresFinal extends Component {
 
     render() {
         return (
-            <div style={{ paddingTop: 0 }} className="center-fixed">
+            <div style={{ paddingTop: 0, marginLeft:15 }} className="center-fixed">
 
                {!this.props.loading_footer ?
-                <table style={{ width: '100%' }}>
+                <table style={{ width: '98%' }}>
                     <tbody>
                         <tr>
                             <td valign="top">

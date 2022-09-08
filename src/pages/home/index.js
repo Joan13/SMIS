@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core';
 import Footer from '../../includes/footer';
 import { FaCircle, FaSearch, FaCheck, FaHome, FaUserPlus, FaClipboard, FaUsers, FaFolder, FaUser, FaPaperclip, FaDatabase, FaStarHalfAlt, FaEdit, FaBell, FaCloudUploadAlt, FaPiedPiperAlt } from 'react-icons/fa';
 import {RiSettings4Fill} from 'react-icons/ri';
-import { FiLogOut, FiRefreshCcw, FiSettings } from 'react-icons/fi';
+import { FiEdit, FiLogOut, FiRefreshCcw, FiSettings } from 'react-icons/fi';
 import modalView from '../../includes/modal';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link, Navigate } from 'react-router-dom';
@@ -38,6 +38,8 @@ import RightClasseMenu from '../../components/classe/right_menu';
 import { FcFolder, FcOpenedFolder } from 'react-icons/fc';
 import PupilsRightMenu from '../../components/classe/pupils_right_menu';
 import PaiementCategories from '../../components/caisse/paiement_categories';
+import ClassePaiementCategorisation from '../../components/classe/paiement_categorisation';
+import Libelles from '../../components/caisse/libelles';
 
 class Home extends Component {
 
@@ -194,6 +196,7 @@ class Home extends Component {
                 this.props.dispatch({ type: "SET_LIBELLES", payload: response.libelles });
                 this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Année scolaire" });
                 this.props.dispatch({ type: "SET_PUPILS_SCHOOL", payload: response.pupils });
+                this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_categories});
                 
                 resolve();
                 }).then(()=>{});
@@ -497,11 +500,11 @@ class Home extends Component {
     color_body(number) {
         if (number <= 25) {
             return 'green';
-        } else if (number > 26 && number <= 40) {
+        } else if (number >= 26 && number <= 40) {
             return 'rgb(0, 80, 180)';
         } else if (number > 40 && number <= 50) {
             return 'rgb(160, 160, 0)';
-        } else if (number > 51 && number <= 69) {
+        } else if (number >= 51 && number <= 69) {
             return 'rgb(166, 83, 0)';
         } else {
             return 'rgb(128, 0, 0)';
@@ -676,6 +679,31 @@ class Home extends Component {
         }
     }
 
+    open_libelles() {
+        if (this.props.modal_libelles === true)  {
+            this.props.dispatch({ type: "SET_MODAL_LIBELLES", payload: false });
+        } else {
+            this.props.dispatch({ type: "SET_MODAL_LIBELLES", payload: true });
+            this.fetch_libelles();
+        }
+    }
+
+    fetch_libelles() {
+        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/libelles.php";
+
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                school_year: this.props.annee,
+            })
+        })
+            .then((response) => response.json())
+            .then((response) => {
+this.props.dispatch({type:"SET_LIBELLES", payload:response.libelles});
+            })
+            .catch((error) => {});
+    };
+
     fetch_paiement_categories() {
         let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/paiement_categories.php";
 
@@ -778,12 +806,12 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
 
         return (
             <div className="main-container">
-
-
                 <div>
                     <div className="top-bar-app">
+                        <h1>
                         <FcOpenedFolder color="orange" size={22} style={{ marginRight: 10, marginLeft: 20 }} />
-                        <h1>{this.props.school_name_abb}<span style={{ color: 'gray', fontSize: 17 }}> / Dossiers / {this.props.annee_scolaire.year_name} </span></h1>
+                        {this.props.school_name_abb}<span style={{ color: 'gray', fontSize: 17 }}> / Dossiers / {this.props.annee_scolaire.year_name} </span>
+                        </h1>
 
                         <div className="float-menu-topbar">
                             {this.props.loading_footer ?
@@ -903,13 +931,22 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
                                     <FaUserPlus style={{ marginRight: 5 }} />
                                     Nouveau</span>}
 
+                               {this.props.middle_func === 12 ?
                                 <span
+                                   onClick={() => this.open_libelles()} 
+                                    style={{ color: 'rgba(0, 80, 180)' }}
+                                    className={`select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold" : ""}`}>
+                                    <span className="divider-menu-topbar"></span>
+                                    <FiEdit style={{ size: 17, marginRight: 5 }} />
+                                    Libéllés</span>
+                                    :
+                                    <span
                                    onClick={() => this.new_classe_import()} 
                                     style={{ color: 'rgba(0, 80, 180)' }}
                                     className={`select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold" : ""}`}>
                                     <span className="divider-menu-topbar"></span>
                                     <FaClipboard style={{ size: 17, marginRight: 5 }} />
-                                    Uploader une classe</span>
+                                    Uploader une classe</span>}
 
                                 <span
                                     onClick={() => this.fetch_synthese()} 
@@ -1004,6 +1041,11 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
                                             {this.props.middle_func === 22 ?
                                             <div id="timetable-settings">
                                                 <TimetableSettings />                                          </div>
+                                            : null}
+
+                                            {this.props.middle_func === 24 ?
+                                            <div id="paiement-categorisation">
+                                                <ClassePaiementCategorisation />                                          </div>
                                             : null}
 
                                             {this.props.middle_func === 14 ?
@@ -1113,6 +1155,9 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
                     <Footer />
                     {this.props.modal_paiement_categories ?
                         <PaiementCategories />:null}
+
+                        {this.props.modal_libelles ?
+                        <Libelles />:null}
 
                     {this.state.modal_view ?
                         <div className="main-div-modal">

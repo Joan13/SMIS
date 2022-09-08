@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FiX } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import ButtonNormal from '../includes/button_normal';
@@ -6,6 +6,34 @@ import ButtonNormal from '../includes/button_normal';
 const PaiementCategories=()=>{
 const paiement_categories = useSelector(state=>state.paiement_categories);
 const dispatch = useDispatch();
+const url_server = useSelector(state=>state.url_server);
+const annee = useSelector(state=>state.annee);
+const [category_name, setCategory_name] = useState("");
+const [category_amount, setCategory_amount] = useState("");
+
+const add_paiement_category =()=> {
+    let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/add_paiement_category.php";
+
+    if (category_name !== "" && category_amount !== "") {
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                school_year: annee,
+                category_name:category_name,
+                category_amount: category_amount,
+            })
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_categories});
+    setCategory_name("");
+    setCategory_amount("");
+            })
+            .catch((error) => {});
+    } else {
+        alert("Le champs de l'intitulé de la catégorie et du montant total annuel sont obligatoires.")
+    }
+};
 
     return(
         <div className="paiement-categories">
@@ -25,17 +53,21 @@ const dispatch = useDispatch();
 <br/>
 <div style={{display:'flex'}}>
 <input
+value={category_name}
+onChange={(text)=>setCategory_name(text.target.value)}
 placeholder='Entrer une nouvelle catégorie de paiement'
 className='input-normall'
 style={{width: '98%', marginRight:10}}
 />
 <input
-placeholder='Entrer une nouvelle catégorie de paiement'
+value={category_amount}
+onChange={(text)=>setCategory_amount(text.target.value)}
+placeholder='Entrer le montant total par an pour cette catégorie'
 className='input-normall'
 style={{width: '98%'}}
 />
 </div>
-<ButtonNormal text="Enregistrer la catégorie de paiement" style={{marginTop: 10, marginBottom:10,width:'100%'}} />
+<ButtonNormal onPress={()=>add_paiement_category()} text="Enregistrer la catégorie de paiement" style={{marginTop: 10, marginBottom:10,width:'100%'}} />
 </div>
 
 <div style={{margin:20, marginTop:10}}>

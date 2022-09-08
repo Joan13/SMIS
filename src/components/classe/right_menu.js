@@ -66,13 +66,6 @@ export default function RightClasseMenu() {
                             <strong className="block-menu-right" style={{ color: 'rgb(0, 0, 0)' }}> Édition</strong>
 
                             <div className="item-menu-right">
-                                <span onClick={() => set_page(19, "", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 19 ? "select-no-border-bold" : ""}`}>
-                                    <BiEdit style={{ marginRight: 7 }} />
-                                    Libéllés
-                                </span>
-                            </div>
-
-                            <div className="item-menu-right">
                                 <span onClick={() => set_page(2, "FPE", false, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 2 ? "select-no-border-bold" : ""}`}>
                                     <BiEdit style={{ marginRight: 7 }} />
                                     Edition des points par élève
@@ -181,6 +174,13 @@ export default function RightClasseMenu() {
                                 <span onClick={() => this.paiements_classe()} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 8 ? "select-no-border-bold" : ""}`}>
                                     <TbReportMoney style={{ marginRight: 7 }} />
                                     Paiement des frais scolaires
+                                </span>
+                            </div>
+
+                            <div className="item-menu-right">
+                                <span onClick={() => set_page(24, "", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 8 ? "select-no-border-bold" : ""}`}>
+                                    <FcFile style={{ marginRight: 7 }} />
+                                    Catégorisation des paiements
                                 </span>
                             </div>
 

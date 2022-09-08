@@ -44,7 +44,7 @@ const initialState = {
     class_loading: 0,
     pupils_school: [],
     pupils_count: 0,
-    fiche_tab:0,
+    fiche_tab: 0,
     pupils_count_male: 0,
     pupils_count_female: 0,
     number_pupils_show: false,
@@ -70,10 +70,14 @@ const initialState = {
     loading_footer: false,
     workers: [],
     trics_timetable: [],
-    timetable: [], 
+    timetable: [],
     course: [],
-    paiement_categories:[],
-    modal_paiement_categories:false,
+    paiement_categories: [],
+    modal_paiement_categories: false,
+    modal_libelles:false,
+    paiements_day:[],
+    frais_divers_day:[],
+    day:"",
 }
 
 const reducer = (state = initialState, action) => {
@@ -81,11 +85,15 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_MODAL_PAIEMENT_CATEGORIES":
             return { ...state, modal_paiement_categories: action.payload }
-            case "SET_WORKERS":
+            case "SET_DAY":
+            return { ...state, day: action.payload }
+            case "SET_MODAL_LIBELLES":
+            return { ...state, modal_libelles: action.payload }
+        case "SET_WORKERS":
             return { ...state, workers: action.payload }
-            case "SET_PAIEMENT_CATEGORIES":
+        case "SET_PAIEMENT_CATEGORIES":
             return { ...state, paiement_categories: action.payload }
-            case "SET_COURSE":
+        case "SET_COURSE":
             return { ...state, course: action.payload }
         case "SET_LOADING_CLASS":
             return { ...state, loading_class: action.payload }
@@ -99,16 +107,29 @@ const reducer = (state = initialState, action) => {
             return { ...state, all_paiements: action.payload }
         case "SET_PAIEMENTS_FRAIS_DIVERS":
             return { ...state, paiements_frais_divers: action.payload }
+            case "SET_FRAIS_DIVERS_DAY":
+            return { ...state, frais_divers_day: action.payload }
+            case "SET_PAIEMENTS_DAY":
+            return { ...state, paiements_day: action.payload }
         case "SET_LIBELLES":
             return { ...state, libelles: action.payload }
         case "SET_LOADING_FOOTER":
             return { ...state, loading_footer: action.payload }
         case "UNLOAD_CLASS":
             return { ...state, can_load_class: false }
-            case "SET_CLASSE_DOMAINS":
+        case "SET_CLASSE_DOMAINS":
             return { ...state, classe: [...state.classe.data.domains, action.payload] }
         case "SET_CLASSE":
             return { ...state, classe: action.payload }
+        case "SET_PUPIL_PAIEMENT_CATEGORY":
+            let index = state.classe.pupils.findIndex(pupil => pupil.pupil_id === action.payload.pupil);
+            let pupil = state.classe.pupils.filter(pupil => pupil.pupil_id === action.payload.pupil);
+            pupil[0].pupil.paiement_category = action.payload.category;
+            let new_classe = action.payload.classe;
+            Object.assign({}, pupil);
+            new_classe.pupils[index] = pupil[0];
+            // console.log(new_classe);
+            return { ...state, classe: new_classe }
         case "SET_CLASSE_OPEN":
             return { ...state, class_open: action.payload }
         case "SET_CYCLES":
@@ -167,9 +188,9 @@ const reducer = (state = initialState, action) => {
             return { ...state, pupils_count: action.payload }
         case "SET_TITLE_MAIN":
             return { ...state, title_main: action.payload }
-            case "SET_FICHES_TAB":
+        case "SET_FICHES_TAB":
             return { ...state, fiches_tab: action.payload }
-            case "SET_FICHE_TAB":
+        case "SET_FICHE_TAB":
             return { ...state, fiche_tab: action.payload }
         case "SET_SCHOOL_NAME_ABB":
             return { ...state, school_name_abb: action.payload }
@@ -195,27 +216,27 @@ const reducer = (state = initialState, action) => {
             return { ...state, courses_count: action.payload }
         case "SET_MOUNT_HOME":
             return { ...state, can_mount_home: action.payload }
-            case "SET_CLASSES_SYNTHESE":
+        case "SET_CLASSES_SYNTHESE":
             return { ...state, classes_synthese: action.payload }
-            case "SET_ALL_PUPILS":
+        case "SET_ALL_PUPILS":
             return { ...state, all_pupils: action.payload }
-            case "SET_NBR_EE":
+        case "SET_NBR_EE":
             return { ...state, nbr_ee: action.payload }
-            case "SET_NBR_TB":
+        case "SET_NBR_TB":
             return { ...state, nbr_tb: action.payload }
-            case "SET_NBR_BB1":
+        case "SET_NBR_BB1":
             return { ...state, nbr_bb1: action.payload }
-            case "SET_NBR_BB2":
+        case "SET_NBR_BB2":
             return { ...state, nbr_bb2: action.payload }
-            case "SET_NBR_ME":
+        case "SET_NBR_ME":
             return { ...state, nbr_me: action.payload }
-            case "SET_NBR_MA":
+        case "SET_NBR_MA":
             return { ...state, nbr_ma: action.payload }
-            case "SET_NBR_CLASSES":
+        case "SET_NBR_CLASSES":
             return { ...state, nbr_classes: action.payload }
-            case "SET_PERIODE_FULL":
+        case "SET_PERIODE_FULL":
             return { ...state, periode_full: action.payload }
-            case "SET_PERIODE_SYNTHESE":
+        case "SET_PERIODE_SYNTHESE":
             return { ...state, periode_full: action.payload }
         default:
             return state;

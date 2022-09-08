@@ -74,6 +74,10 @@ export const mapStateToProps = (state) => {
         course:state.course,
         paiement_categories: state.paiement_categories,
         modal_paiement_categories:state.modal_paiement_categories,
+        modal_libelles: state.modal_libelles,
+        paiements_day:state.paiements_day,
+        frais_divers_day: state.frais_divers_day,
+        day:state.day,
     }
 }
 

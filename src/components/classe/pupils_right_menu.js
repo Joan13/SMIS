@@ -76,7 +76,7 @@ const PupilsRightMenu = () => {
 
                     <input
                         onChange={(val) => searchPupil(val.target.value)}
-                        style={{}}
+                        style={{backgroundColor:'transparent'}}
                         placeholder="Recherchez un élève" />
 
                     {searching_pupil ?

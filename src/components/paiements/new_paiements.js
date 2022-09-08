@@ -25,8 +25,19 @@ class NewPaiements extends Component {
             montant_frais: "",
             libelle_frais: "",
             success_2: "",
+            category: this.props.paiement_categories.filter(category=>category.category_id === this.props.pupil.pupil.paiement_category).length === 0 ? this.props.paiement_categories[0] : this.props.paiement_categories.filter(category=>category.category_id === this.props.pupil.pupil.paiement_category)[0],
 
         }
+    }
+
+    componentDidMount() {
+        // const category = this.props.paiement_categories.filter(category=>category.category_id === this.props.pupil.pupil.paiement_category);
+        // setTimeout(()=>{
+        //     this.setState({category: category});
+        // console.log(this.state.category);
+        // }, 2000);
+        // Object.assign({}, this.state.category);
+        // console.log(this.state.category);
     }
 
     new_frais_divers() {
@@ -116,7 +127,7 @@ class NewPaiements extends Component {
 
         date = day + "/" + month + "/" + date.getFullYear();
 
-        if (montant !== "" && montant_text !== "" && libelle !== "" && total_montant !== "") {
+        if (montant !== "" && montant_text !== "" && libelle !== "") {
             let url_server = sessionStorage.getItem('yambi_smis_url_server');
             this.setState({ loading_middle: true });
 
@@ -129,7 +140,7 @@ class NewPaiements extends Component {
                     input_montant: montant,
                     input_montant_text: montant_text,
                     selectionner_le_libelle: libelle,
-                    total_montant: total_montant,
+                    total_montant: this.state.category.category_amount,
                     school_year: school_year,
                     date_entry: date
                 })
@@ -171,7 +182,14 @@ class NewPaiements extends Component {
                             <td className="td-border-right">
                                 <table style={{ width: "100%" }}>
                                     <tbody>
-                                        <tr>
+                                        {
+                                            this.props.pupil.pupil.paiement_category === "0" ?
+                                            <div>
+Cet élève est exempté(e) de tout paiement des frais scolaires.
+                                            </div>
+                                            :
+                                            <>
+                                            <tr>
                                             <td>
                                                 <select
                                                     value={this.state.libelle_paie}
@@ -202,27 +220,15 @@ class NewPaiements extends Component {
 
                                         <tr>
                                             <td style={{ paddingTop: 10 }}>
-                                                {/* Montant en toutes lettres: */}
                                                 {this.state.montant_paie !== "" ?
                                                 <div><strong style={{color:'rgb(0, 80, 180)'}}>{this.state.montant_text_paie} </strong>dollars Américains<br/></div>:null}
-                                                {/* <input
-                                                    value={this.state.montant_text_paie}
-                                                    onChange={(value) => this.setState({ montant_text_paie: value.target.value })}
-                                                    placeholder="Ex: Cent trente"
-                                                    className="input-montant"
-                                                    type="text" /> */}
                                             </td>
                                         </tr>
 
                                         <tr>
                                             <td style={{ paddingTop: 10 }}>
-                                                Montant total :<br />
-                                                <input
-                                                    value={this.state.total_montant}
-                                                    onChange={(value) => this.setState({ total_montant: value.target.value })}
-                                                    placeholder="Ex: 360"
-                                                    className="input-montant"
-                                                    type="text" />
+                                                Catégorie : <span style={{fontWeight:'bold', color: 'rgb(0, 80, 180)'}}>{this.state.category.category_name} </span>  | 
+                                                Montant total à payer : <span style={{fontWeight:'bold', color: 'rgb(0, 80, 180)'}}> {this.state.category.category_amount}</span>
                                             </td>
                                         </tr>
 
@@ -243,6 +249,8 @@ class NewPaiements extends Component {
                                                 }
                                             </td>
                                         </tr>
+                                            </>
+                                        }
                                     </tbody>
                                 </table>
                             </td>
@@ -274,6 +282,13 @@ class NewPaiements extends Component {
                                                     placeholder="Ex: 10"
                                                     className="input-montant"
                                                     type="number" />
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style={{ paddingTop: 10 }}>
+                                                {this.state.montant_frais !== "" ?
+                                                <div><strong style={{color:'rgb(0, 80, 180)'}}>{NumberToLetter(this.state.montant_frais)} </strong>dollars Américains<br/></div>:null}
                                             </td>
                                         </tr>
 

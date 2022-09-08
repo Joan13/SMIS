@@ -47,6 +47,7 @@ export default class NewClasseImport extends React.Component {
             perm_number: "",
             nationality: "",
             statut_scolaire: "0",
+            paiement_category: "",
             classe: [],
         }
     }
@@ -121,7 +122,7 @@ export default class NewClasseImport extends React.Component {
 
                 let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/new_pupil_classe.php";
 
-                let nom = this.state.classe[i].Nom;
+                let nom = this.state.classe[i].Nom.trim();
                 let postnom = this.state.classe[i].Postnom;
                 let prenom = this.state.classe[i].Prenom;
                 let pnumero0 = this.state.classe[i].Pnumero0;
@@ -138,6 +139,7 @@ export default class NewClasseImport extends React.Component {
                 let pnumero11 = this.state.classe[i].Pnumero11;
                 let pnumero12 = this.state.classe[i].Pnumero12;
 
+                let gender = this.state.classe[i].Sexe;
                 let address = this.state.classe[i].Adresse;
                 let Lnaissance = this.state.classe[i].Lnaissance;
                 let Dnaissance = this.state.classe[i].Dnaissance;
@@ -157,6 +159,14 @@ export default class NewClasseImport extends React.Component {
                 if (pnumero11 === undefined) { pnumero11 = '' }
                 if (pnumero12 === undefined) { pnumero12 = '' }
 
+                if (gender === undefined) 
+                { gender = '1' } 
+                else if(gender === 'F') 
+                { gender = '0'} 
+                else {gender = '0'}
+
+                // if (nom !== undefined) { nom = nom.trim() }
+
                 if (address === undefined) { address = '' }
                 if (Lnaissance === undefined) { Lnaissance = '' }
                 if (Dnaissance === undefined) { Dnaissance = '' }
@@ -165,7 +175,7 @@ export default class NewClasseImport extends React.Component {
                 let permanent_number = pnumero0 + pnumero1 + pnumero2 + pnumero3 + pnumero4 + pnumero5 + pnumero6 + pnumero7 + pnumero8 + pnumero9 + pnumero10 + pnumero11 + pnumero12;
                 // let namee = nom.trim();
                 let name = nom.substring(nom.indexOf(" ") + 1);
-                // let name1 = postnom.substring(postnom.indexOf(" ") + 1);
+                // prenom = nom.substring(nom.indexOf(" ") + 2);
 
                 // console.log(postnom);
                 // if(prenom ==undefined){
@@ -174,19 +184,23 @@ export default class NewClasseImport extends React.Component {
 
                 if (postnom === undefined || postnom === "") {
                     nom = nom.replace(name, "");
-                    postnom = name;
+                    postnom = name.trim();
                     // console.log(nom + " " +postnom);
                 }
 
                 if (prenom === undefined || prenom === "") {
-                    // postnom = postnom.replace(postnom,"");
-                    // prenom = name1;
-                    // console.log(nom + " " +postnom+" "+prenom);
+                    let name1 = postnom.substring(postnom.indexOf(" ") + 1);
+                    postnom = postnom.replace(name1,"");
+                    if (postnom === "") {
+                        postnom = name1;
+                        prenom = "";
+                    } else {
+                        prenom = name1;
+                    }
+                    // console.log(nom + " _ " +postnom+" _ "+prenom);
 
-                    prenom = "";
+                    // prenom = "";
                 }
-
-                // console.log(postnom)
 
                 fetch(BaseURL, {
                     method: 'POST',
@@ -194,7 +208,7 @@ export default class NewClasseImport extends React.Component {
                         first_name_pupil: nom,
                         second_name_pupil: postnom,
                         last_name_pupil: prenom,
-                        gender_pupil: "0",
+                        gender_pupil: gender,
                         birth_date_pupil: Dnaissance,
                         birth_place_pupil: Lnaissance,
                         father_name: this.state.father_name,
@@ -220,6 +234,7 @@ export default class NewClasseImport extends React.Component {
                         perm_number: permanent_number,
                         nationality: nationality,
                         statut_scolaire: this.state.statut_scolaire,
+                        paiement_category: "",
                     })
                 })
                     .then((response) => response.json())
@@ -298,6 +313,7 @@ export default class NewClasseImport extends React.Component {
                     Enregistrer la classe
                 </div>
 
+                <div style={{marginLeft:20, width:'97%'}}>
                 <span className="title-background">I. IDENTITÉ DE LA CLASSE</span>
                 <table className="tables-new-pupil">
                     <tbody>
@@ -413,6 +429,7 @@ export default class NewClasseImport extends React.Component {
                     </div>
                     <input style={{ display: 'none' }} type="file" id="classe" onChange={(data) => this.uploadClasse(data.target.files[0])} />
                     <label className='button-primary' style={{ paddingLeft: 25, paddingRight: 25 }} for="classe">Uploader le fichier Excel (au format .xlsx)</label>
+                </div>
                 </div>
 
                 {this.state.modal_view ?

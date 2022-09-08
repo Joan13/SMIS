@@ -145,6 +145,7 @@ class Signin extends Component {
                 // this.props.dispatch({ type: "SET_PPS", payload: response.pupils });
                 this.props.dispatch({ type: "SET_PUPILS_COUNT_PAIEMENTS", payload: response.pupils_count_paiements });
                 this.props.dispatch({ type: "SET_MONTANT_TOTAL", payload: response.montant_paye });
+                this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_categories});
 
                 // this.parse_classes(response.classes);
 
