@@ -89,7 +89,8 @@ class NewPaiements extends Component {
                         libelle_frais: "",
                         loading_middle2: false,
                         success_2: "Operation successful"
-                    })
+                    });
+                    this.props.dispatch({ type: "SET_PUPIL", payload: response.pupil });
                 })
                 .catch((error) => {
                     console.log(error)

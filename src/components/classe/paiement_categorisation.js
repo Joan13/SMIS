@@ -79,44 +79,12 @@ const ClassePaiementCategorisation = () => {
         window.location.replace("http://" + url_server + home_redirect);
     }
 
-//     const update_classe=(classe)=> {
-//         let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
-
-//         fetch(BaseURL, {
-//             method: 'POST',
-//             body: JSON.stringify({
-//                 cycle_id: classe.cycle,
-//                 class_id: classe.class,
-//                 order_id: classe.order,
-//                 section_id: classe.section,
-//                 option_id: classe.option,
-//                 school_year: classe.school_year,
-//             })
-//         })
-//             .then((response) => response.json())
-//             .then((response) => {
-                    
-//                 for(let i in classes) {
-//                     if (classes[i].id_classes === classe.id_classes) {
-//                         classes[i].data = response;
-//                     }
-//                 }
-                        
-//     });
-// }
-
     return (
-        <>
+        <div style={{marginRight:10}}>
             <div style={{ float: 'right', marginBottom: -60, paddingTop: 10 }}>
                 <span onClick={() => printContent("paiement_categories")} className="add-minus" style={{ fontWeight: 'bold', marginBottom: 10 }}>
                     <FiPrinter /> IMPRIMER LA FICHE
                 </span><br /><br />
-                {/* <span
-                    onClick={() => viewByCategory ? setViewByCategory(false) : setViewByCategory(true)}
-                    className="add-minus"
-                    style={{ marginTop: 20 }}>
-                    Voir par catégorie  {viewByCategory ? <FiChevronUp /> : <FiChevronDown />}
-                </span> */}
             </div>
 
 
@@ -247,7 +215,7 @@ const ClassePaiementCategorisation = () => {
                     </table>
                 </div>
             }
-        </>
+        </div>
     )
 }
 

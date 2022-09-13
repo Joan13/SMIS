@@ -25,54 +25,6 @@ class ViewPupil extends React.Component {
         }
     }
 
-    open_class() {
-
-        if (this.state.can_mount < 5) {
-
-            console.log("Can mount liste");
-            // this.setState({ can_mount: this.state.can_mount + 1 });
-
-            let classe = sessionStorage.getItem('classeYambiSMIS');
-            let url_server = sessionStorage.getItem('yambi_smis_url_server');
-            classe = JSON.parse(classe);
-            this.setState({
-                classe: classe,
-                title_main: classe.class_id + " " + classe.section_id + " " + classe.order_id,
-                loading_middle: true,
-                url_server: url_server
-            });
-
-            let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_summary.php";
-
-            fetch(BaseURL, {
-                method: 'POST',
-                body: JSON.stringify({
-                    cycle_id: classe.cycle,
-                    class_id: classe.class,
-                    order_id: classe.order,
-                    section_id: classe.section,
-                    option_id: classe.option,
-                    school_year: classe.school_year,
-                })
-            })
-                .then((response) => response.json())
-                .then((response) => {
-                    this.setState({
-                        courses: response.courses,
-                        pupils: response.pupils,
-                        autres: response.autres,
-                        loading_middle: false,
-                    })
-                })
-                .catch((error) => {
-                    // alert(error.toString());
-                    // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
-                });
-
-            // this.setState({ can_mount: this.state.can_mount + 1 });
-        }
-    }
-
     find_class_number(class_id) {
 
         let return_value = "";
@@ -195,9 +147,6 @@ class ViewPupil extends React.Component {
         let fullDate = day + " " + month + " " + year;
 
         return fullDate;
-    }
-
-    componentDidMount() {
     }
 
     printContent(divName) {

@@ -7,6 +7,7 @@ import { Button, TextField, MenuItem, CircularProgress } from '@material-ui/core
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../store/state_props';
 import { year } from '../../global_vars';
+import ButtonNormal from '../../components/includes/button_normal';
 // import {ipcRenderer} from 'electron';
 
 class Signin extends Component {
@@ -446,7 +447,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
 
                         {!this.state.is_loading ?
                         <>
-                            <button onClick={() => this.signin()} className="button-primary" style={{ width: '100%' }}>Connexion</button> 
+                            <ButtonNormal text="Connexion"  style={{ width: '100%' }}  onPress={() => this.signin()}/>
                             <div style={{ marginTop: 10, textAlign: 'right', fontSize: 15 }}>Besoin d'aide ? <span onClick={() => this.state.aide ? this.setState({ aide: false }) : this.setState({ aide: true })} style={{ color: 'rgba(0, 80, 180)' }} className="pointer">Cliquez ici.</span></div>
                         </>
                                 : null  }

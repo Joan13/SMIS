@@ -196,6 +196,7 @@ class Home extends Component {
                 this.props.dispatch({ type: "SET_LIBELLES", payload: response.libelles });
                 this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Année scolaire" });
                 this.props.dispatch({ type: "SET_PUPILS_SCHOOL", payload: response.pupils });
+                this.props.dispatch({ type: "SET_PUPILS", payload: response.pupils });
                 this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_categories});
                 
                 resolve();

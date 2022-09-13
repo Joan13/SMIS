@@ -108,7 +108,7 @@ class ListeNomminative extends React.Component {
 
     render() {
         return (
-            <div style={{ marginBottom: 50, paddingTop: 0 }}>
+            <div style={{ marginBottom: 50, paddingTop: 0, marginRight:10 }}>
 
                 {this.props.classe.pupils_count !== 0 ?
                     <div onClick={() => this.printContent("nomminative")} style={{ display: 'block', fontWeight: 'bold', float: 'right', marginBottom: -50, paddingTop: 3 }}>

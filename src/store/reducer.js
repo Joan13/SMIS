@@ -25,6 +25,7 @@ const initialState = {
     class_open: false,
     periode_synthese: '1',
     classes_synthese: [],
+    pupils:[],
     all_pupils: 0,
     nbr_ee: 0,
     nbr_tb: 0,
@@ -54,7 +55,6 @@ const initialState = {
     doubles: 0,
     echecs: 0,
     abandon: 0,
-    pupils_list: [],
     pupils_marks: [],
     courses: [],
     searching_pupil: false,
@@ -210,8 +210,6 @@ const reducer = (state = initialState, action) => {
             return { ...state, url_server: action.payload }
         case "SET_PUPIL":
             return { ...state, pupil: action.payload }
-        case "SET_PUPILS":
-            return { ...state, pupils_list: action.payload }
         case "SET_COURSES_COUNT":
             return { ...state, courses_count: action.payload }
         case "SET_MOUNT_HOME":
@@ -220,6 +218,8 @@ const reducer = (state = initialState, action) => {
             return { ...state, classes_synthese: action.payload }
         case "SET_ALL_PUPILS":
             return { ...state, all_pupils: action.payload }
+            case "SET_PUPILS":
+            return { ...state, pupils: action.payload }
         case "SET_NBR_EE":
             return { ...state, nbr_ee: action.payload }
         case "SET_NBR_TB":

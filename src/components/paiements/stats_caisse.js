@@ -1,7 +1,9 @@
 import React from 'react';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { connect } from 'react-redux';
 import { format_date, find_date, find_date2 } from '../../global_vars';
 import { mapStateToProps } from '../../store/state_props';
+import GeneralStatsCaisse from './general_stats';
 import PaiementsDay from './paiements_day';
 
 class StatistiquesCaisse extends React.Component {
@@ -16,6 +18,7 @@ class StatistiquesCaisse extends React.Component {
             montant: 0,
             date: new Date().getFullYear() + "-" + parseInt(new Date().getMonth() + 1) + "-" + new Date().getDate(),
             makuta_day: 0,
+            stats_tab:0,
         }
 
         this.set_stats = this.set_stats.bind(this);
@@ -93,82 +96,37 @@ class StatistiquesCaisse extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{marginRight:10, marginBottom:30}}>
                 <div>
-                    <div className="border-bottom-blue">
-                        <div style={{ marginBottom: 10, fontWeight: 'bold', marginTop: 10 }}>Paramètres de l'état de caisse</div>
+                    <div>
+                    {this.state.stats_tab !== 1 ?
+                        <div 
+                    onClick={() => this.setState({stats_tab:1})} 
+                    style={{ fontWeight: 'bold' }}>
+                <span className="add-minus"><FiChevronRight /> État général de caisse</span>
+            </div>
+            :
+            <div 
+                    onClick={() => this.setState({stats_tab:0})} 
+                    style={{ fontWeight: 'bold' }}>
+                <span className="add-minus"><FiChevronLeft /> État Journalier de paiement</span>
+            </div>}
 
-                        <table style={{ width: "100%" }}>
-                            <tbody>
-                                <tr>
-                                    <td style={{ width: "50%" }}>
-                                        <div style={{ marginBottom: 10 }}>
-                                            Montant initial de base par an par élève<br />
-                                            <input type="number" className="input-normall" onChange={(text) => this.set_stats(text.target.value)} placeholder="Ex.: 420" />
-                                        </div>
-                                    </td>
-                                    <td style={{ width: "50%" }}>
-                                        <div style={{ marginBottom: 10 }}>
+            {this.state.stats_tab === 0 ?
+            <div>
+                <div style={{ marginBottom: 10, float:'right', marginRight: 20, marginTop:-15  }}>
                                             Sélectionner une date<br />
-                                            <input type="date" className='input-normall' onChange={(text) => this.generate_day_stats(text.target.value)} placeholder="Ex.: 420" />
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div style={{ marginTop: 70, marginBottom: 70, textAlign: 'center', fontWeight: 'bold', fontSize: 17 }}>
+                                            <input type="date" className='input-normall' style={{paddingRight: 15}} onChange={(text) => this.generate_day_stats(text.target.value)} />
+                                        </div><br/><br/>
+                                        <div style={{ marginTop: 70, marginBottom: 70, textAlign: 'center', fontWeight: 'bold', fontSize: 17 }}>
                         Montant total perçu dans la journée du {find_date2(this.props.day)}<br />
-                        <strong style={{ color: "rgb(0, 80, 180)", fontSize: 22 }}>{this.state.makuta_day} dollars Américains</strong>
+                        <strong style={{ color: "rgb(0, 80, 180)", fontSize: 22 }}>{this.state.makuta_day} dollars Américains</strong><br/><br/>
+                    </div>
+            </div>:null}
                     </div>
 
-<PaiementsDay />
+{this.state.stats_tab === 0 ? <PaiementsDay /> : <GeneralStatsCaisse />}
                 </div>
-
-                {/* <table style={{ width: "100%" }} className="table-border">
-                    <thead>
-                        <tr>
-                            <td style={{ paddingTop: 20, paddingBottom: 20, textAlign: 'center', color: "rgba(0,80,180)", fontSize: 17 }} colSpan="3">
-                                <strong>{this.props.title_main} {this.props.annee_scolaire.year_name}</strong> (Paiements scolaires et frais divers)
-                            </td>
-                        </tr>
-                        <tr>
-                            <th style={{ textAlign: 'center', width: '33.33%', paddingTop: 10, paddingBottom: 10 }}>Premier Trimestre</th>
-                            <th style={{ textAlign: 'center', width: '33.33%', paddingTop: 10, paddingBottom: 10 }}>Deuxième trimestre</th>
-                            <th style={{ textAlign: 'center', width: '33.33%', paddingTop: 10, paddingBottom: 10 }}>Troisième Trimestre</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style={{ width: "33.33%", paddingLeft: 0, textAlign: "center", paddingTop: 10, paddingBottom: 10 }}>
-                                Payé     <strong style={{ color: 'rgb(0, 80, 180)', fontSize: 15 }}>{this.state.t1}</strong>
-                            </td>
-                            <td style={{ width: "33.33%", textAlign: "center", paddingTop: 10, paddingBottom: 10 }}>
-                                <strong style={{ color: 'rgb(0, 80, 180)', fontSize: 15 }}>{this.state.t2}</strong>
-                            </td>
-                            <td style={{ width: "33.33%", textAlign: "center", paddingTop: 10, paddingBottom: 10 }}>
-                                <strong style={{ color: 'rgb(0, 80, 180)', fontSize: 15 }}>{this.state.t3}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style={{ width: "33.33%", paddingLeft: 0, textAlign: "center", paddingTop: 10, paddingBottom: 10 }}>
-                                Sur      {(((this.props.pupils_count_paiements) * this.state.montant) / 3).toString().substr(0, 9)}
-                            </td>
-                            <td style={{ width: "33.33%", textAlign: "center", paddingTop: 10, paddingBottom: 10 }}>
-                                {(((this.props.pupils_count_paiements) * this.state.montant) / 3).toString().substr(0, 9)}
-                            </td>
-                            <td style={{ width: "33.33%", textAlign: "center", paddingTop: 10, paddingBottom: 10 }}>
-                                {(((this.props.pupils_count_paiements) * this.state.montant) / 3).toString().substr(0, 9)}
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td style={{ paddingTop: 10, paddingBottom: 10, textAlign: 'center' }} colSpan="3"><strong style={{ color: 'rgb(0, 80, 180)', fontSize: 16 }}>Montant à totaliser {(this.props.pupils_count_paiements) * this.state.montant} dollars Américains</strong></td>
-                        </tr>
-                    </tfoot>
-                </table> */}
             </div>
         )
     }

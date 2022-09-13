@@ -78,6 +78,7 @@ input::-webkit-inner-spin-button {
   padding-bottom: 15px;
   border: none;
   border-radius: 5px;
+  box-shadow: 3px 4px 4px rgb(140, 192, 255);
 }
 
 .button-primary:hover {

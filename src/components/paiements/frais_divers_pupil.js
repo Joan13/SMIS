@@ -68,6 +68,24 @@ class AllPupilPaiements extends Component {
         return return_value;
     }
 
+    find_pupil() {
+        console.log(this.props.pupil);
+        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
+
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                pupil_id: this.props.pupil.pupil.pupil_id,
+            })
+        })
+            .then((response) => response.json())
+            .then((response) => {
+
+                this.props.dispatch({ type: "SET_PUPIL", payload: response.pupil });
+            })
+            .catch((error) => { });
+    };
+
     printContent(divName) {
 
         let printContents = document.getElementById(divName).innerHTML;
@@ -92,7 +110,7 @@ class AllPupilPaiements extends Component {
         })
             .then((response) => response.json())
             .then((response) => {
-
+                this.find_pupil();
             })
             .catch((error) => {
                 // alert(error.toString());
@@ -158,40 +176,40 @@ class AllPupilPaiements extends Component {
                         <div key={index} style={{ marginBottom: 20 }}>
                             <div>
                                 <div className="div-recu-recuu">
-                                        <table style={{ width: "100%" }}>
-                                            <tbody>
-                                                <tr>
-                                                    <td colSpan={2}>
-                                                        <table style={{ width: "100%" }}>
+                                    <table style={{ width: "100%" }}>
+                                        <tbody>
+                                            <tr>
+                                                <td colSpan={2}>
+                                                    <table style={{ width: "100%" }}>
                                                         <thead>
-                                                                <tr style={{backgroundColor:'rgba(0, 0, 0, 0.1)'}}>
-                                                                    <th>Date</th>
-                                                                    <th style={{textAlign:'left'}}>Raison du paiement</th>
-                                                                    <th>Montant</th>
-                                                                    <th>Année scolaire</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                <td style={{textAlign:'center'}}>{find_date(frais.date_entry)}</td>
-                                                                <td style={{ }}>{this.find_libelle(frais.libelle)}</td>
-                                                                <td style={{textAlign:'center'}}>{frais.montant}</td>
-                                                                <td style={{textAlign:'center'}}>{this.props.annee_scolaire.year_name}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                                            <tr style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
+                                                                <th>Date</th>
+                                                                <th style={{ textAlign: 'left' }}>Raison du paiement</th>
+                                                                <th>Montant</th>
+                                                                <th>Année scolaire</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style={{ textAlign: 'center' }}>{find_date(frais.date_entry)}</td>
+                                                                <td style={{}}>{this.find_libelle(frais.libelle)}</td>
+                                                                <td style={{ textAlign: 'center' }}>{frais.montant}</td>
+                                                                <td style={{ textAlign: 'center' }}>{this.props.annee_scolaire.year_name}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
 
-                            <div style={{ textAlign: 'left', marginTop:5 }}>
+                            <div style={{ textAlign: 'left', marginTop: 5 }}>
                                 <span>
                                     <FaChevronDown color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
                                     <span
-                                        onClick={() => this.delete_recu(frais.frais_divers_id)} 
+                                        onClick={() => this.delete_recu(frais.frais_divers_id)}
                                         className="add-minus">
                                         EFFACER CE REÇU
                                     </span>

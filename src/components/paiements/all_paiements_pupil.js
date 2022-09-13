@@ -82,6 +82,23 @@ class AllPupilPaiements extends Component {
         window.location.replace("http://" + this.props.url_server + home_redirect);
     }
 
+    find_pupil() {
+        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
+
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                pupil_id: this.props.pupil.pupil.pupil_id,
+            })
+        })
+            .then((response) => response.json())
+            .then((response) => {
+
+                this.props.dispatch({ type: "SET_PUPIL", payload: response.pupil });
+            })
+            .catch((error) => { });
+    };
+
     delete_recu(recu_id) {
 
         let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/delete_recu.php";
@@ -94,7 +111,7 @@ class AllPupilPaiements extends Component {
         })
             .then((response) => response.json())
             .then((response) => {
-
+                this.find_pupil();
             })
             .catch((error) => {
                 // alert(error.toString());
@@ -105,136 +122,137 @@ class AllPupilPaiements extends Component {
 
     render() {
         return (
-            <div style={{width:'100%'}}>
+            <div style={{ width: '100%' }}>
                 {this.props.pupil.paiements.map((paiement, index) => {
 
                     if (paiement.paiement_validated === "1") {
-                    return (
-                        <div key={index} style={{ margin:0, padding:0, marginBottom: 20 }}>
+                        return (
+                            <div key={index} style={{ margin: 0, padding: 0, marginBottom: 20 }}>
 
-                            <div id={`recu ${paiement.paiement_id}`}>
-                                <div className="div-recu">
-                                    <div className="sub-div-recu">
-                                        <table style={{ width: "100%", padding: 10, paddingTop: 0, paddingBottom: 0 }}>
-                                            <tbody>
-                                                <tr>
-                                                    <td className="td-border-right-recu" style={{ width: "50%", fontSize: 12 }}>
-                                                        <strong className="div-title-recu">{(this.props.autres.school_name).toUpperCase()}</strong><br />
-                                                        <strong className="sub-title-div-recu">{this.props.autres.school_bp}</strong>
-                                                        <table>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>EMAIL <span style={{ color: 'transparent' }}>Ybi</span></td>
-                                                                    <td>: <strong>{this.props.autres.email_school}</strong></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>TÉLÉPHONES <span style={{ color: 'transparent' }}>Ybi</span></td>
-                                                                    <td>: <strong>{this.props.autres.phone_1}</strong></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td> </td>
-                                                                    <td><span style={{ color: 'transparent' }}>:</span> <strong>{this.props.autres.phone_2}</strong></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                    <td style={{ width: "50%", fontSize: 12, paddingLeft: 10 }}>
-                                                        <table>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>ÉLÈVE : <strong>{this.props.pupil.pupil.first_name.toUpperCase()} {this.props.pupil.pupil.second_name.toUpperCase()} {this.props.pupil.pupil.last_name}</strong>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>CLASSE : <strong>{this.find_class_number(this.props.pupil.pupil.class_school)} {this.find_cycle(this.props.pupil.pupil.cycle_school)} {this.find_class_order(this.props.pupil.pupil.class_order)}</strong>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>ANNÉE SCOLAIRE : <strong>{this.props.annee_scolaire.year_name}</strong>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr style={{ padding: 20 }}>
-                                                                    <td colSpan={2}><strong>REÇU DES FRAIS SCOLAIRES</strong></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>DATE : <strong>{find_date(paiement.date_creation)}</strong>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>REÇU No : <strong>{paiement.paiement_id}</strong></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="td-border-right-top" colSpan={2}>
-                                                        <table style={{ width: "100%" }}>
-                                                            <tbody>
-                                                                <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
-                                                                <tr>
-                                                                    <td>ÉLÈVE : <strong>{this.props.pupil.pupil.first_name.toUpperCase()} {this.props.pupil.pupil.second_name.toUpperCase()} {this.props.pupil.pupil.last_name}</strong>
-                                                                    </td>
-                                                                </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
-                                                                <tr>
-                                                                    <td style={{ width: '50%' }}>Montant payé : <strong>{paiement.montant_paye} dollars USD</strong>
-                                                                    </td>
-                                                                    <td>Montant En toutes lettres : <strong>{paiement.montant_text} dollars Américains</strong>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
-                                                                <tr>
-                                                                    <td style={{ width: '50%' }} valign="top">Solde année : <strong>{this.props.pupil.soldes.solde} dollars USD</strong>
-                                                                    </td>
-                                                                    <td>Solde par trimestre    <FaArrowDown size={10} style={{ marginLeft: 5 }} /><br />
-                                                                        <div style={{ marginTop: 5, paddingTop: 2 }} className="td-border-left-top dispp">
-                                                                            <span>T1 : <strong>{this.props.pupil.soldes.solde1}</strong></span><span style={{ marginLeft: 20, marginRight: 20, color: 'gray' }}> | </span>
-                                                                            <span>T2 : <strong>{this.props.pupil.soldes.solde2}</strong></span><span style={{ marginLeft: 20, marginRight: 20, color: 'gray' }}> | </span>
-                                                                            <span>T3 : <strong>{this.props.pupil.soldes.solde3}</strong></span>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td style={{ width: '50%' }}>Motif du paiement : <strong>{this.find_libelle(paiement.libelle)}</strong>
-                                                                    </td>
-                                                                    <td></td>
-                                                                </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                                <div id={`recu ${paiement.paiement_id}`}>
+                                    <div className="div-recu">
+                                        <div className="sub-div-recu">
+                                            <table style={{ width: "100%", padding: 10, paddingTop: 0, paddingBottom: 0 }}>
+                                                <tbody>
+                                                    <tr>
+                                                        <td className="td-border-right-recu" style={{ width: "50%", fontSize: 12 }}>
+                                                            <strong className="div-title-recu">{(this.props.autres.school_name).toUpperCase()}</strong><br />
+                                                            <strong className="sub-title-div-recu">{this.props.autres.school_bp}</strong>
+                                                            <table>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>EMAIL <span style={{ color: 'transparent' }}>Ybi</span></td>
+                                                                        <td>: <strong>{this.props.autres.email_school}</strong></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>TÉLÉPHONES <span style={{ color: 'transparent' }}>Ybi</span></td>
+                                                                        <td>: <strong>{this.props.autres.phone_1}</strong></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> </td>
+                                                                        <td><span style={{ color: 'transparent' }}>:</span> <strong>{this.props.autres.phone_2}</strong></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                        <td style={{ width: "50%", fontSize: 12, paddingLeft: 10 }}>
+                                                            <table>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>ÉLÈVE : <strong>{this.props.pupil.pupil.first_name.toUpperCase()} {this.props.pupil.pupil.second_name.toUpperCase()} {this.props.pupil.pupil.last_name}</strong>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>CLASSE : <strong>{this.find_class_number(this.props.pupil.pupil.class_school)} {this.find_cycle(this.props.pupil.pupil.cycle_school)} {this.find_class_order(this.props.pupil.pupil.class_order)}</strong>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>ANNÉE SCOLAIRE : <strong>{this.props.annee_scolaire.year_name}</strong>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style={{ padding: 20 }}>
+                                                                        <td colSpan={2}><strong>REÇU DES FRAIS SCOLAIRES</strong></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>DATE : <strong>{find_date(paiement.date_creation)}</strong>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>REÇU No : <strong>{paiement.paiement_id}</strong></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td className="td-border-right-top" colSpan={2}>
+                                                            <table style={{ width: "100%" }}>
+                                                                <tbody>
+                                                                    <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                                                                    <tr>
+                                                                        <td>ÉLÈVE : <strong>{this.props.pupil.pupil.first_name.toUpperCase()} {this.props.pupil.pupil.second_name.toUpperCase()} {this.props.pupil.pupil.last_name}</strong>
+                                                                        </td>
+                                                                    </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                                                                    <tr>
+                                                                        <td style={{ width: '50%' }}>Montant payé : <strong>{paiement.montant_paye} dollars USD</strong>
+                                                                        </td>
+                                                                        <td>Montant En toutes lettres : <strong>{paiement.montant_text} dollars Américains</strong>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                                                                    <tr>
+                                                                        <td style={{ width: '50%' }} valign="top">Solde année : <strong>{this.props.pupil.soldes.solde} dollars USD</strong>
+                                                                        </td>
+                                                                        <td>Solde par trimestre    <FaArrowDown size={10} style={{ marginLeft: 5 }} /><br />
+                                                                            <div style={{ marginTop: 5, paddingTop: 2 }} className="td-border-left-top dispp">
+                                                                                <span>T1 : <strong>{this.props.pupil.soldes.solde1}</strong></span><span style={{ marginLeft: 20, marginRight: 20, color: 'gray' }}> | </span>
+                                                                                <span>T2 : <strong>{this.props.pupil.soldes.solde2}</strong></span><span style={{ marginLeft: 20, marginRight: 20, color: 'gray' }}> | </span>
+                                                                                <span>T3 : <strong>{this.props.pupil.soldes.solde3}</strong></span>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style={{ width: '50%' }}>Motif du paiement : <strong>{this.find_libelle(paiement.libelle)}</strong>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
 
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
-                                                <tr>
-                                                    <td style={{ width: "100%", textAlign: 'center' }} colSpan={2}>
-                                                        Signature et sceau de l'école
-                                                    </td>
-                                                </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
-                                            </tbody>
-                                        </table>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                                                    <tr>
+                                                        <td style={{ width: "100%", textAlign: 'center' }} colSpan={2}>
+                                                            Signature et sceau de l'école
+                                                        </td>
+                                                    </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div style={{ textAlign: 'left', marginTop:5 }}>
-                                <span>
-                                    <FaChevronDown color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
-                                    <span
-                                        onClick={() => this.delete_recu(paiement.paiement_id)} 
-                                        className="add-minus">
-                                        EFFACER CE REÇU
+                                <div style={{ textAlign: 'left', marginTop: 5 }}>
+                                    <span>
+                                        <FaChevronDown color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
+                                        <span
+                                            onClick={() => this.delete_recu(paiement.paiement_id)}
+                                            className="add-minus">
+                                            EFFACER CE REÇU
+                                        </span>
                                     </span>
-                                </span>
 
-                                <span>
-                                    <span className="divider-menu-topbar"></span>
-                                    <FaPrint color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
-                                    <span onClick={() => this.printContent(`recu ${paiement.paiement_id}`)} className="add-minus">
-                                        IMPRIMER CE REÇU
+                                    <span>
+                                        <span className="divider-menu-topbar"></span>
+                                        <FaPrint color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
+                                        <span onClick={() => this.printContent(`recu ${paiement.paiement_id}`)} className="add-minus">
+                                            IMPRIMER CE REÇU
+                                        </span>
                                     </span>
-                                </span>
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )
+                    }
                 })}
             </div>
         )
