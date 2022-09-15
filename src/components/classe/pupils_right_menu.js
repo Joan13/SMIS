@@ -68,6 +68,7 @@ const PupilsRightMenu = () => {
 
     return (
         <div className="menu-right">
+        <br/>
             <div>
                 <strong>Tous les élèves ({pupils_count})</strong>
 

@@ -3,6 +3,7 @@ import { Button } from '@material-ui/core';
 import modalView from '../../includes/modal';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../store/state_props';
+import ButtonNormal from '../includes/button_normal';
 
 class NewPupil extends React.Component {
 
@@ -137,13 +138,9 @@ class NewPupil extends React.Component {
         return (
             <div className="center-fixeddd" style={{ paddingRight: 20 }}>
 
-                <div
-                    className="save-pupil"
-                    onClick={() => this.register_new_pupil()}>
-                    Enregistrer l'élève
-                </div>
+                <ButtonNormal text="Enregistrer l'élève" style={{float:'right', paddingTop:10, paddingBottom:10, paddingLeft:20, paddingRight:20, borderTopRightRadius:0, borderTopLeftRadius:0}} onPress={()=>this.register_new_pupil()} />
 
-                <span className="title-background">I. DE L'IDENTITÉ DE BASE DE L'ÉLÈVE</span>
+                <span className="title-background-1">I. DE L'IDENTITÉ DE BASE DE L'ÉLÈVE</span>
                 <table className="tables-new-pupil">
                     <tbody>
                         <tr>

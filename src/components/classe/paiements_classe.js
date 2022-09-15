@@ -1,20 +1,25 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import { CircularProgress } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { FiPrinter } from 'react-icons/fi';
+import {useDispatch, useSelector } from 'react-redux';
 import { home_redirect } from '../../global_vars';
-import { mapStateToProps } from '../../store/state_props';
 
 let paye = 0;
 
-class PaiementsClasse extends React.Component {
-    constructor(props) {
-        super(props);
+const PaiementsClasse =()=> {
+    
+    const dispatch = useDispatch();
+    const classe = useSelector(state=>state.classe);
+    const autres = useSelector(state=>state.autres);
+    const url_server = useSelector(state=>state.url_server);
+    const annee_scolaire = useSelector(state=>state.annee_scolaire);
+    const [pupils, setPupils] = useState([]);
+    const [total_montant, setTotal_montant] = useState(0);
+    const [paye, setPaye] = useState(0);
+    const [percentage,setPercentage] = useState(0);
+    const loading_footer = useSelector(state=>state.loading_footer);
 
-        this.state = {
-            total: 0
-        }
-    }
-
-    printContent(divName) {
+    const printContent=(divName)=> {
 
         let printContents = document.getElementById(divName).innerHTML;
         let originalContents = document.body.innerHTML;
@@ -22,62 +27,68 @@ class PaiementsClasse extends React.Component {
         window.print();
 
         document.body.innerHTML = originalContents;
-        window.location.href = "http://" + this.props.url_server + home_redirect;
-        window.location.replace("http://" + this.props.url_server + home_redirect);
+        window.location.href = "http://" + url_server + home_redirect;
+        window.location.replace("http://" + url_server + home_redirect);
     }
 
-    view_pupil(pupil) {
-        this.props.dispatch({ type: "SET_NEW_PAIEMENT", payload: false });
-        this.props.dispatch({ type: "SET_PAIEMENTS_FRAIS_DIVERS", payload: false });
-        this.props.dispatch({ type: "SET_ALL_PAIEMENTS", payload: true });
-        this.props.dispatch({ type: "SET_PUPIL", payload: pupil });
-        this.props.dispatch({ type: "SET_CLASSE", payload: [] });
-        this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 11 });
-        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
-        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
-        this.props.dispatch({ type: "SET_TITLE_MAIN", payload: (pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name).toUpperCase() });
-    }
+    const find_pupil = (pupil) => {
+        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
 
-    render() {
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                pupil_id: pupil,
+            })
+        })
+            .then((response) => response.json())
+            .then((response) => {
+
+                dispatch({ type: "SET_PUPIL", payload: response.pupil });
+            })
+            .catch((error) => { });
+    };
+
+    const view_pupil=(pupil) =>{
+        dispatch({ type: "SET_NEW_PAIEMENT", payload: false });
+        dispatch({ type: "SET_PAIEMENTS_FRAIS_DIVERS", payload: false });
+        dispatch({ type: "SET_ALL_PAIEMENTS", payload: true });
+        dispatch({ type: "SET_PUPIL", payload: pupil });
+        dispatch({ type: "SET_CLASSE", payload: [] });
+        dispatch({ type: "SET_MIDDLE_FUNC", payload: 11 });
+        dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
+        dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
+        dispatch({ type: "SET_TITLE_MAIN", payload: (pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name).toUpperCase() });
+
+        find_pupil(pupil.pupil.pupil_id);
+    }
         return (
             <div style={{ marginBottom: 50, paddingTop: 0 }}>
-                <div className="border-bottom-blue">
-                    <div style={{ marginBottom: 10, fontWeight: 'bold', marginTop: 10 }}>Paramètres de l'état de caisse</div>
+                                    {loading_footer ?
+                                        <div className="progress-center-progress">
+                                <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
+                                Chargement de la fiche des paiements...
+                            </div>
+                                    :
+                                    <div>
+                                    <span onClick={() => printContent("class-paiements")} className="add-minus" style={{ fontWeight: 'bold' }}>
+                                        <FiPrinter /> IMPRIMER LA FICHE
+                                    </span>
 
-                    <table style={{ width: "100%" }}>
-                        <tbody>
-                            <tr>
-                                <td style={{ width: "50%" }}>
-                                    <div style={{ marginBottom: 10 }}>
-                                        Montant initial de base par an par élève<br />
-                                        <input type="number" onChange={(text) => this.setState({ total: text.target.value })} placeholder="Ex.: 420" />
-                                    </div>
-                                </td>
-                                <td style={{ width: "50%" }}>
-                                    <span onClick={() => this.printContent("nomminative")} className="add-minus" style={{ fontWeight: 'bold' }}>
-                                        IMPRIMER LA FICHE
-                                    </span><br /><br />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div id="nomminative">
+                <div id="class-paiements">
                     <table style={{ width: '100%' }}>
                         <tbody>
                             <tr>
                                 <td valign="top">
                                     <div>
-                                        <strong>{(this.props.autres.school_name).toUpperCase()}</strong><br />
-                                        <strong>{this.props.autres.school_bp}</strong><br />
-                                        <strong>Année scolaire : {this.props.annee_scolaire.year_name}</strong>
+                                        <strong>{(autres.school_name).toUpperCase()}</strong><br />
+                                        <strong>{autres.school_bp}</strong><br />
+                                        <strong>Année scolaire : {annee_scolaire.year_name}</strong>
                                     </div>
                                     <table className="full-table-liste">
                                         <caption>
                                             <h4>
                                                 FICHE DES PAIEMENTS<br />
-                                                {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.cycle_id + " " + this.props.classe.order_id}
+                                                {classe.class_id + " " + classe.section_id + " " + classe.cycle_id + " " + classe.order_id}
                                             </h4>
                                         </caption>
                                         <thead>
@@ -94,26 +105,33 @@ class PaiementsClasse extends React.Component {
                                                 <th style={{ width: 50, textAlign: 'center' }}>T3</th>
                                             </tr>
                                         </thead>
-                                        {this.props.classe.pupils.map((pupil, index) => {
-
-                                            paye = parseInt(paye + pupil.soldes.montant_paye);
+                                        {classe.data.pupils.map((pupil, index) => {
                                             return (
                                                 <tbody key={index}>
-                                                    <tr onClick={() => this.view_pupil(pupil)}>
+                                                    <tr 
+                                                    onClick={() => view_pupil(pupil)}
+                                                    >
                                                         <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
                                                         <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name.toUpperCase()}</td>
                                                         <td style={{ paddingLeft: 10 }}>{pupil.pupil.second_name.toUpperCase()}</td>
                                                         <td style={{ paddingLeft: 10 }}>{pupil.pupil.last_name.toUpperCase()}</td>
-                                                        <td style={{ width: 50, textAlign: 'center' }}>{pupil.soldes.solde1 == "0" ? parseInt((this.state.total) / 3) : pupil.soldes.solde1 === "OK" ? "0" : pupil.soldes.solde1} </td>
-                                                        <td style={{ width: 50, textAlign: 'center' }}>{pupil.soldes.solde2 == "0" ? parseInt((this.state.total) / 3) : pupil.soldes.solde2 === "OK" ? "0" : pupil.soldes.solde2}</td>
-                                                        <td style={{ width: 50, textAlign: 'center' }}>{pupil.soldes.solde3 == "0" ? parseInt((this.state.total) / 3) : pupil.soldes.solde3 === "OK" ? "0" : pupil.soldes.solde3}</td>
+                                                        <td style={{ width: 50, textAlign: 'center' }}>{pupil.soldes_paiements.solde1} </td>
+                                                        <td style={{ width: 50, textAlign: 'center' }}>{pupil.soldes_paiements.solde2}</td>
+                                                        <td style={{ width: 50, textAlign: 'center' }}>{pupil.soldes_paiements.solde3}</td>
                                                     </tr>
                                                 </tbody>
                                             )
                                         })}
                                         <tfoot>
                                             <tr>
-                                                <td colSpan={7} style={{ paddingTop: 10, paddingBottom: 10, fontWeight: 'bold', fontSize: 15, textAlign: 'right', paddingRight: 20 }}>Montant total payé <strong style={{ color: 'rgb(0,80,180)', fontSize: 20 }}>{this.props.classe.paye}</strong> sur <strong style={{ color: 'rgb(0,80,180)', fontSize: 20 }}>{parseInt((this.state.total) * (this.props.classe.pupils_count))}</strong></td>
+                                                <td colSpan={7} style={{ paddingTop: 10, paddingBottom: 10, fontWeight: 'bold', fontSize: 15, textAlign: 'right', paddingRight: 20 }}>
+                                                Montant total payé 
+                                                <strong style={{ color: 'rgb(0,80,180)', fontSize: 20 }}> {classe.data.paye_paiements} </strong> 
+                                                sur 
+                                                <strong style={{ color: 'rgb(0,80,180)', fontSize: 20 }}> {classe.data.total_paiements} </strong> 
+                                                soit 
+                                                <strong style={{ color: 'rgb(0,80,180)', fontSize: 20 }}> {((classe.data.paye_paiements*100)/classe.data.total_paiements).toString().substr(0,5)} </strong> 
+                                                %</td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -122,9 +140,9 @@ class PaiementsClasse extends React.Component {
                         </tbody>
                     </table>
                 </div>
+                                    </div>}
             </div>
         )
     }
-}
 
-export default connect(mapStateToProps)(PaiementsClasse);
+export default PaiementsClasse;

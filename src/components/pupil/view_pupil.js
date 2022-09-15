@@ -8,6 +8,7 @@ import NewPaiements from '../paiements/new_paiements';
 import AllPaiementPupils from '../paiements/all_paiements_pupil';
 import FraisDiversPupil from '../paiements/frais_divers_pupil';
 import { CircularProgress } from '@material-ui/core';
+import EditPupil from './edit_pupil';
 
 
 class ViewPupil extends React.Component {
@@ -278,6 +279,8 @@ class ViewPupil extends React.Component {
                             </tbody>
                         </table>
                     </div>
+
+                    {/* <EditPupil /> */}
 
                     <div style={{textAlign: 'right', marginRight: -20}}>
                     <span>

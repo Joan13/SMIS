@@ -96,7 +96,7 @@ class StatistiquesCaisse extends React.Component {
 
     render() {
         return (
-            <div style={{marginRight:10, marginBottom:30}}>
+            <div style={{marginRight:10, marginBottom:30}}><br/>
                 <div>
                     <div>
                     {this.state.stats_tab !== 1 ?

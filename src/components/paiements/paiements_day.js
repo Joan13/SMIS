@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FiChevronRight, FiPrinter } from 'react-icons/fi';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { home_redirect, find_date2 } from '../../global_vars';
-import { mapStateToProps } from '../../store/state_props';
 
 const PaiementsDay = () => {
 
@@ -26,10 +25,6 @@ const PaiementsDay = () => {
     for (let i in frais_divers_day) {
         total_frais_divers = total_frais_divers + parseInt(frais_divers_day[i].montant);
     }
-
-    useEffect(() => {
-
-    }, []);
 
     const printContent = (divName) => {
 

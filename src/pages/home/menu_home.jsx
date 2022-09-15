@@ -45,7 +45,7 @@ dispatch({type:"SET_TRICKS_TIMETABLE", payload:response.tricks_timetable});
 
     const stats_caisse =()=> {
         dispatch({ type: "SET_MIDDLE_FUNC", payload: 12 });
-        dispatch({ type: "SET_TITLE_MAIN", payload: "État de la caisse" });
+        dispatch({ type: "SET_TITLE_MAIN", payload: "État général de la caisse" });
     }
 
     const gestion_personnel =()=> {

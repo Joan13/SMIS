@@ -29,6 +29,7 @@ export default function RightClasseMenu() {
 
     return (
         <div className="menu-right">
+        <br/>
             {middle_func !== 22 ?
                 middle_func !== 2 ?
                     middle_func !== 23 ?
@@ -50,7 +51,7 @@ export default function RightClasseMenu() {
                             <div className="item-menu-right">
                                 <span 
                                 // onClick={() => set_page(9, "", true, false)} 
-                                style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 9 ? "select-no-border-bold" : ""}`}>
+                                style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 90 ? "select-no-border-bold" : ""}`}>
                                     <FcBusinessman style={{ marginRight: 7 }} />
                                     Cartes d'élève
                                 </span>
@@ -171,14 +172,14 @@ export default function RightClasseMenu() {
 
                             {/* {this.props.class_open ? */}
                             <div className="item-menu-right">
-                                <span onClick={() => this.paiements_classe()} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 8 ? "select-no-border-bold" : ""}`}>
+                                <span onClick={() => set_page(8, "", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 8 ? "select-no-border-bold" : ""}`}>
                                     <TbReportMoney style={{ marginRight: 7 }} />
                                     Paiement des frais scolaires
                                 </span>
                             </div>
 
                             <div className="item-menu-right">
-                                <span onClick={() => set_page(24, "", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 8 ? "select-no-border-bold" : ""}`}>
+                                <span onClick={() => set_page(24, "", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 24 ? "select-no-border-bold" : ""}`}>
                                     <FcFile style={{ marginRight: 7 }} />
                                     Catégorisation des paiements
                                 </span>

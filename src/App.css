@@ -166,7 +166,7 @@ h5 {
   position: fixed;
   left: 25%;
   top: 0px;
-  height: 110px;
+  height: 100px;
 }
 
 .main-middle-page {
@@ -176,7 +176,7 @@ h5 {
   left: 25%;
   top: 0px;
   bottom: 30px;
-  margin-top: 110px;
+  margin-top: 100px;
   overflow-y: auto;
 }
 
@@ -832,7 +832,7 @@ h5 {
 .menu-right {
   position: fixed;
   /* background-color: green; */
-  top: 110px;
+  top: 100px;
   bottom: 30px;
   right: 0px;
   width: 20%;
@@ -844,10 +844,11 @@ h5 {
 .center-fixed {
   position: fixed;
   /* background-color: aqua; */
-  top: 110px;
+  top: 100px;
   bottom: 30px;
   width: 54.3%;
   left: 25%;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
   overflow-y: auto;
   overflow-x: none;
   word-wrap: break-word;
@@ -1100,6 +1101,18 @@ h5 {
   padding-left: 10px;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 5px;
+  width: '80%'
+}
+
+.title-background-1 {
+  display: block;
+  font-weight: bold;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  border-top-left-radius: 0px;
   width: '80%'
 }
 
@@ -1454,12 +1467,22 @@ h5 {
   border-radius: 20px;
 }
 
+.table-borderr {
+  border-collapse: collapse;
+  border: 2px solid rgba(0, 80, 180, 0.2);
+  border-radius: 20px;
+}
+
 .border-bottom-blue {
   padding-bottom: 5px;
   border-bottom: 2px solid rgb(0, 80, 180);
 }
 
 .table-border td {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.table-borderr td {
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
