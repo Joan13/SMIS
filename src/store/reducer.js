@@ -21,6 +21,7 @@ const initialState = {
     autres: [],
     class_pupils: [],
     middle_func: 0,
+    edit_pupil:false,
     marks_tab: "",
     class_open: false,
     periode_synthese: '1',
@@ -238,6 +239,8 @@ const reducer = (state = initialState, action) => {
             return { ...state, periode_full: action.payload }
         case "SET_PERIODE_SYNTHESE":
             return { ...state, periode_full: action.payload }
+            case "SET_EDIT_PUPIL":
+            return { ...state, edit_pupil: action.payload }
         default:
             return state;
     }

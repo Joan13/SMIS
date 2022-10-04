@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaArrowDown, FaChevronDown, FaEdit, FaMoneyBill, FaMoneyBillAlt, FaMoneyBillWave, FaMoneyCheck, FaParagraph, FaPrint } from 'react-icons/fa';
+import { FaArrowDown, FaChevronDown, FaChevronUp, FaEdit, FaMoneyBill, FaMoneyBillAlt, FaMoneyBillWave, FaMoneyCheck, FaParagraph, FaPrint } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
 import { connect } from 'react-redux';
 import { home_redirect } from '../../global_vars';
@@ -22,7 +22,8 @@ class ViewPupil extends React.Component {
             classe: [],
             autres: [],
             pupils: [],
-            can_mount: 0
+            can_mount: 0,
+            edit_pupil:false,
         }
     }
 
@@ -280,15 +281,23 @@ class ViewPupil extends React.Component {
                         </table>
                     </div>
 
-                    {/* <EditPupil /> */}
+                    {this.props.edit_pupil ? <EditPupil />:null}
 
-                    <div style={{textAlign: 'right', marginRight: -20}}>
-                    <span>
+                    <div style={{textAlign: 'left', marginTop: 20}}>
+                    {/* <span>
                     <FaChevronDown color="rgb(0, 80, 180)" style={{marginRight: 5}} />
                         <span 
-                        // onClick={() => this.printContent("nomminative")} 
                         className="add-minus">
                             AFFICHER L'IDENTITÉ COMPLÈTE
+                        </span>
+                    </span> */}
+
+                    <span>
+                    {this.props.edit_pupil ? <FaChevronUp color="rgb(0, 80, 180)" style={{marginRight: 5}} /> : <FaChevronDown color="rgb(0, 80, 180)" style={{marginRight: 5}} />}
+                        <span 
+                        onClick={()=>this.props.dispatch({type:"SET_EDIT_PUPIL", payload:!this.props.edit_pupil})}
+                        className="add-minus">
+                            MODIFIER l'ÉLÈVE
                         </span>
                     </span>
 

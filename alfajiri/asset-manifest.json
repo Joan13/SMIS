@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/alfajiri/static/css/main.36ef32e2.css",
-    "main.js": "/alfajiri/static/js/main.95c4efc2.js",
+    "main.js": "/alfajiri/static/js/main.3eb210d0.js",
     "static/media/armoirie_rdc.png": "/alfajiri/static/media/armoirie_rdc.076a1eee761b3c3caa0b.png",
     "static/media/yambi_red.png": "/alfajiri/static/media/yambi_red.2f940178f78c579c6c2e.png",
     "static/media/flag_drc.jpg": "/alfajiri/static/media/flag_drc.201bde9ef7a490de53e4.jpg",
     "index.html": "/alfajiri/index.html",
     "main.36ef32e2.css.map": "/alfajiri/static/css/main.36ef32e2.css.map",
-    "main.95c4efc2.js.map": "/alfajiri/static/js/main.95c4efc2.js.map"
+    "main.3eb210d0.js.map": "/alfajiri/static/js/main.3eb210d0.js.map"
   },
   "entrypoints": [
     "static/css/main.36ef32e2.css",
-    "static/js/main.95c4efc2.js"
+    "static/js/main.3eb210d0.js"
   ]
 }

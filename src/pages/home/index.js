@@ -231,34 +231,33 @@ class Home extends Component {
     }
 
     collect_data() {
+        this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
+        const data = this.props.annee_scolaire.year_id;
+        const url_server = this.props.url_server;
+        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/collect_data.php";
 
-        // this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
-        // let data = this.props.annee_scolaire.year_id;
-        // let url_server = sessionStorage.getItem('yambi_smis_url_server');
-        // let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/collect_data.php";
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                annee: data,
+            })
+        })
+            .then((response) => response.json())
+            .then((response) => {
 
-        // fetch(BaseURL, {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         annee: data,
-        //     })
-        // })
-        //     .then((response) => response.json())
-        //     .then((response) => {
+            // setTimeout(() => {
+                this.sync_data(response);
+            // },2000);
 
-        //     setTimeout(() => {
-        //         this.sync_data(response);
-        //     },2000);
-
-        //     })
-        //     .catch((error) => {
-        //         this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, is_loading_home: false, loading_middle: false });
-        //     });
+            })
+            .catch((error) => {
+                this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, is_loading_home: false, loading_middle: false });
+            });
     }
 
     sync_data(data) {
-        // let url_server = sessionStorage.getItem('yambi_smis_url_server');
-        let url_server = "cselite.net";
+        let url_server = sessionStorage.getItem('yambi_smis_url_server');
+        // let url_server = "cselite.net";
         let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/sync_data.php";
         // this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
 
@@ -270,10 +269,8 @@ class Home extends Component {
         })
             .then((response) => response.json())
             .then((response) => {
-
                 this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
                 this.setState({ modal_title: "Opération réussie", modal_main_text: "La synchronisation des données a été effectuée avec succès.", modal_view: true, is_loading_home: false, loading_middle: false });
-
             })
             .catch((error) => {
                  console.log(error.toString());
@@ -825,7 +822,7 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
                             </span>
 
                             <span 
-                            onClick={() => this.collect_data()} 
+                            // onClick={() => this.collect_data()} 
                             className="user-home-tools">
                                 <FaCloudUploadAlt color="black" size={22} />
                             </span>

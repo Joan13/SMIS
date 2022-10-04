@@ -78,6 +78,7 @@ export const mapStateToProps = (state) => {
         paiements_day:state.paiements_day,
         frais_divers_day: state.frais_divers_day,
         day:state.day,
+        edit_pupil:state.edit_pupil,
     }
 }
 

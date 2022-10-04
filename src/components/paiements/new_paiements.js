@@ -51,13 +51,13 @@ class NewPaiements extends Component {
         let day = "";
         let month = "";
 
-        if ((date.getDate() + "").length === 1) {
+        if ((date.getDate().toString()).length === 1) {
             day = "0" + date.getDate();
         } else {
             day = date.getDate();
         }
 
-        if ((date.getMonth() + "").length === 1) {
+        if ((parseInt(date.getMonth()+1).toString()).length === 1) {
             month = "0" + parseInt(date.getMonth() + 1);
         } else {
             month = date.getMonth() + 1;
@@ -114,13 +114,13 @@ class NewPaiements extends Component {
         let day = "";
         let month = "";
 
-        if ((date.getDate() + "").length === 1) {
+        if ((date.getDate().toString()).length === 1) {
             day = "0" + date.getDate();
         } else {
             day = date.getDate();
         }
 
-        if ((date.getMonth() + "").length === 1) {
+        if ((parseInt(date.getMonth()+1).toString()).length === 1) {
             month = "0" + parseInt(date.getMonth() + 1);
         } else {
             month = date.getMonth() + 1;

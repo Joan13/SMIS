@@ -24,7 +24,7 @@ class Signin extends Component {
             incorrect: false,
             redirectToReferrer: false,
             url_server: "cselite.net",
-            connection_type: 1,
+            connection_type: 0,
             aide: false,
             message_user: "",
             message1: "",

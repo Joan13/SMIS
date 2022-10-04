@@ -61,6 +61,7 @@ const PupilsRightMenu = () => {
         dispatch({ type: "SET_ALL_PAIEMENTS", payload: true });
         dispatch({ type: "SET_PUPIL", payload: pupil });
         dispatch({ type: "SET_MIDDLE_FUNC", payload: 11 });
+        dispatch({type:"SET_EDIT_PUPIL", payload:false});
         dispatch({ type: "SET_TITLE_MAIN", payload: (pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name).toUpperCase() });
 
         find_pupil(pupil.pupil.pupil_id);
