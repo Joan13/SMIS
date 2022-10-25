@@ -1,5 +1,5 @@
 import { connect, useSelector } from 'react-redux';
-import {home_redirect} from '../../global_vars'
+import {home_redirect, http} from '../../global_vars'
 import { mapStateToProps } from '../../store/state_props';
 function FicheIdentites() {
 
@@ -15,8 +15,8 @@ function FicheIdentites() {
 
         document.body.innerHTML = originalContents;
         // window.location.reload();
-        window.location.href = "http://" + this.state.url_server + home_redirect;
-        window.location.replace("http://" + this.state.url_server + home_redirect);
+        window.location.href = http + this.state.url_server + home_redirect;
+        window.location.replace(http + this.state.url_server + home_redirect);
     }
 
     return (

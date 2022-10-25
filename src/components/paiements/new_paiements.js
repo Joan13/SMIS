@@ -3,6 +3,7 @@ import { NumberToLetter } from 'convertir-nombre-lettre';
 import React, { Component } from 'react'
 import { FaCheckCircle, FaEdit } from 'react-icons/fa'
 import { connect } from 'react-redux'
+import { http } from '../../global_vars';
 import modalView from '../../includes/modal';
 import { mapStateToProps } from '../../store/state_props'
 
@@ -70,7 +71,7 @@ class NewPaiements extends Component {
             let url_server = sessionStorage.getItem('yambi_smis_url_server');
             this.setState({ loading_middle2: true });
 
-            let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/new_frais_divers.php";
+            let BaseURL = http + url_server + "/yambi_class_SMIS/API/new_frais_divers.php";
 
             fetch(BaseURL, {
                 method: 'POST',
@@ -132,7 +133,7 @@ class NewPaiements extends Component {
             let url_server = sessionStorage.getItem('yambi_smis_url_server');
             this.setState({ loading_middle: true });
 
-            let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/new_paiement.php";
+            let BaseURL = http + url_server + "/yambi_class_SMIS/API/new_paiement.php";
 
             fetch(BaseURL, {
                 method: 'POST',

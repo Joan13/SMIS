@@ -8,32 +8,16 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from './store/reducer';
 
-// let initialState = {
-//   val: 42
-// }
-// function reducer (state = initialState, action) {
-//   // const newState = { ...state };
-
-//   switch (action.type) {
-//       case "ADD_VAL":
-//           return { val: state.val + 1 }
-//       default:
-//           return state;
-//   }
-// }
-
 const store = createStore(reducer);
-// console.log(this.props)
-// store.dispatch({ type: "ADD_VAL"})
 
-function App() {
+const App = () => {
   return (
     <Provider store={store}>
       <Router basename="/alfajiri">
         <Routes>
           <Route path="/signin" element={<Signin />} exact />
           <Route path="/settings" element={<Settings />} exact />
-          <Route path="/" element={ <Home />}/>
+          <Route path="/" element={<Home />} />
         </Routes>
       </Router>
     </Provider>

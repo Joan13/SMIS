@@ -3,6 +3,7 @@ import modalView from '../../includes/modal';
 import { Button, CircularProgress } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../store/state_props';
+import { http } from '../../global_vars';
 
 class Courses extends Component {
 
@@ -42,7 +43,7 @@ class Courses extends Component {
             url_server: url_server
         });
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -73,7 +74,7 @@ class Courses extends Component {
     new_course() {
 
         this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/new_course.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/new_course.php";
 
         if(this.state.new_course_name !== "" || this.state.maxima_new_course !== "") {
             fetch(BaseURL, {
@@ -117,7 +118,7 @@ class Courses extends Component {
             url_server: url_server
         });
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_summary.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_class_summary.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -172,7 +173,7 @@ class Courses extends Component {
         //     this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
         // }
 
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/get_class_info.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -241,7 +242,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
 
         if (user.poste === "4") {
             this.setState({ modal_view: false, can_delete_course: true });
-            let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/delete_course.php";
+            let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/delete_course.php";
 
             fetch(BaseURL, {
                 method: 'POST',
@@ -276,7 +277,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
 
         if (user.poste === "4") {
                 
-            let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/modify_course.php";
+            let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/modify_course.php";
 
             fetch(BaseURL, {
                 method: 'POST',
@@ -309,7 +310,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
 
         if (user.poste === "4") {
                 
-            let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/modify_course.php";
+            let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/modify_course.php";
 
             fetch(BaseURL, {
                 method: 'POST',
@@ -339,7 +340,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
         user = JSON.parse(user);
 
         if (user.poste === "4") {
-            let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/modify_course_bulletin.php";
+            let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/modify_course_bulletin.php";
 
             fetch(BaseURL, {
                 method: 'POST',

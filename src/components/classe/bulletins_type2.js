@@ -1,7 +1,7 @@
 import React from 'react';
 import logo_rdc from './../../../src/assets/flag_drc.jpg';
 import logo_armoiries from './../../../src/assets/armoirie_rdc.png';
-import { home_redirect } from "../../global_vars";
+import { home_redirect, http } from "../../global_vars";
 import { FiCheck, FiCircle } from 'react-icons/fi';
 import { FaCheck, FaCircle } from 'react-icons/fa';
 import { mapStateToProps } from '../../store/state_props';
@@ -65,7 +65,7 @@ class BulletinsType2 extends React.Component {
 
             //     console.log("can mount");
 
-            let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
+            let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
             fetch(BaseURL, {
                 method: 'POST',
@@ -398,8 +398,8 @@ class BulletinsType2 extends React.Component {
 
         document.body.innerHTML = originalContents;
         // window.location.reload();
-        window.location.href = "http://" + this.props.url_server + home_redirect;
-        window.location.replace("http://" + this.props.url_server + home_redirect);
+        window.location.href = http + this.props.url_server + home_redirect;
+        window.location.replace(http + this.props.url_server + home_redirect);
     }
 
     find_date(date) {

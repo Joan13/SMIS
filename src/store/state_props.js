@@ -77,6 +77,8 @@ export const mapStateToProps = (state) => {
         modal_libelles: state.modal_libelles,
         paiements_day:state.paiements_day,
         frais_divers_day: state.frais_divers_day,
+        paiements_day_deleted:state.paiements_day_deleted,
+        frais_divers_day_deleted: state.frais_divers_day_deleted,
         day:state.day,
         edit_pupil:state.edit_pupil,
     }

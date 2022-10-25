@@ -1,8 +1,8 @@
-import { connect } from "react-redux";
-import { mapStateToProps } from "./store/state_props";
-
-export const home_redirect = "/cirezi2";
+export const home_redirect = "/alfajiri";
 export const year = "2018 - 2022";
+export const http = "http://";
+export const url_online = "gestion.collegeafajiri.net";
+export const online = false;
 
 export function printContent(divName) {
 
@@ -13,8 +13,8 @@ export function printContent(divName) {
 
     document.body.innerHTML = originalContents;
     // window.location.reload();
-    window.location.href = "http://" + this.state.url_server + home_redirect;
-    window.location.replace( "http://" + this.state.url_server + home_redirect);
+    window.location.href = http + this.state.url_server + home_redirect;
+    window.location.replace(http + this.state.url_server + home_redirect);
 }
 
 export function find_date(date) {

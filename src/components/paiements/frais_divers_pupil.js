@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FaArrowDown, FaChevronDown, FaPrint } from 'react-icons/fa';
 import { connect } from 'react-redux';
-import { find_date, home_redirect } from '../../global_vars';
+import { find_date, home_redirect, http } from '../../global_vars';
 import { mapStateToProps } from '../../store/state_props';
 class AllPupilPaiements extends Component {
 
@@ -70,7 +70,7 @@ class AllPupilPaiements extends Component {
 
     find_pupil() {
         console.log(this.props.pupil);
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -94,13 +94,13 @@ class AllPupilPaiements extends Component {
         window.print();
 
         document.body.innerHTML = originalContents;
-        window.location.href = "http://" + this.props.url_server + home_redirect;
-        window.location.replace("http://" + this.props.url_server + home_redirect);
+        window.location.href = http + this.props.url_server + home_redirect;
+        window.location.replace(http + this.props.url_server + home_redirect);
     }
 
     delete_recu(recu_id) {
 
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/delete_recu_frais_divers.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/delete_recu_frais_divers.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -124,7 +124,59 @@ class AllPupilPaiements extends Component {
             <div>
 
                 <div className="div-recu-recu">
-                    <table style={{ width: '100%' }}>
+                    {/* <table style={{ width: '100%' }}>
+                        <tbody>
+                            <tr>
+                                <td className="td-border-right-recu" style={{ width: "50%", fontSize: 12 }}>
+                                    <strong className="div-title-recu">{(this.props.autres.school_name).toUpperCase()}</strong><br />
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>EMAIL <span style={{ color: 'transparent' }}>Ybi</span></td>
+                                                <td>: <strong>{this.props.autres.email_school}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>TÉLÉPHONES <span style={{ color: 'transparent' }}>Ybi</span></td>
+                                                <td>: <strong>{this.props.autres.phone_1}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td> </td>
+                                                <td><span style={{ color: 'transparent' }}>:</span> <strong>{this.props.autres.phone_2}</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td style={{ width: "50%", fontSize: 12, paddingLeft: 10 }}>
+                                    <table>
+                                        <tbody>
+                                            <tr style={{ padding: 20 }}>
+                                                <td colSpan={2}><strong>REÇU DES FRAIS DIVERS</strong></td>
+                                            </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                                            <tr>
+                                                <td>ÉLÈVE : <strong>{this.props.pupil.pupil.first_name.toUpperCase()} {this.props.pupil.pupil.second_name.toUpperCase()} {this.props.pupil.pupil.last_name}</strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>CLASSE : <strong>{this.find_class_number(this.props.pupil.pupil.class_school)} {this.find_cycle(this.props.pupil.pupil.cycle_school)} {this.find_class_order(this.props.pupil.pupil.class_order)}</strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>ANNÉE SCOLAIRE : <strong>{this.props.annee_scolaire.year_name}</strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> */}
+                </div>
+                {this.props.pupil.frais_divers.map((frais, index) => {
+                    return (
+                        <div key={index} style={{ marginBottom: 20 }}>
+                            <div id="recu-frais-divers">
+                                <div className="div-recu-recuu">
+                                <table style={{ width: '100%' }}>
                         <tbody>
                             <tr>
                                 <td className="td-border-right-recu" style={{ width: "50%", fontSize: 12 }}>
@@ -170,12 +222,6 @@ class AllPupilPaiements extends Component {
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                {this.props.pupil.frais_divers.map((frais, index) => {
-                    return (
-                        <div key={index} style={{ marginBottom: 20 }}>
-                            <div>
-                                <div className="div-recu-recuu">
                                     <table style={{ width: "100%" }}>
                                         <tbody>
                                             <tr>
@@ -217,7 +263,7 @@ class AllPupilPaiements extends Component {
 
                                 <span>
                                     <FaPrint color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
-                                    <span onClick={() => this.printContent("recu")} className="add-minus">
+                                    <span onClick={() => this.printContent("recu-frais-divers")} className="add-minus">
                                         IMPRIMER CE REÇU
                                     </span>
                                 </span>

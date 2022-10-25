@@ -78,13 +78,13 @@ input::-webkit-inner-spin-button {
   padding-bottom: 15px;
   border: none;
   border-radius: 5px;
-  box-shadow: 3px 4px 4px rgb(140, 192, 255);
+  box-shadow: 2px 3px 4px rgb(140, 192, 255);
 }
 
 .button-primary:hover {
   color: white;
   transition: 0.6s;
-  background-color: rgb(1, 65, 143);
+  background-color: rgb(0, 100, 200);
   cursor: pointer;
 }
 
@@ -104,7 +104,7 @@ input::-webkit-inner-spin-button {
 .button-primary-small:hover {
   color: white;
   transition: 0.6s;
-  background-color: rgb(1, 65, 143);
+  background-color: rgb(0, 100, 200);
   cursor: pointer;
 }
 
@@ -832,7 +832,7 @@ h5 {
 .menu-right {
   position: fixed;
   /* background-color: green; */
-  top: 100px;
+  top: 105px;
   bottom: 30px;
   right: 0px;
   width: 20%;
@@ -844,7 +844,7 @@ h5 {
 .center-fixed {
   position: fixed;
   /* background-color: aqua; */
-  top: 100px;
+  top: 105px;
   bottom: 30px;
   width: 54.3%;
   left: 25%;

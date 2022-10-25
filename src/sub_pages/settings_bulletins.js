@@ -1,7 +1,7 @@
 import { Button, CircularProgress } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
-import { format_date, find_date, find_date2 } from '../global_vars';
+import { format_date, find_date, find_date2, http } from '../global_vars';
 import modalView from '../includes/modal';
 import { mapStateToProps } from '../store/state_props';
 
@@ -30,7 +30,7 @@ class SettingsBulletins extends React.Component {
     load_class_data(classe) {
         this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
 
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/get_class_info.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -64,7 +64,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
     save_domain() {
         this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
 
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/new_domain.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/new_domain.php";
 
         if (this.state.domain_name !== "") {
             fetch(BaseURL, {
@@ -102,7 +102,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
     save_sub_domain() {
         this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
 
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/new_sub_domain.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/new_sub_domain.php";
 
         if (this.state.sub_domain_name !== "" || this.state.domain_id){
 

@@ -1,10 +1,10 @@
 {
   "name": "yambi_smis",
-  "homepage": "cirezi2",
+  "homepage": "/alfajiri",
   "version": "8.4.2 Beta",
   "private": false,
-  "app_full_name":"Yambi Class - School Management Information System - (SMIS)",
-  "branch":"stable",
+  "app_full_name": "Yambi Class - School Management Information System - (SMIS)",
+  "branch": "stable",
   "platform": "Web",
   "productName": "Yambi Class SMIS",
   "dependencies": {
@@ -15,6 +15,7 @@
     "convertir-nombre-lettre": "^1.0.2",
     "electron-is-dev": "^2.0.0",
     "react": "^18.2.0",
+    "react-anchor-link-smooth-scroll": "^1.0.12",
     "react-charts": "^2.0.0-beta.7",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.5",

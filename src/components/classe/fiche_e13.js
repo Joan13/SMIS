@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { mapStateToProps } from '../../store/state_props';
-import { home_redirect } from "./../../global_vars";
+import { home_redirect, http } from "./../../global_vars";
 import { connect } from 'react-redux';
 
 class FicheE13 extends Component {
@@ -339,8 +339,8 @@ class FicheE13 extends Component {
 
         document.body.innerHTML = originalContents;
         // window.location.reload();
-        window.location.href = "http://" + this.props.url_server + home_redirect;
-        window.location.replace("http://" + this.props.url_server + home_redirect);
+        window.location.href = http + this.props.url_server + home_redirect;
+        window.location.replace(http + this.props.url_server + home_redirect);
     }
 
     render() {

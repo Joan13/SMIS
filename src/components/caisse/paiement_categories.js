@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FiX } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
+import { http } from '../../global_vars';
 import ButtonNormal from '../includes/button_normal';
 
 const PaiementCategories=()=>{
@@ -12,7 +13,7 @@ const [category_name, setCategory_name] = useState("");
 const [category_amount, setCategory_amount] = useState("");
 
 const add_paiement_category =()=> {
-    let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/add_paiement_category.php";
+    let BaseURL = http + url_server + "/yambi_class_SMIS/API/add_paiement_category.php";
 
     if (category_name !== "" && category_amount !== "") {
         fetch(BaseURL, {

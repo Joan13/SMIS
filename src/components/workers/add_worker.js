@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import modalView from '../../includes/modal';
+import { http } from '../../global_vars';
 
 export default function AddWorker(){
 
@@ -32,7 +33,7 @@ export default function AddWorker(){
         } 
         else {
 
-            let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/add_worker.php";
+            let BaseURL = http + url_server + "/yambi_class_SMIS/API/add_worker.php";
 
             fetch(BaseURL, {
                 method: 'POST',
@@ -76,7 +77,7 @@ export default function AddWorker(){
 
     const fetch_workers =()=> {
 
-            let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/fetch_workers.php";
+            let BaseURL = http + url_server + "/yambi_class_SMIS/API/fetch_workers.php";
 
             fetch(BaseURL, {
                 method: 'POST',

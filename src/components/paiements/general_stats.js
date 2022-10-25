@@ -2,7 +2,7 @@ import { CircularProgress } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { FiPrinter } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { home_redirect } from "../../global_vars";
+import { home_redirect, http } from "../../global_vars";
 import MyChart from "./charts/global_charts";
 
 let ff = 0;
@@ -44,7 +44,7 @@ const GeneralStatsCaisse=()=> {
     const [width_categories_columns, setWidth_categories_columns] = useState(0);
 
     const generate_general_stats = () => {
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/stats_general.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/stats_general.php";
         setLoading_stats(true);
 
         fetch(BaseURL, {
@@ -127,7 +127,7 @@ const GeneralStatsCaisse=()=> {
         setFfmontant(response.ffmontant);
         setFfnombre(response.ffnombre);
 
-        console.log(response)
+        // console.log(response)
         
         resolve();
                 }).then(()=>{});
@@ -147,8 +147,8 @@ const GeneralStatsCaisse=()=> {
         window.print();
 
         document.body.innerHTML = originalContents;
-        window.location.href = "http://" + url_server + home_redirect;
-        window.location.replace("http://" + url_server + home_redirect);
+        window.location.href = http + url_server + home_redirect;
+        window.location.replace(http + url_server + home_redirect);
     }
 
     useEffect(()=>{

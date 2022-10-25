@@ -16,12 +16,11 @@ import NewPupil from '../../components/pupil/new_pupil';
 import ListeNomminative from '../../components/classe/liste_nomminative';
 import ClassOverView from '../../components/classe/class_overview';
 import Bulletins from '../../components/classe/bulletins';
-import PaiementsClasse from '../../components/classe/paiements_classe';
 import StatistiquesCaisse from '../../components/paiements/stats_caisse';
 import FicheE13 from '../../components/classe/fiche_e13';
 import FicheE80 from '../../components/classe/fiche_e80';
 import Courses from '../../components/classe/courses';
-import { home_redirect } from '../../global_vars';
+import { home_redirect, http, online, url_online } from '../../global_vars';
 import { connect } from 'react-redux';
 import PalmaresFinal from '../../components/classe/palmares_final';
 import ViewPupil from '../../components/pupil/view_pupil';
@@ -38,8 +37,9 @@ import RightClasseMenu from '../../components/classe/right_menu';
 import { FcFolder, FcOpenedFolder } from 'react-icons/fc';
 import PupilsRightMenu from '../../components/classe/pupils_right_menu';
 import PaiementCategories from '../../components/caisse/paiement_categories';
-import ClassePaiementCategorisation from '../../components/classe/paiement_categorisation';
+import ClassePaiementCategorisation from '../../components/classe/class_paiements/paiement_categorisation';
 import Libelles from '../../components/caisse/libelles';
+import PaiementsClasse from '../../components/classe/class_paiements';
 
 class Home extends Component {
 
@@ -111,8 +111,8 @@ class Home extends Component {
 
         document.body.innerHTML = originalContents;
         // window.location.reload();
-        window.location.href = "http://" + this.state.url_server + home_redirect;
-        window.location.replace("http://" + this.state.url_server + home_redirect);
+        window.location.href = http + this.state.url_server + home_redirect;
+        window.location.replace(http + this.state.url_server + home_redirect);
     }
 
     get_general_info(annee) {
@@ -157,7 +157,7 @@ class Home extends Component {
             }
         }
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_info_home.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_info_home.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -234,7 +234,7 @@ class Home extends Component {
         this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
         const data = this.props.annee_scolaire.year_id;
         const url_server = this.props.url_server;
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/collect_data.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/collect_data.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -256,10 +256,8 @@ class Home extends Component {
     }
 
     sync_data(data) {
-        let url_server = sessionStorage.getItem('yambi_smis_url_server');
-        // let url_server = "cselite.net";
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/sync_data.php";
-        // this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
+        const url_server = url_online;
+        const BaseURL = http + url_server + "/yambi_class_SMIS/API/sync_data.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -270,7 +268,9 @@ class Home extends Component {
             .then((response) => response.json())
             .then((response) => {
                 this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
-                this.setState({ modal_title: "Opération réussie", modal_main_text: "La synchronisation des données a été effectuée avec succès.", modal_view: true, is_loading_home: false, loading_middle: false });
+                if (response.success === '1'){
+                    this.setState({ modal_title: "Opération réussie", modal_main_text: "La synchronisation des données a été effectuée avec succès.", modal_view: true, is_loading_home: false, loading_middle: false });
+                } 
             })
             .catch((error) => {
                  console.log(error.toString());
@@ -292,7 +292,7 @@ class Home extends Component {
         this.props.dispatch({ type: "SET_LOADING_MIDDLE", payload: true });
         // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
 
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/get_synthese.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_synthese.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -545,7 +545,7 @@ class Home extends Component {
         //     this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
         }
 
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/get_class_info.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -687,7 +687,7 @@ class Home extends Component {
     }
 
     fetch_libelles() {
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/libelles.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/libelles.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -703,7 +703,7 @@ this.props.dispatch({type:"SET_LIBELLES", payload:response.libelles});
     };
 
     fetch_paiement_categories() {
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/paiement_categories.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/paiement_categories.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -821,11 +821,13 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
                                 <FaHome color="black" size={20} />
                             </span>
 
-                            <span 
-                            // onClick={() => this.collect_data()} 
+                            {!online ?
+                                <span 
+                            onClick={() => this.collect_data()} 
                             className="user-home-tools">
                                 <FaCloudUploadAlt color="black" size={22} />
                             </span>
+                            :null}
 
                             <span className="user-home-tools">
                                 <FaBell color="black" size={20} />

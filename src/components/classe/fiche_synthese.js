@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { http } from '../../global_vars';
 import Courses from './courses';
 
 export default class SynthesePoints extends Component {
@@ -40,7 +41,7 @@ export default class SynthesePoints extends Component {
             url_server: url_server,
         });
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -80,7 +81,7 @@ export default class SynthesePoints extends Component {
             url_server: url_server,
         });
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
         fetch(BaseURL, {
             method: 'POST',

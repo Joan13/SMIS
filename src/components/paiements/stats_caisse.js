@@ -2,7 +2,7 @@ import { CircularProgress } from '@material-ui/core';
 import React from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { connect } from 'react-redux';
-import { format_date, find_date, find_date2 } from '../../global_vars';
+import { format_date, find_date, find_date2, http } from '../../global_vars';
 import { mapStateToProps } from '../../store/state_props';
 import GeneralStatsCaisse from './general_stats';
 import PaiementsDay from './paiements_day';
@@ -54,7 +54,7 @@ class StatistiquesCaisse extends React.Component {
         this.setState({ date: date, loading_stats_day:true });
         this.props.dispatch({ type: "SET_DAY", payload: date });
 
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/stats_caisse.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/stats_caisse.php";
 
         fetch(BaseURL,
             {
@@ -75,6 +75,8 @@ class StatistiquesCaisse extends React.Component {
 
                 this.props.dispatch({ type: "SET_PAIEMENTS_DAY", payload: response.paiements });
                 this.props.dispatch({ type: "SET_FRAIS_DIVERS_DAY", payload: response.frais_divers });
+                this.props.dispatch({ type: "SET_PAIEMENTS_DAY_DELETED", payload: response.paiements_deleted });
+                this.props.dispatch({ type: "SET_FRAIS_DIVERS_DAY_DELETED", payload: response.frais_divers_deleted });
             })
             .catch((error) => { });
     }
@@ -104,7 +106,10 @@ class StatistiquesCaisse extends React.Component {
                     <div>
                     {this.state.stats_tab !== 1 ?
                         <div 
-                    onClick={() => this.setState({stats_tab:1})} 
+                    onClick={() => {
+                        this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "État général de caisse" });
+                        this.setState({stats_tab:1});
+                        }}
                     style={{ fontWeight: 'bold' }}>
                 <span className="add-minus"><FiChevronRight /> État général de caisse</span>
             </div>

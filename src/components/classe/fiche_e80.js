@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { http } from '../../global_vars';
 import logo_armoiries from './../../../src/assets/armoirie_rdc.png';
 
 export default class FicheE80 extends Component {
@@ -47,7 +48,7 @@ export default class FicheE80 extends Component {
             url_server: url_server,
         });
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -89,7 +90,7 @@ export default class FicheE80 extends Component {
             url_server: url_server,
         });
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -132,7 +133,7 @@ export default class FicheE80 extends Component {
             }
         }
 
-        let BaseURL = "http://" + this.state.url_server + "/yambi_class_SMIS/API/insert_marks.php";
+        let BaseURL = http + this.state.url_server + "/yambi_class_SMIS/API/insert_marks.php";
 
         fetch(BaseURL,
             {
@@ -296,8 +297,8 @@ export default class FicheE80 extends Component {
 
         document.body.innerHTML = originalContents;
         // window.location.reload();
-        window.location.href = "http://" + this.state.url_server + "/cirezi2/";
-        window.location.replace("http://" + this.state.url_server + "/cirezi2/");
+        window.location.href = http + this.state.url_server + "/cirezi2/";
+        window.location.replace(http + this.state.url_server + "/cirezi2/");
     }
 
     render() {

@@ -78,6 +78,8 @@ const initialState = {
     modal_libelles:false,
     paiements_day:[],
     frais_divers_day:[],
+    paiements_day_deleted:[],
+    frais_divers_day_deleted:[],
     day:"",
 }
 
@@ -112,6 +114,10 @@ const reducer = (state = initialState, action) => {
             return { ...state, frais_divers_day: action.payload }
             case "SET_PAIEMENTS_DAY":
             return { ...state, paiements_day: action.payload }
+            case "SET_FRAIS_DIVERS_DAY_DELETED":
+            return { ...state, frais_divers_day_deleted: action.payload }
+            case "SET_PAIEMENTS_DAY_DELETED":
+            return { ...state, paiements_day_deleted: action.payload }
         case "SET_LIBELLES":
             return { ...state, libelles: action.payload }
         case "SET_LOADING_FOOTER":

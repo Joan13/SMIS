@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FaArrowDown, FaChevronDown, FaPrint } from 'react-icons/fa';
 import { connect } from 'react-redux';
-import { find_date, home_redirect } from '../../global_vars';
+import { find_date, home_redirect, http } from '../../global_vars';
 import { mapStateToProps } from '../../store/state_props';
 
 class AllPupilPaiements extends Component {
@@ -78,12 +78,12 @@ class AllPupilPaiements extends Component {
         window.print();
 
         document.body.innerHTML = originalContents;
-        window.location.href = "http://" + this.props.url_server + home_redirect;
-        window.location.replace("http://" + this.props.url_server + home_redirect);
+        window.location.href = http + this.props.url_server + home_redirect;
+        window.location.replace(http + this.props.url_server + home_redirect);
     }
 
     find_pupil() {
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -101,7 +101,7 @@ class AllPupilPaiements extends Component {
 
     delete_recu(recu_id) {
 
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/delete_recu.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/delete_recu.php";
 
         fetch(BaseURL, {
             method: 'POST',

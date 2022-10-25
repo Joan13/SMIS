@@ -3,12 +3,11 @@ import { FaCheckCircle, FaEye, FaEyeSlash, FaLock, FaServer, FaUser } from 'reac
 import { Navigate } from 'react-router-dom';
 import logo from "./../../../src/assets/yambi_red.png"
 import modalView from '../../includes/modal';
-import { Button, TextField, MenuItem, CircularProgress } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../store/state_props';
-import { year } from '../../global_vars';
+import { http, online, url_online, year } from '../../global_vars';
 import ButtonNormal from '../../components/includes/button_normal';
-// import {ipcRenderer} from 'electron';
 
 class Signin extends Component {
 
@@ -23,7 +22,7 @@ class Signin extends Component {
             empty_error: false,
             incorrect: false,
             redirectToReferrer: false,
-            url_server: "cselite.net",
+            url_server: url_online,
             connection_type: 0,
             aide: false,
             message_user: "",
@@ -75,7 +74,7 @@ class Signin extends Component {
             alert("Cet utilisateur est invalide. Vous devez vous reconnecter pour accéder aux services.");
         }
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_info_home.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_info_home.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -85,35 +84,6 @@ class Signin extends Component {
         })
             .then((response) => response.json())
             .then((response) => {
-
-                // this.props.dispatch({ type: "SET_CLASSES", payload: response.classes });
-                // this.props.dispatch({ type: "SET_AUTRES", payload: response.autres });
-                // this.props.dispatch({ type: "SET_ANNEES", payload: response.annees });
-                // this.props.dispatch({ type: "SET_CLASS_NUMBERS", payload: response.class_numbers });
-                // this.props.dispatch({ type: "SET_ORDERS", payload: response.orders });
-                // this.props.dispatch({ type: "SET_CYCLES", payload: response.cycles });
-                // this.props.dispatch({ type: "SET_SECTIONS", payload: response.sections });
-                // this.props.dispatch({ type: "SET_OPTIONS", payload: response.options });
-                // this.props.dispatch({ type: "SET_ANNEE_SCOLAIRE", payload: response.annee_scolaire });
-                // this.props.dispatch({ type: "SET_ANNEE", payload: response.annee });
-                // this.props.dispatch({ type: "SET_SCHOOL_NAME", payload: response.school_name });
-                // this.props.dispatch({ type: "SET_ATTRIBUTIONS", payload: response.attributions });
-                // this.props.dispatch({ type: "SET_PUPILS_SCHOOL", payload: response.pupils });
-                // this.props.dispatch({ type: "SET_PPS", payload: response.pupils });
-                // this.props.dispatch({ type: "SET_PUPILS_COUNT", payload: response.pupils_count });
-                // this.props.dispatch({ type: "SET_PUPILS_COUNT_MALE", payload: response.pupils_count_male });
-                // this.props.dispatch({ type: "SET_PUPILS_COUNT_FEMALE", payload: response.pupils_count_female });
-                // this.props.dispatch({ type: "SET_SCHOOL_NAME_ABB", payload: response.school_name_abb });
-                // this.props.dispatch({ type: "SET_REUSSITES", payload: response.reussites });
-                // this.props.dispatch({ type: "SET_DOUBLES", payload: response.doubles });
-                // this.props.dispatch({ type: "SET_ECHECS", payload: response.echecs });
-                // this.props.dispatch({ type: "SET_ABANDON", payload: response.abandon });
-                // this.props.dispatch({ type: "SET_LOADING_HOME", payload: false });
-                // this.props.dispatch({ type: "SET_LOADING_MIDDLE", payload: false });
-                // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
-                // this.props.dispatch({ type: "SET_MOUNT_HOME", payload: false });
-                // this.props.dispatch({ type: "SET_LIBELLES", payload: response.libelles });
-                // this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Année scolaire" });
 
             
                 this.props.dispatch({ type: "SET_CLASSES", payload: response.classes });
@@ -189,7 +159,7 @@ setTimeout(() => {
         if (username === "" || password === "" || url_server === "") {
             this.setState({ empty_error: true });
         } else {
-            let BaseURL = "http://" + this.state.url_server + "/yambi_class_SMIS/API/signin.php";
+            let BaseURL = http + url_server + "/yambi_class_SMIS/API/signin.php";
             this.setState({ empty_error: false, incorrect: false, is_loading: true, message_user: "Identification d'utilisateur en cours..." });
 
 
@@ -257,7 +227,7 @@ setTimeout(() => {
         //     this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
         // }
 
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/get_class_info.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -355,7 +325,8 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                     <div style={{ textAlign: 'left', width: '25%', marginLeft: '37%' }}>
                         Connectez-vous<br />
 
-                        <div className="input-div-border-icon">
+                        {!online ?
+                            <div className="input-div-border-icon">
                             <FaServer style={{ marginBottom: -3 }} />
                             <input
                                 placeholder="URL de connexion au serveur"
@@ -363,6 +334,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                 className="input"
                                 onChange={(text) => this.setState({ url_server: text.target.value })} />
                         </div>
+                        :null}
 
                         <div className="input-div-border-icon">
                             <FaUser style={{ marginBottom: -3 }} />

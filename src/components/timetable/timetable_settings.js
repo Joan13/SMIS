@@ -1,6 +1,7 @@
 import { Checkbox } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { http } from '../../global_vars';
 import ButtonNormal from '../includes/button_normal';
 
 export default function TimetableSettings() {
@@ -18,7 +19,7 @@ export default function TimetableSettings() {
 
     const AssignCourseToProf = () => {
         dispatch({ type: "SET_LOADING_FOOTER", payload: true });
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/assign_course_prof.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/assign_course_prof.php";
 
         fetch(BaseURL, {
             method: 'POST',

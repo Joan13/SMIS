@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { http } from "../../global_vars";
 import ButtonNormal from "../includes/button_normal";
 
 const EditPupil = () => {
@@ -48,7 +49,7 @@ const EditPupil = () => {
     const [isInactive, setIsInactive] = useState(pupil.pupil.is_inactive);
 
     const find_pupil = () => {
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -71,7 +72,7 @@ const EditPupil = () => {
             console.log(first_name_pupil + " " + second_name_pupil + " " + cycle_school_pupil + " " + class_school_pupil);
         } else {
             let url_server = sessionStorage.getItem('yambi_smis_url_server');
-            let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/edit_pupil.php";
+            let BaseURL = http + url_server + "/yambi_class_SMIS/API/edit_pupil.php";
 
             fetch(BaseURL, {
                 method: 'POST',

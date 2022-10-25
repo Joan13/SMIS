@@ -1,6 +1,7 @@
 import { CircularProgress } from '@material-ui/core';
 import { Component } from 'react';
 import { connect } from 'react-redux';
+import { http } from '../../global_vars';
 import { mapStateToProps } from '../../store/state_props';
 
 class FichePointsPupils extends Component {
@@ -42,7 +43,7 @@ class FichePointsPupils extends Component {
             url_server: url_server,
         });
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -82,7 +83,7 @@ class FichePointsPupils extends Component {
             url_server: url_server,
         });
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -124,7 +125,7 @@ class FichePointsPupils extends Component {
             }
         }
 
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/insert_marks.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/insert_marks.php";
 
         fetch(BaseURL,
             {
@@ -183,7 +184,7 @@ class FichePointsPupils extends Component {
             period = "11";
         }
 
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/delete_marks.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/delete_marks.php";
 
         fetch(BaseURL,
             {
@@ -206,7 +207,7 @@ class FichePointsPupils extends Component {
     conseil_deliberation(pupil_id, main_conseil) {
         this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
 
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/conseil_deliberation.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/conseil_deliberation.php";
 
         fetch(BaseURL,
             {

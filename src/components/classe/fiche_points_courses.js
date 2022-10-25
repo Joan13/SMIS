@@ -1,6 +1,7 @@
 import { CircularProgress } from '@material-ui/core';
 import { Component } from 'react';
 import { connect } from 'react-redux';
+import { http } from '../../global_vars';
 import { mapStateToProps } from '../../store/state_props';
 
 class FichesPointsCourses extends Component {
@@ -38,7 +39,7 @@ class FichesPointsCourses extends Component {
             url_server: url_server
         });
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -78,7 +79,7 @@ class FichesPointsCourses extends Component {
             url_server: url_server
         });
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -119,7 +120,7 @@ class FichesPointsCourses extends Component {
             }
         }
 
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/insert_marks.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/insert_marks.php";
 
         fetch(BaseURL,
             {

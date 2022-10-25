@@ -1,7 +1,7 @@
 import { CircularProgress } from '@material-ui/core';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { home_redirect } from '../../global_vars';
+import { home_redirect, http } from '../../global_vars';
 import { mapStateToProps } from '../../store/state_props';
 
 class PalmaresFinal extends Component {
@@ -51,7 +51,7 @@ class PalmaresFinal extends Component {
             url_server: url_server,
         });
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -97,7 +97,7 @@ class PalmaresFinal extends Component {
             url_server: url_server,
         });
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_class_info.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -239,8 +239,8 @@ class PalmaresFinal extends Component {
 
         document.body.innerHTML = originalContents;
         // window.location.reload();
-        window.location.href = "http://" + this.props.url_server + home_redirect;
-        window.location.replace("http://" + this.props.url_server + home_redirect);
+        window.location.href = http + this.props.url_server + home_redirect;
+        window.location.replace(http + this.props.url_server + home_redirect);
     }
 
     componentDidMount() {

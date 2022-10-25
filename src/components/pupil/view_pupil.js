@@ -2,7 +2,7 @@ import React from 'react';
 import { FaArrowDown, FaChevronDown, FaChevronUp, FaEdit, FaMoneyBill, FaMoneyBillAlt, FaMoneyBillWave, FaMoneyCheck, FaParagraph, FaPrint } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
 import { connect } from 'react-redux';
-import { home_redirect } from '../../global_vars';
+import { home_redirect, http } from '../../global_vars';
 import { mapStateToProps } from '../../store/state_props';
 import NewPaiements from '../paiements/new_paiements';
 import AllPaiementPupils from '../paiements/all_paiements_pupil';
@@ -159,8 +159,8 @@ class ViewPupil extends React.Component {
         window.print();
 
         document.body.innerHTML = originalContents;
-        window.location.href = "http://" + this.props.url_server + home_redirect;
-        window.location.replace("http://" + this.props.url_server + home_redirect);
+        window.location.href = http + this.props.url_server + home_redirect;
+        window.location.replace(http + this.props.url_server + home_redirect);
     }
 
     render() {

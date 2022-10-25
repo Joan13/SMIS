@@ -4,6 +4,7 @@ import modalView from '../../includes/modal';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../store/state_props';
 import ButtonNormal from '../includes/button_normal';
+import { http } from '../../global_vars';
 
 class NewPupil extends React.Component {
 
@@ -61,7 +62,7 @@ class NewPupil extends React.Component {
                 loading_middle: true,
             });
 
-            let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/new_pupil.php";
+            let BaseURL = http + url_server + "/yambi_class_SMIS/API/new_pupil.php";
             console.log(this.state.gender_pupil);
 
             fetch(BaseURL, {

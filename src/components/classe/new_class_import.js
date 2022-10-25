@@ -4,6 +4,7 @@ import { FaChevronDown, FaCircle, FaSearch, FaExpandAlt, FaCheck, FaToolbox, FaH
 import { FiBarChart, FiCalendar, FiClipboard, FiLogOut, FiMinimize2, FiPaperclip, FiRefreshCcw } from 'react-icons/fi';
 import modalView from '../../includes/modal';
 import * as XLSX from 'xlsx';
+import { http } from '../../global_vars';
 
 export default class NewClasseImport extends React.Component {
 
@@ -59,7 +60,7 @@ export default class NewClasseImport extends React.Component {
             loading_middle: true,
         });
 
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_info_home.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_info_home.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -88,7 +89,7 @@ export default class NewClasseImport extends React.Component {
 
     register_classe() {
         let url_server = sessionStorage.getItem('yambi_smis_url_server');
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/new_classe.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/new_classe.php";
 
         if (this.state.cycle_school_pupil === "" || this.state.school_year_pupil === "" || this.state.class_school_pupil === "") {
             // this.setState({ modal_title: "Information erreur", modal_main_text: "Vous devez renseigner tous les champs obligatoires avant la validation. Ce sont l'identité de base de l'élève et son orientation scolaire.", modal_view: true, loading_middle: false });
@@ -120,7 +121,7 @@ export default class NewClasseImport extends React.Component {
                     loading_middle: true,
                 });
 
-                let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/new_pupil_classe.php";
+                let BaseURL = http + url_server + "/yambi_class_SMIS/API/new_pupil_classe.php";
 
                 let nom = this.state.classe[i].Nom.trim();
                 let postnom = this.state.classe[i].Postnom;

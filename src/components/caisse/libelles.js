@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FiX } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
+import { http } from '../../global_vars';
 import ButtonNormal from '../includes/button_normal';
 
 const Libelles=()=>{
@@ -14,10 +15,13 @@ const user_data = useSelector(state=>state.user_data);
 const add_libelle =()=> {
 
     let gender_libelle = "";
-   if(user_data.poste === "6") gender_libelle = "1";
+   if(user_data.poste === "6") gender_libelle = 1;
+   if(user_data.poste === "3") gender_libelle = 0;
 
-    if (description_libelle !== "") {
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/add_libelle.php";
+   alert(user_data.poste)
+
+    if (description_libelle !== "" && gender_libelle !== "") {
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/add_libelle.php";
 
     fetch(BaseURL, {
         method: 'POST',
@@ -31,8 +35,11 @@ const add_libelle =()=> {
         .then((response) => {
             dispatch({type:"SET_LIBELLES", payload:response.libelles});
 setDescription_libelle("");
+alert("Le libellé a été enregistré avec succès");
         })
         .catch((error) => {});
+    } else {
+        alert("Vous devez être de la finance ou caisse pour enregistrer un nouveau libellé. Aussi, vous devez entrer l'intitulé du libellé");
     }
 };
 

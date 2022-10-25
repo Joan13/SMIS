@@ -2,6 +2,7 @@ import { CircularProgress } from '@material-ui/core';
 import React from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
+import { http } from '../../global_vars';
 
 const PupilsRightMenu = () => {
 
@@ -15,7 +16,7 @@ const PupilsRightMenu = () => {
     const searchPupil = (name) => {
         dispatch({ type: "SET_SEARCHING_PUPIL", payload: true });
         dispatch({ type: "SET_NUMBER_PUPILS_SHOW", payload: false });
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/search_pupil.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/search_pupil.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -37,7 +38,7 @@ const PupilsRightMenu = () => {
 
     const find_pupil = (pupil) => {
         dispatch({ type: "SET_SEARCHING_PUPIL", payload: true });
-        let BaseURL = "http://" + url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
 
         fetch(BaseURL, {
             method: 'POST',

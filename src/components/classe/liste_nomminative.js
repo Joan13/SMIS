@@ -2,7 +2,7 @@ import { Button } from '@material-ui/core';
 import React from 'react';
 import { FiPrinter } from 'react-icons/fi';
 import { connect } from 'react-redux';
-import { home_redirect } from '../../global_vars';
+import { home_redirect, http } from '../../global_vars';
 import modalView from '../../includes/modal';
 import { mapStateToProps } from '../../store/state_props';
 
@@ -32,7 +32,7 @@ class ListeNomminative extends React.Component {
         this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
         this.props.dispatch({ type: "SET_TITLE_MAIN", payload: (pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name).toUpperCase() });
 
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -61,8 +61,8 @@ class ListeNomminative extends React.Component {
         window.print();
 
         document.body.innerHTML = originalContents;
-        window.location.href = "http://" + this.props.url_server + home_redirect;
-        window.location.replace("http://" + this.props.url_server + home_redirect);
+        window.location.href = http + this.props.url_server + home_redirect;
+        window.location.replace(http + this.props.url_server + home_redirect);
     }
 
     view_pupil(pupil) {
@@ -80,7 +80,7 @@ class ListeNomminative extends React.Component {
     delete_class() {
 
         let class_id = this.props.classe.id_classes;
-        let BaseURL = "http://" + this.props.url_server + "/yambi_class_SMIS/API/delete_class.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/delete_class.php";
 
         fetch(BaseURL,
             {
