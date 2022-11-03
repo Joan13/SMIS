@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core';
 import Footer from '../../includes/footer';
 import { FaCircle, FaSearch, FaCheck, FaHome, FaUserPlus, FaClipboard, FaUsers, FaFolder, FaUser, FaPaperclip, FaDatabase, FaStarHalfAlt, FaEdit, FaBell, FaCloudUploadAlt, FaPiedPiperAlt } from 'react-icons/fa';
 import {RiSettings4Fill} from 'react-icons/ri';
-import { FiEdit, FiLogOut, FiRefreshCcw, FiSettings } from 'react-icons/fi';
+import { FiEdit, FiLogOut, FiRefreshCcw, FiUser } from 'react-icons/fi';
 import modalView from '../../includes/modal';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link, Navigate } from 'react-router-dom';
@@ -40,6 +40,8 @@ import PaiementCategories from '../../components/caisse/paiement_categories';
 import ClassePaiementCategorisation from '../../components/classe/class_paiements/paiement_categorisation';
 import Libelles from '../../components/caisse/libelles';
 import PaiementsClasse from '../../components/classe/class_paiements';
+import FichePointsBrouillon from '../../components/classe/fiches_brouillon/fiche_points';
+import FicheSynthesePointsBrouillon from '../../components/classe/fiches_brouillon/fiche_synthese_brouillon';
 
 class Home extends Component {
 
@@ -861,10 +863,10 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
                             <span
                                 onClick={() => this.state.logout_open ? this.setState({ logout_open: false }) : this.setState({ logout_open: true })}
                                 className="user-home">
-                                <FaUser
+                                <FiUser
                                     // color="rgb(0, 80, 180)"
                                     color="black"
-                                    size={25} />
+                                    size={18} />
                             </span>
                             <FaCircle style={{ marginLeft: -13, marginBottom: -13, paddingTop: 20 }} size={13} color="rgb(0, 180, 0)" />
                         </div>
@@ -1051,6 +1053,16 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
                                             {this.props.middle_func === 14 ?
                                             <div id="settings-bulletins">
                                                 <SettingsBulletins />                                            </div>
+                                            : null}
+
+                                            {this.props.middle_func === 26 ?
+                                            <div id="fiche-points-b">
+                                                <FichePointsBrouillon />                                            </div>
+                                            : null}
+
+                                            {this.props.middle_func === 27 ?
+                                            <div id="fiche-synthese-points-b">
+                                                <FicheSynthesePointsBrouillon />                                            </div>
                                             : null}
 
                                         {this.props.middle_func === 5 ?

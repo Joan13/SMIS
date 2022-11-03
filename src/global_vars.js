@@ -1,7 +1,7 @@
-export const home_redirect = "/alfajiri";
+export const home_redirect = "/wima";
 export const year = "2018 - 2022";
 export const http = "http://";
-export const url_online = "gestion.collegeafajiri.net";
+export const url_online = "";
 export const online = false;
 
 export function printContent(divName) {

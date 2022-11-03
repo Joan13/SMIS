@@ -220,18 +220,19 @@ h5 {
 
 .float-menu-topbar {
   float: right;
-  height: 70px;
-  background-color: white;
+  /* height: 70px; */
+  /* background-color: green; */
   margin-right: 20px;
 }
 
 .user-home {
   display: inline-block;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  height: 40px;
-  background-color: white;
-  margin-top: 10px;
+  /* border: 1px solid rgba(0, 0, 0, 0.1); */
+  /* height: 40px; */
+  background-color: rgba(0, 0, 0, 0.070);
+  /* margin-top: 5px; */
   padding-top: 10px;
+  padding-bottom:10px;
   border-radius: 50%;
   padding-left: 12px;
   padding-right: 12px;
@@ -268,13 +269,13 @@ h5 {
 .user-home-tools {
   display: inline-block;
   /* border-right: 1px solid rgba(0, 0, 0, 0.1); */
-  height: 40px;
+  /* height: 40px; */
   background-color: white;
   margin-top: 10px;
-  padding-top: 10px;
-  padding-left: 12px;
-  padding-right: 20px;
-  margin-right: 15px;
+  padding-top: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-right: 20px;
 }
 
 .input-global {
@@ -849,6 +850,19 @@ h5 {
   width: 54.3%;
   left: 25%;
   border-right: 1px solid rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  overflow-x: none;
+  word-wrap: break-word;
+}
+
+.center-fixed-extended {
+  position: fixed;
+  background-color: aqua;
+  top: 103px;
+  bottom: 0;
+  left: 25%;
+  right:5%;
+  /* border-right: 1px solid rgba(0, 0, 0, 0.2); */
   overflow-y: auto;
   overflow-x: none;
   word-wrap: break-word;

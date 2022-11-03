@@ -23,7 +23,11 @@ export default function RightClasseMenu() {
         dispatch({ type: "SET_MIDDLE_FUNC", payload: middle_func });
         dispatch({ type: "SET_FICHES_TAB", payload: fiche_tab });
         dispatch({ type: "SET_MARKS_TAB", payload: marks_tab });
-        dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: menu_left });
+        dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: fiche_tab });
+
+        // if(middle_func === 5 && fiche_tab === "FI") {
+        //     dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: !fiche_tab });
+        // }
     }
 
 
@@ -156,7 +160,7 @@ export default function RightClasseMenu() {
 
                             <div className="item-menu-right">
                                 <span className={`select-no-border ${middle_func === 2 ? "select-no-border-bold" : ""}`}>
-                                    <FcFile color="rgba(0, 80, 180)" style={{ marginRight: 7 }} />
+                                    <FcFile style={{ marginRight: 7 }} />
                                     <select value={fiches_tab} onChange={(val) => set_page1(5, val.target.value, "", true, true)}
                                         style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'transparent' }} className={`select-no-border ${middle_func === 5 ? "select-no-border-bold" : ""}`}>
                                         <option value="">Sélectionner une fiche</option>
@@ -165,6 +169,23 @@ export default function RightClasseMenu() {
                                         <option value="E13">Fiche E13</option>
                                         <option value="E80">Fiche E80</option>
                                     </select>
+                                </span>
+                            </div>
+
+                            <strong className="block-menu-right" style={{ marginTop: 10, color: 'rgb(0, 0, 0)' }}> Fiches brouillon</strong>
+
+                            {/* {this.props.class_open ? */}
+                            <div className="item-menu-right">
+                                <span onClick={() => set_page(26, "", true, true)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 26 ? "select-no-border-bold" : ""}`}>
+                                <FcFile style={{ marginRight: 7 }} />
+                                    Fiche des points brouillon
+                                </span>
+                            </div>
+
+                            <div className="item-menu-right">
+                                <span onClick={() => set_page(27, "", true, true)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 27 ? "select-no-border-bold" : ""}`}>
+                                <FcFile style={{ marginRight: 7 }} />
+                                    Fiche synthèse des points brouillon
                                 </span>
                             </div>
 

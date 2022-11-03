@@ -20,7 +20,7 @@ function FicheIdentites() {
     }
 
     return (
-        <div style={{ marginBottom: 50, paddingTop: 0 }}>
+        <div class="center-fixedd" style={{ marginBottom: 50, paddingTop: 0 }}>
             <span onClick={() => printContent("identities")} className="add-minus" style={{ fontWeight: 'bold' }}>
                     IMPRIMER LA FICHE
                 </span><br /><br />
