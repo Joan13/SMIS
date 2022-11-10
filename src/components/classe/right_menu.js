@@ -182,10 +182,17 @@ export default function RightClasseMenu() {
                                 </span>
                             </div>
 
-                            <div className="item-menu-right">
+                            {/* <div className="item-menu-right">
                                 <span onClick={() => set_page(27, "", true, true)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 27 ? "select-no-border-bold" : ""}`}>
                                 <FcFile style={{ marginRight: 7 }} />
                                     Fiche synthèse des points brouillon
+                                </span>
+                            </div> */}
+
+                            <div className="item-menu-right">
+                                <span onClick={() => set_page(28, "", true, true)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 28 ? "select-no-border-bold" : ""}`}>
+                                <FcFile style={{ marginRight: 7 }} />
+                                    Bulletins brouillons
                                 </span>
                             </div>
 

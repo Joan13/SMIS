@@ -116,6 +116,10 @@ class BulletinsType2 extends React.Component {
             }
         }
 
+        if (return_value === "0") {
+            return_value = "";
+        }
+
         return return_value;
     }
 
@@ -1177,12 +1181,12 @@ else {
 <tr>
 <td className="td-border">MOYENNE ÉCOLE</td>
 <td className="td-border"></td>
-<td className="td-border" style={{textAlign:'center'}}><strong>60</strong></td>
+<td className="td-border" style={{textAlign:'center'}}><strong>50</strong></td>
 </tr>
 <tr>
 <td className="td-border">MOYENNE EXAMEN DE FIN DE CYCLE</td>
 <td className="td-border"></td>
-<td className="td-border" style={{textAlign:'center'}}><strong>40</strong></td>
+<td className="td-border" style={{textAlign:'center'}}><strong>50</strong></td>
 </tr>
 <tr>
 <td className="td-border"><strong>TOTAL</strong></td>

@@ -1,4 +1,4 @@
-export const home_redirect = "/wima";
+export const home_redirect = "/cirezi2";
 export const year = "2018 - 2022";
 export const http = "http://";
 export const url_online = "";

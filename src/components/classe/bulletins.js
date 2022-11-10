@@ -114,6 +114,10 @@ class Bulletins extends React.Component {
             }
         }
 
+        if (return_value === "0") {
+            return_value = "";
+        }
+
         return return_value;
     }
 
@@ -169,6 +173,10 @@ class Bulletins extends React.Component {
                 return_value = return_value + parseInt(this.props.classe.data.pupils_marks[i].main_marks);
             }
         }
+
+        // if (return_value === 0) {
+        //     return_value = "";
+        // }
 
         return return_value;
     }

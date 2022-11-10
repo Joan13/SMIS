@@ -42,6 +42,8 @@ import Libelles from '../../components/caisse/libelles';
 import PaiementsClasse from '../../components/classe/class_paiements';
 import FichePointsBrouillon from '../../components/classe/fiches_brouillon/fiche_points';
 import FicheSynthesePointsBrouillon from '../../components/classe/fiches_brouillon/fiche_synthese_brouillon';
+import BulletinsBrouillon from '../../components/classe/fiches_brouillon/bulletins_brouillon';
+import BulletinsType2Brouillon from '../../components/classe/fiches_brouillon/bulletins_type2_brouillon';
 
 class Home extends Component {
 
@@ -1063,6 +1065,16 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
                                             {this.props.middle_func === 27 ?
                                             <div id="fiche-synthese-points-b">
                                                 <FicheSynthesePointsBrouillon />                                            </div>
+                                            : null}
+
+                                            {this.props.middle_func === 28 ?
+                                            <div id="fiche-synthese-points-b">
+                                                <BulletinsBrouillon />                                            </div>
+                                            : null}
+
+                                            {this.props.middle_func === 29 ?
+                                            <div id="fiche-synthese-points-b">
+                                                <BulletinsType2Brouillon />                                            </div>
                                             : null}
 
                                         {this.props.middle_func === 5 ?
