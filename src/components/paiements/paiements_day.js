@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { home_redirect, find_date2, http } from '../../global_vars';
 
 const PaiementsDay = () => {
-
     const dispatch = useDispatch();
     const url_server = useSelector(state => state.url_server);
     const autres = useSelector(state => state.autres);
@@ -16,14 +15,14 @@ const PaiementsDay = () => {
     const frais_divers_day_deleted = useSelector(state => state.frais_divers_day_deleted);
     const day = useSelector(state => state.day);
     const libelles = useSelector(state => state.libelles);
-    const classes = useSelector(state=>state.classes);
-    const cycles = useSelector(state=>state.cycles);
-    const orders = useSelector(state=>state.orders);
-    const class_numbers = useSelector(state=>state.class_numbers);
+    const classes = useSelector(state => state.classes);
+    const cycles = useSelector(state => state.cycles);
+    const orders = useSelector(state => state.orders);
+    const class_numbers = useSelector(state => state.class_numbers);
+    const [paiements_tab, setPaiements_tab] = useState(0);
     let total_paiement = 0;
     let total_frais_divers = 0;
-    const [paiements_tab, setPaiements_tab] = useState(0);
-    
+
     for (let i in paiements_day) {
         total_paiement = total_paiement + parseInt(paiements_day[i].montant_paye);
     }
@@ -74,7 +73,7 @@ const PaiementsDay = () => {
         find_pupil(pupil.pupil.pupil_id);
     }
 
-    const find_class_number=(class_id)=> {
+    const find_class_number = (class_id) => {
 
         let return_value = "";
         let suffixe = "";
@@ -93,9 +92,9 @@ const PaiementsDay = () => {
         return return_value + "" + suffixe;
     }
 
-    const find_class_order=(order)=> {
+    const find_class_order = (order) => {
 
-        let return_value="";
+        let return_value = "";
         for (let i in orders) {
             if (orders[i].order_id === order) {
                 return_value = orders[i].order_name;
@@ -105,7 +104,7 @@ const PaiementsDay = () => {
         return return_value;
     }
 
-    const find_cycle=(cycle)=> {
+    const find_cycle = (cycle) => {
 
         let return_value = "";
         for (let i in cycles) {
@@ -117,7 +116,7 @@ const PaiementsDay = () => {
         return return_value;
     }
 
-    const find_pupil_data=(pupil_id)=> {
+    const find_pupil_data = (pupil_id) => {
 
         let return_value = null;
         for (let i in pupils_school) {
@@ -184,16 +183,16 @@ const PaiementsDay = () => {
 
             <div onClick={() => setPaiements_tab(1)} style={{ fontWeight: 'bold' }}>
                 <span className="add-minus"><FiChevronRight /> Fiche journalière détaillée des frais scolaires</span>
-            </div><br/>
+            </div><br />
             <div onClick={() => setPaiements_tab(2)} style={{ fontWeight: 'bold' }}>
                 <span className="add-minus"><FiChevronRight /> Fiche journalière détaillée des frais divers</span>
-            </div><br/>
+            </div><br />
             <div onClick={() => setPaiements_tab(3)} style={{ fontWeight: 'bold' }}>
                 <span className="add-minus"><FiChevronRight /> Rapport journalier De paiement</span>
-            </div><br/>
+            </div><br />
             <div onClick={() => setPaiements_tab(4)} style={{ fontWeight: 'bold' }}>
                 <span className="add-minus"><FiChevronRight /> Corbeille</span>
-            </div><br/>
+            </div><br />
 
             {paiements_tab === 1 ?
                 <div>
@@ -235,7 +234,7 @@ const PaiementsDay = () => {
                                                         <tr onClick={() => view_pupil(find_pupil_data(paiement.pupil_id))}>
                                                             <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
                                                             <td style={{ paddingLeft: 10 }}>{paiement.first_name.toUpperCase()} {paiement.second_name.toUpperCase()} {paiement.last_name.toUpperCase()}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{find_class_number(paiement.class_school)} {find_cycle(paiement.cycle_school)} {find_cycle(paiement.class_order)}</td>
+                                                            <td style={{ paddingLeft: 10 }}>{find_class_number(paiement.class_school)} {find_cycle(paiement.cycle_school)} {find_class_order(paiement.class_order)}</td>
                                                             {/* <td style={{ paddingLeft: 10 }}></td> */}
                                                             <td style={{ paddingLeft: 10 }}>{libelle[0].description_libelle}</td>
                                                             <td style={{ width: 50, textAlign: 'center' }}>{paiement.montant_paye} </td>
@@ -420,8 +419,8 @@ const PaiementsDay = () => {
                                                 {paiements_day.map((paiement, index) => {
                                                     const pupil = pupils_school.filter(pupil => pupil.pupil_id === paiement.pupil_id);
                                                     const libelle = libelles.filter(libelle => libelle.libelle_id === paiement.libelle);
-                                                    
-                                                        return (
+
+                                                    return (
                                                         <tbody key={index}>
                                                             <tr onClick={() => view_pupil(find_pupil_data(paiement.pupil_id))}>
                                                                 {/* <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
@@ -431,14 +430,14 @@ const PaiementsDay = () => {
                                                                 <td style={{ width: 50, textAlign: 'center' }}>{paiement.montant_paye} </td> */}
 
                                                                 <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{paiement.first_name.toUpperCase()} {paiement.second_name.toUpperCase()} {paiement.last_name.toUpperCase()}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{find_class_number(paiement.class_school)} {find_cycle(paiement.cycle_school)} {find_cycle(paiement.class_order)}</td>
-                                                            {/* <td style={{ paddingLeft: 10 }}></td> */}
-                                                            <td style={{ paddingLeft: 10 }}>{libelle[0].description_libelle}</td>
-                                                            <td style={{ width: 50, textAlign: 'center' }}>{paiement.montant_paye} </td>
+                                                                <td style={{ paddingLeft: 10 }}>{paiement.first_name.toUpperCase()} {paiement.second_name.toUpperCase()} {paiement.last_name.toUpperCase()}</td>
+                                                                <td style={{ paddingLeft: 10 }}>{find_class_number(paiement.class_school)} {find_cycle(paiement.cycle_school)} {find_class_order(paiement.class_order)}</td>
+                                                                {/* <td style={{ paddingLeft: 10 }}></td> */}
+                                                                <td style={{ paddingLeft: 10 }}>{libelle[0].description_libelle}</td>
+                                                                <td style={{ width: 50, textAlign: 'center' }}>{paiement.montant_paye} </td>
                                                             </tr>
                                                         </tbody>
-                                                        )
+                                                    )
                                                 })}
                                                 <tfoot>
                                                     <tr style={{ backgroundColor: 'rgba(0, 80, 180, 0.2)' }}>
@@ -478,7 +477,7 @@ const PaiementsDay = () => {
                                                 {frais_divers_day.map((frais_divers, index) => {
                                                     const pupil = pupils_school.filter(pupil => pupil.pupil_id === frais_divers.pupil_id);
                                                     const libelle = libelles.filter(libelle => libelle.libelle_id === frais_divers.libelle);
-return (
+                                                    return (
                                                         <tbody key={index}>
                                                             <tr onClick={() => view_pupil(find_pupil_data(frais_divers.pupil_id))}>
                                                                 {/* <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
@@ -488,15 +487,15 @@ return (
                                                                 <td style={{ width: 50, textAlign: 'center' }}>{frais_divers.montant} </td> */}
 
                                                                 <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{frais_divers.first_name.toUpperCase()} {frais_divers.second_name.toUpperCase()} {frais_divers.last_name.toUpperCase()}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{find_class_number(frais_divers.class_school)} {find_cycle(frais_divers.cycle_school)} {find_class_order(frais_divers.class_order)}</td>
-                                                            {/* <td style={{ paddingLeft: 10 }}></td> */}
-                                                            <td style={{ paddingLeft: 10 }}>{libelle[0].description_libelle}</td>
-                                                            <td style={{ width: 50, textAlign: 'center' }}>{frais_divers.montant} </td>
+                                                                <td style={{ paddingLeft: 10 }}>{frais_divers.first_name.toUpperCase()} {frais_divers.second_name.toUpperCase()} {frais_divers.last_name.toUpperCase()}</td>
+                                                                <td style={{ paddingLeft: 10 }}>{find_class_number(frais_divers.class_school)} {find_cycle(frais_divers.cycle_school)} {find_class_order(frais_divers.class_order)}</td>
+                                                                {/* <td style={{ paddingLeft: 10 }}></td> */}
+                                                                <td style={{ paddingLeft: 10 }}>{libelle[0].description_libelle}</td>
+                                                                <td style={{ width: 50, textAlign: 'center' }}>{frais_divers.montant} </td>
                                                             </tr>
                                                         </tbody>
                                                     )
-                                                    
+
                                                 })}
                                                 <tfoot>
                                                     {libelles.map((libelle, index) => {
@@ -534,7 +533,7 @@ return (
                 </div>
                 : null}
 
-                {paiements_tab === 4 ?
+            {paiements_tab === 4 ?
                 <div>
                     <div onClick={() => printContent("corbeille-day")} style={{ fontWeight: 'bold', float: 'right', paddingTop: 30 }}>
                         <span className="add-minus"><FiPrinter /> IMPRIMER LA FICHE</span>
@@ -568,7 +567,7 @@ return (
                                             {paiements_day_deleted.map((paiement, index) => {
                                                 const pupil = pupils_school.filter(pupil => pupil.pupil_id === paiement.pupil_id);
                                                 const libelle = libelles.filter(libelle => libelle.libelle_id === paiement.libelle);
-return (
+                                                return (
                                                     <tbody key={index}>
                                                         <tr onClick={() => view_pupil(find_pupil_data(paiement.pupil_id))}>
                                                             {/* <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
@@ -579,7 +578,7 @@ return (
 
                                                             <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
                                                             <td style={{ paddingLeft: 10 }}>{paiement.first_name.toUpperCase()} {paiement.second_name.toUpperCase()} {paiement.last_name.toUpperCase()}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{find_class_number(paiement.class_school)} {find_cycle(paiement.cycle_school)} {find_cycle(paiement.class_order)}</td>
+                                                            <td style={{ paddingLeft: 10 }}>{find_class_number(paiement.class_school)} {find_cycle(paiement.cycle_school)} {find_class_order(paiement.class_order)}</td>
                                                             {/* <td style={{ paddingLeft: 10 }}></td> */}
                                                             <td style={{ paddingLeft: 10 }}>{libelle[0].description_libelle}</td>
                                                             <td style={{ width: 50, textAlign: 'center' }}>{paiement.montant_paye} </td>
@@ -591,57 +590,57 @@ return (
                                     </td>
                                 </tr>
                             </tbody>
-                        </table><br/><br/><br/>
+                        </table><br /><br /><br />
 
-                            <table style={{ width: '100%' }}>
-                                <tbody>
-                                    <tr>
-                                        <td valign="top">
-                                            <table className="full-table-liste">
-                                                <caption>
-                                                    <h4 style={{ float: 'right', textAlign: 'center' }}>
-                                                        DÉTAILLÉ DE LA CORBEILLE (FRAIS DIVERS)<br />
-                                                        Journée du {find_date2(day)}
-                                                    </h4>
-                                                </caption>
-                                                <thead>
-                                                    <tr>
-                                                        <th style={{ width: 30, textAlign: 'center' }} rowSpan={2}>No</th>
-                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Noms de l'élève</th>
-                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Classe</th>
-                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Motif de paiement</th>
-                                                        <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} rowSpan={2}>Montant (USD)</th>
-                                                    </tr>
-                                                </thead>
-                                                {frais_divers_day_deleted.map((frais_divers, index) => {
-                                                    const pupil = pupils_school.filter(pupil => pupil.pupil_id === frais_divers.pupil_id);
-                                                    const libelle = libelles.filter(libelle => libelle.libelle_id === frais_divers.libelle);
+                        <table style={{ width: '100%' }}>
+                            <tbody>
+                                <tr>
+                                    <td valign="top">
+                                        <table className="full-table-liste">
+                                            <caption>
+                                                <h4 style={{ float: 'right', textAlign: 'center' }}>
+                                                    DÉTAILLÉ DE LA CORBEILLE (FRAIS DIVERS)<br />
+                                                    Journée du {find_date2(day)}
+                                                </h4>
+                                            </caption>
+                                            <thead>
+                                                <tr>
+                                                    <th style={{ width: 30, textAlign: 'center' }} rowSpan={2}>No</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Noms de l'élève</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Classe</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Motif de paiement</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} rowSpan={2}>Montant (USD)</th>
+                                                </tr>
+                                            </thead>
+                                            {frais_divers_day_deleted.map((frais_divers, index) => {
+                                                const pupil = pupils_school.filter(pupil => pupil.pupil_id === frais_divers.pupil_id);
+                                                const libelle = libelles.filter(libelle => libelle.libelle_id === frais_divers.libelle);
 
-return (
-                                                        <tbody key={index}>
-                                                            <tr onClick={() => view_pupil(find_pupil_data(frais_divers.pupil_id))}>
-                                                                {/* <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
+                                                return (
+                                                    <tbody key={index}>
+                                                        <tr onClick={() => view_pupil(find_pupil_data(frais_divers.pupil_id))}>
+                                                            {/* <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
                                                                 <td style={{ paddingLeft: 10 }}>{find_pupil_data(frais_divers.pupil_id).pupil.first_name.toUpperCase()} {find_pupil_data(frais_divers.pupil_id).pupil.second_name.toUpperCase()} {find_pupil_data(frais_divers.pupil_id).pupil.last_name.toUpperCase()}</td>
                                                                 <td style={{ paddingLeft: 10 }}>{find_class_number(find_pupil_data(frais_divers.pupil_id).pupil.class_school)} {find_cycle(find_pupil_data(frais_divers.pupil_id).pupil.cycle_school)} {find_class_order(find_pupil_data(frais_divers.pupil_id).pupil.class_order)}</td>
                                                                 <td style={{ paddingLeft: 10 }}>{libelle[0].description_libelle}</td>
                                                                 <td style={{ width: 50, textAlign: 'center' }}>{frais_divers.montant} </td> */}
 
-                                                                <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
+                                                            <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
                                                             <td style={{ paddingLeft: 10 }}>{frais_divers.first_name.toUpperCase()} {frais_divers.second_name.toUpperCase()} {frais_divers.last_name.toUpperCase()}</td>
                                                             <td style={{ paddingLeft: 10 }}>{find_class_number(frais_divers.class_school)} {find_cycle(frais_divers.cycle_school)} {find_class_order(frais_divers.class_order)}</td>
                                                             {/* <td style={{ paddingLeft: 10 }}></td> */}
                                                             <td style={{ paddingLeft: 10 }}>{libelle[0].description_libelle}</td>
                                                             <td style={{ width: 50, textAlign: 'center' }}>{frais_divers.montant} </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    )
-                                                    
-                                                })}
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table><br /><br /><br />
+                                                        </tr>
+                                                    </tbody>
+                                                )
+
+                                            })}
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table><br /><br /><br />
 
                     </div>
                 </div> : null}

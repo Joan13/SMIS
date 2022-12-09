@@ -135,8 +135,15 @@ const reducer = (state = initialState, action) => {
             let new_classe = action.payload.classe;
             Object.assign({}, pupil);
             new_classe.pupils[index] = pupil[0];
-            // console.log(new_classe);
             return { ...state, classe: new_classe }
+                case "SET_EDIT_PUPIL_MARKS":
+            let index_pupil = state.classe.pupils.findIndex(pupil => pupil.pupil_id === action.payload.pupil);
+            let pupil_m = state.classe.pupils.filter(pupil => pupil.pupil_id === action.payload.pupil);
+            pupil_m[0].pupil.marks = action.payload.marks;
+            let new_classe_marks = action.payload.classe;
+            Object.assign({}, pupil_m);    
+            new_classe_marks.pupils[index_pupil] = pupil_m[0];
+            return { ...state, classe: new_classe_marks }
         case "SET_CLASSE_OPEN":
             return { ...state, class_open: action.payload }
         case "SET_CYCLES":

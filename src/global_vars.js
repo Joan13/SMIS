@@ -5,7 +5,6 @@ export const url_online = "";
 export const online = false;
 
 export function printContent(divName) {
-
     let printContents = document.getElementById(divName).innerHTML;
     let originalContents = document.body.innerHTML;
     document.body.innerHTML = printContents;

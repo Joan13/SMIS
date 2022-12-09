@@ -821,36 +821,45 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
                                     <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} size={20} />
                                 </span> : null}
 
-                            <span className="user-home-tools" onClick={() => this.back_home()}>
+                            <span
+                            title="Revenir au menu principal"
+                             className="user-home-tools" onClick={() => this.back_home()}>
                                 <FaHome color="black" size={20} />
                             </span>
 
                             {!online ?
                                 <span 
+                                title="Synchroniser les données"
                             onClick={() => this.collect_data()} 
                             className="user-home-tools">
                                 <FaCloudUploadAlt color="black" size={22} />
                             </span>
                             :null}
 
-                            <span className="user-home-tools">
+                            <span 
+                            title="Notifications"
+                            className="user-home-tools">
                                 <FaBell color="black" size={20} />
                             </span>
 
                             <span
+                            title="Rafraîchir les données"
                                 onClick={() => this.refresh_window()}
                                 className="user-home-tools">
                                 <FiRefreshCcw color="black" size={20} />
                             </span>
 
                             <Link
+                            title="Configurations"
                                 className="user-home-tools"
                                 to={"/settings"}>
                                 <RiSettings4Fill color="black" size={22} />
                             </Link>
 
                             {this.state.logout_open ?
-                                <span onClick={() => this.logout_session()} className="user-home-tools" style={{ fontSize: 15 }}>
+                                <span
+                                title="Déconnexion"
+                                 onClick={() => this.logout_session()} className="user-home-tools" style={{ fontSize: 15 }}>
                                     <div className="deconnexion">
                                         <FiLogOut color="white" size={12} style={{ marginRight: 10 }} />
                                         Quitter
