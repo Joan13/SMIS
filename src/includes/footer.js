@@ -15,7 +15,7 @@ export default function Footer() {
                     Chargement des données parallèles...
                 </div> : null}
             <div className="footer-rights">
-                <span style={{ marginRight: 20 }}><span style={{ color: 'gray' }}> {JSONPackageFile.app_full_name} / {JSONPackageFile.branch} / version {JSONPackageFile.version} - {JSONPackageFile.platform} / </span>Tous droits réservés © Agisha Migani Joan - Yambi, Inc. {year}</span>
+                <span style={{ marginRight: 20, fontSize:12 }}><span style={{ color: 'gray' }}> {JSONPackageFile.app_full_name} / {JSONPackageFile.branch} / version {JSONPackageFile.version} - {JSONPackageFile.platform} / </span>Tous droits réservés © Agisha Migani Joan - Yambi, Inc. {year}</span>
             </div>
         </div>
     )

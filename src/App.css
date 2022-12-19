@@ -209,11 +209,11 @@ h5 {
   width: 75%;
   position: fixed;
   left: 25%;
-  height: 20px;
+  height: 10px;
   bottom: 0px;
   margin-top: 70px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  /* padding-top: 5px; */
+  padding-bottom: 7px;
   text-align: right;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -834,7 +834,7 @@ h5 {
   position: fixed;
   /* background-color: green; */
   top: 105px;
-  bottom: 30px;
+  bottom: 15px;
   right: 0px;
   width: 20%;
   /* border-left: 1px solid rgba(0, 0, 0, 0.2); */
@@ -846,7 +846,7 @@ h5 {
   position: fixed;
   /* background-color: aqua; */
   top: 105px;
-  bottom: 30px;
+  bottom: 15px;
   width: 54.3%;
   left: 25%;
   border-right: 1px solid rgba(0, 0, 0, 0.2);

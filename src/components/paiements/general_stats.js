@@ -218,15 +218,15 @@ Génération des statistiques générales de la caisse...
                         </tr>
                         <tr>
                             <td style={{ width: "33.33%", paddingLeft: 0, textAlign: "center", paddingTop: 10, paddingBottom: 10 }}>
-                                <strong style={{ color: 'rgb(0, 80, 180)', fontSize: 15 }}>{trim1.toString().substr(0, 5)} %</strong>
+                                <strong style={{ color: 'rgb(0, 80, 180)', fontSize: 15 }}>~ {trim1.toString().substr(0, 5)} %</strong>
                                 <div style={{marginTop:13,fontSize:12}}>{trim1}</div>
                             </td>
                             <td style={{ width: "33.33%", textAlign: "center", paddingTop: 10, paddingBottom: 10 }}>
-                                <strong style={{ color: 'rgb(0, 80, 180)', fontSize: 15 }}>{trim2.toString().substr(0, 5)} %</strong>
+                                <strong style={{ color: 'rgb(0, 80, 180)', fontSize: 15 }}>~ {trim2.toString().substr(0, 5)} %</strong>
                                 <div style={{marginTop:13,fontSize:12}}>{trim2}</div>
                             </td>
                             <td style={{ width: "33.33%", textAlign: "center", paddingTop: 10, paddingBottom: 10 }}>
-                                <strong style={{ color: 'rgb(0, 80, 180)', fontSize: 15 }}>{trim3.toString().substr(0, 5)} %</strong>
+                                <strong style={{ color: 'rgb(0, 80, 180)', fontSize: 15 }}>~ {trim3.toString().substr(0, 5)} %</strong>
                                 <div style={{marginTop:13,fontSize:12}}>{trim3}</div>
                             </td>
                         </tr>

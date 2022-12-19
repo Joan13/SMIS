@@ -13,7 +13,7 @@ const store = createStore(reducer);
 const App = () => {
   return (
     <Provider store={store}>
-      <Router basename="/cirezi2">
+      <Router basename="/alfajiri">
         <Routes>
           <Route path="/signin" element={<Signin />} exact />
           <Route path="/settings" element={<Settings />} exact />
