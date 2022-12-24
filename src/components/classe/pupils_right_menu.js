@@ -12,6 +12,7 @@ const PupilsRightMenu = () => {
     const searching_pupil = useSelector(state => state.searching_pupil);
     const pupils_count = useSelector(state => state.pupils_count);
     const pupils_school = useSelector(state => state.pupils_school);
+    const pupill = useSelector(state=>state.pupil);
 
     const searchPupil = (name) => {
         dispatch({ type: "SET_SEARCHING_PUPIL", payload: true });
@@ -51,6 +52,8 @@ const PupilsRightMenu = () => {
 
                 dispatch({ type: "SET_SEARCHING_PUPIL", payload: false });
                 dispatch({ type: "SET_PUPIL", payload: response.pupil });
+
+                console.log(pupill);
             })
             .catch((error) => { });
     };
@@ -95,7 +98,7 @@ const PupilsRightMenu = () => {
                                         <td style={{ paddingBottom: 5 }}
                                             onClick={() => view_pupil(pupil)}
                                             key={index} className="pupils-list-home">
-                                            {pupil.pupil.first_name.toString().toUpperCase()} {pupil.pupil.second_name.toString().toUpperCase()} {pupil.pupil.last_name.toString().toUpperCase()} ({pupil.pupil.gender === "1" ? "M" : "F"})
+                                            {pupil.pupil.first_name.toString().toUpperCase()} {pupil.pupil.second_name.toString().toUpperCase()} {pupil.pupil.last_name.toString().toUpperCase()} ({parseInt(pupil.pupil.gender) === 1 ? "M" : "F"})
                                         </td>
                                     </tr>
                                 )

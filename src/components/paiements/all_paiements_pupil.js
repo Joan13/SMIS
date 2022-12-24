@@ -1,27 +1,33 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { FaArrowDown, FaChevronDown, FaPrint } from 'react-icons/fa';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { find_date, home_redirect, http } from '../../global_vars';
 import { mapStateToProps } from '../../store/state_props';
 
-class AllPupilPaiements extends Component {
+const AllPupilPaiements =()=> {
 
-    constructor(props) {
-        super(props);
+    const pupil = useSelector(state=>state.pupil);
+    const autres = useSelector(state=>state.autres);
+    const class_numbers = useSelector(state=>state.class_numbers);
+    const orders = useSelector(state=>state.orders);
+    const cycles = useSelector(state=>state.cycles);
+    const libelles = useSelector(state=>state.libelles);
+    const annee_scolaire = useSelector(state=>state.annee_scolaire);
+    const url_server = useSelector(state=>state.url_server);
+    const dispatch = useDispatch();     
 
-        this.state = {
+    useEffect(() => {
+        console.log(pupil.paiements);
+    }, []);
 
-        }
-    }
-
-    find_class_number(class_id) {
+    const find_class_number=(class_id)=> {
 
         let return_value = "";
         let suffixe = "";
 
-        for (let i in this.props.class_numbers) {
-            if (this.props.class_numbers[i].class_id === class_id) {
-                return_value = this.props.class_numbers[i].class_number;
+        for (let i in class_numbers) {
+            if (class_numbers[i].class_id === class_id) {
+                return_value = class_numbers[i].class_number;
                 if (return_value === "1") {
                     suffixe = "ère";
                 } else {
@@ -33,75 +39,75 @@ class AllPupilPaiements extends Component {
         return return_value + "" + suffixe;
     }
 
-    find_class_order(order) {
+    const find_class_order=(order)=> {
 
         let return_value = "";
-        for (let i in this.props.orders) {
-            if (this.props.orders[i].order_id === order) {
-                return_value = this.props.orders[i].order_name;
+        for (let i in orders) {
+            if (orders[i].order_id === order) {
+                return_value = orders[i].order_name;
             }
         }
 
         return return_value;
     }
 
-    find_libelle(libelle) {
+    const find_libelle=(libelle)=> {
 
         let return_value = "";
-        for (let i in this.props.libelles) {
-            if (this.props.libelles[i].libelle_id == libelle) {
-                return_value = this.props.libelles[i].description_libelle;
+        for (let i in libelles) {
+            if (libelles[i].libelle_id == libelle) {
+                return_value = libelles[i].description_libelle;
             }
         }
 
         return return_value;
     }
 
-    find_cycle(cycle) {
+    const find_cycle=(cycle)=> {
 
         let return_value = "";
-        for (let i in this.props.cycles) {
-            if (this.props.cycles[i].cycle_id === cycle) {
-                return_value = this.props.cycles[i].cycle_name;
+        for (let i in cycles) {
+            if (cycles[i].cycle_id === cycle) {
+                return_value = cycles[i].cycle_name;
             }
         }
 
         return return_value;
     }
 
-    printContent(divName) {
+    const printContent=(divName)=> {
 
-        this.props.dispatch({ type: "SET_MOUNT_HOME", payload: false });
+        dispatch({ type: "SET_MOUNT_HOME", payload: false });
         let printContents = document.getElementById(divName).innerHTML;
         let originalContents = document.body.innerHTML;
         document.body.innerHTML = printContents;
         window.print();
 
         document.body.innerHTML = originalContents;
-        window.location.href = http + this.props.url_server + home_redirect;
-        window.location.replace(http + this.props.url_server + home_redirect);
+        window.location.href = http + url_server + home_redirect;
+        window.location.replace(http + url_server + home_redirect);
     }
 
-    find_pupil() {
-        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
+    const find_pupil=()=> {
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
 
         fetch(BaseURL, {
             method: 'POST',
             body: JSON.stringify({
-                pupil_id: this.props.pupil.pupil.pupil_id,
+                pupil_id: pupil.pupil.pupil_id,
             })
         })
             .then((response) => response.json())
             .then((response) => {
 
-                this.props.dispatch({ type: "SET_PUPIL", payload: response.pupil });
+                dispatch({ type: "SET_PUPIL", payload: response.pupil });
             })
             .catch((error) => { });
     };
 
-    delete_recu(recu_id) {
+    const delete_recu=(recu_id)=> {
 
-        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/delete_recu.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/delete_recu.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -111,21 +117,19 @@ class AllPupilPaiements extends Component {
         })
             .then((response) => response.json())
             .then((response) => {
-                this.find_pupil();
+                find_pupil();
             })
             .catch((error) => {
                 // alert(error.toString());
-                // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, is_loading_home: false, loading_middle: false });
+                // setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, is_loading_home: false, loading_middle: false });
             });
     };
 
-
-    render() {
         return (
             <div style={{ width: '100%' }}>
-                {this.props.pupil.paiements.map((paiement, index) => {
+                {pupil.paiements.map((paiement, index) => {
 
-                    if (paiement.paiement_validated === "1") {
+                    if (parseInt(paiement.paiement_validated) === 1) {
                         return (
                             <div key={index} style={{ margin: 0, padding: 0, marginBottom: 20 }}>
 
@@ -136,21 +140,21 @@ class AllPupilPaiements extends Component {
                                                 <tbody>
                                                     <tr>
                                                         <td className="td-border-right-recu" style={{ width: "50%", fontSize: 12 }}>
-                                                            <strong className="div-title-recu">{(this.props.autres.school_name).toUpperCase()}</strong><br />
-                                                            <strong className="sub-title-div-recu">{this.props.autres.school_bp}</strong>
+                                                            <strong className="div-title-recu">{(autres.school_name).toUpperCase()}</strong><br />
+                                                            <strong className="sub-title-div-recu">{autres.school_bp}</strong>
                                                             <table>
                                                                 <tbody>
                                                                     <tr>
                                                                         <td>EMAIL <span style={{ color: 'transparent' }}>Ybi</span></td>
-                                                                        <td>: <strong>{this.props.autres.email_school}</strong></td>
+                                                                        <td>: <strong>{autres.email_school}</strong></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>TÉLÉPHONES <span style={{ color: 'transparent' }}>Ybi</span></td>
-                                                                        <td>: <strong>{this.props.autres.phone_1}</strong></td>
+                                                                        <td>: <strong>{autres.phone_1}</strong></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td> </td>
-                                                                        <td><span style={{ color: 'transparent' }}>:</span> <strong>{this.props.autres.phone_2}</strong></td>
+                                                                        <td><span style={{ color: 'transparent' }}>:</span> <strong>{autres.phone_2}</strong></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -159,15 +163,15 @@ class AllPupilPaiements extends Component {
                                                             <table>
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td>ÉLÈVE : <strong>{this.props.pupil.pupil.first_name.toUpperCase()} {this.props.pupil.pupil.second_name.toUpperCase()} {this.props.pupil.pupil.last_name}</strong>
+                                                                        <td>ÉLÈVE : <strong>{pupil.pupil.first_name.toUpperCase()} {pupil.pupil.second_name.toUpperCase()} {pupil.pupil.last_name}</strong>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td>CLASSE : <strong>{this.find_class_number(this.props.pupil.pupil.class_school)} {this.find_cycle(this.props.pupil.pupil.cycle_school)} {this.find_class_order(this.props.pupil.pupil.class_order)}</strong>
+                                                                        <td>CLASSE : <strong>{find_class_number(pupil.pupil.class_school)} {find_cycle(pupil.pupil.cycle_school)} {find_class_order(pupil.pupil.class_order)}</strong>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td>ANNÉE SCOLAIRE : <strong>{this.props.annee_scolaire.year_name}</strong>
+                                                                        <td>ANNÉE SCOLAIRE : <strong>{annee_scolaire.year_name}</strong>
                                                                         </td>
                                                                     </tr>
                                                                     <tr style={{ padding: 20 }}>
@@ -190,7 +194,7 @@ class AllPupilPaiements extends Component {
                                                                 <tbody>
                                                                     <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
                                                                     <tr>
-                                                                        <td>ÉLÈVE : <strong>{this.props.pupil.pupil.first_name.toUpperCase()} {this.props.pupil.pupil.second_name.toUpperCase()} {this.props.pupil.pupil.last_name}</strong>
+                                                                        <td>ÉLÈVE : <strong>{pupil.pupil.first_name.toUpperCase()} {pupil.pupil.second_name.toUpperCase()} {pupil.pupil.last_name}</strong>
                                                                         </td>
                                                                     </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
                                                                     <tr>
@@ -201,18 +205,18 @@ class AllPupilPaiements extends Component {
                                                                     </tr>
                                                                     <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
                                                                     <tr>
-                                                                        <td style={{ width: '50%' }} valign="top">Solde année : <strong>{this.props.pupil.soldes.solde} dollars USD</strong>
+                                                                        <td style={{ width: '50%' }} valign="top">Solde année : <strong>{pupil.soldes.solde} dollars USD</strong>
                                                                         </td>
                                                                         <td>Solde par trimestre    <FaArrowDown size={10} style={{ marginLeft: 5 }} /><br />
                                                                             <div style={{ marginTop: 5, paddingTop: 2 }} className="td-border-left-top dispp">
-                                                                                <span>T1 : <strong>{this.props.pupil.soldes.solde1}</strong></span><span style={{ marginLeft: 20, marginRight: 20, color: 'gray' }}> | </span>
-                                                                                <span>T2 : <strong>{this.props.pupil.soldes.solde2}</strong></span><span style={{ marginLeft: 20, marginRight: 20, color: 'gray' }}> | </span>
-                                                                                <span>T3 : <strong>{this.props.pupil.soldes.solde3}</strong></span>
+                                                                                <span>T1 : <strong>{pupil.soldes.solde1}</strong></span><span style={{ marginLeft: 20, marginRight: 20, color: 'gray' }}> | </span>
+                                                                                <span>T2 : <strong>{pupil.soldes.solde2}</strong></span><span style={{ marginLeft: 20, marginRight: 20, color: 'gray' }}> | </span>
+                                                                                <span>T3 : <strong>{pupil.soldes.solde3}</strong></span>
                                                                             </div>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td style={{ width: '50%' }}>Motif du paiement : <strong>{this.find_libelle(paiement.libelle)}</strong>
+                                                                        <td style={{ width: '50%' }}>Motif du paiement : <strong>{find_libelle(paiement.libelle)}</strong>
                                                                         </td>
                                                                         <td></td>
                                                                     </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
@@ -236,7 +240,7 @@ class AllPupilPaiements extends Component {
                                     <span>
                                         <FaChevronDown color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
                                         <span
-                                            onClick={() => this.delete_recu(paiement.paiement_id)}
+                                            onClick={() => delete_recu(paiement.paiement_id)}
                                             className="add-minus">
                                             EFFACER CE REÇU
                                         </span>
@@ -245,7 +249,7 @@ class AllPupilPaiements extends Component {
                                     <span>
                                         <span className="divider-menu-topbar"></span>
                                         <FaPrint color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
-                                        <span onClick={() => this.printContent(`recu ${paiement.paiement_id}`)} className="add-minus">
+                                        <span onClick={() => printContent(`recu ${paiement.paiement_id}`)} className="add-minus">
                                             IMPRIMER CE REÇU
                                         </span>
                                     </span>
@@ -256,9 +260,8 @@ class AllPupilPaiements extends Component {
                 })}
             </div>
         )
-    }
 }
 
-export default connect(mapStateToProps)(AllPupilPaiements);
+export default AllPupilPaiements;
 
 

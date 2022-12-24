@@ -200,7 +200,10 @@ class FichesPointsCourses extends Component {
         //         }
         //     }, 500);
 
+        if (this.props.classe.courses[0] !== undefined) {
             this.setState({ course_id:this.props.classe.courses[0].course_id });
+        }
+           
         // }
     }
 

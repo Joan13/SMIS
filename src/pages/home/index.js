@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import Footer from '../../includes/footer';
 import { FaCircle, FaSearch, FaCheck, FaHome, FaUserPlus, FaClipboard, FaUsers, FaFolder, FaUser, FaPaperclip, FaDatabase, FaStarHalfAlt, FaEdit, FaBell, FaCloudUploadAlt, FaPiedPiperAlt } from 'react-icons/fa';
-import {RiSettings4Fill} from 'react-icons/ri';
-import { FiEdit, FiLogOut, FiRefreshCcw, FiUser } from 'react-icons/fi';
+import { RiSettings4Fill } from 'react-icons/ri';
+import { FiAlertOctagon, FiEdit, FiLogOut, FiRefreshCcw, FiUser } from 'react-icons/fi';
 import modalView from '../../includes/modal';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link, Navigate } from 'react-router-dom';
@@ -102,7 +102,7 @@ class Home extends Component {
             abandon: 0,
             pupil: [],
             can_load_data: false,
-            modal_paiement_categories:false,
+            modal_paiement_categories: false,
         }
     }
 
@@ -123,7 +123,7 @@ class Home extends Component {
         let user = sessionStorage.getItem('assemble_user_data');
         let url_server = sessionStorage.getItem('yambi_smis_url_server');
         user = JSON.parse(user);
-        this.setState({can_load_data:false});
+        this.setState({ can_load_data: false });
 
         this.props.dispatch({ type: "SET_USER_CONNECTED", payload: user });
         this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
@@ -137,11 +137,11 @@ class Home extends Component {
         this.props.dispatch({ type: "SET_URL_SERVER", payload: url_server });
         this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Chargement des données générales..." });
 
-        if (user === null) {}
+        if (user === null) { }
         else {
             if (user.poste === "0") {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Admin" });
-            } else if (user.poste === "1") {
+            } else if (parseInt(user.poste) === 1) {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Promoteur" });
             } else if (user.poste === "2") {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Discipline" });
@@ -156,6 +156,7 @@ class Home extends Component {
             } else if (user.poste === "7") {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Directeur des études" });
             } else {
+                alert(user.poste)
                 alert("Cet utilisateur est invalide. Vous devez vous reconnecter pour accéder aux services.");
                 this.logout_session();
             }
@@ -172,41 +173,41 @@ class Home extends Component {
             .then((response) => response.json())
             .then((response) => {
 
-                const promise_general_info_home = new Promise((resolve, reject) =>{
+                const promise_general_info_home = new Promise((resolve, reject) => {
                     this.props.dispatch({ type: "SET_CLASSES", payload: response.classes });
-                this.props.dispatch({ type: "SET_PUPILS_COUNT_PAIEMENTS", payload: response.pupils_count_paiements });
-                this.props.dispatch({ type: "SET_MONTANT_TOTAL", payload: response.montant_paye });
-                this.props.dispatch({ type: "SET_AUTRES", payload: response.autres });
-                this.props.dispatch({ type: "SET_ANNEES", payload: response.annees });
-                this.props.dispatch({ type: "SET_CLASS_NUMBERS", payload: response.class_numbers });
-                this.props.dispatch({ type: "SET_ORDERS", payload: response.orders });
-                this.props.dispatch({ type: "SET_CYCLES", payload: response.cycles });
-                this.props.dispatch({ type: "SET_SECTIONS", payload: response.sections });
-                this.props.dispatch({ type: "SET_OPTIONS", payload: response.options });
-                this.props.dispatch({ type: "SET_ANNEE_SCOLAIRE", payload: response.annee_scolaire });
-                this.props.dispatch({ type: "SET_ANNEE", payload: response.annee });
-                this.props.dispatch({ type: "SET_SCHOOL_NAME", payload: response.school_name });
-                this.props.dispatch({ type: "SET_ATTRIBUTIONS", payload: response.attributions });
-                this.props.dispatch({ type: "SET_PUPILS_COUNT", payload: response.pupils_count });
-                this.props.dispatch({ type: "SET_PUPILS_COUNT_MALE", payload: response.pupils_count_male });
-                this.props.dispatch({ type: "SET_PUPILS_COUNT_FEMALE", payload: response.pupils_count_female });
-                this.props.dispatch({ type: "SET_SCHOOL_NAME_ABB", payload: response.school_name_abb });
-                this.props.dispatch({ type: "SET_REUSSITES", payload: response.reussites });
-                this.props.dispatch({ type: "SET_DOUBLES", payload: response.doubles });
-                this.props.dispatch({ type: "SET_ECHECS", payload: response.echecs });
-                this.props.dispatch({ type: "SET_ABANDON", payload: response.abandon });
-                this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
-                this.props.dispatch({ type: "SET_MOUNT_HOME", payload: false });
-                this.props.dispatch({ type: "SET_LIBELLES", payload: response.libelles });
-                this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Année scolaire" });
-                this.props.dispatch({ type: "SET_PUPILS_SCHOOL", payload: response.pupils });
-                this.props.dispatch({ type: "SET_PUPILS", payload: response.pupils });
-                this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_categories});
-                
-                resolve();
-                }).then(()=>{});
+                    this.props.dispatch({ type: "SET_PUPILS_COUNT_PAIEMENTS", payload: response.pupils_count_paiements });
+                    this.props.dispatch({ type: "SET_MONTANT_TOTAL", payload: response.montant_paye });
+                    this.props.dispatch({ type: "SET_AUTRES", payload: response.autres });
+                    this.props.dispatch({ type: "SET_ANNEES", payload: response.annees });
+                    this.props.dispatch({ type: "SET_CLASS_NUMBERS", payload: response.class_numbers });
+                    this.props.dispatch({ type: "SET_ORDERS", payload: response.orders });
+                    this.props.dispatch({ type: "SET_CYCLES", payload: response.cycles });
+                    this.props.dispatch({ type: "SET_SECTIONS", payload: response.sections });
+                    this.props.dispatch({ type: "SET_OPTIONS", payload: response.options });
+                    this.props.dispatch({ type: "SET_ANNEE_SCOLAIRE", payload: response.annee_scolaire });
+                    this.props.dispatch({ type: "SET_ANNEE", payload: response.annee });
+                    this.props.dispatch({ type: "SET_SCHOOL_NAME", payload: response.school_name });
+                    this.props.dispatch({ type: "SET_ATTRIBUTIONS", payload: response.attributions });
+                    this.props.dispatch({ type: "SET_PUPILS_COUNT", payload: response.pupils_count });
+                    this.props.dispatch({ type: "SET_PUPILS_COUNT_MALE", payload: response.pupils_count_male });
+                    this.props.dispatch({ type: "SET_PUPILS_COUNT_FEMALE", payload: response.pupils_count_female });
+                    this.props.dispatch({ type: "SET_SCHOOL_NAME_ABB", payload: response.school_name_abb });
+                    this.props.dispatch({ type: "SET_REUSSITES", payload: response.reussites });
+                    this.props.dispatch({ type: "SET_DOUBLES", payload: response.doubles });
+                    this.props.dispatch({ type: "SET_ECHECS", payload: response.echecs });
+                    this.props.dispatch({ type: "SET_ABANDON", payload: response.abandon });
+                    this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
+                    // this.props.dispatch({ type: "SET_MOUNT_HOME", payload: false });
+                    this.props.dispatch({ type: "SET_LIBELLES", payload: response.libelles });
+                    this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Année scolaire" });
+                    this.props.dispatch({ type: "SET_PUPILS_SCHOOL", payload: response.pupils });
+                    this.props.dispatch({ type: "SET_PUPILS", payload: response.pupils });
+                    this.props.dispatch({ type: "SET_PAIEMENT_CATEGORIES", payload: response.paiement_categories });
 
-                promise_general_info_home.finally(()=>{
+                    resolve();
+                }).then(() => { });
+
+                promise_general_info_home.finally(() => {
                     this.props.dispatch({ type: "SET_LOADING_MIDDLE", payload: false });
                     this.props.dispatch({ type: "SET_LOADING_HOME", payload: false });
                 })
@@ -228,7 +229,7 @@ class Home extends Component {
                     modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.",
                     modal_view: true,
                     is_loading_home: false,
-                    can_load_data:false,
+                    can_load_data: false,
                     loading_middle: false
                 });
             });
@@ -249,9 +250,9 @@ class Home extends Component {
             .then((response) => response.json())
             .then((response) => {
 
-            // setTimeout(() => {
+                // setTimeout(() => {
                 this.sync_data(response);
-            // },2000);
+                // },2000);
 
             })
             .catch((error) => {
@@ -272,12 +273,12 @@ class Home extends Component {
             .then((response) => response.json())
             .then((response) => {
                 this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
-                if (response.success === '1'){
+                if (response.success === '1') {
                     this.setState({ modal_title: "Opération réussie", modal_main_text: "La synchronisation des données a été effectuée avec succès.", modal_view: true, is_loading_home: false, loading_middle: false });
-                } 
+                }
             })
             .catch((error) => {
-                 console.log(error.toString());
+                console.log(error.toString());
                 this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
                 this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, is_loading_home: false, loading_middle: false });
             });
@@ -520,13 +521,13 @@ class Home extends Component {
         this.props.dispatch({ type: "SET_CLASSE_OPEN", payload: true });
         this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
 
-        if(this.props.middle_func === 23 || this.props.middle_func === 22) {
+        if (this.props.middle_func === 23 || this.props.middle_func === 22) {
             this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Horaires" });
             this.props.dispatch({ type: "SET_COURSE", payload: classe.courses[0] });
         } else {
             this.props.dispatch({ type: "SET_TITLE_MAIN", payload: classe.class_id + " " + classe.section_id + " " + classe.cycle_id + " " + classe.order_id });
         }
-        
+
         if (this.props.middle_func !== 2) {
             this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
         }
@@ -543,10 +544,10 @@ class Home extends Component {
 
 
         if (this.props.middle_func === 15 || this.props.middle_func === 16 || this.props.middle_func === 17 || this.props.middle_func === 0) {
-        //     // this.setState({ middle_func: 1, allow_right_menu_pupils: false, allow_right_menu: true });
+            //     // this.setState({ middle_func: 1, allow_right_menu_pupils: false, allow_right_menu: true });
             this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
-        // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
-        //     this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
+            // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
+            //     this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
         }
 
         let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_class_info.php";
@@ -565,66 +566,66 @@ class Home extends Component {
             .then((response) => response.json())
             .then((response) => {
 
-                
-        //         // this.props.dispatch({ type: "SET_LOADING_CLASS", payload: false});
-        //         // this.props.dispatch({ type: "SET_COURSES", payload: response.courses });
-        //         // this.props.dispatch({ type: "SET_AUTRES", payload: response.autres });
-        //         // this.props.dispatch({ type: "SET_COURSES_COUNT", payload: response.courses_count });
+
+                //         // this.props.dispatch({ type: "SET_LOADING_CLASS", payload: false});
+                //         // this.props.dispatch({ type: "SET_COURSES", payload: response.courses });
+                //         // this.props.dispatch({ type: "SET_AUTRES", payload: response.autres });
+                //         // this.props.dispatch({ type: "SET_COURSES_COUNT", payload: response.courses_count });
 
                 // this.setState({can_load_data:false});
 
-                if(this.props.middle_func !== 0) {
-                    let promise_classes = new Promise((resolve, reject)=>{
-                        for(let i in this.props.classes) {
+                if (this.props.middle_func !== 0) {
+                    let promise_classes = new Promise((resolve, reject) => {
+                        for (let i in this.props.classes) {
                             if (this.props.classes[i].id_classes === classe.id_classes) {
                                 this.props.classes[i].data = response;
                                 resolve();
                             }
                         }
-                    }).then(()=>{});
-    
-                    promise_classes.finally(()=>{
+                    }).then(() => { });
+
+                    promise_classes.finally(() => {
                         this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
-    
-            if (this.props.middle_func === 0 || this.props.middle_func === 4 || this.props.middle_func === 6 || this.props.middle_func === 11 || this.props.middle_func === 12) {
-                this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
-                this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
-            }
-    
-            if (this.props.middle_func === 0) {
-                this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
-            }
+
+                        if (this.props.middle_func === 0 || this.props.middle_func === 4 || this.props.middle_func === 6 || this.props.middle_func === 11 || this.props.middle_func === 12) {
+                            this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
+                            this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
+                        }
+
+                        if (this.props.middle_func === 0) {
+                            this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
+                        }
                     });
-    
+
                     // console.log(this.props.classe)
-    
-            // if (this.props.middle_func === 4 || this.props.middle_func === 6 || this.props.middle_func === 11 || this.props.middle_func === 12) {
-                // this.setState({ middle_func: 1, allow_right_menu: true, });
-                // this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
-                // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
-                
-            // }
-    
-            // if (this.props.middle_func === 0 || this.props.middle_func === 6 || this.props.middle_func === 11) {
-                // this.setState({ middle_func: 1, allow_right_menu: true, });
-            //     this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
-            //     this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
-            // }
-    
-            //         console.log(this.props)
-                
+
+                    // if (this.props.middle_func === 4 || this.props.middle_func === 6 || this.props.middle_func === 11 || this.props.middle_func === 12) {
+                    // this.setState({ middle_func: 1, allow_right_menu: true, });
+                    // this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
+                    // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
+
+                    // }
+
+                    // if (this.props.middle_func === 0 || this.props.middle_func === 6 || this.props.middle_func === 11) {
+                    // this.setState({ middle_func: 1, allow_right_menu: true, });
+                    //     this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
+                    //     this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
+                    // }
+
+                    //         console.log(this.props)
+
                 } else {
                     this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
                 }
             }).catch((error) => {
-                    console.log(error.toString());
-                    this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
-                    this.setState({ can_load_data:false,modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_class: false, class_loading: 0 });
-                });
+                console.log(error.toString());
+                this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
+                this.setState({ can_load_data: false, modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_class: false, class_loading: 0 });
+            });
     }
 
     back_home() {
-        const classe = { pupils:[], }
+        const classe = { pupils: [], }
         this.props.dispatch({ type: "SET_CLASSE", payload: classe });
         this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Année scolaire" });
         this.props.dispatch({ type: "SET_CLASSE_OPEN", payload: false });
@@ -635,7 +636,7 @@ class Home extends Component {
 
     parse_classes(data) {
         setTimeout(() => {
-            for(let i in data) {
+            for (let i in data) {
                 this.load_class_data(data[i]);
             }
         }, 3000);
@@ -673,7 +674,7 @@ class Home extends Component {
     }
 
     paiement_categories() {
-        if (this.props.modal_paiement_categories === true)  {
+        if (this.props.modal_paiement_categories === true) {
             this.props.dispatch({ type: "SET_MODAL_PAIEMENT_CATEGORIES", payload: false });
         } else {
             this.props.dispatch({ type: "SET_MODAL_PAIEMENT_CATEGORIES", payload: true });
@@ -682,7 +683,7 @@ class Home extends Component {
     }
 
     open_libelles() {
-        if (this.props.modal_libelles === true)  {
+        if (this.props.modal_libelles === true) {
             this.props.dispatch({ type: "SET_MODAL_LIBELLES", payload: false });
         } else {
             this.props.dispatch({ type: "SET_MODAL_LIBELLES", payload: true });
@@ -701,9 +702,9 @@ class Home extends Component {
         })
             .then((response) => response.json())
             .then((response) => {
-this.props.dispatch({type:"SET_LIBELLES", payload:response.libelles});
+                this.props.dispatch({ type: "SET_LIBELLES", payload: response.libelles });
             })
-            .catch((error) => {});
+            .catch((error) => { });
     };
 
     fetch_paiement_categories() {
@@ -717,9 +718,9 @@ this.props.dispatch({type:"SET_LIBELLES", payload:response.libelles});
         })
             .then((response) => response.json())
             .then((response) => {
-this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_categories});
+                this.props.dispatch({ type: "SET_PAIEMENT_CATEGORIES", payload: response.paiement_categories });
             })
-            .catch((error) => {});
+            .catch((error) => { });
     };
 
     new_classe_import() {
@@ -794,12 +795,12 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
 
     componentDidMount() {
 
-        if (this.props.can_mount_home) {
-            this.get_general_info("");
-        } else {
-            // this.parse_classes(this.props.classes);
-            // this.setState({ modal_title: "Synchronisation des données", modal_main_text: "Pas de pannique ! Après un bon nombre d'enregistrements des informations dans le logiciel, souvenez-vous de les synchroniser au travers du bouton d'upload des données dans la topbar du logiciel.", modal_view: true });
-        }
+        // if (this.props.can_mount_home) {
+        this.get_general_info("");
+        // } else {
+        //     // this.parse_classes(this.props.classes);
+        //     // this.setState({ modal_title: "Synchronisation des données", modal_main_text: "Pas de pannique ! Après un bon nombre d'enregistrements des informations dans le logiciel, souvenez-vous de les synchroniser au travers du bouton d'upload des données dans la topbar du logiciel.", modal_view: true });
+        // }
     }
 
     render() {
@@ -811,8 +812,8 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
                 <div>
                     <div className="top-bar-app">
                         <h1>
-                        <FcOpenedFolder color="orange" size={22} style={{ marginRight: 10, marginLeft: 20 }} />
-                        {this.props.school_name_abb}<span style={{ color: 'gray', fontSize: 17 }}> / Dossiers / {this.props.annee_scolaire.year_name} </span>
+                            <FcOpenedFolder color="orange" size={22} style={{ marginRight: 10, marginLeft: 20 }} />
+                            {this.props.school_name_abb}<span style={{ color: 'gray', fontSize: 17 }}> / Dossiers / {this.props.annee_scolaire.year_name} </span>
                         </h1>
 
                         <div className="float-menu-topbar">
@@ -822,35 +823,35 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
                                 </span> : null}
 
                             <span
-                            title="Revenir au menu principal"
-                             className="user-home-tools" onClick={() => this.back_home()}>
+                                title="Revenir au menu principal"
+                                className="user-home-tools" onClick={() => this.back_home()}>
                                 <FaHome color="black" size={20} />
                             </span>
 
                             {!online ?
-                                <span 
-                                title="Synchroniser les données"
-                            onClick={() => this.collect_data()} 
-                            className="user-home-tools">
-                                <FaCloudUploadAlt color="black" size={22} />
-                            </span>
-                            :null}
+                                <span
+                                    title="Synchroniser les données"
+                                    onClick={() => this.collect_data()}
+                                    className="user-home-tools">
+                                    <FaCloudUploadAlt color="black" size={22} />
+                                </span>
+                                : null}
 
-                            <span 
-                            title="Notifications"
-                            className="user-home-tools">
+                            <span
+                                title="Notifications"
+                                className="user-home-tools">
                                 <FaBell color="black" size={20} />
                             </span>
 
                             <span
-                            title="Rafraîchir les données"
+                                title="Rafraîchir les données"
                                 onClick={() => this.refresh_window()}
                                 className="user-home-tools">
                                 <FiRefreshCcw color="black" size={20} />
                             </span>
 
                             <Link
-                            title="Configurations"
+                                title="Configurations"
                                 className="user-home-tools"
                                 to={"/settings"}>
                                 <RiSettings4Fill color="black" size={22} />
@@ -858,8 +859,8 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
 
                             {this.state.logout_open ?
                                 <span
-                                title="Déconnexion"
-                                 onClick={() => this.logout_session()} className="user-home-tools" style={{ fontSize: 15 }}>
+                                    title="Déconnexion"
+                                    onClick={() => this.logout_session()} className="user-home-tools" style={{ fontSize: 15 }}>
                                     <div className="deconnexion">
                                         <FiLogOut color="white" size={12} style={{ marginRight: 10 }} />
                                         Quitter
@@ -890,7 +891,7 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
                                 <FaEdit color="rgba(0, 80, 180)" />
                                 <select
                                     onChange={(val) => this.get_general_info(val.target.value)}
-                                    style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white',textAlign:'right' }} className="select-no-border-select">
+                                    style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white', textAlign: 'right' }} className="select-no-border-select">
                                     <option value={this.props.annee}>Modifier année</option>
                                     {this.props.annees.map((annee, index) => (<option key={index} value={annee.year_id}>{annee.year_name}</option>))}
                                 </select>
@@ -898,7 +899,7 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
 
                             <div className="topbar-menu-float-right">
 
-                            {/* <span
+                                {/* <span
                                     onClick={() => this.new_classe_import()}
                                     style={{ color: 'rgba(0, 80, 180)' }}
                                     className={`select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold" : ""}`}>
@@ -907,62 +908,62 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
 
                                 {this.props.middle_func === 15 ?
                                     <span
-                                    onClick={() => this.new_worker()}
-                                    style={{ color: 'rgba(0, 80, 180)' }}
-                                    className={`select-no-border ${this.props.middle_func === 6 ? "select-no-border-bold" : ""}`}>
-                                    <FaUserPlus style={{ marginRight: 5 }} />
-                                    Nouveau membre</span>
+                                        onClick={() => this.new_worker()}
+                                        style={{ color: 'rgba(0, 80, 180)' }}
+                                        className={`select-no-border ${this.props.middle_func === 6 ? "select-no-border-bold" : ""}`}>
+                                        <FaUserPlus style={{ marginRight: 5 }} />
+                                        Nouveau membre</span>
                                     :
                                     this.props.middle_func === 23 ?
-                                    <span
-                                    onClick={() => this.timetable_settings()}
-                                    style={{ color: 'rgba(0, 80, 180)' }}
-                                    className={`select-no-border ${this.props.middle_func === 22 ? "select-no-border-bold" : ""}`}>
-                                    <FaUserPlus style={{ marginRight: 5 }} />
-                                    Configuration des horaires</span>
-                                    :
-                                    this.props.middle_func === 12 ?
-                                    <>
-                                    {/* <span
+                                        <span
+                                            onClick={() => this.timetable_settings()}
+                                            style={{ color: 'rgba(0, 80, 180)' }}
+                                            className={`select-no-border ${this.props.middle_func === 22 ? "select-no-border-bold" : ""}`}>
+                                            <FaUserPlus style={{ marginRight: 5 }} />
+                                            Configuration des horaires</span>
+                                        :
+                                        this.props.middle_func === 12 ?
+                                            <>
+                                                {/* <span
                                     // onClick={() => this.gestion_depenses()}
                                     style={{ color: 'rgba(0, 80, 180)' }}
                                     className={`select-no-border ${this.props.middle_func === 22 ? "select-no-border-bold" : ""}`}>
                                     <FaUserPlus style={{ marginRight: 5 }} />
                                     Gestion des dépenses</span> */}
+                                                <span
+                                                    onClick={() => this.paiement_categories()}
+                                                    style={{ color: 'rgba(0, 80, 180)' }}
+                                                    className={`select-no-border ${this.props.middle_func === 22 ? "select-no-border-bold" : ""}`}>
+                                                    <FaUserPlus style={{ marginRight: 5 }} />
+                                                    Catégories de paiement</span>
+                                            </>
+                                            :
+                                            <span
+                                                onClick={() => this.new_pupil()}
+                                                style={{ color: 'rgba(0, 80, 180)' }}
+                                                className={`select-no-border ${this.props.middle_func === 6 ? "select-no-border-bold" : ""}`}>
+                                                <FaUserPlus style={{ marginRight: 5 }} />
+                                                Nouveau</span>}
+
+                                {this.props.middle_func === 12 ?
                                     <span
-                                    onClick={() => this.paiement_categories()}
-                                    style={{ color: 'rgba(0, 80, 180)' }}
-                                    className={`select-no-border ${this.props.middle_func === 22 ? "select-no-border-bold" : ""}`}>
-                                    <FaUserPlus style={{ marginRight: 5 }} />
-                                    Catégories de paiement</span>
-                                    </>
+                                        onClick={() => this.open_libelles()}
+                                        style={{ color: 'rgba(0, 80, 180)' }}
+                                        className={`select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold" : ""}`}>
+                                        <span className="divider-menu-topbar"></span>
+                                        <FiEdit style={{ size: 17, marginRight: 5 }} />
+                                        Libéllés</span>
                                     :
                                     <span
-                                    onClick={() => this.new_pupil()}
-                                    style={{ color: 'rgba(0, 80, 180)' }}
-                                    className={`select-no-border ${this.props.middle_func === 6 ? "select-no-border-bold" : ""}`}>
-                                    <FaUserPlus style={{ marginRight: 5 }} />
-                                    Nouveau</span>}
-
-                               {this.props.middle_func === 12 ?
-                                <span
-                                   onClick={() => this.open_libelles()} 
-                                    style={{ color: 'rgba(0, 80, 180)' }}
-                                    className={`select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold" : ""}`}>
-                                    <span className="divider-menu-topbar"></span>
-                                    <FiEdit style={{ size: 17, marginRight: 5 }} />
-                                    Libéllés</span>
-                                    :
-                                    <span
-                                   onClick={() => this.new_classe_import()} 
-                                    style={{ color: 'rgba(0, 80, 180)' }}
-                                    className={`select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold" : ""}`}>
-                                    <span className="divider-menu-topbar"></span>
-                                    <FaClipboard style={{ size: 17, marginRight: 5 }} />
-                                    Uploader une classe</span>}
+                                        onClick={() => this.new_classe_import()}
+                                        style={{ color: 'rgba(0, 80, 180)' }}
+                                        className={`select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold" : ""}`}>
+                                        <span className="divider-menu-topbar"></span>
+                                        <FaClipboard style={{ size: 17, marginRight: 5 }} />
+                                        Uploader une classe</span>}
 
                                 <span
-                                    onClick={() => this.fetch_synthese()} 
+                                    onClick={() => this.fetch_synthese()}
                                     style={{ color: 'rgba(0, 80, 180)' }}
                                     className={`select-no-border ${this.props.middle_func === 4 ? "select-no-border-bold" : ""}`}>
                                     <span className="divider-menu-topbar"></span>
@@ -1009,177 +1010,177 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
                         <div className="sub-div-main">
 
                             {this.props.loading_middle ?
-                                <div className="progress-center-main" style={{alignItems:'center'}}>
+                                <div className="progress-center-main" style={{ alignItems: 'center' }}>
                                     <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
                                     Chargement des données...
-                                </div> 
+                                </div>
                                 :
                                 <div>
                                     <div className="center-fixed">
-                                    <div style={{paddingLeft:20,paddingRight:10}}>
-                                        {this.props.middle_func === 1 ?
-                                            <div id="liste-nomminative">
-                                                <ListeNomminative />
-                                            </div>
-                                            : null}
+                                        <div style={{ paddingLeft: 20, paddingRight: 10 }}>
+                                            {this.props.middle_func === 1 ?
+                                                <div id="liste-nomminative">
+                                                    <ListeNomminative />
+                                                </div>
+                                                : null}
 
-                                        {this.props.middle_func === 11 ?
-                                            <div id="view_pupil">
-                                                <ViewPupil />
-                                            </div>
-                                            : null}
+                                            {this.props.middle_func === 11 ?
+                                                <div id="view_pupil">
+                                                    <ViewPupil />
+                                                </div>
+                                                : null}
 
                                             {this.props.middle_func === 12 ?
-                                            <div id="stats_caisse">
-                                                <StatistiquesCaisse />
-                                            </div>
-                                            : null}
+                                                <div id="stats_caisse">
+                                                    <StatistiquesCaisse />
+                                                </div>
+                                                : null}
 
                                             {this.props.middle_func === 13 ?
-                                            <div id="class-import">
-                                                <NewClasseImport />
-                                            </div>
-                                            : null}
+                                                <div id="class-import">
+                                                    <NewClasseImport />
+                                                </div>
+                                                : null}
 
                                             {this.props.middle_func === 15 ?
-                                            <div id="gestion-personnel">
-                                                <GestionPersonnel />                                          </div>
-                                            : null}
+                                                <div id="gestion-personnel">
+                                                    <GestionPersonnel />                                          </div>
+                                                : null}
 
                                             {this.props.middle_func === 16 ?
-                                            <div id="add-worker">
-                                                <AddWorker />                                          </div>
-                                            : null}
+                                                <div id="add-worker">
+                                                    <AddWorker />                                          </div>
+                                                : null}
 
                                             {this.props.middle_func === 22 ?
-                                            <div id="timetable-settings">
-                                                <TimetableSettings />                                          </div>
-                                            : null}
+                                                <div id="timetable-settings">
+                                                    <TimetableSettings />                                          </div>
+                                                : null}
 
                                             {this.props.middle_func === 24 ?
-                                            <div id="paiement-categorisation">
-                                                <ClassePaiementCategorisation />                                          </div>
-                                            : null}
+                                                <div id="paiement-categorisation">
+                                                    <ClassePaiementCategorisation />                                          </div>
+                                                : null}
 
                                             {this.props.middle_func === 14 ?
-                                            <div id="settings-bulletins">
-                                                <SettingsBulletins />                                            </div>
-                                            : null}
+                                                <div id="settings-bulletins">
+                                                    <SettingsBulletins />                                            </div>
+                                                : null}
 
                                             {this.props.middle_func === 26 ?
-                                            <div id="fiche-points-b">
-                                                <FichePointsBrouillon />                                            </div>
-                                            : null}
+                                                <div id="fiche-points-b">
+                                                    <FichePointsBrouillon />                                            </div>
+                                                : null}
 
                                             {this.props.middle_func === 27 ?
-                                            <div id="fiche-synthese-points-b">
-                                                <FicheSynthesePointsBrouillon />                                            </div>
-                                            : null}
+                                                <div id="fiche-synthese-points-b">
+                                                    <FicheSynthesePointsBrouillon />                                            </div>
+                                                : null}
 
                                             {this.props.middle_func === 28 ?
-                                            <div id="fiche-synthese-points-b">
-                                                <BulletinsBrouillon />                                            </div>
-                                            : null}
+                                                <div id="fiche-synthese-points-b">
+                                                    <BulletinsBrouillon />                                            </div>
+                                                : null}
 
                                             {this.props.middle_func === 29 ?
-                                            <div id="fiche-synthese-points-b">
-                                                <BulletinsType2Brouillon />                                            </div>
-                                            : null}
+                                                <div id="fiche-synthese-points-b">
+                                                    <BulletinsType2Brouillon />                                            </div>
+                                                : null}
 
-                                        {this.props.middle_func === 5 ?
-                                            <div id="fiches">
-                                                {this.props.fiches_tab === "FI" ?
-                                                    <div id="fiche-identity">
-                                                        {<FicheIdentites/>}
-                                                    </div> : null}
+                                            {this.props.middle_func === 5 ?
+                                                <div id="fiches">
+                                                    {this.props.fiches_tab === "FI" ?
+                                                        <div id="fiche-identity">
+                                                            {<FicheIdentites />}
+                                                        </div> : null}
 
-                                                {this.props.fiches_tab === "FO" ?
-                                                    <div id="fiche-observation">
-                                                        {/* {<FicheObservationPoints />} */}
-                                                    </div> : null}
+                                                    {this.props.fiches_tab === "FO" ?
+                                                        <div id="fiche-observation">
+                                                            {/* {<FicheObservationPoints />} */}
+                                                        </div> : null}
 
-                                                {this.props.fiches_tab === "E13" ?
-                                                    <div id="fiche-e133">
-                                                        <FicheE13 />
-                                                    </div> : null}
+                                                    {this.props.fiches_tab === "E13" ?
+                                                        <div id="fiche-e133">
+                                                            <FicheE13 />
+                                                        </div> : null}
 
-                                                {this.props.fiches_tab === "E80" ?
-                                                    <div id="fiche-e800">
-                                                        {/* {<FicheE80 />} */}
-                                                    </div> : null}
-                                            </div>
-                                            : null}
+                                                    {this.props.fiches_tab === "E80" ?
+                                                        <div id="fiche-e800">
+                                                            {/* {<FicheE80 />} */}
+                                                        </div> : null}
+                                                </div>
+                                                : null}
 
-                                        {this.props.middle_func === 9 ?
-                                            <div>
-                                                <Courses />
-                                            </div>
-                                            : null}
+                                            {this.props.middle_func === 9 ?
+                                                <div>
+                                                    <Courses />
+                                                </div>
+                                                : null}
 
-                                        {this.props.middle_func === 8 ?
-                                            <div>
-                                                <PaiementsClasse />
-                                            </div>
-                                            : null}
+                                            {this.props.middle_func === 8 ?
+                                                <div>
+                                                    <PaiementsClasse />
+                                                </div>
+                                                : null}
 
                                             {this.props.middle_func === 0 ?
-                                            <div>
-                                                <MenuHome />
-                                            </div>
-                                            : null}
+                                                <div>
+                                                    <MenuHome />
+                                                </div>
+                                                : null}
 
-                                        {this.props.middle_func === 2 ?
-                                            <div>
-                                                {this.props.marks_tab === "FPE" ?
-                                                    <FichePointsPupils /> : null}
+                                            {this.props.middle_func === 2 ?
+                                                <div>
+                                                    {this.props.marks_tab === "FPE" ?
+                                                        <FichePointsPupils /> : null}
 
-                                                {this.props.marks_tab === "FPC" ?
-                                                    <FichesPointsCourses /> : null}
-                                            </div>
-                                            : null}
+                                                    {this.props.marks_tab === "FPC" ?
+                                                        <FichesPointsCourses /> : null}
+                                                </div>
+                                                : null}
 
-                                        {this.props.middle_func === 3 ?
-                                            <PalmaresPupils />
-                                            : null}
+                                            {this.props.middle_func === 3 ?
+                                                <PalmaresPupils />
+                                                : null}
 
-                                        {this.props.middle_func === 10 ?
-                                            <PalmaresFinal />
-                                            : null}
+                                            {this.props.middle_func === 10 ?
+                                                <PalmaresFinal />
+                                                : null}
 
-                                        {this.props.middle_func === 4 ?
-                                            this.render_synthese()
-                                            : null}
+                                            {this.props.middle_func === 4 ?
+                                                this.render_synthese()
+                                                : null}
 
-                                        {this.props.middle_func === 6 ?
-                                            <NewPupil />
-                                            : null}
+                                            {this.props.middle_func === 6 ?
+                                                <NewPupil />
+                                                : null}
 
-                                        {this.props.middle_func === 7 ?
-                                            <div id="liste-bulletins">
-                                                {/* {listeNomminative(this.state.classe, this.state.autres, this.state.pupils)} */}
-                                                <Bulletins />
-                                            </div>
-                                            : null}
-                                            </div>
+                                            {this.props.middle_func === 7 ?
+                                                <div id="liste-bulletins">
+                                                    {/* {listeNomminative(this.state.classe, this.state.autres, this.state.pupils)} */}
+                                                    <Bulletins />
+                                                </div>
+                                                : null}
+                                        </div>
                                     </div>
 
-{this.props.middle_func === 15 || this.props.middle_func === 16 ?
-    <div className="menu-right">
-    <EmployeesList />
-</div>
-:null}
+                                    {this.props.middle_func === 15 || this.props.middle_func === 16 ?
+                                        <div className="menu-right">
+                                            <EmployeesList />
+                                        </div>
+                                        : null}
 
-{this.props.middle_func === 22 ?
-    <div className="menu-right">
-    <CoursesTimetableConfigurator />
-</div>
-:null}
+                                    {this.props.middle_func === 22 ?
+                                        <div className="menu-right">
+                                            <CoursesTimetableConfigurator />
+                                        </div>
+                                        : null}
 
                                     {this.props.allow_right_menu && this.props.class_open ?
-                                        <RightClasseMenu/> : null}
+                                        <RightClasseMenu /> : null}
 
                                     {this.props.allow_right_menu_pupils ?
-                                                <PupilsRightMenu />
+                                        <PupilsRightMenu />
                                         : null}
                                 </div>}
                         </div>
@@ -1187,10 +1188,10 @@ this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_c
 
                     <Footer />
                     {this.props.modal_paiement_categories ?
-                        <PaiementCategories />:null}
+                        <PaiementCategories /> : null}
 
-                        {this.props.modal_libelles ?
-                        <Libelles />:null}
+                    {this.props.modal_libelles ?
+                        <Libelles /> : null}
 
                     {this.state.modal_view ?
                         <div className="main-div-modal">

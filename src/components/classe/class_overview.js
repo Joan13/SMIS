@@ -14,7 +14,7 @@ class ClassOverView extends React.Component {
                         <tr>
                             <td valign="bottom" style={{ backgroundColor: "rgba(0, 0, 0, 0.05)", width: 50 }}>
                                 {this.props.classe.pupils.map((pupil, index) => {
-                                    if (pupil.pupil.gender === "0") {
+                                    if (parseInt(pupil.pupil.gender) === 0) {
                                         return (<div key={index} style={{ height: 2, backgroundColor: "rgb(120, 25, 100)", color: 'transparent' }}>ooooooo</div>)
                                     } else {
                                         return (<div key={index} style={{ height: 0, backgroundColor: "rgba(0, 0, 0, 0.05)", color: 'transparent' }}>ooooooo</div>)
@@ -23,7 +23,7 @@ class ClassOverView extends React.Component {
                             </td>
                             <td valign="bottom" style={{ backgroundColor: "rgba(0, 0, 0, 0.05)", width: 50 }}>
                                 {this.props.classe.pupils.map((pupil, index) => {
-                                    if (pupil.pupil.gender === "1") {
+                                    if (parseInt(pupil.pupil.gender) === 1) {
                                         return (<div key={index} style={{ height: 2, backgroundColor: "rgb(250, 105, 0)", color: 'transparent' }}>ooooooo</div>)
                                     } else {
                                         return (<div key={index} style={{ height: 0, backgroundColor: "rgba(0, 0, 0, 0.05)", color: 'transparent' }}>ooooooo</div>)

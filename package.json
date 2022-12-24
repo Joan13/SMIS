@@ -1,13 +1,15 @@
 {
   "name": "yambi_smis",
-  "homepage": "/alfajiri",
-  "version": "8.4.2 Beta",
+  "homepage": "./",
+  "version": "8.4.2",
   "private": false,
   "app_full_name": "Yambi Class - School Management Information System - (SMIS)",
   "branch": "stable",
   "platform": "Web",
   "productName": "Yambi Class SMIS",
+  "main": "public/main.js",
   "dependencies": {
+    "@electron/remote": "^2.0.9",
     "@material-ui/core": "^4.12.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -32,7 +34,25 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron:serve": "concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn electron:start\"",
+    "electron:build": "yarn build && electron-builder --win -c.extraMetadata.main=build/main.js",
+    "electron:start": "wait-on tcp:3000 && electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "extends": null,
+    "appId": "com.class.yambi",
+    "files": [
+      "dist/**/*",
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -53,6 +73,9 @@
     ]
   },
   "devDependencies": {
-    "electron": "^19.0.7"
+    "concurrently": "^7.6.0",
+    "cross-env": "^7.0.3",
+    "electron": "^22.0.0",
+    "wait-on": "^7.0.1"
   }
 }

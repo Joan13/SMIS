@@ -30,7 +30,7 @@ class Signin extends Component {
             message2: ""
         }
 
-        this.signin = this.signin.bind(this); 
+        this.signin = this.signin.bind(this);
         this.get_general_info = this.get_general_info.bind(this);
     }
 
@@ -52,7 +52,7 @@ class Signin extends Component {
 
         this.setState({
             is_loading: true,
-            message_user: "Préparation du bureau...", 
+            message_user: "Préparation du bureau...",
             message2: "Initialisation de session"
         });
 
@@ -71,6 +71,7 @@ class Signin extends Component {
         } else if (user.poste === "7") {
             this.props.dispatch({ type: "SET_POSTE", payload: "Directeur des études" });
         } else {
+            // console.log(user.poste)
             alert("Cet utilisateur est invalide. Vous devez vous reconnecter pour accéder aux services.");
         }
 
@@ -85,7 +86,7 @@ class Signin extends Component {
             .then((response) => response.json())
             .then((response) => {
 
-            
+
                 this.props.dispatch({ type: "SET_CLASSES", payload: response.classes });
                 this.props.dispatch({ type: "SET_AUTRES", payload: response.autres });
                 this.props.dispatch({ type: "SET_ANNEES", payload: response.annees });
@@ -116,13 +117,13 @@ class Signin extends Component {
                 // this.props.dispatch({ type: "SET_PPS", payload: response.pupils });
                 this.props.dispatch({ type: "SET_PUPILS_COUNT_PAIEMENTS", payload: response.pupils_count_paiements });
                 this.props.dispatch({ type: "SET_MONTANT_TOTAL", payload: response.montant_paye });
-                this.props.dispatch({type:"SET_PAIEMENT_CATEGORIES", payload:response.paiement_categories});
+                this.props.dispatch({ type: "SET_PAIEMENT_CATEGORIES", payload: response.paiement_categories });
 
                 // this.parse_classes(response.classes);
 
-setTimeout(() => {
-    this.setState({ redirectToReferrer: true });
-                }, 4000);                
+                setTimeout(() => {
+                    this.setState({ redirectToReferrer: true });
+                }, 4000);
             })
             .catch((error) => {
 
@@ -138,15 +139,6 @@ setTimeout(() => {
 
                 this.props.dispatch({ type: "SET_MOUNT_HOME", payload: true });
             });
-    }
-
-    close_application() {
-        // const ipcRenderer = require('electron');
-        // ipcRenderer.send('close-yambi'); 
-
-        // const { ipcRenderer } = require('electron')
-
-// ipcRenderer.send('close-yambi');
     }
 
     signin() {
@@ -184,13 +176,16 @@ setTimeout(() => {
 
                         setTimeout(() => {
                             this.setState({ message_user: "Initialisation de session...", message1: "Compression des données d'utilisateur" });
-                            this.get_general_info("");
-                        }, 5000);
+                            // this.get_general_info("");
+                        }, 4000);
 
-                        this.get_general_info("");
+                        // this.get_general_info("");
+                        setTimeout(() => {
+                            this.setState({ redirectToReferrer: true });
+                        }, 6000);
 
                     } else {
-                        this.setState({ empty_error: false, incorrect: true, is_loading: false, message_user: "Identification d'utilisateur en cours..." });
+                        this.setState({ empty_error: false, incorrect: true, is_loading: false, message_user: "Echec lors de l'identification d'utilisateur..." });
                     }
                 })
                 .catch((error) => {
@@ -204,28 +199,9 @@ setTimeout(() => {
                 });
         }
     };
-    
+
     load_class_data(classe) {
-        // sessionStorage.setItem("classeYambiSMIS", JSON.stringify(classe));
         this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
-        // this.props.dispatch({ type: "SET_TITLE_MAIN", payload: classe});
-        // console.log(this.props)
-
-
-        // this.props.dispatch({ type: "SET_TITLE_MAIN", payload: classe.class_id + " " + classe.section_id + " " + classe.cycle_id + " " + classe.order_id });
-        // this.props.dispatch({ type: "SET_CLASS_LOADING", payload: classe.id_classes });
-        // this.props.dispatch({ type: "SET_CLASSE_OPEN", payload: true });
-        // this.props.dispatch({ type: "SET_LOADING_CLASS", payload: true });
-        //         // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
-
-
-
-        // if (this.props.middle_func === 4 || this.props.middle_func === 6) {
-        //     // this.setState({ middle_func: 1, allow_right_menu_pupils: false, allow_right_menu: true });
-        //     this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
-        // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
-        //     this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
-        // }
 
         let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
@@ -244,45 +220,23 @@ setTimeout(() => {
             .then((response) => {
 
                 this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
-        //         // this.props.dispatch({ type: "SET_LOADING_CLASS", payload: false});
-        //         // this.props.dispatch({ type: "SET_COURSES", payload: response.courses });
-        //         // this.props.dispatch({ type: "SET_AUTRES", payload: response.autres });
-        //         // this.props.dispatch({ type: "SET_COURSES_COUNT", payload: response.courses_count });
 
-                // this.setState({can_load_data:false});
-
-                for(let i in this.props.classes) {
-if (this.props.classes[i].id_classes === classe.id_classes) {
-    this.props.classes[i].data = response;
-    // console.log(this.props.classes[i])
-}
+                for (let i in this.props.classes) {
+                    if (this.props.classes[i].id_classes === classe.id_classes) {
+                        this.props.classes[i].data = response;
+                    }
                 }
-
-        // if (this.props.middle_func === 4 || this.props.middle_func === 6 || this.props.middle_func === 11 || this.props.middle_func === 12) {
-            // this.setState({ middle_func: 1, allow_right_menu: true, });
-            // this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
-            // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
-            // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
-        // }
-
-        // if (this.props.middle_func === 0 || this.props.middle_func === 6 || this.props.middle_func === 11) {
-            // this.setState({ middle_func: 1, allow_right_menu: true, });
-        //     this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
-        //     this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
-        // }
-
-        //         console.log(this.props)
             })
             .catch((error) => {
                 console.log(error.toString());
                 this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
-                this.setState({ can_load_data:false,modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_class: false, class_loading: 0 });
+                this.setState({ can_load_data: false, modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_class: false, class_loading: 0 });
             });
     }
 
     parse_classes(data) {
         setTimeout(() => {
-            for(let i in data) {
+            for (let i in data) {
                 this.load_class_data(data[i]);
             }
         }, 3000);
@@ -327,14 +281,14 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
 
                         {!online ?
                             <div className="input-div-border-icon">
-                            <FaServer style={{ marginBottom: -3 }} />
-                            <input
-                                placeholder="URL de connexion au serveur"
-                                style={{ width: '85%', marginLeft: 10 }}
-                                className="input"
-                                onChange={(text) => this.setState({ url_server: text.target.value })} />
-                        </div>
-                        :null}
+                                <FaServer style={{ marginBottom: -3 }} />
+                                <input
+                                    placeholder="URL de connexion au serveur"
+                                    style={{ width: '85%', marginLeft: 10 }}
+                                    className="input"
+                                    onChange={(text) => this.setState({ url_server: text.target.value })} />
+                            </div>
+                            : null}
 
                         <div className="input-div-border-icon">
                             <FaUser style={{ marginBottom: -3 }} />
@@ -345,9 +299,10 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                 onChange={(text) => this.setState({ username: text.target.value })} />
                         </div>
 
-                        {this.state.see_pass ?
-                            <div className="input-div-border-icon">
-                                <FaLock style={{ marginBottom: -3 }} />
+                        <div className="input-div-border-icon">
+                            <FaLock style={{ marginBottom: -3 }} />
+
+                            {this.state.see_pass ?
                                 <input
                                     placeholder="Mot de passe"
                                     style={{ width: '77%', marginLeft: 10 }}
@@ -355,38 +310,27 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
                                     type="text"
                                     value={this.state.password}
                                     onChange={(text) => this.setState({ password: text.target.value })} />
-                                {this.state.see_pass ?
-                                    <button
-                                    style={{width:'10%'}}
-                                        onClick={() => this.state.see_pass ? this.setState({ see_pass: false }) : this.setState({ see_pass: true })}
-                                        className="no-decoration"><FaEye style={{ marginBottom: -3, marginLeft: 10 }} size={15} /></button>
-                                    :
-                                    <button
-                                    style={{width:'10%'}}
-                                        onClick={() => this.state.see_pass ? this.setState({ see_pass: false }) : this.setState({ see_pass: true })}
-                                        className="no-decoration"><FaEyeSlash style={{ marginBottom: -3, marginLeft: 10 }} size={15} /></button>}
-                            </div>
-                            :
-                            <div className="input-div-border-icon">
-                                <FaLock style={{ marginBottom: -3 }} />
+                                :
                                 <input
                                     placeholder="Mot de passe"
                                     style={{ width: '77%', marginLeft: 10 }}
                                     className="input"
                                     type="password"
                                     value={this.state.password}
-                                    onChange={(text) => this.setState({ password: text.target.value })} />
-                                {this.state.see_pass ?
-                                    <button
-                                    style={{width:'10%'}}
-                                        onClick={() => this.state.see_pass ? this.setState({ see_pass: false }) : this.setState({ see_pass: true })}
-                                        className="no-decoration"><FaEye style={{ marginBottom: -3, marginLeft: 10 }} size={15} /></button>
-                                    :
-                                    <button
-                                    style={{width:'10%'}}
-                                        onClick={() => this.state.see_pass ? this.setState({ see_pass: false }) : this.setState({ see_pass: true })}
-                                        className="no-decoration"><FaEyeSlash style={{ marginBottom: -3, marginLeft: 10 }} size={15} /></button>}
-                            </div>}<br />
+                                    onChange={(text) => this.setState({ password: text.target.value })} />}
+
+
+                            {this.state.see_pass ?
+                                <button
+                                    style={{ width: '10%' }}
+                                    onClick={() => this.state.see_pass ? this.setState({ see_pass: false }) : this.setState({ see_pass: true })}
+                                    className="no-decoration"><FaEye style={{ marginBottom: -3, marginLeft: 10 }} size={15} /></button>
+                                :
+                                <button
+                                    style={{ width: '10%' }}
+                                    onClick={() => this.state.see_pass ? this.setState({ see_pass: false }) : this.setState({ see_pass: true })}
+                                    className="no-decoration"><FaEyeSlash style={{ marginBottom: -3, marginLeft: 10 }} size={15} /></button>}
+                        </div><br />
 
                         {this.state.message1 !== "" ?
                             <><span style={{ color: 'green', marginBottom: 15, height: 30 }}>
@@ -418,17 +362,17 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
 
 
                         {!this.state.is_loading ?
-                        <>
-                            <ButtonNormal text="Connexion"  style={{ width: '100%' }}  onPress={() => this.signin()}/>
-                            <div style={{ marginTop: 10, textAlign: 'right', fontSize: 15 }}>Besoin d'aide ? <span onClick={() => this.state.aide ? this.setState({ aide: false }) : this.setState({ aide: true })} style={{ color: 'rgba(0, 80, 180)' }} className="pointer">Cliquez ici.</span></div>
-                        </>
-                                : null  }
+                            <>
+                                <ButtonNormal text="Connexion" style={{ width: '100%' }} onPress={() => this.signin()} />
+                                <div style={{ marginTop: 10, textAlign: 'right', fontSize: 15 }}>Besoin d'aide ? <span onClick={() => this.state.aide ? this.setState({ aide: false }) : this.setState({ aide: true })} style={{ color: 'rgba(0, 80, 180)' }} className="pointer">Cliquez ici.</span></div>
+                            </>
+                            : null}
 
-                                {/* <div>
+                        {/* <div>
                                 <button className="button-primary" style={{ width: '100%', color: 'transparent', backgroundColor: 'transparent', cursor: 'progress' }}>Connexion</button>
                                 
                                 </div> */}
-                            
+
 
                         {this.state.aide ?
                             <div className="box-border">
