@@ -15,8 +15,8 @@ class Signin extends Component {
         super(props);
 
         this.state = {
-            username: "",
-            password: "",
+            username: "principal@yambi.class",
+            password: "000000",
             see_pass: false,
             is_loading: false,
             empty_error: false,
@@ -31,114 +31,6 @@ class Signin extends Component {
         }
 
         this.signin = this.signin.bind(this);
-        this.get_general_info = this.get_general_info.bind(this);
-    }
-
-    get_general_info(annee) {
-        let user = sessionStorage.getItem('assemble_user_data');
-        let url_server = sessionStorage.getItem('yambi_smis_url_server');
-        user = JSON.parse(user);
-
-        this.props.dispatch({ type: "SET_USER_CONNECTED", payload: user });
-        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
-        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
-        this.props.dispatch({ type: "SET_CLASS_OPEN", payload: false });
-        this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 0 });
-        this.props.dispatch({ type: "SET_LOADING_MIDDLE", payload: true });
-        this.props.dispatch({ type: "SET_CLASSE", payload: [] });
-        this.props.dispatch({ type: "SET_MARKS_TAB", payload: "" });
-        this.props.dispatch({ type: "SET_URL_SERVER", payload: url_server });
-        this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Chargement des données générales..." });
-
-        this.setState({
-            is_loading: true,
-            message_user: "Préparation du bureau...",
-            message2: "Initialisation de session"
-        });
-
-        if (user.poste === "1") {
-            this.props.dispatch({ type: "SET_POSTE", payload: "Promoteur" });
-        } else if (user.poste === "2") {
-            this.props.dispatch({ type: "SET_POSTE", payload: "Discipline" });
-        } else if (user.poste === "3") {
-            this.props.dispatch({ type: "SET_POSTE", payload: "Finances" });
-        } else if (user.poste === "4") {
-            this.props.dispatch({ type: "SET_POSTE", payload: "Secrétaire" });
-        } else if (user.poste === "5") {
-            this.props.dispatch({ type: "SET_POSTE", payload: "Enseignant" });
-        } else if (user.poste === "6") {
-            this.props.dispatch({ type: "SET_POSTE", payload: "Caisse" });
-        } else if (user.poste === "7") {
-            this.props.dispatch({ type: "SET_POSTE", payload: "Directeur des études" });
-        } else {
-            // console.log(user.poste)
-            alert("Cet utilisateur est invalide. Vous devez vous reconnecter pour accéder aux services.");
-        }
-
-        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_info_home.php";
-
-        fetch(BaseURL, {
-            method: 'POST',
-            body: JSON.stringify({
-                annee: annee,
-            })
-        })
-            .then((response) => response.json())
-            .then((response) => {
-
-
-                this.props.dispatch({ type: "SET_CLASSES", payload: response.classes });
-                this.props.dispatch({ type: "SET_AUTRES", payload: response.autres });
-                this.props.dispatch({ type: "SET_ANNEES", payload: response.annees });
-                this.props.dispatch({ type: "SET_CLASS_NUMBERS", payload: response.class_numbers });
-                this.props.dispatch({ type: "SET_ORDERS", payload: response.orders });
-                this.props.dispatch({ type: "SET_CYCLES", payload: response.cycles });
-                this.props.dispatch({ type: "SET_SECTIONS", payload: response.sections });
-                this.props.dispatch({ type: "SET_OPTIONS", payload: response.options });
-                this.props.dispatch({ type: "SET_ANNEE_SCOLAIRE", payload: response.annee_scolaire });
-                this.props.dispatch({ type: "SET_ANNEE", payload: response.annee });
-                this.props.dispatch({ type: "SET_SCHOOL_NAME", payload: response.school_name });
-                this.props.dispatch({ type: "SET_ATTRIBUTIONS", payload: response.attributions });
-                this.props.dispatch({ type: "SET_PUPILS_COUNT", payload: response.pupils_count });
-                this.props.dispatch({ type: "SET_PUPILS_COUNT_MALE", payload: response.pupils_count_male });
-                this.props.dispatch({ type: "SET_PUPILS_COUNT_FEMALE", payload: response.pupils_count_female });
-                this.props.dispatch({ type: "SET_SCHOOL_NAME_ABB", payload: response.school_name_abb });
-                this.props.dispatch({ type: "SET_REUSSITES", payload: response.reussites });
-                this.props.dispatch({ type: "SET_DOUBLES", payload: response.doubles });
-                this.props.dispatch({ type: "SET_ECHECS", payload: response.echecs });
-                this.props.dispatch({ type: "SET_ABANDON", payload: response.abandon });
-                this.props.dispatch({ type: "SET_LOADING_HOME", payload: false });
-                this.props.dispatch({ type: "SET_LOADING_MIDDLE", payload: false });
-                this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
-                this.props.dispatch({ type: "SET_MOUNT_HOME", payload: false });
-                this.props.dispatch({ type: "SET_LIBELLES", payload: response.libelles });
-                this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Année scolaire" });
-                this.props.dispatch({ type: "SET_PUPILS_SCHOOL", payload: response.pupils });
-                // this.props.dispatch({ type: "SET_PPS", payload: response.pupils });
-                this.props.dispatch({ type: "SET_PUPILS_COUNT_PAIEMENTS", payload: response.pupils_count_paiements });
-                this.props.dispatch({ type: "SET_MONTANT_TOTAL", payload: response.montant_paye });
-                this.props.dispatch({ type: "SET_PAIEMENT_CATEGORIES", payload: response.paiement_categories });
-
-                // this.parse_classes(response.classes);
-
-                setTimeout(() => {
-                    this.setState({ redirectToReferrer: true });
-                }, 4000);
-            })
-            .catch((error) => {
-
-                console.log(error)
-                this.props.dispatch({ type: "SET_LOADING_HOME", payload: false });
-                this.setState({
-                    modal_title: "Information erreur",
-                    modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.",
-                    modal_view: true,
-                    is_loading_home: false,
-                    loading_middle: false
-                });
-
-                this.props.dispatch({ type: "SET_MOUNT_HOME", payload: true });
-            });
     }
 
     signin() {
@@ -170,19 +62,22 @@ class Signin extends Component {
                         sessionStorage.setItem("yambi_smis_url_server", this.state.url_server);
                         sessionStorage.setItem("assemble_user_data", JSON.stringify(response.user_data));
 
+                        this.props.dispatch({type:"SET_USER_CONNECTED", payload:response.user_data});
+                        this.props.dispatch({type:"SET_URL_SERVER", payload:this.state.url_server});
+
                         setTimeout(() => {
                             this.setState({ message_user: "Récupération et compression des données d'utilisateur..." });
-                        }, 3000);
+                        }, 1000);
 
                         setTimeout(() => {
                             this.setState({ message_user: "Initialisation de session...", message1: "Compression des données d'utilisateur" });
                             // this.get_general_info("");
-                        }, 4000);
+                        }, 3000);
 
                         // this.get_general_info("");
                         setTimeout(() => {
                             this.setState({ redirectToReferrer: true });
-                        }, 6000);
+                        }, 4500);
 
                     } else {
                         this.setState({ empty_error: false, incorrect: true, is_loading: false, message_user: "Echec lors de l'identification d'utilisateur..." });
@@ -194,53 +89,11 @@ class Signin extends Component {
                         modal_title: "Information erreur",
                         modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.",
                         modal_view: true,
-                        is_loading: false
+                        is_loading: false,
                     });
                 });
         }
     };
-
-    load_class_data(classe) {
-        this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
-
-        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_class_info.php";
-
-        fetch(BaseURL, {
-            method: 'POST',
-            body: JSON.stringify({
-                cycle_id: classe.cycle,
-                class_id: classe.class,
-                order_id: classe.order,
-                section_id: classe.section,
-                option_id: classe.option,
-                school_year: classe.school_year,
-            })
-        })
-            .then((response) => response.json())
-            .then((response) => {
-
-                this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
-
-                for (let i in this.props.classes) {
-                    if (this.props.classes[i].id_classes === classe.id_classes) {
-                        this.props.classes[i].data = response;
-                    }
-                }
-            })
-            .catch((error) => {
-                console.log(error.toString());
-                this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
-                this.setState({ can_load_data: false, modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_class: false, class_loading: 0 });
-            });
-    }
-
-    parse_classes(data) {
-        setTimeout(() => {
-            for (let i in data) {
-                this.load_class_data(data[i]);
-            }
-        }, 3000);
-    }
 
     render() {
 
@@ -253,7 +106,6 @@ class Signin extends Component {
 
         return (
             <div style={{ marginTop: 40 }}>
-
                 <div style={{ textAlign: 'center' }}>
                     <img src={logo} width='200' height="130" /><br /><br />
                     <div className="title-big">School Managment Information System</div><br />
@@ -286,6 +138,7 @@ class Signin extends Component {
                                     placeholder="URL de connexion au serveur"
                                     style={{ width: '85%', marginLeft: 10 }}
                                     className="input"
+                                    value={this.state.url_server}
                                     onChange={(text) => this.setState({ url_server: text.target.value })} />
                             </div>
                             : null}
@@ -296,6 +149,7 @@ class Signin extends Component {
                                 placeholder="Nom d'utilisateur"
                                 style={{ width: '85%', marginLeft: 10 }}
                                 className="input"
+                                value={this.state.username}
                                 onChange={(text) => this.setState({ username: text.target.value })} />
                         </div>
 

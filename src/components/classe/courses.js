@@ -4,10 +4,10 @@ import { Button, CircularProgress } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../store/state_props';
 import { http } from '../../global_vars';
+import { FaAddressCard } from 'react-icons/fa';
+import { FiPlus, FiX } from 'react-icons/fi';
 
 class Courses extends Component {
-
-    intervalID = 0;
 
     constructor(props) {
         super(props);
@@ -25,9 +25,11 @@ class Courses extends Component {
             can_mount: 0,
             being_modified: 0,
             text_course_name: "",
-            new_course_name:"",
-            maxima_new_course:"",
-            toggle_action:false,
+            new_course_name: "",
+            maxima_new_course: "",
+            toggle_action: false,
+            enter_new_course:false,
+            erreur_new_course:"",
         }
     }
 
@@ -73,10 +75,11 @@ class Courses extends Component {
 
     new_course() {
 
-        this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
-        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/new_course.php";
+        if (this.state.new_course_name !== "" || this.state.maxima_new_course !== "") {
+            
+            this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
+            let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/new_course.php";
 
-        if(this.state.new_course_name !== "" || this.state.maxima_new_course !== "") {
             fetch(BaseURL, {
                 method: 'POST',
                 body: JSON.stringify({
@@ -86,21 +89,21 @@ class Courses extends Component {
                     option_id: this.props.classe.option,
                     school_year: this.props.classe.school_year,
                     course: this.state.new_course_name,
-                    maxima:this.state.maxima_new_course,
+                    maxima: this.state.maxima_new_course,
                 })
             })
                 .then((response) => response.json())
                 .then((response) => {
                     this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
                     this.load_class_data(this.props.classe);
-                    this.setState({new_course_name:"",maxima_new_course:""});
+                    this.setState({ new_course_name: "", maxima_new_course: "" });
                 })
                 .catch((error) => {
                     // alert(error.toString());
                     // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
                 });
         } else {
-            this.setState({ modal_title: "Information erreur", modal_main_text: "Entrer l'intitulé du cours et le maxima avant de procéder à l'enregistrement du cours.", modal_view: true, loading_middle: false });
+            this.setState({ erreur_new_course:"Tous les champs sont obligatoires pour enregistrer un cours" });
         }
     }
 
@@ -190,39 +193,39 @@ class Courses extends Component {
             .then((response) => {
 
                 this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
-        //         // this.props.dispatch({ type: "SET_LOADING_CLASS", payload: false});
-        //         // this.props.dispatch({ type: "SET_COURSES", payload: response.courses });
-        //         // this.props.dispatch({ type: "SET_AUTRES", payload: response.autres });
-        //         // this.props.dispatch({ type: "SET_COURSES_COUNT", payload: response.courses_count });
+                //         // this.props.dispatch({ type: "SET_LOADING_CLASS", payload: false});
+                //         // this.props.dispatch({ type: "SET_COURSES", payload: response.courses });
+                //         // this.props.dispatch({ type: "SET_AUTRES", payload: response.autres });
+                //         // this.props.dispatch({ type: "SET_COURSES_COUNT", payload: response.courses_count });
 
                 // this.setState({can_load_data:false});
 
-                for(let i in this.props.classes) {
-if (this.props.classes[i].id_classes === classe.id_classes) {
-    this.props.classes[i].data = response;
-    // console.log(this.props.classes[i])
-}
+                for (let i in this.props.classes) {
+                    if (this.props.classes[i].id_classes === classe.id_classes) {
+                        this.props.classes[i].data = response;
+                        // console.log(this.props.classes[i])
+                    }
                 }
 
-        // if (this.props.middle_func === 4 || this.props.middle_func === 6 || this.props.middle_func === 11 || this.props.middle_func === 12) {
-            // this.setState({ middle_func: 1, allow_right_menu: true, });
-            // this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
-            // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
-            // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
-        // }
+                // if (this.props.middle_func === 4 || this.props.middle_func === 6 || this.props.middle_func === 11 || this.props.middle_func === 12) {
+                // this.setState({ middle_func: 1, allow_right_menu: true, });
+                // this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
+                // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
+                // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
+                // }
 
-        // if (this.props.middle_func === 0 || this.props.middle_func === 6 || this.props.middle_func === 11) {
-            // this.setState({ middle_func: 1, allow_right_menu: true, });
-        //     this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
-        //     this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
-        // }
+                // if (this.props.middle_func === 0 || this.props.middle_func === 6 || this.props.middle_func === 11) {
+                // this.setState({ middle_func: 1, allow_right_menu: true, });
+                //     this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
+                //     this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
+                // }
 
-        //         console.log(this.props)
+                //         console.log(this.props)
             })
             .catch((error) => {
                 console.log(error.toString());
                 this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
-                this.setState({ can_load_data:false,modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_class: false, class_loading: 0 });
+                this.setState({ can_load_data: false, modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_class: false, class_loading: 0 });
             });
     }
 
@@ -276,7 +279,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
         // window.open('', 'blank', ''); window.close()
 
         if (user.poste === "4") {
-                
+
             let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/modify_course.php";
 
             fetch(BaseURL, {
@@ -309,7 +312,7 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
         user = JSON.parse(user);
 
         if (user.poste === "4") {
-                
+
             let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/modify_course.php";
 
             fetch(BaseURL, {
@@ -366,129 +369,168 @@ if (this.props.classes[i].id_classes === classe.id_classes) {
     }
 
     componentDidMount() {
-
-        // if (this.state.can_mount < 5) {
-        //     this.intervalID = setInterval(() => {
-        //         let classe = sessionStorage.getItem('classeYambiSMIS');
-        //         classe = JSON.parse(classe);
-
-        //         if (classe.id_classes !== this.state.classe.id_classes) {
-        //             this.open_class();
-        //         }
-        //     }, 500);
-        // }
     }
 
     render() {
         return (
-            <div style={{ marginBottom: 50,marginRight:10 }} className="div-courses">
+            <div style={{ marginBottom: 50, marginRight: 10 }} className="div-courses">
                 {!this.props.loading_footer ?
-                <div>
-                <h3>Cours</h3>
-                <div className="menu-float-right-normal">
-                    <span style={{ marginLeft: 30,color:'rgb(0,80,180)',cursor:'pointer' }} onClick={() => this.state.toggle_action ? this.setState({ toggle_action: false }) : this.setState({ toggle_action: true })}>Supprimer un cours</span>
-                </div>
-                <table className="full-table-liste-markss">
-                    <tr>
-                        <th style={{ width: 30,paddingLeft: 10,paddingRight: 10 }}>No</th>
-                        <th style={{ textAlign: 'left', paddingLeft: 10 }}>Intitulé du cours</th>
-                        <th style={{ width: 100 }}>Maxima</th>
-                        <th style={{ width: 100 }}>Ex. ?</th>
-                        {this.state.toggle_action ?
-                            <th>Option</th>:null}
-                    </tr>
-                    {this.props.classe.data.courses.map((course, index) => (
-                        <>
-                            <tr key={index + 1}>
-                                <td style={{ paddingLeft: 10,paddingRight: 10 }}>
-                                    {index + 1}
-                                </td>
-                                <td style={{ paddingLeft: 10 }}>
-                                    <input
-                                    onChange={(text) => this.setState({ text_course_name: text.target.value, being_modified: course.course_id })}
-                                        placeholder={course.course_name}
-                                        value={this.state.being_modified === course.course_id ? this.state.text_course_name : ""}
-                                        className="input-no-borderrr" />
-                                        {this.state.being_modified === course.course_id ?
-                                        <button
-                                        className="button-primary-small"
-                                        onClick={(text) => this.modify_course_name(course.course_id, course.total_marks)}
-                                        >Enregistrer</button>:null}
-                                </td>
-                                <td style={{ width: 50 }}>
-                                    <input
-                                        onChange={(text) => this.modify_course(course.course_id, course.course_name, text.target.value)}
-                                        value={course.total_marks}
-                                        className="input-no-borderr" />
-                                </td>
-                                <td style={{ paddingLeft: 10 }}>
-                                        <button
-                                         className={`button-primary-small-normal ${course.considered == "5" ? "" : "button-primary-small"}`}
-                                        onClick={(text) => this.course_ex_bulletin(course.course_id, "")}
-                                        >Oui</button>
-                                        <button
-                                        style={{ marginLeft: 5 }}
-                                        className={`button-primary-small-normal ${course.considered == '5'  ? "button-primary-small" : ""}`}
-                                        onClick={(text) => this.course_ex_bulletin(course.course_id, "5")}
-                                        >Non</button>
-                                </td>
-                                {this.state.toggle_action ?
-                                    <td style={{ textAlign: 'center' }}>
-                                    <span
-                                        onClick={() => this.delete_course_ask(course.course_id)}
-                                        className="menu-float-rightt">Supprimer</span>
-                                </td>:null}
-                            </tr>
-                        </>
-                    ))}
-                </table>
-
-                <div>
-                <h3>Entrer un nouveau cours pour cette classe la {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.cycle_id}</h3>
-                <br/>
-
-                <table>
-                    <tr>
-<td>
-<input
-                                    onChange={(text) => this.setState({ new_course_name: text.target.value })}
-                                    placeholder="Intitulé du cours"
-                                        value={ this.state.new_course_name}
-                                        className="input-normall" />
-</td>
-<td>
-<input
-                                    onChange={(text) => this.setState({ maxima_new_course: text.target.value })}
-                                    type='number'
-                                    placeholder="Maxima"
-                                        value={ this.state.maxima_new_course}
-                                        className="input-normall" />
-</td>
-                    </tr>
-                </table>
-                                        
-                                        <button
-                                        className="button-primary"
-                                        style={{marginLeft: 2, paddingLeft:35,paddingRight:35,marginTop:10}}
-                                        onClick={(text) => this.new_course()}
-                                        >Enregistrer le cours</button>
-                </div>
-
-                {this.state.modal_view ?
-                    <div className="main-div-modal">
-                        {modalView(this.state.modal_title, this.state.modal_main_text)}
-                        <div className="sub-div-modal">
-                            <Button onClick={() => this.setState({ modal_view: false })} variant="outlined" style={{ color: 'black', borderWidth: 1, borderColor: 'rgba(0, 0, 0, 0.3)' }}>Annuler</Button>
-                            <Button onClick={() => this.delete_course(this.state.course_to_delete_id)} variant="outlined" style={{ color: 'white', borderWidth: 1, borderColor: 'red', backgroundColor: 'red', marginLeft: 30 }}>Oui, Procéder</Button>
+                    <div>
+                        <div style={{
+                            marginTop:10,
+                            marginBottom:-20
+                        }}>
+                            <span style={{
+                                fontSize:15,
+                                fontWeight:'bold'
+                                }}>Cours </span>
+                            <span 
+                                    onClick={()=>this.setState({enter_new_course:true})}
+                                    style={{
+                                        display:'inline-block',
+                                        backgroundColor:'rgb(0,80,180)',
+                                        padding:5,
+                                        cursor:'pointer',
+                                        borderRadius:20,
+                                        paddingBottom:3,
+                                        marginLeft:10
+                                    }}>
+                                        <FiPlus color='white' size={15} />
+                                    </span>
+                                    </div>
+                        <div className="menu-float-right-normal">
+                            <span style={{ color: 'rgb(0,80,180)', cursor: 'pointer' }} onClick={() => this.state.toggle_action ? this.setState({ toggle_action: false }) : this.setState({ toggle_action: true })}>Supprimer un cours</span>
                         </div>
-                    </div> : null}
-                </div>
-                :
-                <div className="progress-center-progress">
-                                <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
-                                Chargement des cours...
+                        <table className="full-table-liste-markss" style={{
+                            marginTop:0
+                        }}>
+                            <tr>
+                                <th style={{ width: 30, paddingLeft: 10, paddingRight: 10 }}>No</th>
+                                <th style={{ textAlign: 'left', paddingLeft: 10 }}>Intitulé du cours</th>
+                                <th style={{ width: 100 }}>Maxima</th>
+                                <th style={{ width: 100 }}>Ex. ?</th>
+                                {this.state.toggle_action ?
+                                    <th>Option</th> : null}
+                            </tr>
+                            {this.props.classe.data.courses.map((course, index) => (
+                                <>
+                                    <tr key={index + 1}>
+                                        <td style={{ paddingLeft: 10, paddingRight: 10 }}>
+                                            {index + 1}
+                                        </td>
+                                        <td style={{ paddingLeft: 10 }}>
+                                            <input
+                                                onChange={(text) => this.setState({ text_course_name: text.target.value, being_modified: course.course_id })}
+                                                placeholder={course.course_name}
+                                                value={this.state.being_modified === course.course_id ? this.state.text_course_name : ""}
+                                                className="input-no-borderrr" />
+                                            {this.state.being_modified === course.course_id ?
+                                                <button
+                                                    className="button-primary-small"
+                                                    onClick={(text) => this.modify_course_name(course.course_id, course.total_marks)}
+                                                >Enregistrer</button> : null}
+                                        </td>
+                                        <td style={{ width: 50 }}>
+                                            <input
+                                                onChange={(text) => this.modify_course(course.course_id, course.course_name, text.target.value)}
+                                                value={course.total_marks}
+                                                className="input-no-borderr" />
+                                        </td>
+                                        <td style={{ paddingLeft: 10 }}>
+                                            <button
+                                                className={`button-primary-small-normal ${course.considered == "5" ? "" : "button-primary-small"}`}
+                                                onClick={(text) => this.course_ex_bulletin(course.course_id, "")}
+                                            >Oui</button>
+                                            <button
+                                                style={{ marginLeft: 5 }}
+                                                className={`button-primary-small-normal ${course.considered == '5' ? "button-primary-small" : ""}`}
+                                                onClick={(text) => this.course_ex_bulletin(course.course_id, "5")}
+                                            >Non</button>
+                                        </td>
+                                        {this.state.toggle_action ?
+                                            <td style={{ textAlign: 'center' }}>
+                                                <span
+                                                    onClick={() => this.delete_course_ask(course.course_id)}
+                                                    className="menu-float-rightt">Supprimer</span>
+                                            </td> : null}
+                                    </tr>
+                                </>
+                            ))}
+                        </table>
+
+                        {this.state.enter_new_course ?
+                            <div className="new_course_modal_transparent">
+                            <div className="new_course_modal">
+                                <div style={{
+                                    textAlign:'right',
+                                    backgroundColor:'rgb(240,240,240)',
+                                    borderTopLeftRadius:5,
+                                    borderTopRightRadius:5
+                                }}>
+                                    <span 
+                                    onClick={()=>this.setState({enter_new_course:false})}
+                                    style={{
+                                        display:'inline-block',
+                                        backgroundColor:'red',
+                                        padding:5,
+                                        cursor:'pointer',
+                                        borderTopRightRadius:5
+                                    }}>
+                                        <FiX color='white' size={20} />
+                                    </span>
+                                </div>
+                                <h3>Ajouter un nouveau cours pour cette classe la {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.cycle_id}</h3>
+                                <br />
+
+                                <div style={{
+                                    textAlign:'center',
+                                }}>
+                                <table style={{display:'inline-block'}}>
+                                    <tr>
+                                        <td>
+                                            <input
+                                                onChange={(text) => this.setState({ new_course_name: text.target.value })}
+                                                placeholder="Intitulé du cours"
+                                                value={this.state.new_course_name}
+                                                className="input-normall" />
+                                        </td>
+                                        <td>
+                                            <input
+                                                onChange={(text) => this.setState({ maxima_new_course: text.target.value })}
+                                                type='number'
+                                                placeholder="Maxima"
+                                                value={this.state.maxima_new_course}
+                                                className="input-normall" />
+                                        </td>
+                                    </tr>
+                                </table>
+                                </div>
+<span style={{
+    color:'#780006'
+}}>{this.state.erreur_new_course}</span><br/>
+                                <button
+                                    className="button-primary"
+                                    style={{ marginLeft: 2, paddingLeft: 35, paddingRight: 35, marginTop: 10 }}
+                                    onClick={(text) => this.new_course()}
+                                >Enregistrer le cours</button>
                             </div>
-                    }
+                        </div>:null}
+
+                        {this.state.modal_view ?
+                            <div className="main-div-modal">
+                                {modalView(this.state.modal_title, this.state.modal_main_text)}
+                                <div className="sub-div-modal">
+                                    <Button onClick={() => this.setState({ modal_view: false })} variant="outlined" style={{ color: 'black', borderWidth: 1, borderColor: 'rgba(0, 0, 0, 0.3)' }}>Annuler</Button>
+                                    <Button onClick={() => this.delete_course(this.state.course_to_delete_id)} variant="outlined" style={{ color: 'white', borderWidth: 1, borderColor: 'red', backgroundColor: 'red', marginLeft: 30 }}>Oui, Procéder</Button>
+                                </div>
+                            </div> : null}
+                    </div>
+                    :
+                    <div className="progress-center-progress">
+                        <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
+                        Chargement des cours...
+                    </div>
+                }
             </div>
         )
     }

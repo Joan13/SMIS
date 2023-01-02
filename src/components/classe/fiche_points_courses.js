@@ -111,16 +111,16 @@ class FichesPointsCourses extends Component {
 
     edit_marks(pupil_id, course_id, period, marks) {
 
-        for (let i in this.props.classe.data.pupils_marks) {
-            if (this.props.classe.data.pupils_marks[i].pupil == pupil_id && this.props.classe.data.pupils_marks[i].course == course_id && this.props.classe.data.pupils_marks[i].school_period == period) {
-                this.props.classe.data.pupils_marks[i].main_marks = marks;
-                this.setState({ should_fetch_marks: true });
-            } else {
-                this.setState({ should_fetch_marks: true });
-            }
-        }
+        // for (let i in this.props.classe.data.pupils_marks) {
+        //     if (this.props.classe.data.pupils_marks[i].pupil == pupil_id && this.props.classe.data.pupils_marks[i].course == course_id && this.props.classe.data.pupils_marks[i].school_period == period) {
+        //         this.props.classe.data.pupils_marks[i].main_marks = marks;
+        //         this.setState({ should_fetch_marks: true });
+        //     } else {
+        //         this.setState({ should_fetch_marks: true });
+        //     }
+        // }
 
-        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/insert_marks.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/edit_marks.php";
 
         fetch(BaseURL,
             {
@@ -130,7 +130,46 @@ class FichesPointsCourses extends Component {
                     course_id: course_id,
                     periode: period,
                     school_year: this.props.classe.school_year,
+                    main_marks: marks
+                })
+            })
+            .then((response) => response.json())
+            .then((response) => {
+
+                if (this.state.should_fetch_marks) {
+                    // this.refresh_class();
+                }
+
+            })
+            .catch((error) => {
+                // Alert.alert(strings.error, strings.connection_failed);
+                // alert(error.toString())
+                this.setState({ loading_class: false, pupils_see: false });
+            });
+    }
+
+    insert_marks(pupil_id, course_id, period, marks, total_marks) {
+
+        // for (let i in this.props.classe.data.pupils_marks) {
+        //     if (this.props.classe.data.pupils_marks[i].pupil == pupil_id && this.props.classe.data.pupils_marks[i].course == course_id && this.props.classe.data.pupils_marks[i].school_period == period) {
+        //         this.props.classe.data.pupils_marks[i].main_marks = marks;
+        //         this.setState({ should_fetch_marks: true });
+        //     } else {
+        //         this.setState({ should_fetch_marks: true });
+        //     }
+        // }
+
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/edit_marks.php";
+
+        fetch(BaseURL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    pupil_id: pupil_id,
+                    course_id: course_id,
+                    periode: period,
+                    school_year: this.props.classe.school_year,
                     main_marks: marks,
+                    total_marks:total_marks,
                     cycle: this.props.classe.cycle,
                     class_id: this.props.classe.class,
                     section_id: this.props.classe.section,

@@ -21,12 +21,12 @@ const initialState = {
     autres: [],
     class_pupils: [],
     middle_func: 0,
-    edit_pupil:false,
+    edit_pupil: false,
     marks_tab: "",
     class_open: false,
     periode_synthese: '1',
     classes_synthese: [],
-    pupils:[],
+    pupils: [],
     all_pupils: 0,
     nbr_ee: 0,
     nbr_tb: 0,
@@ -75,12 +75,12 @@ const initialState = {
     course: [],
     paiement_categories: [],
     modal_paiement_categories: false,
-    modal_libelles:false,
-    paiements_day:[],
-    frais_divers_day:[],
-    paiements_day_deleted:[],
-    frais_divers_day_deleted:[],
-    day:"",
+    modal_libelles: false,
+    paiements_day: [],
+    frais_divers_day: [],
+    paiements_day_deleted: [],
+    frais_divers_day_deleted: [],
+    day: "",
 }
 
 const reducer = (state = initialState, action) => {
@@ -88,9 +88,9 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_MODAL_PAIEMENT_CATEGORIES":
             return { ...state, modal_paiement_categories: action.payload }
-            case "SET_DAY":
+        case "SET_DAY":
             return { ...state, day: action.payload }
-            case "SET_MODAL_LIBELLES":
+        case "SET_MODAL_LIBELLES":
             return { ...state, modal_libelles: action.payload }
         case "SET_WORKERS":
             return { ...state, workers: action.payload }
@@ -110,13 +110,13 @@ const reducer = (state = initialState, action) => {
             return { ...state, all_paiements: action.payload }
         case "SET_PAIEMENTS_FRAIS_DIVERS":
             return { ...state, paiements_frais_divers: action.payload }
-            case "SET_FRAIS_DIVERS_DAY":
+        case "SET_FRAIS_DIVERS_DAY":
             return { ...state, frais_divers_day: action.payload }
-            case "SET_PAIEMENTS_DAY":
+        case "SET_PAIEMENTS_DAY":
             return { ...state, paiements_day: action.payload }
-            case "SET_FRAIS_DIVERS_DAY_DELETED":
+        case "SET_FRAIS_DIVERS_DAY_DELETED":
             return { ...state, frais_divers_day_deleted: action.payload }
-            case "SET_PAIEMENTS_DAY_DELETED":
+        case "SET_PAIEMENTS_DAY_DELETED":
             return { ...state, paiements_day_deleted: action.payload }
         case "SET_LIBELLES":
             return { ...state, libelles: action.payload }
@@ -136,12 +136,12 @@ const reducer = (state = initialState, action) => {
             Object.assign({}, pupil);
             new_classe.pupils[index] = pupil[0];
             return { ...state, classe: new_classe }
-                case "SET_EDIT_PUPIL_MARKS":
+        case "SET_EDIT_PUPIL_MARKS":
             let index_pupil = state.classe.pupils.findIndex(pupil => pupil.pupil_id === action.payload.pupil);
             let pupil_m = state.classe.pupils.filter(pupil => pupil.pupil_id === action.payload.pupil);
             pupil_m[0].pupil.marks = action.payload.marks;
             let new_classe_marks = action.payload.classe;
-            Object.assign({}, pupil_m);    
+            Object.assign({}, pupil_m);
             new_classe_marks.pupils[index_pupil] = pupil_m[0];
             return { ...state, classe: new_classe_marks }
         case "SET_CLASSE_OPEN":
@@ -232,7 +232,7 @@ const reducer = (state = initialState, action) => {
             return { ...state, classes_synthese: action.payload }
         case "SET_ALL_PUPILS":
             return { ...state, all_pupils: action.payload }
-            case "SET_PUPILS":
+        case "SET_PUPILS":
             return { ...state, pupils: action.payload }
         case "SET_NBR_EE":
             return { ...state, nbr_ee: action.payload }
@@ -252,7 +252,7 @@ const reducer = (state = initialState, action) => {
             return { ...state, periode_full: action.payload }
         case "SET_PERIODE_SYNTHESE":
             return { ...state, periode_full: action.payload }
-            case "SET_EDIT_PUPIL":
+        case "SET_EDIT_PUPIL":
             return { ...state, edit_pupil: action.payload }
         default:
             return state;

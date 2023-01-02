@@ -1511,3 +1511,23 @@ h5 {
   border-top: rgba(0, 0, 0, 0.1);
   background-color: rgb(255, 255, 255);
 }
+
+.new_course_modal {
+  margin:auto;
+  margin-top:200px;
+  width:550px;
+  padding-bottom: 60px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: white;
+}
+
+.new_course_modal_transparent {
+  position:fixed;
+  top:0px;
+  bottom:0px;
+  left:0px;
+  right:0px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+

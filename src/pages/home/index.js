@@ -139,24 +139,24 @@ class Home extends Component {
 
         if (user === null) { }
         else {
-            if (user.poste === "0") {
+            if (parseInt(user.poste) === 0) {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Admin" });
             } else if (parseInt(user.poste) === 1) {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Promoteur" });
-            } else if (user.poste === "2") {
+            } else if (parseInt(user.poste) === 2) {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Discipline" });
-            } else if (user.poste === "3") {
+            } else if (parseInt(user.poste) === 3) {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Finances" });
-            } else if (user.poste === "4") {
+            } else if (parseInt(user.poste) === 4) {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Secrétaire" });
-            } else if (user.poste === "5") {
+            } else if (parseInt(user.poste) === 5) {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Enseignant" });
-            } else if (user.poste === "6") {
+            } else if (parseInt(user.poste) === 6) {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Caisse" });
-            } else if (user.poste === "7") {
+            } else if (parseInt(user.poste) === 7) {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Directeur des études" });
             } else {
-                alert(user.poste)
+                // alert(user.poste)
                 alert("Cet utilisateur est invalide. Vous devez vous reconnecter pour accéder aux services.");
                 this.logout_session();
             }
@@ -794,13 +794,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-
-        // if (this.props.can_mount_home) {
         this.get_general_info("");
-        // } else {
-        //     // this.parse_classes(this.props.classes);
-        //     // this.setState({ modal_title: "Synchronisation des données", modal_main_text: "Pas de pannique ! Après un bon nombre d'enregistrements des informations dans le logiciel, souvenez-vous de les synchroniser au travers du bouton d'upload des données dans la topbar du logiciel.", modal_view: true });
-        // }
     }
 
     render() {
@@ -1016,6 +1010,24 @@ class Home extends Component {
                                 </div>
                                 :
                                 <div>
+                                    {this.props.middle_func === 15 || this.props.middle_func === 16 ?
+                                        <div className="menu-right">
+                                            <EmployeesList />
+                                        </div>
+                                        : null}
+
+                                    {this.props.middle_func === 22 ?
+                                        <div className="menu-right">
+                                            <CoursesTimetableConfigurator />
+                                        </div>
+                                        : null}
+
+                                    {this.props.allow_right_menu && this.props.class_open ?
+                                        <RightClasseMenu /> : null}
+
+                                    {this.props.allow_right_menu_pupils ?
+                                        <PupilsRightMenu />
+                                        : null}
                                     <div className="center-fixed">
                                         <div style={{ paddingLeft: 20, paddingRight: 10 }}>
                                             {this.props.middle_func === 1 ?
@@ -1044,47 +1056,56 @@ class Home extends Component {
 
                                             {this.props.middle_func === 15 ?
                                                 <div id="gestion-personnel">
-                                                    <GestionPersonnel />                                          </div>
+                                                    <GestionPersonnel />
+                                                </div>
                                                 : null}
 
                                             {this.props.middle_func === 16 ?
                                                 <div id="add-worker">
-                                                    <AddWorker />                                          </div>
+                                                    <AddWorker />
+                                                </div>
                                                 : null}
 
                                             {this.props.middle_func === 22 ?
                                                 <div id="timetable-settings">
-                                                    <TimetableSettings />                                          </div>
+                                                    <TimetableSettings />
+                                                </div>
                                                 : null}
 
                                             {this.props.middle_func === 24 ?
                                                 <div id="paiement-categorisation">
-                                                    <ClassePaiementCategorisation />                                          </div>
+                                                    <ClassePaiementCategorisation />
+                                                </div>
                                                 : null}
 
                                             {this.props.middle_func === 14 ?
                                                 <div id="settings-bulletins">
-                                                    <SettingsBulletins />                                            </div>
+                                                    <SettingsBulletins />
+                                                </div>
                                                 : null}
 
                                             {this.props.middle_func === 26 ?
                                                 <div id="fiche-points-b">
-                                                    <FichePointsBrouillon />                                            </div>
+                                                    <FichePointsBrouillon />
+                                                </div>
                                                 : null}
 
                                             {this.props.middle_func === 27 ?
                                                 <div id="fiche-synthese-points-b">
-                                                    <FicheSynthesePointsBrouillon />                                            </div>
+                                                    <FicheSynthesePointsBrouillon />
+                                                </div>
                                                 : null}
 
                                             {this.props.middle_func === 28 ?
                                                 <div id="fiche-synthese-points-b">
-                                                    <BulletinsBrouillon />                                            </div>
+                                                    <BulletinsBrouillon />
+                                                </div>
                                                 : null}
 
                                             {this.props.middle_func === 29 ?
                                                 <div id="fiche-synthese-points-b">
-                                                    <BulletinsType2Brouillon />                                            </div>
+                                                    <BulletinsType2Brouillon />
+                                                </div>
                                                 : null}
 
                                             {this.props.middle_func === 5 ?
@@ -1163,25 +1184,6 @@ class Home extends Component {
                                                 : null}
                                         </div>
                                     </div>
-
-                                    {this.props.middle_func === 15 || this.props.middle_func === 16 ?
-                                        <div className="menu-right">
-                                            <EmployeesList />
-                                        </div>
-                                        : null}
-
-                                    {this.props.middle_func === 22 ?
-                                        <div className="menu-right">
-                                            <CoursesTimetableConfigurator />
-                                        </div>
-                                        : null}
-
-                                    {this.props.allow_right_menu && this.props.class_open ?
-                                        <RightClasseMenu /> : null}
-
-                                    {this.props.allow_right_menu_pupils ?
-                                        <PupilsRightMenu />
-                                        : null}
                                 </div>}
                         </div>
                     </div>
