@@ -1,8 +1,12 @@
 {
+  "homepage": ".",
   "name": "yambi_smis",
-  "homepage": "./",
   "version": "8.4.2",
-  "private": false,
+  "private": true,
+  "author": {
+    "name": "Joan Migani",
+    "email": "joan.agisha@gmail.com"
+  },
   "app_full_name": "Yambi Class - School Management Information System - (SMIS)",
   "branch": "stable",
   "platform": "Web",
@@ -36,7 +40,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron:serve": "concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn electron:start\"",
-    "electron:build": "yarn build && electron-builder --win -c.extraMetadata.main=build/main.js",
+    "electron:build": "yarn build && electron-builder --linux -c.extraMetadata.main=build/main.js",
     "electron:start": "wait-on tcp:3000 && electron .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
@@ -44,6 +48,13 @@
   "build": {
     "extends": null,
     "appId": "com.class.yambi",
+    "linux": {
+      "target": [
+        "deb",
+        "snap"
+      ],
+      "category": "Utility"
+    },
     "files": [
       "dist/**/*",
       "build/**/*",
@@ -76,6 +87,7 @@
     "concurrently": "^7.6.0",
     "cross-env": "^7.0.3",
     "electron": "^22.0.0",
+    "electron-builder": "^23.6.0",
     "wait-on": "^7.0.1"
   }
 }

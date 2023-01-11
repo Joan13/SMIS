@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, HashRouter } from 'react-router-dom';
 import Home from './pages/home';
 import Settings from './pages/settings';
 import Signin from './pages/signin';
@@ -13,13 +13,13 @@ const store = createStore(reducer);
 const App = () => {
   return (
     <Provider store={store}>
-      <Router>
+      <HashRouter>
         <Routes>
           <Route path="/signin" element={<Signin />} exact />
           <Route path="/settings" element={<Settings />} exact />
           <Route path="/" element={<Home />} />
         </Routes>
-      </Router>
+      </HashRouter>
     </Provider>
   );
 }

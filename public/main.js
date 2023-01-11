@@ -11,9 +11,11 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 1500,
     height: 850,
+    icon:"logo192.png",
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true
+      enableRemoteModule: true,
+      javascript:true
     }
   })
 
@@ -23,7 +25,7 @@ const createWindow = () => {
       : `file://${path.join(__dirname, '../build/index.html')}`
   )
 
-  alert(isDev)
+  // alert(isDev)
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
