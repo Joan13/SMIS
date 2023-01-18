@@ -10,7 +10,10 @@ const store = createStore(reducer);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <div>
+        <TitlebarWid style={{backgroungColor:"#000000"}} />
+        <App />
+      </div>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

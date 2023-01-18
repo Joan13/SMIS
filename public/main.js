@@ -16,7 +16,9 @@ const createWindow = () => {
       nodeIntegration: true,
       enableRemoteModule: true,
       javascript:true
-    }
+    },
+    frame:false,
+    autoHideMenuBar: true,
   })
 
   mainWindow.loadURL(

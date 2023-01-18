@@ -1,0 +1,6 @@
+{
+  "appId": "com.yambiclass",
+  "appName": "Yambi Class SMIS",
+  "webDir": "build",
+  "bundledWebRuntime": false
+}
