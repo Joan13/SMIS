@@ -1,26 +1,20 @@
-import React, { useEffect } from 'react';
 import { FaArrowDown, FaChevronDown, FaPrint } from 'react-icons/fa';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { find_date, home_redirect, http } from '../../global_vars';
-import { mapStateToProps } from '../../store/state_props';
 
-const AllPupilPaiements =()=> {
+const AllPupilPaiements = () => {
 
-    const pupil = useSelector(state=>state.pupil);
-    const autres = useSelector(state=>state.autres);
-    const class_numbers = useSelector(state=>state.class_numbers);
-    const orders = useSelector(state=>state.orders);
-    const cycles = useSelector(state=>state.cycles);
-    const libelles = useSelector(state=>state.libelles);
-    const annee_scolaire = useSelector(state=>state.annee_scolaire);
-    const url_server = useSelector(state=>state.url_server);
-    const dispatch = useDispatch();     
+    const pupil = useSelector(state => state.pupil);
+    const autres = useSelector(state => state.autres);
+    const class_numbers = useSelector(state => state.class_numbers);
+    const orders = useSelector(state => state.orders);
+    const cycles = useSelector(state => state.cycles);
+    const libelles = useSelector(state => state.libelles);
+    const annee_scolaire = useSelector(state => state.annee_scolaire);
+    const url_server = useSelector(state => state.url_server);
+    const dispatch = useDispatch();
 
-    useEffect(() => {
-        console.log(pupil.paiements);
-    }, []);
-
-    const find_class_number=(class_id)=> {
+    const find_class_number = (class_id) => {
 
         let return_value = "";
         let suffixe = "";
@@ -39,7 +33,7 @@ const AllPupilPaiements =()=> {
         return return_value + "" + suffixe;
     }
 
-    const find_class_order=(order)=> {
+    const find_class_order = (order) => {
 
         let return_value = "";
         for (let i in orders) {
@@ -51,7 +45,7 @@ const AllPupilPaiements =()=> {
         return return_value;
     }
 
-    const find_libelle=(libelle)=> {
+    const find_libelle = (libelle) => {
 
         let return_value = "";
         for (let i in libelles) {
@@ -63,7 +57,7 @@ const AllPupilPaiements =()=> {
         return return_value;
     }
 
-    const find_cycle=(cycle)=> {
+    const find_cycle = (cycle) => {
 
         let return_value = "";
         for (let i in cycles) {
@@ -75,7 +69,7 @@ const AllPupilPaiements =()=> {
         return return_value;
     }
 
-    const printContent=(divName)=> {
+    const printContent = (divName) => {
 
         dispatch({ type: "SET_MOUNT_HOME", payload: false });
         let printContents = document.getElementById(divName).innerHTML;
@@ -88,7 +82,7 @@ const AllPupilPaiements =()=> {
         window.location.replace(http + url_server + home_redirect);
     }
 
-    const find_pupil=()=> {
+    const find_pupil = () => {
         let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
 
         fetch(BaseURL, {
@@ -105,7 +99,7 @@ const AllPupilPaiements =()=> {
             .catch((error) => { });
     };
 
-    const delete_recu=(recu_id)=> {
+    const delete_recu = (recu_id) => {
 
         let BaseURL = http + url_server + "/yambi_class_SMIS/API/delete_recu.php";
 
@@ -125,141 +119,141 @@ const AllPupilPaiements =()=> {
             });
     };
 
-        return (
-            <div style={{ width: '100%' }}>
-                {pupil.paiements.map((paiement, index) => {
+    return (
+        <div style={{ width: '100%' }}>
+            {pupil.paiements.map((paiement, index) => {
 
-                    if (parseInt(paiement.paiement_validated) === 1) {
-                        return (
-                            <div key={index} style={{ margin: 0, padding: 0, marginBottom: 20 }}>
+                if (parseInt(paiement.paiement_validated) === 1) {
+                    return (
+                        <div key={index} style={{ margin: 0, padding: 0, marginBottom: 20 }}>
 
-                                <div id={`recu ${paiement.paiement_id}`}>
-                                    <div className="div-recu">
-                                        <div className="sub-div-recu">
-                                            <table style={{ width: "100%", padding: 10, paddingTop: 0, paddingBottom: 0 }}>
-                                                <tbody>
-                                                    <tr>
-                                                        <td className="td-border-right-recu" style={{ width: "50%", fontSize: 12 }}>
-                                                            <strong className="div-title-recu">{(autres.school_name).toUpperCase()}</strong><br />
-                                                            <strong className="sub-title-div-recu">{autres.school_bp}</strong>
-                                                            <table>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>EMAIL <span style={{ color: 'transparent' }}>Ybi</span></td>
-                                                                        <td>: <strong>{autres.email_school}</strong></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>TÉLÉPHONES <span style={{ color: 'transparent' }}>Ybi</span></td>
-                                                                        <td>: <strong>{autres.phone_1}</strong></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td> </td>
-                                                                        <td><span style={{ color: 'transparent' }}>:</span> <strong>{autres.phone_2}</strong></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </td>
-                                                        <td style={{ width: "50%", fontSize: 12, paddingLeft: 10 }}>
-                                                            <table>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>ÉLÈVE : <strong>{pupil.pupil.first_name.toUpperCase()} {pupil.pupil.second_name.toUpperCase()} {pupil.pupil.last_name}</strong>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>CLASSE : <strong>{find_class_number(pupil.pupil.class_school)} {find_cycle(pupil.pupil.cycle_school)} {find_class_order(pupil.pupil.class_order)}</strong>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>ANNÉE SCOLAIRE : <strong>{annee_scolaire.year_name}</strong>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr style={{ padding: 20 }}>
-                                                                        <td colSpan={2}><strong>REÇU DES FRAIS SCOLAIRES</strong></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>DATE : <strong>{find_date(paiement.date_creation)}</strong>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>REÇU No : <strong>{paiement.paiement_id}</strong></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td className="td-border-right-top" colSpan={2}>
-                                                            <table style={{ width: "100%" }}>
-                                                                <tbody>
-                                                                    <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
-                                                                    <tr>
-                                                                        <td>ÉLÈVE : <strong>{pupil.pupil.first_name.toUpperCase()} {pupil.pupil.second_name.toUpperCase()} {pupil.pupil.last_name}</strong>
-                                                                        </td>
-                                                                    </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
-                                                                    <tr>
-                                                                        <td style={{ width: '50%' }}>Montant payé : <strong>{paiement.montant_paye} dollars USD</strong>
-                                                                        </td>
-                                                                        <td>Montant En toutes lettres : <strong>{paiement.montant_text} dollars Américains</strong>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
-                                                                    <tr>
-                                                                        <td style={{ width: '50%' }} valign="top">Solde année : <strong>{pupil.soldes.solde} dollars USD</strong>
-                                                                        </td>
-                                                                        <td>Solde par trimestre    <FaArrowDown size={10} style={{ marginLeft: 5 }} /><br />
-                                                                            <div style={{ marginTop: 5, paddingTop: 2 }} className="td-border-left-top dispp">
-                                                                                <span>T1 : <strong>{pupil.soldes.solde1}</strong></span><span style={{ marginLeft: 20, marginRight: 20, color: 'gray' }}> | </span>
-                                                                                <span>T2 : <strong>{pupil.soldes.solde2}</strong></span><span style={{ marginLeft: 20, marginRight: 20, color: 'gray' }}> | </span>
-                                                                                <span>T3 : <strong>{pupil.soldes.solde3}</strong></span>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td style={{ width: '50%' }}>Motif du paiement : <strong>{find_libelle(paiement.libelle)}</strong>
-                                                                        </td>
-                                                                        <td></td>
-                                                                    </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                            <div id={`recu ${paiement.paiement_id}`}>
+                                <div className="div-recu">
+                                    <div className="sub-div-recu">
+                                        <table style={{ width: "100%", padding: 10, paddingTop: 0, paddingBottom: 0 }}>
+                                            <tbody>
+                                                <tr>
+                                                    <td className="td-border-right-recu" style={{ width: "50%", fontSize: 12 }}>
+                                                        <strong className="div-title-recu">{(autres.school_name).toUpperCase()}</strong><br />
+                                                        <strong className="sub-title-div-recu">{autres.school_bp}</strong>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>EMAIL <span style={{ color: 'transparent' }}>Ybi</span></td>
+                                                                    <td>: <strong>{autres.email_school}</strong></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>TÉLÉPHONES <span style={{ color: 'transparent' }}>Ybi</span></td>
+                                                                    <td>: <strong>{autres.phone_1}</strong></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td> </td>
+                                                                    <td><span style={{ color: 'transparent' }}>:</span> <strong>{autres.phone_2}</strong></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                    <td style={{ width: "50%", fontSize: 12, paddingLeft: 10 }}>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>ÉLÈVE : <strong>{pupil.pupil.first_name.toUpperCase()} {pupil.pupil.second_name.toUpperCase()} {pupil.pupil.last_name}</strong>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>CLASSE : <strong>{find_class_number(pupil.pupil.class_school)} {find_cycle(pupil.pupil.cycle_school)} {find_class_order(pupil.pupil.class_order)}</strong>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>ANNÉE SCOLAIRE : <strong>{annee_scolaire.year_name}</strong>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr style={{ padding: 20 }}>
+                                                                    <td colSpan={2}><strong>REÇU DES FRAIS SCOLAIRES</strong></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>DATE : <strong>{find_date(paiement.date_creation)}</strong>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>REÇU No : <strong>{paiement.paiement_id}</strong></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="td-border-right-top" colSpan={2}>
+                                                        <table style={{ width: "100%" }}>
+                                                            <tbody>
+                                                                <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                                                                <tr>
+                                                                    <td>ÉLÈVE : <strong>{pupil.pupil.first_name.toUpperCase()} {pupil.pupil.second_name.toUpperCase()} {pupil.pupil.last_name}</strong>
+                                                                    </td>
+                                                                </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                                                                <tr>
+                                                                    <td style={{ width: '50%' }}>Montant payé : <strong>{paiement.montant_paye} dollars USD</strong>
+                                                                    </td>
+                                                                    <td>Montant En toutes lettres : <strong>{paiement.montant_text} dollars Américains</strong>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                                                                <tr>
+                                                                    <td style={{ width: '50%' }} valign="top">Solde année : <strong>{pupil.soldes.solde} dollars USD</strong>
+                                                                    </td>
+                                                                    <td>Solde par trimestre    <FaArrowDown size={10} style={{ marginLeft: 5 }} /><br />
+                                                                        <div style={{ marginTop: 5, paddingTop: 2 }} className="td-border-left-top dispp">
+                                                                            <span>T1 : <strong>{pupil.soldes.solde1}</strong></span><span style={{ marginLeft: 20, marginRight: 20, color: 'gray' }}> | </span>
+                                                                            <span>T2 : <strong>{pupil.soldes.solde2}</strong></span><span style={{ marginLeft: 20, marginRight: 20, color: 'gray' }}> | </span>
+                                                                            <span>T3 : <strong>{pupil.soldes.solde3}</strong></span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style={{ width: '50%' }}>Motif du paiement : <strong>{find_libelle(paiement.libelle)}</strong>
+                                                                    </td>
+                                                                    <td></td>
+                                                                </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
 
-                                                                </tbody>
-                                                            </table>
-                                                        </td>
-                                                    </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
-                                                    <tr>
-                                                        <td style={{ width: "100%", textAlign: 'center' }} colSpan={2}>
-                                                            Signature et sceau de l'école
-                                                        </td>
-                                                    </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                                                <tr>
+                                                    <td style={{ width: "100%", textAlign: 'center' }} colSpan={2}>
+                                                        Signature et sceau de l'école
+                                                    </td>
+                                                </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
-
-                                <div style={{ textAlign: 'left', marginTop: 5 }}>
-                                    <span>
-                                        <FaChevronDown color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
-                                        <span
-                                            onClick={() => delete_recu(paiement.paiement_id)}
-                                            className="add-minus">
-                                            EFFACER CE REÇU
-                                        </span>
-                                    </span>
-
-                                    <span>
-                                        <span className="divider-menu-topbar"></span>
-                                        <FaPrint color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
-                                        <span onClick={() => printContent(`recu ${paiement.paiement_id}`)} className="add-minus">
-                                            IMPRIMER CE REÇU
-                                        </span>
-                                    </span>
-                                </div>
                             </div>
-                        )
-                    }
-                })}
-            </div>
-        )
+
+                            <div style={{ textAlign: 'left', marginTop: 5 }}>
+                                <span>
+                                    <FaChevronDown color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
+                                    <span
+                                        onClick={() => delete_recu(paiement.paiement_id)}
+                                        className="add-minus">
+                                        EFFACER CE REÇU
+                                    </span>
+                                </span>
+
+                                <span>
+                                    <span className="divider-menu-topbar"></span>
+                                    <FaPrint color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
+                                    <span onClick={() => printContent(`recu ${paiement.paiement_id}`)} className="add-minus">
+                                        IMPRIMER CE REÇU
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    )
+                }
+            })}
+        </div>
+    )
 }
 
 export default AllPupilPaiements;

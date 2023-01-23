@@ -7,7 +7,6 @@ import { home_redirect } from './global_vars';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from './store/reducer';
-import { TitlebarWid, TitlebarMac } from 'electron-titlebar-react-component';
 
 const store = createStore(reducer);
 

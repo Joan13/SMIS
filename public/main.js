@@ -17,7 +17,7 @@ const createWindow = () => {
       enableRemoteModule: true,
       javascript:true
     },
-    frame:false,
+    // frame:false,
     autoHideMenuBar: true,
   })
 

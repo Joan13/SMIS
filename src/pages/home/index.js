@@ -156,7 +156,6 @@ class Home extends Component {
             } else if (parseInt(user.poste) === 7) {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Directeur des études" });
             } else {
-                // alert(user.poste)
                 alert("Cet utilisateur est invalide. Vous devez vous reconnecter pour accéder aux services.");
                 this.logout_session();
             }
@@ -197,7 +196,6 @@ class Home extends Component {
                     this.props.dispatch({ type: "SET_ECHECS", payload: response.echecs });
                     this.props.dispatch({ type: "SET_ABANDON", payload: response.abandon });
                     this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
-                    // this.props.dispatch({ type: "SET_MOUNT_HOME", payload: false });
                     this.props.dispatch({ type: "SET_LIBELLES", payload: response.libelles });
                     this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Année scolaire" });
                     this.props.dispatch({ type: "SET_PUPILS_SCHOOL", payload: response.pupils });
@@ -566,25 +564,21 @@ class Home extends Component {
             .then((response) => response.json())
             .then((response) => {
 
-
-                //         // this.props.dispatch({ type: "SET_LOADING_CLASS", payload: false});
-                //         // this.props.dispatch({ type: "SET_COURSES", payload: response.courses });
-                //         // this.props.dispatch({ type: "SET_AUTRES", payload: response.autres });
-                //         // this.props.dispatch({ type: "SET_COURSES_COUNT", payload: response.courses_count });
-
-                // this.setState({can_load_data:false});
-
                 if (this.props.middle_func !== 0) {
-                    let promise_classes = new Promise((resolve, reject) => {
-                        for (let i in this.props.classes) {
-                            if (this.props.classes[i].id_classes === classe.id_classes) {
-                                this.props.classes[i].data = response;
-                                resolve();
-                            }
-                        }
-                    }).then(() => { });
 
-                    promise_classes.finally(() => {
+                    classe.data = response;
+                    this.props.dispatch({ type: "SET_CLASSE", payload: classe });
+                    console.log(this.props.classe);
+                    // let promise_classes = new Promise((resolve, reject) => {
+                    //     for (let i in this.props.classes) {
+                    //         if (this.props.classes[i].id_classes === classe.id_classes) {
+                    //             this.props.classes[i].data = response;
+                    //             resolve();
+                    //         }
+                    //     }
+                    // }).then(() => { });
+
+                    // promise_classes.finally(() => {
                         this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
 
                         if (this.props.middle_func === 0 || this.props.middle_func === 4 || this.props.middle_func === 6 || this.props.middle_func === 11 || this.props.middle_func === 12) {
@@ -595,24 +589,7 @@ class Home extends Component {
                         if (this.props.middle_func === 0) {
                             this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
                         }
-                    });
-
-                    // console.log(this.props.classe)
-
-                    // if (this.props.middle_func === 4 || this.props.middle_func === 6 || this.props.middle_func === 11 || this.props.middle_func === 12) {
-                    // this.setState({ middle_func: 1, allow_right_menu: true, });
-                    // this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
-                    // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
-
-                    // }
-
-                    // if (this.props.middle_func === 0 || this.props.middle_func === 6 || this.props.middle_func === 11) {
-                    // this.setState({ middle_func: 1, allow_right_menu: true, });
-                    //     this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
-                    //     this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
-                    // }
-
-                    //         console.log(this.props)
+                    // });
 
                 } else {
                     this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });

@@ -1,7 +1,7 @@
 import { CircularProgress } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { FiPrinter } from 'react-icons/fi';
-import {useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { home_redirect, http } from '../../../global_vars';
 import All_paiements_pupil from '../../paiements/all_paiements_pupil';
 import AllClassPaiements from './all_paiements';
@@ -9,21 +9,21 @@ import SoldeTrimesters from './soldes_trimesters';
 
 let paye = 0;
 
-const PaiementsClasse =()=> {
-    
+const PaiementsClasse = () => {
+
     const dispatch = useDispatch();
-    const classe = useSelector(state=>state.classe);
-    const autres = useSelector(state=>state.autres);
-    const url_server = useSelector(state=>state.url_server);
-    const annee_scolaire = useSelector(state=>state.annee_scolaire);
+    const classe = useSelector(state => state.classe);
+    const autres = useSelector(state => state.autres);
+    const url_server = useSelector(state => state.url_server);
+    const annee_scolaire = useSelector(state => state.annee_scolaire);
     const [pupils, setPupils] = useState([]);
     const [total_montant, setTotal_montant] = useState(0);
     const [paye, setPaye] = useState(0);
-    const [percentage,setPercentage] = useState(0);
-    const loading_footer = useSelector(state=>state.loading_footer);
+    const [percentage, setPercentage] = useState(0);
+    const loading_footer = useSelector(state => state.loading_footer);
     const [paiements_tab, setpaiements_tab] = useState(0);
 
-    const printContent=(divName)=> {
+    const printContent = (divName) => {
 
         let printContents = document.getElementById(divName).innerHTML;
         let originalContents = document.body.innerHTML;
@@ -52,7 +52,7 @@ const PaiementsClasse =()=> {
             .catch((error) => { });
     };
 
-    const view_pupil=(pupil) =>{
+    const view_pupil = (pupil) => {
         dispatch({ type: "SET_NEW_PAIEMENT", payload: false });
         dispatch({ type: "SET_PAIEMENTS_FRAIS_DIVERS", payload: false });
         dispatch({ type: "SET_ALL_PAIEMENTS", payload: true });
@@ -65,29 +65,29 @@ const PaiementsClasse =()=> {
 
         find_pupil(pupil.pupil.pupil_id);
     }
-        return (
-            <div style={{ marginBottom: 50, paddingTop: 0 }}>
-                                    {loading_footer ?
-                                        <div className="progress-center-progress">
-                                <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
-                                Chargement de la fiche des paiements...
-                            </div>
-                                    :
-                                    <div>
-                                    <span onClick={() => printContent("class-paiements")} className="add-minus" style={{ fontWeight: 'bold' }}>
-                                        <FiPrinter /> IMPRIMER LA FICHE
-                                    </span>
+    return (
+        <div style={{ marginBottom: 50, paddingTop: 0 }}>
+            {loading_footer ?
+                <div className="progress-center-progress">
+                    <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
+                    Chargement de la fiche des paiements...
+                </div>
+                :
+                <div>
+                    <span onClick={() => printContent("class-paiements")} className="add-minus" style={{ fontWeight: 'bold' }}>
+                        <FiPrinter /> IMPRIMER LA FICHE
+                    </span>
 
-                           {paiements_tab === 0 ?
-                           <div style={{color:'rgb(0, 80, 180)', float:'right', marginTop:20, cursor:'pointer'}} onClick={()=>setpaiements_tab(1)}>FILTRER LES FICHES</div>
-                           :
-                           <div style={{color:'rgb(0, 80, 180)', float:'right', marginTop:20, cursor:'pointer'}} onClick={()=>setpaiements_tab(0)}>VOIR TOUTES LES PAIEMENTS</div>}         
+                    {paiements_tab === 0 ?
+                        <div style={{ color: 'rgb(0, 80, 180)', float: 'right', marginTop: 20, cursor: 'pointer' }} onClick={() => setpaiements_tab(1)}>FILTRER LES FICHES</div>
+                        :
+                        <div style={{ color: 'rgb(0, 80, 180)', float: 'right', marginTop: 20, cursor: 'pointer' }} onClick={() => setpaiements_tab(0)}>VOIR TOUTES LES PAIEMENTS</div>}
 
-{paiements_tab === 0 ?<AllClassPaiements />:<SoldeTrimesters />}
+                    {paiements_tab === 0 ? <AllClassPaiements /> : <SoldeTrimesters />}
 
-                                    </div>}
-            </div>
-        )
-    }
+                </div>}
+        </div>
+    )
+}
 
 export default PaiementsClasse;

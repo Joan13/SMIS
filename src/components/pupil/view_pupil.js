@@ -23,7 +23,7 @@ class ViewPupil extends React.Component {
             autres: [],
             pupils: [],
             can_mount: 0,
-            edit_pupil:false,
+            edit_pupil: false,
         }
     }
 
@@ -166,183 +166,176 @@ class ViewPupil extends React.Component {
     render() {
         return (
             <div>
-{!this.props.loading_footer ?
-    <div style={{ marginBottom: 50, paddingTop: 0,marginLeft:0, marginRight: 10 }}>
-                <div className="div-div">
-                    <div style={{fontWeight: 'bold', fontSize: 15, marginTop: 10, marginBottom: 5}}>Identité de l'élève</div>
-                    <div id="nomminative" style={{ marginBottom: 5, marginLeft: 0 }}>
+                {!this.props.loading_footer ?
+                    <div style={{ marginBottom: 50, paddingTop: 0, marginLeft: 0, marginRight: 10 }}>
+                        <div className="div-div">
+                            <div style={{ fontWeight: 'bold', fontSize: 15, marginTop: 10, marginBottom: 5 }}>Identité de l'élève</div>
+                            <div id="nomminative" style={{ marginBottom: 5, marginLeft: 0 }}>
 
-                        <table style={{ width: '100%' }}>
-                            <tbody>
-                                <tr>
-                                    <td style={{ width: "33.3%" }}>
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Sexe  </td>
-                                                    <td>
-                                                        <strong> : {this.props.pupil.pupil.gender === "1" ? "Masculin (M)" : "Féminin (F)"}</strong>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                <td>Nationalité  </td>
-                                                    <td>
-                                                        <strong> : {this.props.pupil.pupil.nationality !== "" ? this.props.pupil.pupil.nationality : "Non défini"}</strong>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Date de naissance  </td>
-                                                    <td>
-                                                        <strong> : {this.find_date(this.props.pupil.pupil.birth_date)}</strong>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Lieu de naissance  </td>
-                                                    <td>
-                                                        <strong> : {this.props.pupil.pupil.birth_place !== "" ? this.props.pupil.pupil.birth_place : "Non défini"}</strong>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                    <td style={{ width: "33.3%" }} valign="top">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                <td>Classe  </td>
-                                                    <td>
-                                                        <strong> : {this.find_class_number(this.props.pupil.pupil.class_school)} {this.find_cycle(this.props.pupil.pupil.cycle_school)} {this.find_section(this.props.pupil.pupil.class_section)} {this.find_class_order(this.props.pupil.pupil.class_order)}</strong>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Noms du père  </td>
-                                                    <td>
-                                                        <strong> : {this.props.pupil.pupil.father_names !== "" ? this.props.pupil.pupil.father_names : "Non défini"}</strong>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Noms de la mère  </td>
-                                                    <td>
-                                                        <strong> : {this.props.pupil.pupil.mother_names !== "" ? this.props.pupil.pupil.mother_names : "Non défini"}</strong>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
+                                <table style={{ width: '100%' }}>
+                                    <tbody>
+                                        <tr>
+                                            <td style={{ width: "33.3%" }}>
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Sexe  </td>
+                                                            <td>
+                                                                <strong> : {this.props.pupil.pupil.gender === "1" ? "Masculin (M)" : "Féminin (F)"}</strong>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Nationalité  </td>
+                                                            <td>
+                                                                <strong> : {this.props.pupil.pupil.nationality !== "" ? this.props.pupil.pupil.nationality : "Non défini"}</strong>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Date de naissance  </td>
+                                                            <td>
+                                                                <strong> : {this.find_date(this.props.pupil.pupil.birth_date)}</strong>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Lieu de naissance  </td>
+                                                            <td>
+                                                                <strong> : {this.props.pupil.pupil.birth_place !== "" ? this.props.pupil.pupil.birth_place : "Non défini"}</strong>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td style={{ width: "33.3%" }} valign="top">
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Classe  </td>
+                                                            <td>
+                                                                <strong> : {this.find_class_number(this.props.pupil.pupil.class_school)} {this.find_cycle(this.props.pupil.pupil.cycle_school)} {this.find_section(this.props.pupil.pupil.class_section)} {this.find_class_order(this.props.pupil.pupil.class_order)}</strong>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Noms du père  </td>
+                                                            <td>
+                                                                <strong> : {this.props.pupil.pupil.father_names !== "" ? this.props.pupil.pupil.father_names : "Non défini"}</strong>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Noms de la mère  </td>
+                                                            <td>
+                                                                <strong> : {this.props.pupil.pupil.mother_names !== "" ? this.props.pupil.pupil.mother_names : "Non défini"}</strong>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
 
-                                    <td style={{ width: "33.3%" }} valign="top">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Adresse  </td>
-                                                    <td>
-                                                        <strong> : {this.props.pupil.pupil.physical_address !== "" ? this.props.pupil.pupil.physical_address : "Non défini"}</strong>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Email  </td>
-                                                    <td>
-                                                        <strong> : {this.props.pupil.pupil.email_address !== "" ? this.props.pupil.pupil.email_address : "Non défini"}</strong>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Téléphone  </td>
-                                                    <td>
-                                                        <strong> : {this.props.pupil.pupil.contact_phone_1 !== "" ? this.props.pupil.pupil.contact_phone_1 : "Non défini"}</strong>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td> </td>
-                                                    {this.props.pupil.pupil.contact_phone_2 !== "" ?
-                                                        <td>
-                                                            <strong> : {this.props.pupil.pupil.contact_phone_2}</strong>
-                                                        </td> : null}
-                                                </tr>
-                                                <tr>
-                                                    <td> </td>
-                                                    {this.props.pupil.pupil.contact_phone_3 !== "" ?
-                                                        <td>
-                                                            <strong> : {this.props.pupil.pupil.contact_phone_3}</strong>
-                                                        </td> : null}
-                                                </tr>
-                                                <tr>
-                                                    <td> </td>
-                                                    {this.props.pupil.pupil.contact_phone_4 !== "" ?
-                                                        <td>
-                                                            <strong> : {this.props.pupil.pupil.contact_phone_4}</strong>
-                                                        </td> : null}
-                                                </tr>
+                                            <td style={{ width: "33.3%" }} valign="top">
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Adresse  </td>
+                                                            <td>
+                                                                <strong> : {this.props.pupil.pupil.physical_address !== "" ? this.props.pupil.pupil.physical_address : "Non défini"}</strong>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Email  </td>
+                                                            <td>
+                                                                <strong> : {this.props.pupil.pupil.email_address !== "" ? this.props.pupil.pupil.email_address : "Non défini"}</strong>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Téléphone  </td>
+                                                            <td>
+                                                                <strong> : {this.props.pupil.pupil.contact_phone_1 !== "" ? this.props.pupil.pupil.contact_phone_1 : "Non défini"}</strong>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td> </td>
+                                                            {this.props.pupil.pupil.contact_phone_2 !== "" ?
+                                                                <td>
+                                                                    <strong> : {this.props.pupil.pupil.contact_phone_2}</strong>
+                                                                </td> : null}
+                                                        </tr>
+                                                        <tr>
+                                                            <td> </td>
+                                                            {this.props.pupil.pupil.contact_phone_3 !== "" ?
+                                                                <td>
+                                                                    <strong> : {this.props.pupil.pupil.contact_phone_3}</strong>
+                                                                </td> : null}
+                                                        </tr>
+                                                        <tr>
+                                                            <td> </td>
+                                                            {this.props.pupil.pupil.contact_phone_4 !== "" ?
+                                                                <td>
+                                                                    <strong> : {this.props.pupil.pupil.contact_phone_4}</strong>
+                                                                </td> : null}
+                                                        </tr>
 
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {this.props.edit_pupil ? <EditPupil /> : null}
+
+                            <div style={{ textAlign: 'left', marginTop: 20 }}>
+
+                                <span>
+                                    {this.props.edit_pupil ? <FaChevronUp color="rgb(0, 80, 180)" style={{ marginRight: 5 }} /> : <FaChevronDown color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />}
+                                    <span
+                                        onClick={() => this.props.dispatch({ type: "SET_EDIT_PUPIL", payload: !this.props.edit_pupil })}
+                                        className="add-minus">
+                                        MODIFIER l'ÉLÈVE
+                                    </span>
+                                </span>
+
+                                <span>
+                                    <span className="divider-menu-topbar"></span>
+                                    <FaPrint color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
+                                    <span onClick={() => this.printContent("nomminative")} className="add-minus">
+                                        IMPRIMER LA FICHE DE L'ÉLÈVE
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className="div-div" style={{ paddingBottom: 0 }}>
+                            <h3>Paiements de l'élève</h3>
+                            <span onClick={() => this.newPaiement()} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${this.props.new_paiement ? "select-no-border-bold" : ""}`}>
+                                <span className="divider-menu-topbar"></span>
+                                <FaEdit style={{ size: 17, marginRight: 5 }} />
+                                Nouveaux paiements</span>
+
+                            <span onClick={() => this.allPaiements()} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${this.props.all_paiements ? "select-no-border-bold" : ""}`}>
+                                <span className="divider-menu-topbar"></span>
+                                <FaMoneyCheck style={{ size: 17, marginRight: 5 }} />
+                                Paiements scolaires</span>
+
+                            <span onClick={() => this.fraisDiversPaiements()} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${this.props.paiements_frais_divers ? "select-no-border-bold" : ""}`}>
+                                <span className="divider-menu-topbar"></span>
+                                <FaMoneyBillWave style={{ size: 17, marginRight: 5 }} />
+                                Paiements frais divers</span>
+
+                            {this.props.new_paiement ?
+                                <NewPaiements /> : null}
+
+                            {this.props.all_paiements ?
+                                <AllPaiementPupils /> : null}
+
+                            {this.props.paiements_frais_divers ?
+                                <FraisDiversPupil /> : null}
+                        </div>
                     </div>
-
-                    {this.props.edit_pupil ? <EditPupil />:null}
-
-                    <div style={{textAlign: 'left', marginTop: 20}}>
-                    {/* <span>
-                    <FaChevronDown color="rgb(0, 80, 180)" style={{marginRight: 5}} />
-                        <span 
-                        className="add-minus">
-                            AFFICHER L'IDENTITÉ COMPLÈTE
-                        </span>
-                    </span> */}
-
-                    <span>
-                    {this.props.edit_pupil ? <FaChevronUp color="rgb(0, 80, 180)" style={{marginRight: 5}} /> : <FaChevronDown color="rgb(0, 80, 180)" style={{marginRight: 5}} />}
-                        <span 
-                        onClick={()=>this.props.dispatch({type:"SET_EDIT_PUPIL", payload:!this.props.edit_pupil})}
-                        className="add-minus">
-                            MODIFIER l'ÉLÈVE
-                        </span>
-                    </span>
-
-                    <span>
-                    <span className="divider-menu-topbar"></span>
-                    <FaPrint color="rgb(0, 80, 180)" style={{marginRight: 5}} />
-                        <span onClick={() => this.printContent("nomminative")} className="add-minus">
-                            IMPRIMER LA FICHE DE L'ÉLÈVE
-                        </span>
-                    </span>
-                    </div>
-                </div>
-
-                <div className="div-div" style={{ paddingBottom: 0}}>
-                    <h3>Paiements de l'élève</h3>
-                    <span onClick={() => this.newPaiement()} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${this.props.new_paiement ? "select-no-border-bold" : ""}`}>
-                        <span className="divider-menu-topbar"></span>
-                        <FaEdit style={{ size: 17, marginRight: 5 }} />
-                        Nouveaux paiements</span>
-
-                    <span onClick={() => this.allPaiements()} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${this.props.all_paiements ? "select-no-border-bold" : ""}`}>
-                        <span className="divider-menu-topbar"></span>
-                        <FaMoneyCheck style={{ size: 17, marginRight: 5 }} />
-                        Paiements scolaires</span>
-
-                    <span onClick={() => this.fraisDiversPaiements()} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${this.props.paiements_frais_divers ? "select-no-border-bold" : ""}`}>
-                        <span className="divider-menu-topbar"></span>
-                        <FaMoneyBillWave style={{ size: 17, marginRight: 5 }} />
-                        Paiements frais divers</span>
-
-                    {this.props.new_paiement ?
-                        <NewPaiements /> : null}
-
-                    {this.props.all_paiements ?
-                        <AllPaiementPupils /> : null}
-
-                    {this.props.paiements_frais_divers ?
-                        <FraisDiversPupil /> : null}
-                </div>
-            </div>
-:
-<div className="progress-center-progress">
-                                <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
-                                Chargement de la page élève...
-                            </div>}
+                    :
+                    <div className="progress-center-progress">
+                        <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
+                        Chargement de la page élève...
+                    </div>}
             </div>
         )
     }

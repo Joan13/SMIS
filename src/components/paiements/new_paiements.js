@@ -26,7 +26,7 @@ class NewPaiements extends Component {
             montant_frais: "",
             libelle_frais: "",
             success_2: "",
-            category: this.props.paiement_categories.filter(category=>category.category_id === this.props.pupil.pupil.paiement_category).length === 0 ? this.props.paiement_categories[0] : this.props.paiement_categories.filter(category=>category.category_id === this.props.pupil.pupil.paiement_category)[0],
+            category: this.props.paiement_categories.filter(category => category.category_id === this.props.pupil.pupil.paiement_category).length === 0 ? this.props.paiement_categories[0] : this.props.paiement_categories.filter(category => category.category_id === this.props.pupil.pupil.paiement_category)[0],
 
         }
     }
@@ -38,7 +38,7 @@ class NewPaiements extends Component {
         // console.log(this.state.category);
         // }, 2000);
         // Object.assign({}, this.state.category);
-        // console.log(this.state.category);
+        // console.log(this.props.libelles);
     }
 
     new_frais_divers() {
@@ -58,9 +58,9 @@ class NewPaiements extends Component {
             day = date.getDate();
         }
 
-        if ((parseInt(date.getMonth()+1).toString()).length === 1) {
+        if ((parseInt(date.getMonth() + 1).toString()).length === 1) {
             month = "0" + parseInt(date.getMonth() + 1);
-        } else {
+        } else {    
             month = date.getMonth() + 1;
         }
 
@@ -121,7 +121,7 @@ class NewPaiements extends Component {
             day = date.getDate();
         }
 
-        if ((parseInt(date.getMonth()+1).toString()).length === 1) {
+        if ((parseInt(date.getMonth() + 1).toString()).length === 1) {
             month = "0" + parseInt(date.getMonth() + 1);
         } else {
             month = date.getMonth() + 1;
@@ -186,72 +186,73 @@ class NewPaiements extends Component {
                                     <tbody>
                                         {
                                             this.props.pupil.pupil.paiement_category === "0" ?
-                                            <div>
-Cet élève est exempté(e) de tout paiement des frais scolaires.
-                                            </div>
-                                            :
-                                            <>
-                                            <tr>
-                                            <td>
-                                                <select
-                                                    value={this.state.libelle_paie}
-                                                    onChange={(val) => this.setState({ libelle_paie: val.target.value })}
-                                                    style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white', marginBottom: 10, width: '80%' }} className="select-no-border-select">
-                                                    <option value="">Sélectionner le libellé</option>
-                                                    {this.props.libelles.map((libelle, index) => {
-                                                        if (libelle.gender_libelle === "1") { return (<option key={index} value={libelle.libelle_id}>{libelle.description_libelle}</option>) }
-                                                    })}
-                                                </select>
-                                            </td>
-                                        </tr>
+                                                <div>
+                                                    Cet élève est exempté(e) de tout paiement des frais scolaires.
+                                                </div>
+                                                :
+                                                <>
+                                                    <tr>
+                                                        <td>
+                                                            <select
+                                                                value={this.state.libelle_paie}
+                                                                onChange={(val) => this.setState({ libelle_paie: val.target.value })}
+                                                                style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white', marginBottom: 10, width: '80%' }} className="select-no-border-select">
+                                                                <option value="">Sélectionner le libellé</option>
+                                                                {this.props.libelles.map((libelle, index) => {
+                                                                    if (parseInt(libelle.gender_libelle) === 1) { return (<option key={index} value={libelle.libelle_id}>{libelle.description_libelle}</option>) }
+                                                                })}
+                                                            </select>
+                                                        </td>
+                                                    </tr>
 
-                                        <tr>
-                                            <td>
-                                                Montant (en dollars US):<br />
-                                                <input
-                                                    value={this.state.montant_paie}
-                                                    onChange={(value) => {
-                                                        this.setState({ montant_paie: value.target.value });
-                                                        if(parseInt(value.target.value) >= 0)  this.setState({ montant_text_paie: NumberToLetter(value.target.value) })}}
-                                                    placeholder="Ex: 130"
-                                                    maxLength={14}
-                                                    className="input-montant"
-                                                    type="number" />
-                                            </td>
-                                        </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Montant (en dollars US):<br />
+                                                            <input
+                                                                value={this.state.montant_paie}
+                                                                onChange={(value) => {
+                                                                    this.setState({ montant_paie: value.target.value });
+                                                                    if (parseInt(value.target.value) >= 0) this.setState({ montant_text_paie: NumberToLetter(value.target.value) })
+                                                                }}
+                                                                placeholder="Ex: 130"
+                                                                maxLength={14}
+                                                                className="input-montant"
+                                                                type="number" />
+                                                        </td>
+                                                    </tr>
 
-                                        <tr>
-                                            <td style={{ paddingTop: 10 }}>
-                                                {this.state.montant_paie !== "" ?
-                                                <div><strong style={{color:'rgb(0, 80, 180)'}}>{this.state.montant_text_paie} </strong>dollars Américains<br/></div>:null}
-                                            </td>
-                                        </tr>
+                                                    <tr>
+                                                        <td style={{ paddingTop: 10 }}>
+                                                            {this.state.montant_paie !== "" ?
+                                                                <div><strong style={{ color: 'rgb(0, 80, 180)' }}>{this.state.montant_text_paie} </strong>dollars Américains<br /></div> : null}
+                                                        </td>
+                                                    </tr>
 
-                                        <tr>
-                                            <td style={{ paddingTop: 10 }}>
-                                                Catégorie : <span style={{fontWeight:'bold', color: 'rgb(0, 80, 180)'}}>{this.state.category.category_name} </span>  | 
-                                                Montant total à payer : <span style={{fontWeight:'bold', color: 'rgb(0, 80, 180)'}}> {this.state.category.category_amount}</span>
-                                            </td>
-                                        </tr>
+                                                    <tr>
+                                                        <td style={{ paddingTop: 10 }}>
+                                                            Catégorie : <span style={{ fontWeight: 'bold', color: 'rgb(0, 80, 180)' }}>{this.state.category.category_name} </span>  |
+                                                            Montant total à payer : <span style={{ fontWeight: 'bold', color: 'rgb(0, 80, 180)' }}> {this.state.category.category_amount}</span>
+                                                        </td>
+                                                    </tr>
 
-                                        <tr>
-                                            <td>
-                                                {this.state.success !== "" ?
-                                                    <><span style={{ color: 'green', marginBottom: 5 }}>
-                                                        <FaCheckCircle color="green" size={11} style={{ marginRight: 5, marginTop: 10 }} />
-                                                        {this.state.success}
-                                                    </span><br /></> : null}
-                                                <br />
-                                                {this.state.loading_middle ?
-                                                    <><CircularProgress style={{ color: 'rgb(0, 80, 180)', marginLeft: '35%' }} /><br /></>
-                                                    :
-                                                    <><button
-                                                        onClick={() => this.new_paiement()}
-                                                        className="button-primary" style={{ width: '83%' }}>Valider le paiement</button></>
-                                                }
-                                            </td>
-                                        </tr>
-                                            </>
+                                                    <tr>
+                                                        <td>
+                                                            {this.state.success !== "" ?
+                                                                <><span style={{ color: 'green', marginBottom: 5 }}>
+                                                                    <FaCheckCircle color="green" size={11} style={{ marginRight: 5, marginTop: 10 }} />
+                                                                    {this.state.success}
+                                                                </span><br /></> : null}
+                                                            <br />
+                                                            {this.state.loading_middle ?
+                                                                <><CircularProgress style={{ color: 'rgb(0, 80, 180)', marginLeft: '35%' }} /><br /></>
+                                                                :
+                                                                <><button
+                                                                    onClick={() => this.new_paiement()}
+                                                                    className="button-primary" style={{ width: '83%' }}>Valider le paiement</button></>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                </>
                                         }
                                     </tbody>
                                 </table>
@@ -269,7 +270,7 @@ Cet élève est exempté(e) de tout paiement des frais scolaires.
                                                     style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white', marginBottom: 10, width: '80%' }} className="select-no-border-select">
                                                     <option value="">Sélectionner le libellé</option>
                                                     {this.props.libelles.map((libelle, index) => {
-                                                        if (libelle.gender_libelle === "1") { return (<option key={index} value={libelle.libelle_id}>{libelle.description_libelle}</option>) }
+                                                        if (parseInt(libelle.gender_libelle) === 1) { return (<option key={index} value={libelle.libelle_id}>{libelle.description_libelle}</option>) }
                                                     })}
                                                 </select>
                                             </td>
@@ -290,7 +291,7 @@ Cet élève est exempté(e) de tout paiement des frais scolaires.
                                         <tr>
                                             <td style={{ paddingTop: 10 }}>
                                                 {this.state.montant_frais !== "" ?
-                                                <div><strong style={{color:'rgb(0, 80, 180)'}}>{NumberToLetter(this.state.montant_frais)} </strong>dollars Américains<br/></div>:null}
+                                                    <div><strong style={{ color: 'rgb(0, 80, 180)' }}>{NumberToLetter(this.state.montant_frais)} </strong>dollars Américains<br /></div> : null}
                                             </td>
                                         </tr>
 

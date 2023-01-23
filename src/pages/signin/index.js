@@ -15,8 +15,8 @@ class Signin extends Component {
         super(props);
 
         this.state = {
-            username: "principal@yambi.class",
-            password: "000000",
+            username: "",
+            password: "",
             see_pass: false,
             is_loading: false,
             empty_error: false,

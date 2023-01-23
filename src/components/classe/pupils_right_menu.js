@@ -12,7 +12,7 @@ const PupilsRightMenu = () => {
     const searching_pupil = useSelector(state => state.searching_pupil);
     const pupils_count = useSelector(state => state.pupils_count);
     const pupils_school = useSelector(state => state.pupils_school);
-    const pupill = useSelector(state=>state.pupil);
+    const pupill = useSelector(state => state.pupil);
 
     const searchPupil = (name) => {
         dispatch({ type: "SET_SEARCHING_PUPIL", payload: true });
@@ -65,7 +65,7 @@ const PupilsRightMenu = () => {
         dispatch({ type: "SET_ALL_PAIEMENTS", payload: true });
         dispatch({ type: "SET_PUPIL", payload: pupil });
         dispatch({ type: "SET_MIDDLE_FUNC", payload: 11 });
-        dispatch({type:"SET_EDIT_PUPIL", payload:false});
+        dispatch({ type: "SET_EDIT_PUPIL", payload: false });
         dispatch({ type: "SET_TITLE_MAIN", payload: (pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name).toUpperCase() });
 
         find_pupil(pupil.pupil.pupil_id);
@@ -73,7 +73,7 @@ const PupilsRightMenu = () => {
 
     return (
         <div className="menu-right">
-        <br/>
+            <br />
             <div>
                 <strong>Tous les élèves ({pupils_count})</strong>
 
@@ -82,7 +82,7 @@ const PupilsRightMenu = () => {
 
                     <input
                         onChange={(val) => searchPupil(val.target.value)}
-                        style={{backgroundColor:'transparent'}}
+                        style={{ backgroundColor: 'transparent' }}
                         placeholder="Recherchez un élève" />
 
                     {searching_pupil ?
@@ -90,20 +90,22 @@ const PupilsRightMenu = () => {
                 </div>
                 <div style={{ marginLeft: 10 }}>
                     <table>
-                        {pupils_school.map((pupil, index) => {
-                            if (index < 50) {
-                                return (
-                                    <tr>
-                                        <td style={{ minWidth: 23 }}>{index + 1}. </td>
-                                        <td style={{ paddingBottom: 5 }}
-                                            onClick={() => view_pupil(pupil)}
-                                            key={index} className="pupils-list-home">
-                                            {pupil.pupil.first_name.toString().toUpperCase()} {pupil.pupil.second_name.toString().toUpperCase()} {pupil.pupil.last_name.toString().toUpperCase()} ({parseInt(pupil.pupil.gender) === 1 ? "M" : "F"})
-                                        </td>
-                                    </tr>
-                                )
-                            }
-                        })}
+                        <tbody>
+                            {pupils_school.map((pupil, index) => {
+                                if (index < 50) {
+                                    return (
+                                        <tr key={index}>
+                                            <td style={{ minWidth: 23 }}>{index + 1}. </td>
+                                            <td style={{ paddingBottom: 5 }}
+                                                onClick={() => view_pupil(pupil)}
+                                                key={index} className="pupils-list-home">
+                                                {pupil.pupil.first_name.toString().toUpperCase()} {pupil.pupil.second_name.toString().toUpperCase()} {pupil.pupil.last_name.toString().toUpperCase()} ({parseInt(pupil.pupil.gender) === 1 ? "M" : "F"})
+                                            </td>
+                                        </tr>
+                                    )
+                                }
+                            })}
+                        </tbody>
                     </table>
                 </div>
             </div>
