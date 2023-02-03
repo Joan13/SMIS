@@ -1,8 +1,9 @@
 export const home_redirect = "/";
 export const year = "2018 - 2023";
 export const http = "http://";
-export const url_online = "gestion.collegeafajiri.net";
-export const online = true;
+// export const url_online = "gestion.collegeafajiri.net";
+export const url_online = "";
+export const online = false;
 
 export function printContent(divName) {
     let printContents = document.getElementById(divName).innerHTML;
