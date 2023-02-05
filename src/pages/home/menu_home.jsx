@@ -82,7 +82,7 @@ const MenuHome = () => {
                 </div>
 
                 <div
-                    // onClick={() => gestion_personnel()} 
+                    onClick={() => gestion_personnel()} 
                     className="div-menu-home-circle">
                     <div style={{ width: '100%', height: 120 }}><br /><br /><br /><FcConferenceCall size={70} /><br /><br /></div>
                     <span style={{ fontSize: 15, fontWeight: '500' }}>Gestion du<br />personnel<br /></span>

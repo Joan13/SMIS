@@ -1,5 +1,7 @@
 const initialState = {
     user_data: [],
+    data_session: [],
+    employee:[],
     user_poste: "",
     url_server: "",
     classes: [],
@@ -88,6 +90,10 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_MODAL_PAIEMENT_CATEGORIES":
             return { ...state, modal_paiement_categories: action.payload }
+            case "SET_EMPLOYEE":
+            return { ...state, employee: action.payload }
+        case "SET_DATA_SESSION":
+            return { ...state, data_session: action.payload }
         case "SET_DAY":
             return { ...state, day: action.payload }
         case "SET_MODAL_LIBELLES":
@@ -144,7 +150,7 @@ const reducer = (state = initialState, action) => {
             // let new_classe_marks = action.payload.classe;
             // Object.assign({}, pupil_m);
             // new_classe_marks.pupils[index_pupil] = pupil_m[0];
-            
+
             return { ...state, classe: action.payload }
         case "SET_CLASSE_OPEN":
             return { ...state, class_open: action.payload }

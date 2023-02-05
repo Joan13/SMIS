@@ -4,33 +4,32 @@ import { useDispatch, useSelector } from 'react-redux';
 import modalView from '../../includes/modal';
 import { http } from '../../global_vars';
 
-export default function AddWorker(){
+export default function AddWorker() {
 
     const [loading_middle, setLoading_middle] = useState(false);
-    const [modal_title,setModal_title] = useState("");
+    const [modal_title, setModal_title] = useState("");
     const [modal_main_text, setModal_main_text] = useState("");
     const [modal_view, setModal_view] = useState(false);
-
-    const [first_name,setFirst_name] = useState("");
+    const [first_name, setFirst_name] = useState("");
     const [second_name, setSecond_name] = useState("");
     const [last_name, setLast_name] = useState("");
-    const [gender,setGender] = useState("");
-    const [free_day_1,setFree_day_1] = useState("");
-    const [free_day_2,setFree_day_2] = useState("");
-    const [poste,setPoste] = useState("");
+    const [gender, setGender] = useState("");
+    const [free_day_1, setFree_day_1] = useState("");
+    const [free_day_2, setFree_day_2] = useState("");
+    const [poste, setPoste] = useState("");
 
-    const annee = useSelector(state=>state.annee);
+    const annee = useSelector(state => state.annee);
     const dispatch = useDispatch();
-    const url_server = useSelector(state=>state.url_server);
+    const url_server = useSelector(state => state.url_server);
 
-    const add_worker =()=> {
+    const add_worker = () => {
 
         if (first_name === "" || second_name === "" || poste === "" || gender === "") {
             setModal_title("Information erreur");
             setModal_main_text("Vous devez renseigner tous les champs obligatoires avant la validation. Ce sont l'identité de base de l'employé(e) et son orientation professionnelle (le poste qu'il occupe).");
             setModal_view(true);
             setLoading_middle(false);
-        } 
+        }
         else {
 
             let BaseURL = http + url_server + "/yambi_class_SMIS/API/add_worker.php";
@@ -52,112 +51,112 @@ export default function AddWorker(){
                 .then((response) => response.json())
                 .then((response) => {
                     setModal_title("Information succès");
-            setModal_main_text("Vous venez d'enregistrer un nouvau membre du personnel");
-            setModal_view(true);
-            setLoading_middle(false);
-            setFirst_name("");
-            setSecond_name("");
-            setLast_name("");
-            setGender("");
-            setPoste("");
-            setFree_day_1("");
-            setFree_day_2("");
+                    setModal_main_text("Vous venez d'enregistrer un nouvau membre du personnel");
+                    setModal_view(true);
+                    setLoading_middle(false);
+                    setFirst_name("");
+                    setSecond_name("");
+                    setLast_name("");
+                    setGender("");
+                    setPoste("");
+                    setFree_day_1("");
+                    setFree_day_2("");
 
-            dispatch({type:"SET_WORKERS", payload:response.employees});
+                    dispatch({ type: "SET_WORKERS", payload: response.employees });
 
                 })
                 .catch((error) => {
                     setModal_title("Information erreur");
-            setModal_main_text("Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.");
-            setModal_view(true);
-            setLoading_middle(false);
+                    setModal_main_text("Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.");
+                    setModal_view(true);
+                    setLoading_middle(false);
                 });
         }
     };
 
-    const fetch_workers =()=> {
+    const fetch_workers = () => {
 
-            let BaseURL = http + url_server + "/yambi_class_SMIS/API/fetch_workers.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/fetch_workers.php";
 
-            fetch(BaseURL, {
-                method: 'POST',
-                body: JSON.stringify({
-                    school_year: annee
-                })
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                school_year: annee
             })
-                .then((response) => response.json())
-                .then((response) => {
-                    
-dispatch({type:"SET_WORKERS", payload:response});
+        })
+            .then((response) => response.json())
+            .then((response) => {
 
-                })
-                .catch((error) => {
-                    setModal_title("Information erreur");
-            setModal_main_text("Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.");
-            setModal_view(true);
-            setLoading_middle(false);
-                });
-        };
+                dispatch({ type: "SET_WORKERS", payload: response });
 
-        return (
-            <div className="center-fixeddd" style={{ paddingRight: 20 }}>
+            })
+            .catch((error) => {
+                setModal_title("Information erreur");
+                setModal_main_text("Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.");
+                setModal_view(true);
+                setLoading_middle(false);
+            });
+    };
 
-                <div
-                    className="save-pupil"
-                    onClick={() => add_worker()}>
-                    Enregistrer l'employé(e)
-                </div>
+    return (
+        <div className="center-fixeddd" style={{ paddingRight: 20 }}>
 
-                <span className="title-background">I. DE L'IDENTITÉ DE BASE DE L'EMPLOYÉ(E)</span>
-                <table className="tables-new-pupil">
-                    <tbody>
-                        <tr>
-                            <td style={{ paddingRight: 0, textAlign: 'left' }}>
-                                <input
-                                    onChange={(val) => setFirst_name(val.target.value)}
-                                    placeholder="Nom"
-                                    className="input-normall"
-                                    value={first_name}
-                                    style={{ width: '96%' }}
-                                />
-                            </td>
-                            <td style={{ paddingLeft: 0, textAlign: 'right' }}>
-                                <input
-                                    onChange={(val) => setSecond_name(val.target.value)}
-                                    placeholder="Post-nom"
-                                    className="input-normall"
-                                    value={second_name}
-                                    style={{ width: '96%' }}
-                                />
-                            </td>
-                        </tr>
+            <div
+                className="save-pupil"
+                onClick={() => add_worker()}>
+                Enregistrer l'employé(e)
+            </div>
 
-                        <tr>
-                            <td style={{ paddingRight: 0, textAlign: 'left' }}>
-                                <input
-                                    onChange={(val) => setLast_name(val.target.value)}
-                                    placeholder="Prénom"
-                                    className="input-normall"
-                                    value={last_name}
-                                    style={{ width: '96%' }}
-                                />
-                            </td>
-                            <td style={{ paddingLeft: 0, textAlign: 'right' }}>
-                                <select
-                                    className="select-normall"
-                                    onChange={(val) => setGender(val.target.value)}
-                                    placeholder="Sexe"
-                                    variant="outlined"
-                                    value={gender}
-                                    style={{ width: '100%', textAlign: 'left' }}>
-                                    <option value="">Sélectionner le sexe</option>
-                                    <option value="0">Féminin</option>
-                                    <option value="1">Masculin</option>
-                                </select>
-                            </td>
-                        </tr>
+            <span className="title-background">I. DE L'IDENTITÉ DE BASE DE L'EMPLOYÉ(E)</span>
+            <table className="tables-new-pupil">
+                <tbody>
+                    <tr>
+                        <td style={{ paddingRight: 0, textAlign: 'left' }}>
+                            <input
+                                onChange={(val) => setFirst_name(val.target.value)}
+                                placeholder="Nom"
+                                className="input-normall"
+                                value={first_name}
+                                style={{ width: '96%' }}
+                            />
+                        </td>
+                        <td style={{ paddingLeft: 0, textAlign: 'right' }}>
+                            <input
+                                onChange={(val) => setSecond_name(val.target.value)}
+                                placeholder="Post-nom"
+                                className="input-normall"
+                                value={second_name}
+                                style={{ width: '96%' }}
+                            />
+                        </td>
+                    </tr>
 
-                        {/* <tr>
+                    <tr>
+                        <td style={{ paddingRight: 0, textAlign: 'left' }}>
+                            <input
+                                onChange={(val) => setLast_name(val.target.value)}
+                                placeholder="Prénom"
+                                className="input-normall"
+                                value={last_name}
+                                style={{ width: '96%' }}
+                            />
+                        </td>
+                        <td style={{ paddingLeft: 0, textAlign: 'right' }}>
+                            <select
+                                className="select-normall"
+                                onChange={(val) => setGender(val.target.value)}
+                                placeholder="Sexe"
+                                variant="outlined"
+                                value={gender}
+                                style={{ width: '100%', textAlign: 'left' }}>
+                                <option value="">Sélectionner le sexe</option>
+                                <option value="0">Féminin</option>
+                                <option value="1">Masculin</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    {/* <tr>
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
                                 <input
                                     onChange={(val) => this.setState({ birth_place_pupil: val.target.value })}
@@ -189,7 +188,7 @@ dispatch({type:"SET_WORKERS", payload:response});
                             </td>
                         </tr> */}
 
-                        {/* <tr>
+                    {/* <tr>
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
                                 <input
                                     onChange={(val) => this.setState({ nationality: val.target.value })}
@@ -204,17 +203,17 @@ dispatch({type:"SET_WORKERS", payload:response});
                                 
                             </td>
                         </tr> */}
-                    </tbody>
-                </table>
-                {first_name !== "" || second_name !== "" ?
+                </tbody>
+            </table>
+            {first_name !== "" || second_name !== "" ?
                 <div>
-                <span>{first_name !== "" || second_name !== "" ? "Nom d'utilisateur" : "" }</span><br/>
-<strong>{first_name.toLowerCase().trim()}{first_name !== "" || second_name !== "" ? "." : "" }{second_name.toLowerCase().trim()}</strong>
-<strong>{first_name !== "" || second_name !== "" ? "@yambi.class" : "" }</strong>
-<br/><br/><br/>
-                </div>:null}
+                    <span>{first_name !== "" || second_name !== "" ? "Nom d'utilisateur" : ""}</span><br />
+                    <strong style={{color:'rgb(0, 80, 180)'}}>{first_name.toLowerCase().trim()}{first_name !== "" || second_name !== "" ? "." : ""}{second_name.toLowerCase().trim()}</strong>
+                    <strong>{first_name !== "" || second_name !== "" ? "@yambi.class" : ""}</strong>
+                    <br /><br /><br />
+                </div> : null}
 
-                {/* <span className="title-background">II. DE L'ORIENTATION SCOLAIRE</span>
+            {/* <span className="title-background">II. DE L'ORIENTATION SCOLAIRE</span>
                 <table className="tables-new-pupil">
                     <tbody>
                         <tr>
@@ -350,29 +349,29 @@ dispatch({type:"SET_WORKERS", payload:response});
                     </tbody>
                 </table> */}
 
-                <span className="title-background">II. DE L'ORIENTATION PROFESSIONNELLE</span>
-                <table className="tables-new-pupil">
-                    <tbody>
-                        <tr>
-                            <td style={{ paddingRight: 0, textAlign: 'left', width: "50%" }}>
+            <span className="title-background">II. DE L'ORIENTATION PROFESSIONNELLE</span>
+            <table className="tables-new-pupil">
+                <tbody>
+                    <tr>
+                        <td style={{ paddingRight: 0, textAlign: 'left', width: "50%" }}>
                             <select
-                                    className="select-normall"
-                                    onChange={(val) => setPoste(val.target.value)}
-                                    value={poste}
-                                    style={{ width: '100%' }}>
-                                    <option value="">Sélectionner le poste</option>
-                                    <option value="1">Promoteur / Préfet / Recteur</option>
-                                    <option value="7">Directeur des Études</option>
-                                    <option value="2">Directeur de Discipline</option>
-                                    <option value="3">Directeur des Financies / Économe</option>
-                                    <option value="4">Secrétaire</option>
-                                    <option value="5">Enseignant</option>
-                                    <option value="6">Caissier/caissière</option>
-                                    <option value="0">Administrateur Logiciel</option>
-                                </select>
-                            </td>
-                            <td style={{ paddingLeft: 0, textAlign: 'right' }}>
-                                {/* {poste === 6 ?
+                                className="select-normall"
+                                onChange={(val) => setPoste(val.target.value)}
+                                value={poste}
+                                style={{ width: '100%' }}>
+                                <option value="">Sélectionner le poste</option>
+                                <option value="1">Promoteur / Préfet / Recteur</option>
+                                <option value="7">Directeur des Études</option>
+                                <option value="2">Directeur de Discipline</option>
+                                <option value="3">Directeur des Financies / Économe</option>
+                                <option value="4">Secrétaire</option>
+                                <option value="5">Enseignant</option>
+                                <option value="6">Caissier/caissière</option>
+                                <option value="0">Administrateur Logiciel</option>
+                            </select>
+                        </td>
+                        <td style={{ paddingLeft: 0, textAlign: 'right' }}>
+                            {/* {poste === 6 ?
                                     <select
                                     // select
                                     className="select-normall"
@@ -387,44 +386,44 @@ dispatch({type:"SET_WORKERS", payload:response});
                                     <option value="1">Seule la mère en vie</option>
                                     <option value="1">Les deux parents dècédés</option>
                                 </select>:null} */}
-                            </td>
-                        </tr>
-                        <tr>
-<td colSpan={2} style={{color:'gray'}}>Jours de congé. Ajouter-en si l'employé(e) en a. Si il en a deux, compléter les deux journées.</td>
-                        </tr>
-                        <tr>
-                            <td style={{ paddingRight: 0, textAlign: 'left' }}>
-                                <select
-                                    className="select-normall"
-                                    onChange={(val) => setFree_day_1(val.target.value)}
-                                    value={free_day_1}
-                                    style={{ width: '100%' }}>
-                                    <option value="">Journée pédagogique 1</option>
-                                    <option value="1">Lundi</option>
-                                    <option value="2">Mardi</option>
-                                    <option value="3">Mercredi</option>
-                                    <option value="4">Jeudi</option>
-                                    <option value="5">Vendredi</option>
-                                    <option value="6">Samedi</option>
-                                </select>
-                            </td>
-                            <td style={{ paddingLeft: 0, textAlign: 'right' }}>
-                                <select
-                                    className="select-normall"
-                                    onChange={(val) => setFree_day_2(val.target.value)}
-                                    value={free_day_2}
-                                    style={{ width: '100%', textAlign: 'left' }}>
-                                    <option value="">Journée pédagogique 2</option>
-                                    <option value="1">Lundi</option>
-                                    <option value="2">Mardi</option>
-                                    <option value="3">Mercredi</option>
-                                    <option value="4">Jeudi</option>
-                                    <option value="5">Vendredi</option>
-                                    <option value="6">Samedi</option>
-                                </select>
-                            </td>
-                        </tr>
-                        {/* <tr>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colSpan={2} style={{ color: 'gray' }}>Jours de congé. Ajouter-en si l'employé(e) en a. Si il en a deux, compléter les deux journées.</td>
+                    </tr>
+                    <tr>
+                        <td style={{ paddingRight: 0, textAlign: 'left' }}>
+                            <select
+                                className="select-normall"
+                                onChange={(val) => setFree_day_1(val.target.value)}
+                                value={free_day_1}
+                                style={{ width: '100%' }}>
+                                <option value="">Journée pédagogique 1</option>
+                                <option value="1">Lundi</option>
+                                <option value="2">Mardi</option>
+                                <option value="3">Mercredi</option>
+                                <option value="4">Jeudi</option>
+                                <option value="5">Vendredi</option>
+                                <option value="6">Samedi</option>
+                            </select>
+                        </td>
+                        <td style={{ paddingLeft: 0, textAlign: 'right' }}>
+                            <select
+                                className="select-normall"
+                                onChange={(val) => setFree_day_2(val.target.value)}
+                                value={free_day_2}
+                                style={{ width: '100%', textAlign: 'left' }}>
+                                <option value="">Journée pédagogique 2</option>
+                                <option value="1">Lundi</option>
+                                <option value="2">Mardi</option>
+                                <option value="3">Mercredi</option>
+                                <option value="4">Jeudi</option>
+                                <option value="5">Vendredi</option>
+                                <option value="6">Samedi</option>
+                            </select>
+                        </td>
+                    </tr>
+                    {/* <tr>
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
                                 <select
                                     className="select-normall"
@@ -442,7 +441,7 @@ dispatch({type:"SET_WORKERS", payload:response});
                             <td style={{ paddingLeft: 0, textAlign: 'right' }}>
                             </td>
                         </tr> */}
-                        {/* <tr>
+                    {/* <tr>
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
                                 <input
                                     onChange={(val) => this.setState({ father_work_pupil: val.target.value })}
@@ -464,10 +463,10 @@ dispatch({type:"SET_WORKERS", payload:response});
                                 />
                             </td>
                         </tr> */}
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
 
-                {/* <span className="title-background">IV. DES CONTACTS ET ADRESSES</span>
+            {/* <span className="title-background">IV. DES CONTACTS ET ADRESSES</span>
                 <table className="tables-new-pupil">
                     <tbody>
                         <tr>
@@ -540,13 +539,13 @@ dispatch({type:"SET_WORKERS", payload:response});
                     </tbody>
                 </table> */}
 
-                {modal_view ?
-                    <div className="main-div-modal">
-                        {modalView(modal_title, modal_main_text)}
-                        <div className="sub-div-modal">
-                            <Button onClick={() => setModal_view(false)} variant="outlined" style={{ color: 'black', borderWidth: 1, borderColor: 'rgba(0, 0, 0, 0.3)' }}>Fermer</Button>
-                        </div>
-                    </div> : null}
-            </div>
-        )
+            {modal_view ?
+                <div className="main-div-modal">
+                    {modalView(modal_title, modal_main_text)}
+                    <div className="sub-div-modal">
+                        <Button onClick={() => setModal_view(false)} variant="outlined" style={{ color: 'black', borderWidth: 1, borderColor: 'rgba(0, 0, 0, 0.3)' }}>Fermer</Button>
+                    </div>
+                </div> : null}
+        </div>
+    )
 }

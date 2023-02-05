@@ -1,7 +1,7 @@
 import { Button, CircularProgress } from '@material-ui/core';
 import { NumberToLetter } from 'convertir-nombre-lettre';
 import React, { Component } from 'react'
-import { FaCheckCircle, FaEdit } from 'react-icons/fa'
+import { FaCheckCircle } from 'react-icons/fa'
 import { connect } from 'react-redux'
 import { http } from '../../global_vars';
 import modalView from '../../includes/modal';
@@ -60,7 +60,7 @@ class NewPaiements extends Component {
 
         if ((parseInt(date.getMonth() + 1).toString()).length === 1) {
             month = "0" + parseInt(date.getMonth() + 1);
-        } else {    
+        } else {
             month = date.getMonth() + 1;
         }
 

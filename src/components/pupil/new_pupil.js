@@ -139,7 +139,7 @@ class NewPupil extends React.Component {
         return (
             <div className="center-fixeddd" style={{ paddingRight: 20 }}>
 
-                <ButtonNormal text="Enregistrer l'élève" style={{float:'right', paddingTop:10, paddingBottom:10, paddingLeft:20, paddingRight:20, borderTopRightRadius:0, borderTopLeftRadius:0}} onPress={()=>this.register_new_pupil()} />
+                <ButtonNormal text="Enregistrer l'élève" style={{ float: 'right', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20, borderTopRightRadius: 0, borderTopLeftRadius: 0 }} onPress={() => this.register_new_pupil()} />
 
                 <span className="title-background-1">I. DE L'IDENTITÉ DE BASE DE L'ÉLÈVE</span>
                 <table className="tables-new-pupil">
@@ -170,10 +170,8 @@ class NewPupil extends React.Component {
                                 <input
                                     onChange={(val) => this.setState({ last_name_pupil: val.target.value })}
                                     placeholder="Prénom de l'élève"
-                                    // label="Prénom"
                                     className="input-normall"
                                     value={this.state.last_name_pupil}
-                                    // variant="outlined"
                                     style={{ width: '96%' }}
                                 />
                             </td>
@@ -191,7 +189,7 @@ class NewPupil extends React.Component {
 
                         <tr>
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
-                            <span style={{color:'transparent'}}>.</span>
+                                <span style={{ color: 'transparent' }}>.</span>
                                 <input
                                     onChange={(val) => this.setState({ birth_place_pupil: val.target.value })}
                                     placeholder="Lieu de naissance"
@@ -201,7 +199,7 @@ class NewPupil extends React.Component {
                                 />
                             </td>
                             <td style={{ paddingLeft: 0, textAlign: 'left' }}>
-                                Date de naissance<br/>
+                                Date de naissance<br />
                                 <input
                                     onChange={(val) => this.setState({ birth_date_pupil: val.target.value })}
                                     className="input-normall"
@@ -257,7 +255,7 @@ class NewPupil extends React.Component {
                                 </select>
                             </td>
                             <td style={{ paddingLeft: 0, textAlign: 'right' }}>
-                            <select
+                                <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ class_school_pupil: val.target.value })}
                                     placeholder="Classe"
@@ -272,7 +270,7 @@ class NewPupil extends React.Component {
                         </tr>
                         <tr>
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
-                            <select
+                                <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ class_order_pupil: val.target.value })}
                                     value={this.state.class_order_pupil}
@@ -284,7 +282,7 @@ class NewPupil extends React.Component {
                                 </select>
                             </td>
                             <td style={{ paddingLeft: 0, textAlign: 'right' }}>
-                            <select
+                                <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ class_section_pupil: val.target.value })}
                                     value={this.state.class_section_pupil}
@@ -298,7 +296,7 @@ class NewPupil extends React.Component {
                         </tr>
                         <tr>
                             <td style={{ paddingRight: 0, textAlign: 'left', width: '50%' }}>
-                            <select
+                                <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ class_option_pupil: val.target.value })}
                                     value={this.state.class_option_pupil}
@@ -310,33 +308,24 @@ class NewPupil extends React.Component {
                                 </select>
                             </td>
                             <td style={{ paddingLeft: 0, textAlign: 'right' }}>
-                            <select
+                                <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ statut_scolaire: val.target.value })}
-                                    // label="Statut scolaire"
-                                    // variant="outlined"
                                     value={this.state.statut_scolaire}
                                     style={{ width: '100%' }}>
-                                    <option selected value="0">Normal</option>
+                                    <option value="0">Statut scolaire</option>
+                                    <option value="0">Normal</option>
                                     <option value="1">Nouveau (N)</option>
                                     <option value="1">Reddoublant (D)</option>
                                     <option value="1">Nouveau reddoublant (ND)</option>
                                 </select>
                             </td>
                         </tr>
-                        {/* <tr>
-                            <td style={{ paddingRight: 0, textAlign: 'left' }}>
-                                
-                            </td>
-                            <td style={{ paddingLeft: 0, textAlign: 'right' }}>
-                            </td>
-                        </tr> */}
                         <tr>
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
                                 <input
                                     onChange={(val) => this.setState({ id_number: val.target.value })}
                                     placeholder="Numéro d'identification"
-                                    // variant="outlined"
                                     className="input-normall"
                                     value={this.state.id_number}
                                     style={{ width: '96%' }}
@@ -346,7 +335,6 @@ class NewPupil extends React.Component {
                                 <input
                                     onChange={(val) => this.setState({ perm_number: val.target.value })}
                                     placeholder="Numéro permanent"
-                                    // variant="outlined"
                                     className="input-normall"
                                     value={this.state.perm_number}
                                     style={{ width: '96%' }}
@@ -364,7 +352,6 @@ class NewPupil extends React.Component {
                                 <input
                                     onChange={(val) => this.setState({ father_name: val.target.value })}
                                     placeholder="Nom du père"
-                                    // variant="outlined"
                                     className="input-normall"
                                     value={this.state.father_name}
                                     style={{ width: '96%' }}
@@ -374,7 +361,6 @@ class NewPupil extends React.Component {
                                 <input
                                     onChange={(val) => this.setState({ mother_name: val.target.value })}
                                     placeholder="Noms de la mère"
-                                    // variant="outlined"
                                     className="input-normall"
                                     value={this.state.mother_name}
                                     style={{ width: '96%' }}
@@ -384,11 +370,8 @@ class NewPupil extends React.Component {
                         <tr>
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
                                 <select
-                                    // select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ parents_alive: val.target.value })}
-                                    // label="Vie des parents"
-                                    // variant="outlined"
                                     value={this.state.parents_alive}
                                     style={{ width: '100%' }}>
                                     <option value="">Vie des parents</option>
@@ -402,8 +385,6 @@ class NewPupil extends React.Component {
                                 <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ parents_state: val.target.value })}
-                                    // label="statut des parents"
-                                    // variant="outlined"
                                     value={this.state.parents_state}
                                     style={{ width: '100%', textAlign: 'left' }}>
                                     <option value="">Statut des parents</option>
@@ -418,9 +399,7 @@ class NewPupil extends React.Component {
                                 <select
                                     className="select-normall"
                                     onChange={(val) => this.setState({ lives_with: val.target.value })}
-                                    // label="Vis avec"
                                     value={this.state.lives_with}
-                                    // variant="outlined"
                                     style={{ width: '100%' }}>
                                     <option value="">Vis avec</option>
                                     <option value="0">Les deux parents</option>
@@ -436,7 +415,6 @@ class NewPupil extends React.Component {
                                 <input
                                     onChange={(val) => this.setState({ father_work_pupil: val.target.value })}
                                     placeholder="Travail du père"
-                                    // variant="outlined"
                                     className="input-normall"
                                     value={this.state.father_work_pupil}
                                     style={{ width: '96%' }}
@@ -447,7 +425,6 @@ class NewPupil extends React.Component {
                                     onChange={(val) => this.setState({ mother_work_pupil: val.target.value })}
                                     placeholder="Travail de la mère"
                                     value={this.state.mother_work_pupil}
-                                    // variant="outlined"
                                     className="input-normall"
                                     style={{ width: '96%' }}
                                 />
@@ -464,7 +441,6 @@ class NewPupil extends React.Component {
                                 <input
                                     onChange={(val) => this.setState({ email_address_pupil: val.target.value })}
                                     placeholder="Adresse électronique"
-                                    // variant="outlined"
                                     className="input-normall"
                                     value={this.state.email_address_pupil}
                                     style={{ width: '96%' }}
@@ -474,7 +450,6 @@ class NewPupil extends React.Component {
                                 <input
                                     onChange={(val) => this.setState({ physical_address_pupil: val.target.value })}
                                     placeholder="Adresse physique"
-                                    // variant="outlined"
                                     className="input-normall"
                                     value={this.state.physical_address_pupil}
                                     style={{ width: '96%' }}
@@ -486,8 +461,7 @@ class NewPupil extends React.Component {
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
                                 <input
                                     onChange={(val) => this.setState({ contact_1_pupil: val.target.value })}
-                                    placeholder="Contact phone 1"
-                                    // variant="outlined"
+                                    placeholder="Ajouter un numéro de téléphone"
                                     className="input-normall"
                                     value={this.state.contact_1_pupil}
                                     style={{ width: '96%' }}
@@ -496,8 +470,7 @@ class NewPupil extends React.Component {
                             <td style={{ paddingLeft: 0, textAlign: 'right' }}>
                                 <input
                                     onChange={(val) => this.setState({ contact_2_pupil: val.target.value })}
-                                    placeholder="Contact phone 2"
-                                    // variant="outlined"
+                                    placeholder="Ajouter un numéro de téléphone"
                                     className="input-normall"
                                     value={this.state.contact_2_pupil}
                                     style={{ width: '96%' }}
@@ -508,9 +481,8 @@ class NewPupil extends React.Component {
                             <td style={{ paddingRight: 0, textAlign: 'left' }}>
                                 <input
                                     onChange={(val) => this.setState({ contact_3_pupil: val.target.value })}
-                                    placeholder="Contact phone 3"
+                                    placeholder="Ajouter un numéro de téléphone"
                                     value={this.state.contact_3_pupil}
-                                    // variant="outlined"
                                     className="input-normall"
                                     style={{ width: '96%' }}
                                 />
@@ -518,9 +490,8 @@ class NewPupil extends React.Component {
                             <td style={{ paddingLeft: 0, textAlign: 'right' }}>
                                 <input
                                     onChange={(val) => this.setState({ contact_4_pupil: val.target.value })}
-                                    placeholder="Contact phone 4"
+                                    placeholder="Ajouter un numéro de téléphone"
                                     value={this.state.contact_4_pupil}
-                                    // variant="outlined"
                                     className="input-normall"
                                     style={{ width: '96%' }}
                                 />

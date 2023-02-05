@@ -44,6 +44,7 @@ import FichePointsBrouillon from '../../components/classe/fiches_brouillon/fiche
 import FicheSynthesePointsBrouillon from '../../components/classe/fiches_brouillon/fiche_synthese_brouillon';
 import BulletinsBrouillon from '../../components/classe/fiches_brouillon/bulletins_brouillon';
 import BulletinsType2Brouillon from '../../components/classe/fiches_brouillon/bulletins_type2_brouillon';
+import ViewWorker from '../../components/workers/view_worker';
 
 class Home extends Component {
 
@@ -579,16 +580,16 @@ class Home extends Component {
                     // }).then(() => { });
 
                     // promise_classes.finally(() => {
-                        this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
+                    this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
 
-                        if (this.props.middle_func === 0 || this.props.middle_func === 4 || this.props.middle_func === 6 || this.props.middle_func === 11 || this.props.middle_func === 12) {
-                            this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
-                            this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
-                        }
+                    if (this.props.middle_func === 0 || this.props.middle_func === 4 || this.props.middle_func === 6 || this.props.middle_func === 11 || this.props.middle_func === 12) {
+                        this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
+                        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
+                    }
 
-                        if (this.props.middle_func === 0) {
-                            this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
-                        }
+                    if (this.props.middle_func === 0) {
+                        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
+                    }
                     // });
 
                 } else {
@@ -970,6 +971,7 @@ class Home extends Component {
                                             Garcons : {classe.pupils_count_male} |
                                             Filles : {classe.pupils_count_female}
                                         </span>
+                                        <div className="border-bottom-classes"></div>
                                     </div>
                                 )
                             })
@@ -987,11 +989,7 @@ class Home extends Component {
                                 </div>
                                 :
                                 <div>
-                                    {this.props.middle_func === 15 || this.props.middle_func === 16 ?
-                                        <div className="menu-right">
                                             <EmployeesList />
-                                        </div>
-                                        : null}
 
                                     {this.props.middle_func === 22 ?
                                         <div className="menu-right">
@@ -1085,6 +1083,12 @@ class Home extends Component {
                                                 </div>
                                                 : null}
 
+                                            {this.props.middle_func === 30 ?
+                                                <div id="view_worker">
+                                                    <ViewWorker />
+                                                </div>
+                                                : null}
+
                                             {this.props.middle_func === 5 ?
                                                 <div id="fiches">
                                                     {this.props.fiches_tab === "FI" ?
@@ -1155,7 +1159,6 @@ class Home extends Component {
 
                                             {this.props.middle_func === 7 ?
                                                 <div id="liste-bulletins">
-                                                    {/* {listeNomminative(this.state.classe, this.state.autres, this.state.pupils)} */}
                                                     <Bulletins />
                                                 </div>
                                                 : null}

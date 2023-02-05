@@ -290,7 +290,7 @@ class ViewPupil extends React.Component {
                                     <span
                                         onClick={() => this.props.dispatch({ type: "SET_EDIT_PUPIL", payload: !this.props.edit_pupil })}
                                         className="add-minus">
-                                        MODIFIER l'ÉLÈVE
+                                        MODIFIER L'ÉLÈVE
                                     </span>
                                 </span>
 
