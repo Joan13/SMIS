@@ -576,6 +576,19 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   height: 30px;
 }
 
+.select-borderr {
+  transition: 0.6s;
+  border: none;
+  outline: none;
+  /* margin-left: 20px; */
+  cursor: pointer;
+  font-size: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  height: 40px;
+  border-radius: 5px;
+  padding-left:10px;
+}
+
 .select-no-border-select {
   transition: 0.6s;
   border: none;
@@ -1429,8 +1442,8 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
 .input-montant {
   border: 1px solid rgba(0, 0, 0, 0.2);
-  width: 80%;
-  height: 30px;
+  width: 65%;
+  height: 35px;
   border-radius: 3px;
   padding-left: 10px;
   outline: none;

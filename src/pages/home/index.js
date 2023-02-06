@@ -542,7 +542,7 @@ class Home extends Component {
 
 
 
-        if (this.props.middle_func === 15 || this.props.middle_func === 16 || this.props.middle_func === 17 || this.props.middle_func === 0) {
+        if (this.props.middle_func === 15 || this.props.middle_func === 16 || this.props.middle_func === 17 || this.props.middle_func === 0 || this.props.middle_func === 30) {
             //     // this.setState({ middle_func: 1, allow_right_menu_pupils: false, allow_right_menu: true });
             this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
             // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });

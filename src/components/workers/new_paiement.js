@@ -1,25 +1,111 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {useState} from 'react';
 import { NumberToLetter } from 'convertir-nombre-lettre';
 import { FaCheckCircle } from "react-icons/fa";
 import { CircularProgress } from "@material-ui/core";
+import { http } from "../../global_vars";
 
 const NewPaiementWorker=()=>{
 
     const employee = useSelector(state=>state.employee);
-    const libelles = useSelector(state=>state.libelles);
-    const [libelle_paie, setLibelle_paie] = useState("");
+    const annee_scolaire = useSelector(state=>state.annee_scolaire);
+    const [month_paie, setMonth_paie] = useState("");
     const [montant_paie, setMontant_paie] = useState("");
     const [loading_middle, setLoading_middle] = useState(false);
     const [success, setSuccess] = useState("");
+    const url_server = useSelector(state=>state.url_server);
+    const user_data = useSelector(state=>state.user_data);
+    const dispatch = useDispatch();
 
+const months = [
+{month: "Janvier"},
+{month: "Février"},
+{month: "Mars"},
+{month: "Avril"},
+{month: "Mai"},
+{month: "Juin"},
+{month: "Juillet"},
+{month: "Août"},
+{month: "Septembre"},
+{month: "Octobre"},
+{month: "Novembre"},
+{month: "Décembre"},
+]
 
+const new_paiement=()=> {
+
+    let date = new Date();
+    let day = "";
+    let month = "";
+
+    if ((date.getDate().toString()).length === 1) {
+        day = "0" + date.getDate();
+    } else {
+        day = date.getDate();
+    }
+
+    if ((parseInt(date.getMonth() + 1).toString()).length === 1) {
+        month = "0" + parseInt(date.getMonth() + 1);
+    } else {
+        month = date.getMonth() + 1;
+    }
+
+    date = day + "/" + month + "/" + date.getFullYear();
+    console.log({
+        worker_id: employee.worker_id,
+        montant_paie: montant_paie,
+        month_paie: month_paie,
+        user_id: user_data.user_id,
+        school_year: employee.worker_year,
+        date_entry: date
+    })
+
+    if (montant_paie !== "" && month_paie !== "") {
+        setLoading_middle(true);
+
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/new_paiement_salaire.php";
+
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                worker_id: employee.worker_id,
+                montant_paie: montant_paie,
+                month_paie: month_paie,
+                user_id: user_data.user_id,
+                school_year: employee.worker_year,
+                date_entry: date
+            })
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                // this.setState({
+                //     montant_paie: "",
+                //     montant_text_paie: "",
+                //     libelle_paie: "",
+                //     total_montant: "",
+                //     loading_middle: false,
+                //     success: "Operation successful"
+                // })
+                setMontant_paie("");
+                setMonth_paie("");
+                setSuccess("Operation successful");
+                setLoading_middle(false);
+
+                dispatch({ type: "SET_SALAIRES_WORKER", payload: response.fiche_paie });
+            })
+            .catch((error) => {
+                console.log(error)
+                // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
+            });
+    } else {
+        // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à l'enregistrement du nouveau paiement. Tous les champs sont obligatoires, notamment le libellé et les champs des montants.", modal_view: true, loading_middle: false });
+    }
+}
     return(
         <div>
-            <table style={{ width: "100%" }}>
+            <table style={{ width: "100%", maginBottom:20 }}>
                                     <tbody>
-                                        {
-                                            employee.paiement_amount === null ?
+                                        {employee.paiement_amount === null ?
                                                 <div>
                                                     Cet employé n'a pas de salaire pré-enregistré.<br/>
                                                     Veuillez enregistrer son salaire avant de proceder.
@@ -29,14 +115,23 @@ const NewPaiementWorker=()=>{
                                                     <tr>
                                                         <td>
                                                             <select
-                                                                value={libelle_paie}
-                                                                onChange={(val) => setLibelle_paie(val.target.value)}
-                                                                style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white', marginBottom: 10, width: '80%' }} className="select-no-border-select">
-                                                                <option value="">Sélectionner le libellé</option>
-                                                                {libelles.map((libelle, index) => {
-                                                                    if (parseInt(libelle.gender_libelle) === 1) { return (<option key={index} value={libelle.libelle_id}>{libelle.description_libelle}</option>) }
-                                                                })}
+                                                                value={month_paie}
+                                                                onChange={(val) => setMonth_paie(val.target.value)}
+                                                                style={{ color: 'rgba(0, 80, 180)', 
+                                                                backgroundColor: 'white', 
+                                                                marginBottom: 10, 
+                                                                width: '66%' }} className="select-borderr">
+                                                                <option value="">Sélectionner le mois</option>
+                                                                {months.map((month, index) => (
+                                                                        <option key={index} value={index + 1}>{month.month}</option>
+                                                                ))}
                                                             </select>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                        Année scolaire : <span style={{ fontWeight: 'bold', color: 'rgb(0, 80, 180)' }}> {annee_scolaire.year_name} </span><br/><br/>
                                                         </td>
                                                     </tr>
 
@@ -45,10 +140,7 @@ const NewPaiementWorker=()=>{
                                                             Montant (en dollars US):<br />
                                                             <input
                                                                 value={montant_paie}
-                                                                onChange={(value) => {
-                                                                    setMontant_paie(value.target.value);
-                                                                    // if (parseInt(value.target.value) >= 0) this.setState({ montant_text_paie: NumberToLetter(value.target.value) })
-                                                                }}
+                                                                onChange={(value) => { setMontant_paie(value.target.value); }}
                                                                 placeholder="Ex: 130"
                                                                 maxLength={14}
                                                                 className="input-montant"
@@ -84,8 +176,8 @@ const NewPaiementWorker=()=>{
                                                                 <><CircularProgress style={{ color: 'rgb(0, 80, 180)', marginLeft: '35%' }} /><br /></>
                                                                 :
                                                                 <><button
-                                                                    // onClick={() => this.new_paiement()}  
-                                                                    className="button-primary" style={{ width: '83%' }}>Valider le paiement</button></>
+                                                                    onClick={() => new_paiement()}  
+                                                                    className="button-primary" style={{ width: '66%' }}>Valider le paiement</button></>
                                                             }
                                                         </td>
                                                     </tr>

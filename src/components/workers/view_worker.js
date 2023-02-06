@@ -150,7 +150,7 @@ const ViewWorker = () => {
             </div>
 
             <div className="div-div" style={{ paddingBottom: 0 }}>
-                            <h3>Paiements de l'élève</h3>
+                            <h3>Salaire</h3>
                             <span  onClick={() => {
                                setOptions_tab(0);
 }} 

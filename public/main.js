@@ -1,7 +1,8 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
+// const { autoUpdater } = require("electron-updater");
 const path = require('path');
 const isDev = require('electron-is-dev');
 require('@electron/remote/main').initialize();

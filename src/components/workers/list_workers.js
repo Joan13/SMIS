@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { http } from '../../global_vars';
 
 export default function EmployeesList() {
 
@@ -12,8 +13,31 @@ export default function EmployeesList() {
     const caisse = employees.filter(employee => employee.poste === "6");
     const employee_data = useSelector(state => state.employee);
     const middle_func = useSelector(state=>state.middle_func);
-
+    const url_server = useSelector(state=>state.url_server);
     const dispatch = useDispatch();
+
+    const find_worker = (worker) => {
+        // dispatch({ type: "SET_SEARCHING_PUPIL", payload: true });
+        // dispatch({ type: "SET_NUMBER_PUPILS_SHOW", payload: false });
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/fiche_paie.php";
+
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                worker: worker,
+            })
+        })
+            .then((response) => response.json())
+            .then((response) => {
+
+                // dispatch({ type: "SET_SEARCHING_PUPIL", payload: false });
+                // dispatch({ type: "SET_PUPILS_SCHOOL", payload: response.pupils });
+                // dispatch({ type: "SET_PUPILS_COUNT", payload: response.pupils_count });
+                dispatch({ type: "SET_SALAIRES_WORKER", payload: response.fiche_paie });
+
+            })
+            .catch((error) => { });
+    };
 
     if (middle_func === 15 || middle_func === 16 || middle_func === 30) {
     return (
@@ -30,7 +54,8 @@ export default function EmployeesList() {
                                 onClick={() => {
                                     dispatch({ type: "SET_EMPLOYEE", payload: employee });
                                     dispatch({ type: "SET_MIDDLE_FUNC", payload: 30 });
-                                    dispatch({type: "SET_TITLE_MAIN", payload:employee.first_name.toUpperCase() + " " + employee.second_name.toUpperCase() +" "+employee.last_name })
+                                    dispatch({type: "SET_TITLE_MAIN", payload:employee.first_name.toUpperCase() + " " + employee.second_name.toUpperCase() +" "+employee.last_name });
+                                    find_worker(employee.worker_id);
                                     // console.log(employee_data);
                                 }}
                                 key={index} className="pupils-list-home">
