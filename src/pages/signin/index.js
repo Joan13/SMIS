@@ -13,6 +13,7 @@ const Signin = () => {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const user_data = useSelector(state=>state.user_data);
     const [url_server, setUrl_erver] = useState(url_online);
     const [connection_type, setConnection_type] = useState(0);
     const [is_loading, setIs_loading] = useState(false);
@@ -95,7 +96,7 @@ const Signin = () => {
     };
 
     useEffect(() => {
-        console.log(data_session)
+        console.log(user_data)
     }, []);
 
     if ((redirectToReferrer && sessionStorage.getItem('assemble_user_data'))) {

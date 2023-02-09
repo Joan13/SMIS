@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { find_date, home_redirect, http } from "../../global_vars";
 import { CircularProgress } from "@material-ui/core";
 import NewPaiementWorker from "./new_paiement";
+import FichePaie from "./fiche _paie";
 
 const ViewWorker = () => {
 
@@ -14,6 +15,23 @@ const ViewWorker = () => {
     const loading_footer = useSelector(state=>state.loadding_footer);
     const [options_tab, setOptions_tab] = useState(1);
     const dispatch = useDispatch();
+
+    const find_worker_paie = (worker) => {
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/find_worker.php";
+
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                worker_id: worker,
+            })
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                dispatch({ type: "SET_FICHE_PAIE", payload: response.fiche_paie });
+                dispatch({ type: "SET_EMPLOYEE", payload: response.worker });
+            })
+            .catch((error) => { });
+    };
 
     const printContent = (divName) => {
 
@@ -160,6 +178,7 @@ const ViewWorker = () => {
                                 Effectuer un paiement</span>
 
                             <span  onClick={() => {
+                                find_worker_paie(employee.worker_id)
                                 setOptions_tab(1);
 }} 
                             style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${options_tab === 1 ? "select-no-border-bold" : ""}`}>
@@ -188,7 +207,7 @@ const ViewWorker = () => {
                                 : null}
 
                             {options_tab === 1 ?
-                                <div>Fiche paie</div>
+                                <FichePaie />
                                 : null}
 
 {options_tab === 2 ?

@@ -5,19 +5,19 @@ export const http = "http://";
 export const url_online = "";
 export const online = false;
 
-export function printContent(divName) {
-    let printContents = document.getElementById(divName).innerHTML;
-    let originalContents = document.body.innerHTML;
-    document.body.innerHTML = printContents;
-    window.print();
+// export function printContent(divName) {
+//     let printContents = document.getElementById(divName).innerHTML;
+//     let originalContents = document.body.innerHTML;
+//     document.body.innerHTML = printContents;
+//     window.print();
 
-    document.body.innerHTML = originalContents;
-    // window.location.reload();
-    window.location.href = http + this.state.url_server + home_redirect;
-    window.location.replace(http + this.state.url_server + home_redirect);
-}
+//     document.body.innerHTML = originalContents;
+//     // window.location.reload();
+//     window.location.href = http + this.state.url_server + home_redirect;
+//     window.location.replace(http + this.state.url_server + home_redirect);
+// }
 
-export function find_date(date) {
+export const find_date = (date) => {
     let year = date.substr(6, 4);
     let month = date.substr(3, 2);
     let day = date.substr(0, 2);
@@ -56,7 +56,7 @@ export function find_date(date) {
     return fullDate;
 }
 
-export function find_date2(date) {
+export const find_date2 = (date) => {
     let year = date.substr(0, 4);
     let month = date.substr(5, 2);
     let day = date.substr(8, 2);
@@ -95,7 +95,7 @@ export function find_date2(date) {
     return fullDate;
 }
 
-export function format_date(date) {
+export const format_date = (date) => {
     let year = date.substr(0, 4);
     let month = date.substr(5, 2);
     let day = date.substr(8, 2);
@@ -103,4 +103,32 @@ export function format_date(date) {
     let date_return = day + "/" + month + "/" + year;
 
     return date_return;
+}
+
+export const generateMonth = (month) => {
+    if (month === 1) {
+        return "Janvier";
+    } else if (month === 2) {
+        return "Février";
+    } else if (month === 3) {
+        return "Mars";
+    } else if (month === 4) {
+        return "Avril";
+    } else if (month === 5) {
+        return "Mai";
+    } else if (month === 6) {
+        return "Juin";
+    } else if (month === 7) {
+        return "Juillet";
+    } else if (month === 8) {
+        return "Août";
+    } else if (month === 9) {
+        return "Septembre";
+    } else if (month === 10) {
+        return "Octobre";
+    } else if (month === 11) {
+        return "November";
+    } else {
+        return "Décembre"
+    }
 }

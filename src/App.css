@@ -173,7 +173,7 @@ h5 {
   position: fixed;
   left: 25%;
   top: 0px;
-  height: 100px;
+  height: 70px;
 }
 
 .main-middle-page {
@@ -243,6 +243,17 @@ h5 {
   border-radius: 50%;
   padding-left: 12px;
   padding-right: 12px;
+}
+
+.topbar-title {
+  display:flex;
+font-size: 30px;
+font-weight: bold;  
+align-items: center;
+margin-top: 10px;
+/* background-color: #680006; */
+display: inline-block;
+
 }
 
 .sub-menu-item {
@@ -553,7 +564,8 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   margin-right: 20px;
   /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding-bottom: 10px;
+  padding-bottom: 7px;
+  /* background-color: #680006; */
 }
 
 .select-no-border {
@@ -861,6 +873,7 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: inline-block;
   float: right;
   font-size: 14px;
+  /* background-color: #680006; */
 }
 
 .menu-right {
@@ -878,7 +891,7 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 .center-fixed {
   position: fixed;
   /* background-color: aqua; */
-  top: 105px;
+  top: 80px;
   bottom: 15px;
   width: 54.3%;
   left: 25%;
@@ -1584,4 +1597,19 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     text-align: left;
     border:none;
     } */
+
+    .fiche-paie th {
+      text-align: left;
+      padding-top:5px;
+      padding-bottom:5px;
+      padding-left: 10px;
+      background-color: rgba(0, 80, 180, 0.2);
+    }
+
+    .fiche-paie td {
+      text-align: left;
+      padding-top:5px;
+      padding-bottom:5px;
+      padding-left: 10px;
+    }
 

@@ -783,10 +783,10 @@ class Home extends Component {
             <div className="main-container">
                 <div>
                     <div className="top-bar-app">
-                        <h1>
+                        <span className='topbar-title'>
                             <FcOpenedFolder color="orange" size={22} style={{ marginRight: 10, marginLeft: 20 }} />
-                            {this.props.school_name_abb}<span style={{ color: 'gray', fontSize: 17 }}> / Dossiers / {this.props.annee_scolaire.year_name} </span>
-                        </h1>
+                            {this.props.school_name_abb}<span style={{ color: 'gray', fontSize: 17, marginLeft:20 }}> / Dossiers / {this.props.annee_scolaire.year_name} </span>
+                        </span>
 
                         <div className="float-menu-topbar">
                             {this.props.loading_footer ?
@@ -848,7 +848,6 @@ class Home extends Component {
                                 onClick={() => this.state.logout_open ? this.setState({ logout_open: false }) : this.setState({ logout_open: true })}
                                 className="user-home">
                                 <FiUser
-                                    // color="rgb(0, 80, 180)"
                                     color="black"
                                     size={18} />
                             </span>

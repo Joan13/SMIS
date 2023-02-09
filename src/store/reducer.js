@@ -82,6 +82,7 @@ const initialState = {
     frais_divers_day: [],
     paiements_day_deleted: [],
     frais_divers_day_deleted: [],
+    fiche_paie: [],
     day: "",
 }
 
@@ -90,6 +91,8 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_MODAL_PAIEMENT_CATEGORIES":
             return { ...state, modal_paiement_categories: action.payload }
+            case "SET_FICHE_PAIE":
+            return { ...state, fiche_paie: action.payload }
             case "SET_EMPLOYEE":
             return { ...state, employee: action.payload }
         case "SET_DATA_SESSION":
