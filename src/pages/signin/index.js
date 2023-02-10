@@ -38,7 +38,7 @@ const Signin = () => {
             setEmpty_error(false);
             setIncorrect(false);
             setIs_loading(true);
-            setMessage_user("Identification d'utilisateur en cours...");
+            setMessage_user("Identification de l'utilisateur en cours...");
 
             fetch(BaseURL, {
                 method: 'POST',
@@ -62,12 +62,12 @@ const Signin = () => {
                         dispatch({ type: "SET_URL_SERVER", payload: url_server });
 
                         setTimeout(() => {
-                            setMessage_user("Récupération et compression des données d'utilisateur...");
+                            setMessage_user("Récupération et compression des données de l'utilisateur...");
                         }, 1000);
 
                         setTimeout(() => {
                             setMessage_user("Initialisation de session...");
-                            setMessage1("Compression des données d'utilisateur...");
+                            setMessage1("Compression des données de l'utilisateur...");
                         }, 3000);
 
                         setTimeout(() => {
@@ -78,7 +78,7 @@ const Signin = () => {
                         setEmpty_error(false);
                         setIncorrect(true);
                         setIs_loading(false);
-                        setMessage_user("Echec lors de l'identification d'utilisateur...");
+                        setMessage_user("Echec lors de l'identification de l'utilisateur...");
                     }
                 })
                 .catch((error) => {
@@ -143,7 +143,13 @@ const Signin = () => {
 
                             <input
                                 placeholder="Mot de passe"
-                                style={{ width: '77%', marginLeft: 10 }}
+                                style={{ 
+                                    width: '77%', 
+                                marginLeft: 10,
+                                fontSize: !see_pass && password !== "" ? 35 : 13,
+                                fontWeight: !see_pass && password !== "" ? 'bold' : '455',
+                                height: !see_pass && password !== "" ? 25 : 25
+                             }}
                                 className="input"
                                 type={see_pass ? "text" : "password"}
                                 value={password}

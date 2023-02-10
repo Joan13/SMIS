@@ -21,7 +21,7 @@ html {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
+
 }
 
 code {
@@ -53,13 +53,14 @@ input::-webkit-inner-spin-button {
 }
 
 .input-div-border-icon {
+  display: flex;
+  align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  padding-left: 10px;
-  padding-top: 10px;
-  padding-bottom: 12px;
+  padding-left: 15px;
   border-radius: 5px;
   margin-top: 10px;
   margin-bottom: 10px;
+  height: 50px;
 }
 
 .red {
@@ -239,20 +240,20 @@ h5 {
   background-color: rgba(0, 0, 0, 0.070);
   /* margin-top: 5px; */
   padding-top: 10px;
-  padding-bottom:10px;
+  padding-bottom: 10px;
   border-radius: 50%;
   padding-left: 12px;
   padding-right: 12px;
 }
 
 .topbar-title {
-  display:flex;
-font-size: 30px;
-font-weight: bold;  
-align-items: center;
-margin-top: 10px;
-/* background-color: #680006; */
-display: inline-block;
+  display: flex;
+  font-size: 30px;
+  font-weight: bold;
+  align-items: center;
+  margin-top: 10px;
+  /* background-color: #680006; */
+  display: inline-block;
 
 }
 
@@ -542,9 +543,9 @@ display: inline-block;
 }
 
 .border-bottom-classes {
-  display:'inline';
+  display: 'inline';
   padding-top: 15px;
-border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .classes-div:hover {
@@ -598,7 +599,7 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.2);
   height: 40px;
   border-radius: 5px;
-  padding-left:10px;
+  padding-left: 10px;
 }
 
 .select-no-border-select {
@@ -907,7 +908,7 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   top: 103px;
   bottom: 0;
   left: 25%;
-  right:5%;
+  right: 5%;
   /* border-right: 1px solid rgba(0, 0, 0, 0.2); */
   overflow-y: auto;
   overflow-x: none;
@@ -1124,11 +1125,11 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .div-search input {
-  width:100%;
+  width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 5px;
-  border:none;
+  border: none;
   outline: none;
 }
 
@@ -1559,9 +1560,9 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .new_course_modal {
-  margin:auto;
-  margin-top:200px;
-  width:550px;
+  margin: auto;
+  margin-top: 200px;
+  width: 550px;
   padding-bottom: 60px;
   border-radius: 5px;
   text-align: center;
@@ -1569,47 +1570,90 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .new_course_modal_transparent {
-  position:fixed;
-  top:0px;
-  bottom:0px;
-  left:0px;
-  right:0px;
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
   background-color: rgba(0, 0, 0, 0.3);
 }
 
 .fiche-employee-pupil td {
-  padding-top:3px;
+  padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 0px;
   text-align: left;
   /* background-color: aqua; */
-  border:none;
-  }
+  border: none;
+}
 
-  /* .fiche-employee-pupil tr {
+/* .fiche-employee-pupil tr {
     border:none;
     padding-left: 0px;
   } */
-  
-  /* .fiche-employee-pupil {
+
+/* .fiche-employee-pupil {
     margin-left: 0px;
     background-color: #0a5f54;
     text-align: left;
     border:none;
     } */
 
-    .fiche-paie th {
-      text-align: left;
-      padding-top:5px;
-      padding-bottom:5px;
-      padding-left: 10px;
-      background-color: rgba(0, 80, 180, 0.2);
-    }
+.fiche-paie th {
+  text-align: left;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  background-color: rgba(0, 80, 180, 0.2);
+}
 
-    .fiche-paie td {
-      text-align: left;
-      padding-top:5px;
-      padding-bottom:5px;
-      padding-left: 10px;
-    }
+.fiche-paie td {
+  text-align: left;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+}
 
+.table-employees-full th {
+  text-align: left;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  background-color: rgba(0, 80, 180, 0.2);
+}
+
+.table-employees-full td {
+  text-align: left;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.button-outline {
+  transition: 0.6s;
+  background-color: white;
+  border: 1px solid rgba(0, 80, 180, 0.5);
+  padding: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-outline:hover {
+  transition: 0.6s;
+  color: white;
+  background-color: rgb(0, 80, 180);
+  cursor: pointer;
+}
+
+.add-button {
+  display:inline-block;
+  background-color: rgb(0,80,180);
+  cursor: pointer;
+  border-radius: 50%;
+  padding:5px;
+  padding-bottom:3px;
+  margin-left: 10px;
+}

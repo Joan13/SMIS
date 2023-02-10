@@ -64,9 +64,9 @@ const FichesPointsCourses = () => {
             .then((response) => {
 
                 let new_classe = classe;
-                classe.data = response;
+                new_classe.data = response;
                     dispatch({ type: "SET_CLASSE", payload: new_classe });
-                    console.log(classe);
+                    console.log(new_classe);
 
             })
             .catch((error) => {

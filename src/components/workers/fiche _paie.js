@@ -10,7 +10,7 @@ const FichePaie = () => {
     const autres = useSelector(state => state.autres);
 
     useEffect(() => {
-        console.log(fiche_paie);
+        // console.log(fiche_paie);
     }, []);
 
     return (
@@ -28,6 +28,7 @@ const FichePaie = () => {
                     </div>
                 </div>
                 <table style={{ width: '100%', marginTop: 20 }} className="fiche-paie">
+                    <thead>
                     <tr>
                         <th style={{ width: 30 }}>N0</th>
                         <th>Date</th>
@@ -35,14 +36,17 @@ const FichePaie = () => {
                         <th>Mois</th>
                         <th>Annee scolaire</th>
                     </tr>
+                    </thead>
                     {fiche_paie.map((fiche, index) => (
-                        <tr key={index} style={{ backgroundColor: index % 2 === 0 ? "rgba(0,0,0,0.015)" : "rgba(0,0,0,0.050)" }}>
+                        <tbody key={index}>
+                            <tr style={{ backgroundColor: index % 2 === 0 ? "rgba(0,0,0,0.015)" : "rgba(0,0,0,0.050)" }}>
                             <td>{index + 1}</td>
                             <td>{find_date(fiche.date_entry)}</td>
                             <td>{fiche.montant_paye} USD</td>
                             <td>{generateMonth(parseInt(fiche.month_paye))}</td>
                             <td>{annees.filter(annee => annee.year_id == fiche.school_year)[0].year_name}</td>
                         </tr>
+                        </tbody>
                     ))}
                 </table>
             </div>

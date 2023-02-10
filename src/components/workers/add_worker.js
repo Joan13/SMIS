@@ -359,7 +359,7 @@ export default function AddWorker() {
                                 onChange={(val) => setPoste(val.target.value)}
                                 value={poste}
                                 style={{ width: '100%' }}>
-                                <option value="">Sélectionner le poste</option>
+                                <option value="">Sélectionner la fonction</option>
                                 <option value="1">Promoteur / Préfet / Recteur</option>
                                 <option value="7">Directeur des Études</option>
                                 <option value="2">Directeur de Discipline</option>
