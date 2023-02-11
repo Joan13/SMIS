@@ -1657,3 +1657,13 @@ h5 {
   padding-bottom:3px;
   margin-left: 10px;
 }
+
+.red-input {
+  color: red;
+  border:1px solid red;
+  background-color: hsl(358, 100%, 94%);
+}
+
+.input-red {
+  border:1px solid white;
+}

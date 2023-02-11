@@ -404,16 +404,20 @@ class Courses extends Component {
                         <table className="full-table-liste-markss" style={{
                             marginTop:0
                         }}>
-                            <tr>
+                            <thead>
+                                <tr>
+                                
                                 <th style={{ width: 30, paddingLeft: 10, paddingRight: 10 }}>No</th>
                                 <th style={{ textAlign: 'left', paddingLeft: 10 }}>Intitulé du cours</th>
                                 <th style={{ width: 100 }}>Maxima</th>
                                 <th style={{ width: 100 }}>Ex. ?</th>
                                 {this.state.toggle_action ?
                                     <th>Option</th> : null}
+                                
                             </tr>
+                            </thead>
                             {this.props.classe.data.courses.map((course, index) => (
-                                <>
+                                <tbody key={index}>
                                     <tr key={index + 1}>
                                         <td style={{ paddingLeft: 10, paddingRight: 10 }}>
                                             {index + 1}
@@ -454,7 +458,7 @@ class Courses extends Component {
                                                     className="menu-float-rightt">Supprimer</span>
                                             </td> : null}
                                     </tr>
-                                </>
+                                </tbody>
                             ))}
                         </table>
 

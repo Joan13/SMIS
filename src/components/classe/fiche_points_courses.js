@@ -12,6 +12,8 @@ const FichesPointsCourses = () => {
     // const autres = useSelector(state => state.autres);
     const loading_footer = useSelector(state => state.loading_footer);
     const url_server = useSelector(state => state.url_server);
+    const [marks_edit, setMarks_edit] = useState([]);
+    const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
 
     // intervalID = 0;
@@ -62,17 +64,28 @@ const FichesPointsCourses = () => {
         })
             .then((response) => response.json())
             .then((response) => {
-
-                let new_classe = classe;
+let new_classe = classe;
+                const promise = new Promise((resolve, reject)=>{
+        
                 new_classe.data = response;
-                    dispatch({ type: "SET_CLASSE", payload: new_classe });
-                    console.log(new_classe);
+                resolve();
+                })
+
+                promise.finally(()=>{
+                    set_classe(new_classe);
+                })
+                    
+                    // console.log(classe.data);
 
             })
             .catch((error) => {
                 console.log(error);
                 // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
             });
+    }
+
+    const set_classe=(classe)=>{
+        dispatch({ type: "SET_CLASSE", payload: classe});
     }
 
     // open_class() {
@@ -117,7 +130,8 @@ const FichesPointsCourses = () => {
     //         });
     // }
 
-    const edit_marks = (pupil_id, course_id, period, marks) => {
+    // const edit_marks = (pupil_id, course_id, period, marks) => {
+        const edit_marks = (marks) => {
 
         // for (let i in classe.data.pupils_marks) {
         //     if (classe.data.pupils_marks[i].pupil == pupil_id && classe.data.pupils_marks[i].course == course_id && classe.data.pupils_marks[i].school_period == period) {
@@ -134,12 +148,13 @@ const FichesPointsCourses = () => {
             {
                 method: 'POST',
                 body: JSON.stringify({
-                    pupil_id: pupil_id,
-                    course_id: course_id,
-                    periode: period,
-                    school_year: classe.school_year,
-                    main_marks: marks,
-                    total_marks: findCourse(course_id).total_marks,
+                    // pupil_id: pupil_id,
+                    // course_id: course_id,
+                    // periode: period,
+                    // school_year: classe.school_year,
+                    // main_marks: marks,
+                    // total_marks: findCourse(course_id).total_marks,
+                    marks:marks
                 })
             })
             .then((response) => response.json())
@@ -161,7 +176,10 @@ const FichesPointsCourses = () => {
                     // dispatch({type: "SET_EDIT_PUPIL_MARKS", payload: new_classe_marks});
                     // alert("ok")
                     // }
-                    refresh_class();
+                    // refresh_class();
+                    setErrors([]);
+                    setMarks_edit([]);
+
                 }
 
                 // console.log(classe);
@@ -244,14 +262,13 @@ const FichesPointsCourses = () => {
     }
 
     const findCourse = (course_id) => {
-
         let course = [];
         for (let i in classe.data.courses) {
             if (parseInt(classe.data.courses[i].course_id) === parseInt(course_id)) {
                 course = classe.data.courses[i];
             }
         }
-
+        // const course = classe.data.courses.filter(course=>parseInt(course.course_id) === parseInt(course_id));
         return course;
     }
 
@@ -283,12 +300,38 @@ const FichesPointsCourses = () => {
     //     // }
     // }
 
+    const handle_change=(pupil, course_id, periode,marks)=> {
+        let markks = {};
+        let global_marks = [];
+        global_marks = marks_edit;
+        markks.id = pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + course_id + periode;
+        markks.pupil_id = pupil.pupil.pupil_id;
+        markks.course_id = course_id;
+        markks.period = 1;
+        markks.school_year = pupil.pupil.school_year;
+        markks.total_marks = findCourse(course_id).total_marks;
+        markks.marks = marks;
+
+        const main_marks = global_marks.filter(marks => marks.id === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + course_id + periode);
+        if(main_marks.length !== 0) {
+            main_marks[0].marks = marks;
+            setMarks_edit(global_marks);
+        } else {
+            global_marks = [...global_marks, markks];
+            setMarks_edit(global_marks);
+        }
+
+        if(parseInt(marks) > findCourse(course_id).total_marks) {
+            setErrors([...errors, pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + course_id + periode]);
+        } else {
+            setErrors(errors.filter((element) => !(pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + course_id + periode).includes(element)));
+        }
+    }
+
     useEffect(() => {
         if (classe.courses[0] !== undefined) {
             setCourse_id(classe.courses[0].course_id);
         }
-
-        // console.log(classe.pupils[0])
     }, [classe.courses]);
 
     return (
@@ -396,17 +439,17 @@ const FichesPointsCourses = () => {
                                                     <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
                                                     {periode === "P1" ?
                                                         <td style={{ width: 50, textAlign: 'center' }}>
-                                                            <input className="input-marks"
+                                                            <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + course_id + "1") === undefined ? "input-red" : "red-input"}`}
                                                                 type="number"
-                                                                value={render_period_marks(pupil.marks, course_id, 1)}
-                                                                onChange={(text) => edit_marks(pupil.pupil.pupil_id, course_id, 1, text.target.value)}
+                                                                placeholder={render_period_marks(pupil.marks, course_id, 1)}
+                                                                onChange={(text) =>  handle_change(pupil, course_id, 1, text.target.value)}
                                                             />
                                                         </td> :
                                                         periode === "*" ?
                                                             <td style={{ width: 50, textAlign: 'center' }}>
                                                                 <input className="input-marks"
                                                                     type="number"
-                                                                    value={render_period_marks(pupil.marks, course_id, 1)}
+                                                                    placeholder={render_period_marks(pupil.marks, course_id, 1)}
                                                                     onChange={(text) => edit_marks(pupil.pupil.pupil_id, course_id, 1, text.target.value)}
                                                                 />
                                                             </td> :
@@ -598,6 +641,10 @@ const FichesPointsCourses = () => {
                     <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
                     Chargement de la fiche des points...
                 </div>}
+
+                <button
+                onClick={()=>edit_marks(marks_edit)}
+                >Finir et envoyer</button>
         </div>
     )
 }

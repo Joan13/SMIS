@@ -569,7 +569,7 @@ class Home extends Component {
 
                     classe.data = response;
                     this.props.dispatch({ type: "SET_CLASSE", payload: classe });
-                    console.log(this.props.classe);
+                    // console.log(this.props.classe);
                     // let promise_classes = new Promise((resolve, reject) => {
                     //     for (let i in this.props.classes) {
                     //         if (this.props.classes[i].id_classes === classe.id_classes) {
