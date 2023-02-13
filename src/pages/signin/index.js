@@ -13,7 +13,7 @@ const Signin = () => {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const user_data = useSelector(state=>state.user_data);
+    const user_data = useSelector(state => state.user_data);
     const [url_server, setUrl_erver] = useState(url_online);
     const [connection_type, setConnection_type] = useState(0);
     const [is_loading, setIs_loading] = useState(false);
@@ -143,13 +143,13 @@ const Signin = () => {
 
                             <input
                                 placeholder="Mot de passe"
-                                style={{ 
-                                    width: '77%', 
-                                marginLeft: 10,
-                                fontSize: !see_pass && password !== "" ? 35 : 13,
-                                fontWeight: !see_pass && password !== "" ? 'bold' : '455',
-                                height: !see_pass && password !== "" ? 25 : 25
-                             }}
+                                style={{
+                                    width: '77%',
+                                    marginLeft: 10,
+                                    fontSize: !see_pass && password !== "" ? 35 : 13,
+                                    height: !see_pass && password !== "" ? 25 : 25,
+                                    letterSpacing: !see_pass && password !== "" ? 2 : null,
+                                }}
                                 className="input"
                                 type={see_pass ? "text" : "password"}
                                 value={password}
@@ -194,7 +194,7 @@ const Signin = () => {
                             </span><br /><br /></> : null}
 
                         {is_loading ?
-                            <div style={{ textAlign: 'center', marginTop:12 }}>
+                            <div style={{ textAlign: 'center', marginTop: 12 }}>
                                 <LinearProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
                                 <span>{message_user}</span><br /><br />
                             </div> : null}

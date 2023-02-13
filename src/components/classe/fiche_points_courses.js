@@ -7,47 +7,35 @@ import { FaChevronCircleLeft } from 'react-icons/fa';
 const FichesPointsCourses = () => {
 
     const [course_id, setCourse_id] = useState(null);
-    const [periode, setPeriode] = useState('P1');
+    const [periode, setPeriode] = useState('*');
     const classe = useSelector(state => state.classe);
-    // const autres = useSelector(state => state.autres);
+    const middle_func = useSelector(state => state.middle_func);
     const loading_footer = useSelector(state => state.loading_footer);
     const url_server = useSelector(state => state.url_server);
     const [marks_edit, setMarks_edit] = useState([]);
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
 
-    // intervalID = 0;
+    const open_classe = () => {
+        dispatch({ type: "SET_LOADING_FOOTER", payload: true });
+        dispatch({ type: "SET_CLASSE", payload: classe });
+        dispatch({ type: "SET_CLASSE_OPEN", payload: true });
+        dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
 
-    // constructor(props) {
-    //     super(props);
+        if (middle_func === 23 || middle_func === 22) {
+            dispatch({ type: "SET_TITLE_MAIN", payload: "Horaires" });
+            dispatch({ type: "SET_COURSE", payload: classe.courses[0] });
+        } else {
+            dispatch({ type: "SET_TITLE_MAIN", payload: classe.class_id + " " + classe.section_id + " " + classe.cycle_id + " " + classe.order_id });
+        }
 
-    //     this.state = {
-    //         classe: [],
-    //         autres: [],
-    //         pupils_marks: [],
-    //         courses: [],
-    //         pupils: [],
-    //         url_server: "",
-    //         periode: "P1",
-    //         num: 0,
-    //         pupil_id: 1,
-    //         should_fetch_marks: false,
-    //         can_mount: 0,
-    //         course_id: null,
-    //     }
-    // }
+        if (middle_func !== 2) {
+            dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
+        }
 
-    const refresh_class=()=> {
-
-        // let classe = sessionStorage.getItem('classeYambiSMIS');
-        let url_server = sessionStorage.getItem('yambi_smis_url_server');
-        // classe = JSON.parse(classe);
-        // this.setState({
-        //     classe: classe,
-        //     title_main: classe.class_id + " " + classe.section_id + " " + classe.order_id,
-        //     loading_middle: true,
-        //     url_server: url_server
-        // });
+        if (middle_func === 15 || middle_func === 16 || middle_func === 17 || middle_func === 0 || middle_func === 30) {
+            dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
+        }
 
         let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_class_info.php";
 
@@ -64,190 +52,58 @@ const FichesPointsCourses = () => {
         })
             .then((response) => response.json())
             .then((response) => {
-let new_classe = classe;
-                const promise = new Promise((resolve, reject)=>{
-        
-                new_classe.data = response;
-                resolve();
-                })
 
-                promise.finally(()=>{
-                    set_classe(new_classe);
-                })
-                    
-                    // console.log(classe.data);
+                if (middle_func !== 0) {
+                    classe.data = response;
+                    dispatch({ type: "SET_CLASSE", payload: classe });
+                    dispatch({ type: "SET_LOADING_FOOTER", payload: false });
 
-            })
-            .catch((error) => {
-                console.log(error);
-                // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
-            });
-    }
+                    if (middle_func === 0 || middle_func === 4 || middle_func === 6 || middle_func === 11 || middle_func === 12) {
+                        dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
+                        dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
+                    }
 
-    const set_classe=(classe)=>{
-        dispatch({ type: "SET_CLASSE", payload: classe});
-    }
+                    if (middle_func === 0) {
+                        dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
+                    }
 
-    // open_class() {
+                    dispatch({ type: "SET_MARKS_MODIFIED", payload: false });
 
-    //     let classe = sessionStorage.getItem('classeYambiSMIS');
-    //     let url_server = sessionStorage.getItem('yambi_smis_url_server');
-    //     classe = JSON.parse(classe);
-    //     this.setState({
-    //         classe: classe,
-    //         title_main: classe.class_id + " " + classe.section_id + " " + classe.order_id,
-    //         loading_middle: true,
-    //         url_server: url_server
-    //     });
-
-    //     let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_class_info.php";
-
-    //     fetch(BaseURL, {
-    //         method: 'POST',
-    //         body: JSON.stringify({
-    //             cycle_id: classe.cycle,
-    //             class_id: classe.class,
-    //             order_id: classe.order,
-    //             section_id: classe.section,
-    //             option_id: classe.option,
-    //             school_year: classe.school_year,
-    //         })
-    //     })
-    //         .then((response) => response.json())
-    //         .then((response) => {
-    //             this.setState({
-    //                 pupils_marks: response.pupils_marks,
-    //                 courses: response.courses,
-    //                 pupils: response.pupils,
-    //                 loading_middle: false,
-    //                 pupil_id: response.first_pupil,
-    //                 course_id: response.first_course
-    //             })
-    //         })
-    //         .catch((error) => {
-    //             // alert(error.toString());
-    //             // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
-    //         });
-    // }
-
-    // const edit_marks = (pupil_id, course_id, period, marks) => {
-        const edit_marks = (marks) => {
-
-        // for (let i in classe.data.pupils_marks) {
-        //     if (classe.data.pupils_marks[i].pupil == pupil_id && classe.data.pupils_marks[i].course == course_id && classe.data.pupils_marks[i].school_period == period) {
-        //         classe.data.pupils_marks[i].main_marks = marks;
-        //         this.setState({ should_fetch_marks: true });
-        //     } else {
-        //         this.setState({ should_fetch_marks: true });
-        //     }
-        // }
-
-        let BaseURL = http + url_server + "/yambi_class_SMIS/API/edit_marks.php";
-
-        fetch(BaseURL,
-            {
-                method: 'POST',
-                body: JSON.stringify({
-                    // pupil_id: pupil_id,
-                    // course_id: course_id,
-                    // periode: period,
-                    // school_year: classe.school_year,
-                    // main_marks: marks,
-                    // total_marks: findCourse(course_id).total_marks,
-                    marks:marks
-                })
-            })
-            .then((response) => response.json())
-            .then((response) => {
-
-                // console.log('powa')
-
-                // let index_pupil = classe.data.pupils.findIndex(pupil => parseInt(pupil.pupil_id) === parseInt(response.pupil));
-                // let pupil_m = classe.data.pupils.filter(pupil => parseInt(pupil.pupil_id) === parseInt(response.pupil));
-                
-                // if(pupil_m.length > 0){
-                //     pupil_m[0].marks = response.marks;
-                //     pupil_m[0].tmarks = response.tmarks;
-                //     let new_classe_marks = classe;
-                //     Object.assign({}, pupil_m);
-                //     new_classe_marks.pupils[index_pupil] = pupil_m[0];
-    
-                    if(response.success === '1' || response.success === '2') {
-                    // dispatch({type: "SET_EDIT_PUPIL_MARKS", payload: new_classe_marks});
-                    // alert("ok")
-                    // }
-                    // refresh_class();
-                    setErrors([]);
-                    setMarks_edit([]);
-
+                } else {
+                    dispatch({ type: "SET_LOADING_FOOTER", payload: false });
                 }
-
-                // console.log(classe);
-
-            })
-            .catch((error) => {
-                // Alert.alert(strings.error, strings.connection_failed);
-                // alert(error.toString())
-                console.log(error);
-                // this.setState({ loading_class: false, pupils_see: false });
-                // alert("siko")
+            }).catch((error) => {
+                dispatch({ type: "SET_LOADING_FOOTER", payload: false });
             });
     }
 
-    // insert_marks(pupil_id, course_id, period, marks, total_marks) {
+    const edit_marks = () => {
 
-    //     // for (let i in classe.data.pupils_marks) {
-    //     //     if (classe.data.pupils_marks[i].pupil == pupil_id && classe.data.pupils_marks[i].course == course_id && classe.data.pupils_marks[i].school_period == period) {
-    //     //         classe.data.pupils_marks[i].main_marks = marks;
-    //     //         this.setState({ should_fetch_marks: true });
-    //     //     } else {
-    //     //         this.setState({ should_fetch_marks: true });
-    //     //     }
-    //     // }
+        if (course_id !== null || marks_edit.length !== 0) {
+            let BaseURL = http + url_server + "/yambi_class_SMIS/API/edit_marks.php";
 
-    //     let BaseURL = http + url_server + "/yambi_class_SMIS/API/edit_marks.php";
+            fetch(BaseURL,
+                {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        marks: marks_edit
+                    })
+                })
+                .then((response) => response.json())
+                .then((response) => {
+                    if (response.success === '1' || response.success === '2') {
+                        setErrors([]);
+                        setMarks_edit([]);
+                        dispatch({ type: "SET_MARKS_MODIFIED", payload: true });
 
-    //     fetch(BaseURL, {
-    //             method: 'POST',
-    //             body: JSON.stringify({
-    //                 pupil_id: pupil_id,
-    //                 course_id: course_id,
-    //                 periode: period,
-    //                 school_year: classe.school_year,
-    //                 main_marks: marks,
-    //                 total_marks:total_marks,
-    //                 cycle: classe.cycle,
-    //                 class_id: classe.class,
-    //                 section_id: classe.section,
-    //                 option_id: classe.option
-    //             })
-    //         })
-    //         .then((response) => response.json())
-    //         .then((response) => {
-
-    //             if (should_fetch_marks) {
-    //                 // this.refresh_class();
-    //             }
-
-    //         })
-    //         .catch((error) => {
-    //             // Alert.alert(strings.error, strings.connection_failed);
-    //             // alert(error.toString())
-    //             this.setState({ loading_class: false, pupils_see: false });
-    //         });
-    // }
-
-    // const render_period_marks=(pupil_id, course_id, periode)=> {
-    //     let return_value = 0;
-
-    //     for (let i in classe.data.pupils_marks) {
-    //         if (parseInt(classe.data.pupils_marks[i].pupil) === parseInt(pupil_id) && parseInt(classe.data.pupils_marks[i].course) === parseInt(course_id) && parseInt(classe.data.pupils_marks[i].school_period) === parseInt(periode)) {
-    //             return_value = classe.data.pupils_marks[i].main_marks;
-    //         }
-    //     }
-
-    //     return return_value;
-    // }
+                        open_classe();
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    }
 
     const render_period_marks = (marks, course_id, periode) => {
         let return_value = 0;
@@ -268,52 +124,31 @@ let new_classe = classe;
                 course = classe.data.courses[i];
             }
         }
-        // const course = classe.data.courses.filter(course=>parseInt(course.course_id) === parseInt(course_id));
+
         return course;
     }
 
     const set_page = (middle_func, marks_tab, menu_left, menu_pupils) => {
-        // this.setState({ middle_func: 7, marks_tab: "", allow_right_menu: true })
-
-        // dispatch({ type: "SET_CLASSE", payload: [] });
-        // dispatch({ type: "SET_TITLE_MAIN", payload: "Nouvel(le) élève | " });
-        // dispatch({ type: "SET_CLASSE_OPEN", payload: false });
-        // dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: menu_pupils });
         dispatch({ type: "SET_MIDDLE_FUNC", payload: middle_func });
         dispatch({ type: "SET_MARKS_TAB", payload: marks_tab });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: menu_left });
     }
 
-    // componentDidMount() {
-    //     // if(can_mount < 4) {
-    //     //     this.intervalID = setInterval(() => {
-    //     //         let classe = sessionStorage.getItem('classeYambiSMIS');
-    //     //         classe = JSON.parse(classe);
-
-    //     //         if(classe.id_classes !== classe.id_classes) {
-    //     //             this.open_class();
-    //     //         }
-    //     //     }, 500);
-
-
-
-    //     // }
-    // }
-
-    const handle_change=(pupil, course_id, periode,marks)=> {
+    const handle_change = (pupil, course, period, marks, modified) => {
         let markks = {};
         let global_marks = [];
         global_marks = marks_edit;
-        markks.id = pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + course_id + periode;
+        markks.id = pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period);
         markks.pupil_id = pupil.pupil.pupil_id;
-        markks.course_id = course_id;
-        markks.period = 1;
+        markks.course_id = course;
+        markks.period = period;
         markks.school_year = pupil.pupil.school_year;
-        markks.total_marks = findCourse(course_id).total_marks;
+        markks.total_marks = findCourse(course).total_marks;
+        markks.modified = modified;
         markks.marks = marks;
 
-        const main_marks = global_marks.filter(marks => marks.id === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + course_id + periode);
-        if(main_marks.length !== 0) {
+        const main_marks = global_marks.filter(marks => marks.id === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period));
+        if (main_marks.length !== 0) {
             main_marks[0].marks = marks;
             setMarks_edit(global_marks);
         } else {
@@ -321,10 +156,16 @@ let new_classe = classe;
             setMarks_edit(global_marks);
         }
 
-        if(parseInt(marks) > findCourse(course_id).total_marks) {
-            setErrors([...errors, pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + course_id + periode]);
+        if (parseInt(marks) > findCourse(course).total_marks) {
+            setErrors([...errors, pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period)]);
         } else {
-            setErrors(errors.filter((element) => !(pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + course_id + periode).includes(element)));
+            setErrors(errors.filter((element) => !(pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period)).includes(element)));
+        }
+    }
+
+    const show_periode = (period, semester) => {
+        if (periode === period || semester === periode || periode === "*") {
+            return true;
         }
     }
 
@@ -332,319 +173,196 @@ let new_classe = classe;
         if (classe.courses[0] !== undefined) {
             setCourse_id(classe.courses[0].course_id);
         }
+
     }, [classe.courses]);
 
     return (
         <div style={{ marginBottom: 50, paddingTop: 10, width: '100%' }}>
             {!loading_footer ?
-                <table style={{ width: '100%' }}>
-                    <tbody>
-                        <tr>
-                            <td valign="top">
+                <div>
+                    <table style={{ width: '100%' }}>
+                        <tbody>
+                            <tr>
+                                <td valign="top">
 
-                                <strong style={{ fontSize: 20 }}>{findCourse(course_id).course_name} / {findCourse(course_id).total_marks}</strong>
+                                    <strong style={{ fontSize: 20 }}>{findCourse(course_id).course_name} / {findCourse(course_id).total_marks}</strong>
 
-                                <div className="float-menu-right">
-                                    <select
-                                        onChange={(val) => setPeriode(val.target.value)}
-                                        style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white', textAlign: 'right' }}
-                                        value={periode}
-                                        className="select-no-border-select">
-                                        <option value="*">Toutes les périodes</option>
-                                        <option>- - - - - - - - - - - -</option>
-                                        <option value="P1">Première période</option>
-                                        <option value="P2">Deuxième période</option>
-                                        <option value="P3">Troisième période</option>
-                                        <option value="P4">Quatrième période</option>
-                                        <option>- - - - - - - - - - - -</option>
-                                        <option value="EX1">Examen premier semestre</option>
-                                        <option value="EX2">Examen deuxième semestre</option>
-                                        <option>- - - - - - - - - - - -</option>
-                                        <option value="S1">Premier semestre</option>
-                                        <option value="S2">Deuxième semestre</option>
-                                    </select>
+                                    <div className="float-menu-right">
+                                        <select
+                                            onChange={(val) => setPeriode(val.target.value)}
+                                            style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white', textAlign: 'right' }}
+                                            value={periode}
+                                            className="select-no-border-select">
+                                            <option value="*">Toutes les périodes</option>
+                                            <option>- - - - - - - - - - - -</option>
+                                            <option value="P1">Première période</option>
+                                            <option value="P2">Deuxième période</option>
+                                            <option value="P3">Troisième période</option>
+                                            <option value="P4">Quatrième période</option>
+                                            <option>- - - - - - - - - - - -</option>
+                                            <option value="EX1">Examen premier semestre</option>
+                                            <option value="EX2">Examen deuxième semestre</option>
+                                            <option>- - - - - - - - - - - -</option>
+                                            <option value="S1">Premier semestre</option>
+                                            <option value="S2">Deuxième semestre</option>
+                                        </select>
 
-                                </div>
+                                    </div>
 
-                                <table className="full-table-liste-markss" style={{ marginTop: 10, width: '100%' }}>
-                                    <thead>
-                                        <tr>
-                                            <th style={{ width: 30, textAlign: 'center' }}>No</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'left' }}>Noms des élèves</th>
-                                            {periode === "P1" ?
-                                                <th style={{ width: 50, textAlign: 'center' }}>P1</th> :
-                                                periode === "*" ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>P1</th> :
-                                                    periode === "S1" ?
-                                                        <th style={{ width: 50, textAlign: 'center' }}>P1</th> : null}
+                                    <table className="full-table-liste-markss" style={{ marginTop: 10, width: '100%' }}>
+                                        <thead>
+                                            <tr>
+                                                <th style={{ width: 30, textAlign: 'center' }}>No</th>
+                                                <th style={{ paddingLeft: 10, textAlign: 'left' }}>Noms des élèves</th>
+                                                {show_periode("P1", "S1") ?
+                                                    <th style={{ width: 50, textAlign: 'center' }}>P1</th> : null}
 
-                                            {periode === "P2" ?
-                                                <th style={{ width: 50, textAlign: 'center' }}>P2</th> :
-                                                periode === "*" ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>P2</th> :
-                                                    periode === "S1" ?
-                                                        <th style={{ width: 50, textAlign: 'center' }}>P2</th> : null}
+                                                {show_periode("P2", "S1") ?
+                                                    <th style={{ width: 50, textAlign: 'center' }}>P2</th> : null}
 
-                                            {periode === "EX1" ?
-                                                <th style={{ width: 50, textAlign: 'center' }}>EX1</th> :
-                                                periode === "*" ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>EX1</th> :
-                                                    periode === "S1" ?
-                                                        <th style={{ width: 50, textAlign: 'center' }}>EX1</th> : null}
+                                                {show_periode("EX1", "S1") ?
+                                                    <th style={{ width: 50, textAlign: 'center' }}>EX1</th> : null}
 
-                                            {periode === "S1" ?
-                                                <th style={{ width: 50, textAlign: 'center' }}>S1</th> :
-                                                periode === "*" ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>S1</th> :
-                                                    periode === "S1" ?
-                                                        <th style={{ width: 50, textAlign: 'center' }}>S1</th> : null}
+                                                {show_periode("S1", "S1") ?
+                                                    <th style={{ width: 50, textAlign: 'center' }}>S1</th> : null}
 
-                                            {periode === "P3" ?
-                                                <th style={{ width: 50, textAlign: 'center' }}>P3</th> :
-                                                periode === "*" ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>P3</th> :
-                                                    periode === "S2" ?
-                                                        <th style={{ width: 50, textAlign: 'center' }}>P3</th> : null}
+                                                {show_periode("P3", "S2") ?
+                                                    <th style={{ width: 50, textAlign: 'center' }}>P3</th> : null}
 
-                                            {periode === "P4" ?
-                                                <th style={{ width: 50, textAlign: 'center' }}>P4</th> :
-                                                periode === "*" ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>P4</th> :
-                                                    periode === "S2" ?
-                                                        <th style={{ width: 50, textAlign: 'center' }}>P4</th> : null}
+                                                {show_periode("P4", "S2") ?
+                                                    <th style={{ width: 50, textAlign: 'center' }}>P4</th> : null}
 
-                                            {periode === "EX2" ?
-                                                <th style={{ width: 50, textAlign: 'center' }}>EX2</th> :
-                                                periode === "*" ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>EX2</th> :
-                                                    periode === "S2" ?
-                                                        <th style={{ width: 50, textAlign: 'center' }}>EX2</th> : null}
+                                                {show_periode("EX1", "S2") ?
+                                                    <th style={{ width: 50, textAlign: 'center' }}>EX2</th> : null}
 
-                                            {periode === "S2" ?
-                                                <th style={{ width: 50, textAlign: 'center' }}>S2</th> :
-                                                periode === "*" ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>S2</th> :
-                                                    periode === "S2" ?
-                                                        <th style={{ width: 50, textAlign: 'center' }}>S2</th> : null}
+                                                {show_periode("S2", "S2") ?
+                                                    <th style={{ width: 50, textAlign: 'center' }}>S2</th> : null}
 
-                                            {periode === "*" ?
-                                                <th style={{ width: 50, textAlign: 'center' }}>TOTAL</th> : null}
-                                        </tr>
-                                    </thead>
-                                    {classe.data.pupils.map((pupil, index) => {
-                                        return (
-                                            <tbody key={index}>
-                                                <tr>
-                                                    <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                    <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                    {periode === "P1" ?
-                                                        <td style={{ width: 50, textAlign: 'center' }}>
-                                                            <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + course_id + "1") === undefined ? "input-red" : "red-input"}`}
-                                                                type="number"
-                                                                placeholder={render_period_marks(pupil.marks, course_id, 1)}
-                                                                onChange={(text) =>  handle_change(pupil, course_id, 1, text.target.value)}
-                                                            />
-                                                        </td> :
-                                                        periode === "*" ?
+                                                {show_periode("*","*") ?
+                                                    <th style={{ width: 50, textAlign: 'center' }}>TOTAL</th> : null}
+                                            </tr>
+                                        </thead>
+                                        {classe.data.pupils.map((pupil, index) => {
+                                            return (
+                                                <tbody key={index}>
+                                                    <tr style={{ backgroundColor: index % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
+                                                        <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
+                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+
+                                                        {show_periode("P1", "S1") ?
                                                             <td style={{ width: 50, textAlign: 'center' }}>
-                                                                <input className="input-marks"
+                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 1)) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
+                                                                    // value={render_period_marks(pupil.marks, course_id, 1)}
                                                                     placeholder={render_period_marks(pupil.marks, course_id, 1)}
-                                                                    onChange={(text) => edit_marks(pupil.pupil.pupil_id, course_id, 1, text.target.value)}
+                                                                    onChange={(text) => handle_change(pupil, course_id, 1, text.target.value, true)}
                                                                 />
-                                                            </td> :
-                                                            periode === "S1" ?
-                                                                <td style={{ width: 50, textAlign: 'center' }}>
-                                                                    <input className="input-marks"
-                                                                        type="number"
-                                                                        value={render_period_marks(pupil.marks, course_id, 1)}
-                                                                        onChange={(text) => edit_marks(pupil.pupil.pupil_id, course_id, 1, text.target.value)}
-                                                                    />
-                                                                </td> : null}
+                                                            </td> : null}
 
-                                                    {/* {periode == "P2" ?
-                                        <td style={{ width: 50, textAlign: 'center' }}>
-                                            <input className="input-marks"
-                                                type="number"
-                                                value={this.render_period_marks(pupil.pupil.pupil_id, course_id, 2)}
-                                                onChange={(text) => this.edit_marks(pupil.pupil.pupil_id, course_id, 2, text.target.value)}
-                                            />
-                                        </td> :
-                                        periode == "*" ?
-                                            <td style={{ width: 50, textAlign: 'center' }}>
-                                                <input className="input-marks"
-                                                    type="number"
-                                                    value={this.render_period_marks(pupil.pupil.pupil_id, course_id, 2)}
-                                                    onChange={(text) => this.edit_marks(pupil.pupil.pupil_id, course_id, 2, text.target.value)}
-                                                />
-                                            </td> :
-                                            periode == "S1" ?
-                                                <td style={{ width: 50, textAlign: 'center' }}>
-                                                    <input className="input-marks"
-                                                        type="number"
-                                                        value={this.render_period_marks(pupil.pupil.pupil_id, course_id, 2)}
-                                                        onChange={(text) => this.edit_marks(pupil.pupil.pupil_id, course_id, 2, text.target.value)}
-                                                    />
-                                                </td> : null} */}
+                                                        {show_periode("P2", "S1") ?
+                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 2)) === undefined ? "input-red" : "red-input"}`}
+                                                                    type="number"
+                                                                    placeholder={render_period_marks(pupil.marks, course_id, 2)}
+                                                                    onChange={(text) => handle_change(pupil, course_id, 2, text.target.value, true)}
+                                                                />
+                                                            </td> : null}
 
-                                                    {/* {periode == "EX1" ?
-                                        <td style={{ width: 50, textAlign: 'center' }}>
-                                            <input className="input-marks"
-                                                type="number"
-                                                value={this.render_period_marks(pupil.pupil.pupil_id, course_id, 10)}
-                                                onChange={(text) => this.edit_marks(pupil.pupil.pupil_id, course_id, 10, text.target.value)}
-                                            />
-                                        </td> :
-                                        periode == "*" ?
-                                            <td style={{ width: 50, textAlign: 'center' }}>
-                                                <input className="input-marks"
-                                                    type="number"
-                                                    value={this.render_period_marks(pupil.pupil.pupil_id, course_id, 10)}
-                                                    onChange={(text) => this.edit_marks(pupil.pupil.pupil_id, course_id, 10, text.target.value)}
-                                                />
-                                            </td> :
-                                            periode == "S1" ?
-                                                <td style={{ width: 50, textAlign: 'center' }}>
-                                                    <input className="input-marks"
-                                                        type="number"
-                                                        value={this.render_period_marks(pupil.pupil.pupil_id, course_id, 10)}
-                                                        onChange={(text) => this.edit_marks(pupil.pupil.pupil_id, course_id, 10, text.target.value)}
-                                                    />
-                                                </td> : null} */}
+                                                        {show_periode("EX1", "S1") ?
+                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 10)) === undefined ? "input-red" : "red-input"}`}
+                                                                    type="number"
+                                                                    placeholder={render_period_marks(pupil.marks, course_id, 10)}
+                                                                    onChange={(text) => handle_change(pupil, course_id, 10, text.target.value, true)}
+                                                                />
+                                                            </td> : null}
 
-                                                    {/* {periode == "*" ?
-                                        <td style={{ width: 50, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
-                                            {parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 1)) + parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 2)) + parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 10))}
-                                        </td> :
-                                        periode == "S1" ?
-                                            <td style={{ width: 50, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
-                                                {parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 1)) + parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 2)) + parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 10))}
-                                            </td> : null} */}
+                                                        {show_periode("S1", "S1") ?
+                                                            <td style={{ width: 50, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
+                                                                {parseInt(render_period_marks(pupil.marks, course_id, 1)) + parseInt(render_period_marks(pupil.marks, course_id, 2)) + parseInt(render_period_marks(pupil.marks, course_id, 10))}
+                                                            </td> : null}
 
+                                                        {show_periode("P3", "S2") ?
+                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 3)) === undefined ? "input-red" : "red-input"}`}
+                                                                    type="number"
+                                                                    placeholder={render_period_marks(pupil.marks, course_id, 3)}
+                                                                    onChange={(text) => handle_change(pupil, course_id, 3, text.target.value, true)}
+                                                                />
+                                                            </td> : null}
 
-                                                    {/* {periode == "P3" ?
-                                        <td style={{ width: 50, textAlign: 'center' }}>
-                                            <input className="input-marks"
-                                                type="number"
-                                                value={this.render_period_marks(pupil.pupil.pupil_id, course_id, 3)}
-                                                onChange={(text) => this.edit_marks(pupil.pupil.pupil_id, course_id, 3, text.target.value)}
-                                            />
-                                        </td> :
-                                        periode == "*" ?
-                                            <td style={{ width: 50, textAlign: 'center' }}>
-                                                <input className="input-marks"
-                                                    type="number"
-                                                    value={this.render_period_marks(pupil.pupil.pupil_id, course_id, 3)}
-                                                    onChange={(text) => this.edit_marks(pupil.pupil.pupil_id, course_id, 3, text.target.value)}
-                                                />
-                                            </td> :
-                                            periode == "S2" ?
-                                                <td style={{ width: 50, textAlign: 'center' }}>
-                                                    <input className="input-marks"
-                                                        type="number"
-                                                        value={this.render_period_marks(pupil.pupil.pupil_id, course_id, 3)}
-                                                        onChange={(text) => this.edit_marks(pupil.pupil.pupil_id, course_id, 3, text.target.value)}
-                                                    />
-                                                </td> : null} */}
+                                                        {show_periode("P4", "S2") ?
+                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 4)) === undefined ? "input-red" : "red-input"}`}
+                                                                    type="number"
+                                                                    placeholder={render_period_marks(pupil.marks, course_id, 4)}
+                                                                    onChange={(text) => handle_change(pupil, course_id, 4, text.target.value, true)}
+                                                                />
+                                                            </td> : null}
 
-                                                    {/* {periode == "P4" ?
-                                        <td style={{ width: 50, textAlign: 'center' }}>
-                                            <input className="input-marks"
-                                                type="number"
-                                                value={this.render_period_marks(pupil.pupil.pupil_id, course_id, 4)}
-                                                onChange={(text) => this.edit_marks(pupil.pupil.pupil_id, course_id, 4, text.target.value)}
-                                            />
-                                        </td> :
-                                        periode == "*" ?
-                                            <td style={{ width: 50, textAlign: 'center' }}>
-                                                <input className="input-marks"
-                                                    type="number"
-                                                    value={this.render_period_marks(pupil.pupil.pupil_id, course_id, 4)}
-                                                    onChange={(text) => this.edit_marks(pupil.pupil.pupil_id, course_id, 4, text.target.value)}
-                                                />
-                                            </td> :
-                                            periode == "S2" ?
-                                                <td style={{ width: 50, textAlign: 'center' }}>
-                                                    <input className="input-marks"
-                                                        type="number"
-                                                        value={this.render_period_marks(pupil.pupil.pupil_id, course_id, 4)}
-                                                        onChange={(text) => this.edit_marks(pupil.pupil.pupil_id, course_id, 4, text.target.value)}
-                                                    />
-                                                </td> : null} */}
+                                                        {show_periode("EX2", "S2") ?
+                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 11)) === undefined ? "input-red" : "red-input"}`}
+                                                                    type="number"
+                                                                    placeholder={render_period_marks(pupil.marks, course_id, 11)}
+                                                                    onChange={(text) => handle_change(pupil, course_id, 11, text.target.value, true)}
+                                                                />
+                                                            </td> : null}
 
-                                                    {/* {periode == "EX2" ?
-                                        <td style={{ width: 50, textAlign: 'center' }}>
-                                            <input className="input-marks"
-                                                type="number"
-                                                value={this.render_period_marks(pupil.pupil.pupil_id, course_id, 11)}
-                                                onChange={(text) => this.edit_marks(pupil.pupil.pupil_id, course_id, 11, text.target.value)}
-                                            />
-                                        </td> :
-                                        periode == "*" ?
-                                            <td style={{ width: 50, textAlign: 'center' }}>
-                                                <input className="input-marks"
-                                                    type="number"
-                                                    value={this.render_period_marks(pupil.pupil.pupil_id, course_id, 11)}
-                                                    onChange={(text) => this.edit_marks(pupil.pupil.pupil_id, course_id, 11, text.target.value)}
-                                                />
-                                            </td> :
-                                            periode == "S2" ?
-                                                <td style={{ width: 50, textAlign: 'center' }}>
-                                                    <input className="input-marks"
-                                                        type="number"
-                                                        value={this.render_period_marks(pupil.pupil.pupil_id, course_id, 11)}
-                                                        onChange={(text) => this.edit_marks(pupil.pupil.pupil_id, course_id, 11, text.target.value)}
-                                                    />
-                                                </td> : null} */}
+                                                        {show_periode("S2", "S2") ?
+                                                            <td style={{ width: 50, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
+                                                                {parseInt(render_period_marks(pupil.marks, course_id, 3)) + parseInt(render_period_marks(pupil.marks, course_id, 4)) + parseInt(render_period_marks(pupil.marks, course_id, 11))}
+                                                            </td> : null}
 
-                                                    {/* {periode == "*" ?
-                                        <td style={{ width: 50, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
-                                            {parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 3)) + parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 4)) + parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 11))}
-                                        </td> :
-                                        periode == "S2" ?
-                                            <td style={{ width: 50, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
-                                                {parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 3)) + parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 4)) + parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 11))}
-                                            </td> : null}
+                                                        {show_periode("*","*") ?
+                                                            <td style={{ width: 50, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
+                                                                {parseInt(render_period_marks(pupil.marks, course_id, 3)) + parseInt(render_period_marks(pupil.marks, course_id, 4)) + parseInt(render_period_marks(pupil.marks, course_id, 11)) + parseInt(render_period_marks(pupil.marks, course_id, 1)) + parseInt(render_period_marks(pupil.marks, course_id, 2)) + parseInt(render_period_marks(pupil.marks, course_id, 10))}
+                                                            </td> : null}
+                                                    </tr>
+                                                </tbody>
+                                            )
+                                        })}
+                                    </table>
+                                </td>
+                                <td valign="top" style={{ paddingLeft: 30 }} className="td-pupils">
+                                    <strong onClick={() =>
+                                        set_page(1, "", true, false)
+                                    } style={{ color: 'rgba(0, 80, 180)' }} className="select-no-border-bold">
+                                        <FaChevronCircleLeft style={{ marginRight: 7 }} />
+                                        Revenir en arrière
+                                    </strong><br />
 
-                                    {periode == "*" ?
-                                        <td style={{ width: 50, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
-                                            {parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 3)) + parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 4)) + parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 11)) + parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 1)) + parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 2)) + parseInt(this.render_period_marks(pupil.pupil.pupil_id, course_id, 10))}
-                                        </td> : null} */}
+                                    <h3>Liste des Cours</h3>
+                                    {classe.data.courses.map((course, index) => (
+                                        <span style={{ marginBottom: 13 }} onClick={() => {
+                                            setMarks_edit([]);
+                                            setErrors([]);
+                                            setCourse_id(course.course_id)
+                                        }}
+                                            className={`list-pupils ${course_id === course.course_id ? "list-pupils-selected" : ""}`} key={course.course_id}>{index + 1}. {course.course_name.toUpperCase()}</span>
+                                    ))}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-
-                                                </tr>
-                                            </tbody>
-                                        )
-                                    })}
-                                </table>
-                            </td>
-                            <td valign="top" style={{ paddingLeft: 30 }} className="td-pupils">
-                                {/* <Courses /> */}
-
-                                <strong onClick={() =>
-                                    set_page(1, "", true, false)
-                                } style={{ color: 'rgba(0, 80, 180)' }} className="select-no-border-bold">
-                                    <FaChevronCircleLeft style={{ marginRight: 7 }} />
-                                    Revenir en arrière
-                                </strong><br />
-
-                                <h3>Liste des Cours</h3>
-                                {classe.data.courses.map((course, index) => (
-                                    <span style={{ marginBottom: 13 }} onClick={() => setCourse_id(course.course_id)} className={`list-pupils ${course_id === course.course_id ? "list-pupils-selected" : ""}`} key={course.course_id}>{index + 1}. {course.course_name.toUpperCase()}</span>
-                                ))}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    {marks_edit.lengh !== 0 ?
+                        <div style={{ textAlign: 'right', paddingRight: 7 }}>
+                            {errors.length === 0 ?
+                                <button className='button-enter-marks' onClick={() => edit_marks()}>Finir et envoyer</button>
+                                :
+                                <div style={{ color: 'red', fontWeight: 'bold', marginTop: 10 }}>
+                                    Il y a {errors.length} erreur{errors.length > 1 ? "s" : ""} dans vos entrées<br />
+                                    Corrigez toute erreur avant de valider
+                                </div>
+                            }
+                        </div> : null}
+                </div>
                 :
                 <div className="progress-center-progress">
                     <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
                     Chargement de la fiche des points...
                 </div>}
-
-                <button
-                onClick={()=>edit_marks(marks_edit)}
-                >Finir et envoyer</button>
         </div>
     )
 }

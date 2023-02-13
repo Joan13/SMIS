@@ -674,9 +674,9 @@ h5 {
 
 .full-table-liste-markss {
   width: 100%;
-  border-collapse: collapse;
+  /* border-collapse: collapse; */
   margin-top: -60px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 .full-table-liste th {
@@ -699,8 +699,10 @@ h5 {
 
 .full-table-liste-markss th {
   background-color: rgba(0, 80, 180, 0.3);
-  border: 1px solid black;
+  /* border: 1px solid black; */
   /* height: 23px; */
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 
 .full-table-liste td {
@@ -722,13 +724,13 @@ h5 {
 }
 
 .full-table-liste-markss td {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   height: 23px;
   cursor: pointer;
 }
 
 .full-table-liste-markss td {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   height: 23px;
   cursor: pointer;
 }
@@ -1649,21 +1651,42 @@ h5 {
 }
 
 .add-button {
-  display:inline-block;
-  background-color: rgb(0,80,180);
+  display: inline-block;
+  background-color: rgb(0, 80, 180);
   cursor: pointer;
   border-radius: 50%;
-  padding:5px;
-  padding-bottom:3px;
+  padding: 5px;
+  padding-bottom: 3px;
   margin-left: 10px;
 }
 
 .red-input {
   color: red;
-  border:1px solid red;
+  border: 1px solid red;
+  border-radius: 5px;
   background-color: hsl(358, 100%, 94%);
 }
 
 .input-red {
-  border:1px solid white;
+  border: 1px solid white;
+}
+
+.button-enter-marks {
+  transition: 0.6s;
+  border-radius: 5px;
+  border:1px solid rgb(0, 80, 180);
+  background-color: rgb(0, 80, 180);
+  cursor:pointer;
+  color:white;
+  padding-right: 25px;
+  padding-left: 25px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.button-enter-marks:hover {
+  transition: 0.6s;
+  border:1px solid rgb(1, 103, 228);
+  background-color: rgb(1, 103, 228);
+  color:white;
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from '@material-ui/core';
+import { Button, LinearProgress } from '@material-ui/core';
 import Footer from '../../includes/footer';
 import { FaCircle, FaSearch, FaCheck, FaHome, FaUserPlus, FaClipboard, FaUsers, FaFolder, FaUser, FaPaperclip, FaDatabase, FaStarHalfAlt, FaEdit, FaBell, FaCloudUploadAlt, FaPiedPiperAlt } from 'react-icons/fa';
 import { RiSettings4Fill } from 'react-icons/ri';
@@ -514,7 +514,6 @@ class Home extends Component {
     }
 
     open_classe(classe) {
-        // sessionStorage.setItem("classeYambiSMIS", JSON.stringify(classe));
         this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
         this.props.dispatch({ type: "SET_CLASSE", payload: classe });
         this.props.dispatch({ type: "SET_CLASSE_OPEN", payload: true });
@@ -530,23 +529,9 @@ class Home extends Component {
         if (this.props.middle_func !== 2) {
             this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
         }
-        // this.props.dispatch({ type: "SET_TITLE_MAIN", payload: classe});
-        // console.log(this.props)
-
-
-        // this.props.dispatch({ type: "SET_TITLE_MAIN", payload: classe.class_id + " " + classe.section_id + " " + classe.cycle_id + " " + classe.order_id });
-        // this.props.dispatch({ type: "SET_CLASS_LOADING", payload: classe.id_classes });
-        // this.props.dispatch({ type: "SET_CLASSE_OPEN", payload: true });
-        // this.props.dispatch({ type: "SET_LOADING_CLASS", payload: true });
-        //         // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
-
-
 
         if (this.props.middle_func === 15 || this.props.middle_func === 16 || this.props.middle_func === 17 || this.props.middle_func === 0 || this.props.middle_func === 30) {
-            //     // this.setState({ middle_func: 1, allow_right_menu_pupils: false, allow_right_menu: true });
             this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
-            // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
-            //     this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
         }
 
         let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_class_info.php";
@@ -566,20 +551,8 @@ class Home extends Component {
             .then((response) => {
 
                 if (this.props.middle_func !== 0) {
-
                     classe.data = response;
                     this.props.dispatch({ type: "SET_CLASSE", payload: classe });
-                    // console.log(this.props.classe);
-                    // let promise_classes = new Promise((resolve, reject) => {
-                    //     for (let i in this.props.classes) {
-                    //         if (this.props.classes[i].id_classes === classe.id_classes) {
-                    //             this.props.classes[i].data = response;
-                    //             resolve();
-                    //         }
-                    //     }
-                    // }).then(() => { });
-
-                    // promise_classes.finally(() => {
                     this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
 
                     if (this.props.middle_func === 0 || this.props.middle_func === 4 || this.props.middle_func === 6 || this.props.middle_func === 11 || this.props.middle_func === 12) {
@@ -590,7 +563,8 @@ class Home extends Component {
                     if (this.props.middle_func === 0) {
                         this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
                     }
-                    // });
+
+                    this.props.dispatch({ type: "SET_MARKS_MODIFIED", payload: false });
 
                 } else {
                     this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
@@ -783,9 +757,10 @@ class Home extends Component {
             <div className="main-container">
                 <div>
                     <div className="top-bar-app">
+                        {this.props.loadding_header ? <LinearProgress /> : null}
                         <span className='topbar-title'>
                             <FcOpenedFolder color="orange" size={22} style={{ marginRight: 10, marginLeft: 20 }} />
-                            {this.props.school_name_abb}<span style={{ color: 'gray', fontSize: 17, marginLeft:20 }}> / Dossiers / {this.props.annee_scolaire.year_name} </span>
+                            {this.props.school_name_abb}<span style={{ color: 'gray', fontSize: 17, marginLeft: 20 }}> / Dossiers / {this.props.annee_scolaire.year_name} </span>
                         </span>
 
                         <div className="float-menu-topbar">
@@ -988,7 +963,7 @@ class Home extends Component {
                                 </div>
                                 :
                                 <div>
-                                            <EmployeesList />
+                                    <EmployeesList />
 
                                     {this.props.middle_func === 22 ?
                                         <div className="menu-right">

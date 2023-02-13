@@ -181,7 +181,7 @@ class ViewPupil extends React.Component {
                                                         <tr>
                                                             <td>Sexe  </td>
                                                             <td>
-                                                                <strong> : {this.props.pupil.pupil.gender === "1" ? "Masculin (M)" : "Féminin (F)"}</strong>
+                                                                <strong> : {parseInt(this.props.pupil.pupil.gender) === 1 ? "Masculin (M)" : "Féminin (F)"}</strong>
                                                             </td>
                                                         </tr>
                                                         <tr>
