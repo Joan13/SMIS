@@ -31,9 +31,9 @@ export default function RightClasseMenu() {
         // }
     }
 
-    useEffect(() => {
-        console.log(user_data.poste);
-    }, []);
+    // useEffect(() => {
+    //     console.log(user_data.poste);
+    // }, []);
 
 
     return (
@@ -92,7 +92,7 @@ export default function RightClasseMenu() {
                                     </div>
 
                                     <div className="item-menu-right">
-                                        <span onClick={() => set_page(2, "FPE", false, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 17 ? "select-no-border-bold" : ""}`}>
+                                        <span onClick={() => set_page(31, "", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 17 ? "select-no-border-bold" : ""}`}>
                                             <BiEdit style={{ marginRight: 7 }} />
                                             Conduites
                                         </span>

@@ -133,33 +133,50 @@ const FichesPointsPupils = () => {
         dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: menu_left });
     }
 
-    const handle_change = (pupil, course, period, marks, modified) => {
-        let markks = {};
-        let global_marks = [];
-        global_marks = marks_edit;
-        markks.id = pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period);
-        markks.pupil_id = pupil.pupil.pupil_id;
-        markks.course_id = course;
-        markks.period = period;
-        markks.school_year = pupil.pupil.school_year;
-        markks.total_marks = findCourse(course).total_marks;
-        markks.modified = modified;
-        markks.marks = marks;
-
-        const main_marks = global_marks.filter(marks => marks.id === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period));
-        if (main_marks.length !== 0) {
-            main_marks[0].marks = marks;
-            setMarks_edit(global_marks);
-        } else {
-            global_marks = [...global_marks, markks];
-            setMarks_edit(global_marks);
-        }
-
-        if (parseInt(marks) > findCourse(course).total_marks) {
-            setErrors([...errors, pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period)]);
-        } else {
-            setErrors(errors.filter((element) => !(pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period)).includes(element)));
-        }
+    const handle_change = (pupill, course, period, marks, modified) => {
+            let sp = '';
+            if(period === 'P1') 
+                sp = 1;
+            if(period === 'P2') 
+                sp = 2;
+            if(period === 'EX1') 
+                sp = 10;
+            if(period === 'P3')
+                sp = 3;
+            if(period === 'P4')
+                sp = 4;
+            if(period === 'Ex2')
+                sp = 11;
+    
+            let markks = {};
+            let global_marks = [];
+            global_marks = marks_edit;
+            markks.id = pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period);
+            markks.pupil_id = pupill.pupil.pupil_id;
+            markks.course_id = course;
+            markks.period = sp;
+            markks.school_year = pupill.pupil.school_year;
+            markks.total_marks = findCourse(course).total_marks;
+            markks.modified = modified;
+            markks.marks = marks;
+    
+            const main_marks = global_marks.filter(marks => marks.id === pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period));
+            if (main_marks.length !== 0) {
+                main_marks[0].marks = marks;
+                setMarks_edit(global_marks);
+            } else {
+                global_marks = [...global_marks, markks];
+                setMarks_edit(global_marks);
+            }
+    
+            if (parseInt(marks) > findCourse(course).total_marks || parseInt(marks) < 0) {
+                if(errors.find(error => error === pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (parseInt(pupill.pupil.pupil_id) + course + period)) === undefined) {
+                    setErrors([...errors, pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period)]);
+                }
+                
+            } else {
+                setErrors(errors.filter((element) => !(pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period)).includes(element)));
+            }
     }
 
     const show_periode = (period, semester) => {
@@ -168,14 +185,16 @@ const FichesPointsPupils = () => {
         }
     }
 
-    // useEffect(() => {
-    //     if (classe.data.pupils.length !== 0) {
-    //         setPupil(classe.data.pupils[0]);
-    //     }
+    const find_error=(pupill, course, period)=>{
+        const value = pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (parseInt(pupill.pupil.pupil_id) + course + period);
 
-    //     // console.log(pupil);
+        return value;
+    }
 
-    // }, []);
+    useEffect(() => {
+        setErrors([]);
+        setMarks_edit([]);
+    }, []);
 
     return (
         <div style={{ marginBottom: 50, paddingTop: 10, width: '100%' }}>
@@ -186,7 +205,11 @@ const FichesPointsPupils = () => {
                             <tr>
                                 <td valign="top">
 
-                                    {pupil !== null ? <strong style={{ fontSize: 20 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</strong>:null}
+                                    {pupil !== null ? 
+                                    <strong style={{ fontSize: 20 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</strong>
+                                    :
+                                    <span>Cliquez sur le nom d'un élève pour commencer</span> 
+                                    }
 
                                     <div className="float-menu-right">
                                         <select
@@ -252,28 +275,28 @@ const FichesPointsPupils = () => {
 
                                                         {show_periode("P1", "S1") ?
                                                             <td style={{ width: 50, textAlign: 'center' }}>
-                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course.course_id + 1)) === undefined ? "input-red" : "red-input"}`}
+                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + (parseInt(pupil.pupil.pupil_id) + course.course_id + 'P1')) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course.course_id, 1)}
-                                                                    onChange={(text) => handle_change(pupil, course.course_id, 1, text.target.value, true)}
+                                                                    onChange={(text) => handle_change(pupil, parseInt(course.course_id), 'P1', text.target.value, true)}
                                                                 />
                                                             </td> : null}
 
                                                         {show_periode("P2", "S1") ?
                                                             <td style={{ width: 50, textAlign: 'center' }}>
-                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course.course_id + 2)) === undefined ? "input-red" : "red-input"}`}
+                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + (parseInt(pupil.pupil.pupil_id) + course.course_id + 'P2')) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course.course_id, 2)}
-                                                                    onChange={(text) => handle_change(pupil, course.course_id, 2, text.target.value, true)}
+                                                                    onChange={(text) => handle_change(pupil, parseInt(course.course_id), 'P2', parseInt(text.target.value), true)}
                                                                 />
                                                             </td> : null}
 
                                                         {show_periode("EX1", "S1") ?
                                                             <td style={{ width: 50, textAlign: 'center' }}>
-                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course.course_id + 10)) === undefined ? "input-red" : "red-input"}`}
+                                                                <input className={`input-marks ${errors.find(error => error === find_error(pupil, course.course_id, 'EX1')) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course.course_id, 10)}
-                                                                    onChange={(text) => handle_change(pupil, course.course_id, 10, text.target.value, true)}
+                                                                    onChange={(text) => handle_change(pupil, course.course_id, 'EX1', text.target.value, true)}
                                                                 />
                                                             </td> : null}
 
@@ -284,28 +307,28 @@ const FichesPointsPupils = () => {
 
                                                         {show_periode("P3", "S2") ?
                                                             <td style={{ width: 50, textAlign: 'center' }}>
-                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course.course_id + 3)) === undefined ? "input-red" : "red-input"}`}
+                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + (parseInt(pupil.pupil.pupil_id) + course.course_id + 'P3')) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course.course_id, 3)}
-                                                                    onChange={(text) => handle_change(pupil, course.course_id, 3, text.target.value, true)}
+                                                                    onChange={(text) => handle_change(pupil, course.course_id, 'P3', text.target.value, true)}
                                                                 />
                                                             </td> : null}
 
                                                         {show_periode("P4", "S2") ?
                                                             <td style={{ width: 50, textAlign: 'center' }}>
-                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course.course_id + 4)) === undefined ? "input-red" : "red-input"}`}
+                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + (parseInt(pupil.pupil.pupil_id) + course.course_id + 'P4')) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course.course_id, 4)}
-                                                                    onChange={(text) => handle_change(pupil, course.course_id, 4, text.target.value, true)}
+                                                                    onChange={(text) => handle_change(pupil, course.course_id, 'P4', text.target.value, true)}
                                                                 />
                                                             </td> : null}
 
                                                         {show_periode("EX2", "S2") ?
                                                             <td style={{ width: 50, textAlign: 'center' }}>
-                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course.course_id + 11)) === undefined ? "input-red" : "red-input"}`}
+                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + (parseInt(pupil.pupil.pupil_id) + course.course_id + 'EX2')) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course.course_id, 11)}
-                                                                    onChange={(text) => handle_change(pupil, course.course_id, 11, text.target.value, true)}
+                                                                    onChange={(text) => handle_change(pupil, course.course_id, 'EX2', text.target.value, true)}
                                                                 />
                                                             </td> : null}
 
@@ -332,19 +355,12 @@ const FichesPointsPupils = () => {
                                         Revenir en arrière
                                     </strong><br />
 
-                                    {/* <h3>Liste des Cours</h3> */}
-                                    {/* {classe.data.courses.map((course, index) => (
-                                        <span style={{ marginBottom: 13 }} onClick={() => {
-                                            setMarks_edit([]);
-                                            setErrors([]);
-                                            setCourse_id(course.course_id)
-                                        }}
-                                            className={`list-pupils ${course_id === course.course_id ? "list-pupils-selected" : ""}`} key={course.course_id}>{index + 1}. {course.course_name.toUpperCase()}</span>
-                                    ))} */}
                                     <h3>Liste des élèves</h3>
                                 {classe.data.pupils.map((pupill, index) => (
                                     <span onClick={() => {
                                         setPupil(pupill);
+                                        setErrors([]);
+                                        setMarks_edit([]);
                                     }} 
                                     className={`list-pupils ${pupil !== null ? parseInt(pupill.pupil.pupil_id) === parseInt(pupil.pupil.pupil_id) ? "list-pupils-selected" : "":""}`} key={pupill.pupil.pupil_id}>{index + 1} {pupill.pupil.first_name + " " + pupill.pupil.second_name + " " + pupill.pupil.last_name}</span>
                                 ))}
@@ -370,6 +386,7 @@ const FichesPointsPupils = () => {
                     <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
                     Chargement de la fiche des points...
                 </div>}
+                {/* <button className='button-enter-marks' onClick={() => edit_marks()}>Finir et envoyer</button> */}
         </div>
     )
 }

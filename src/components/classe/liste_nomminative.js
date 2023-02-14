@@ -82,13 +82,12 @@ class ListeNomminative extends React.Component {
         let class_id = this.props.classe.id_classes;
         let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/delete_class.php";
 
-        fetch(BaseURL,
-            {
-                method: 'POST',
-                body: JSON.stringify({
-                    class_id: class_id,
-                })
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                class_id: class_id,
             })
+        })
             .then((response) => response.json())
             .then((response) => {
 
@@ -108,7 +107,7 @@ class ListeNomminative extends React.Component {
 
     render() {
         return (
-            <div style={{ marginBottom: 50, paddingTop: 0, marginRight:10 }}>
+            <div style={{ marginBottom: 50, paddingTop: 0, marginRight: 10 }}>
 
                 {this.props.classe.pupils_count !== 0 ?
                     <div onClick={() => this.printContent("nomminative")} style={{ display: 'block', fontWeight: 'bold', float: 'right', marginBottom: -50, paddingTop: 3 }}>

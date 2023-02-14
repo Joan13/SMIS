@@ -45,6 +45,7 @@ import FicheSynthesePointsBrouillon from '../../components/classe/fiches_brouill
 import BulletinsBrouillon from '../../components/classe/fiches_brouillon/bulletins_brouillon';
 import BulletinsType2Brouillon from '../../components/classe/fiches_brouillon/bulletins_type2_brouillon';
 import ViewWorker from '../../components/workers/view_worker';
+import Conduites from '../../components/classe/conduite';
 
 class Home extends Component {
 
@@ -813,19 +814,18 @@ class Home extends Component {
                                         Quitter
                                     </div>
                                 </span> : null}
-                            <div
+                            <span
                                 onClick={() => this.state.logout_open ? this.setState({ logout_open: false }) : this.setState({ logout_open: true })}
                                 style={{ display: 'inline-block', textAlign: 'right', marginRight: 10 }}>
                                 <strong style={{ fontSize: 13 }}>{this.props.user_poste.toUpperCase()}</strong><br />
                                 <span style={{ display: 'inline-block' }}>{this.props.user_data.username}</span>
-                            </div>
-                            <span
-                                onClick={() => this.state.logout_open ? this.setState({ logout_open: false }) : this.setState({ logout_open: true })}
-                                className="user-home">
-                                <FiUser
-                                    color="black"
-                                    size={18} />
                             </span>
+                                <span onClick={() => this.state.logout_open ? this.setState({ logout_open: false }) : this.setState({ logout_open: true })}
+                                    className="user-home">
+                                    <FiUser
+                                        color="black"
+                                        size={15} />
+                                </span>
                             <FaCircle style={{ marginLeft: -13, marginBottom: -13, paddingTop: 20 }} size={13} color="rgb(0, 180, 0)" />
                         </div>
 
@@ -1060,6 +1060,12 @@ class Home extends Component {
                                             {this.props.middle_func === 30 ?
                                                 <div id="view_worker">
                                                     <ViewWorker />
+                                                </div>
+                                                : null}
+
+{this.props.middle_func === 31 ?
+                                                <div id="view_worker">
+                                                    <Conduites />
                                                 </div>
                                                 : null}
 

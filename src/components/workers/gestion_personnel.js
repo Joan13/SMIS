@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaAccusoft } from 'react-icons/fa';
+import { FaAccusoft, FaDatabase } from 'react-icons/fa';
 import { FiPlus } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { http } from '../../global_vars';
@@ -137,7 +137,7 @@ export default function GestionPersonnel() {
                 </table>
                 :
                 <div style={{ textAlign: 'center', marginTop: 200 }}>
-                    <FaAccusoft color='gray' size={80} />
+                    <FaDatabase color='gray' size={80} />
                     <div style={{ marginTop: 20, marginBottom: 10 }}>Aucun employé enregistré pour le moment</div>
                     <button onClick={() => {
                         dispatch({ type: "SET_CLASSE", payload: [] });

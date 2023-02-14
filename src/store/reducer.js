@@ -75,6 +75,7 @@ const initialState = {
     trics_timetable: [],
     timetable: [],
     course: [],
+    conduites:[],
     paiement_categories: [],
     modal_paiement_categories: false,
     modal_libelles: false,
@@ -92,6 +93,8 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_MODAL_PAIEMENT_CATEGORIES":
             return { ...state, modal_paiement_categories: action.payload }
+            case "SET_CONDUITES":
+            return { ...state, conduites: action.payload }
             case "SET_MARKS_MODIFIED":
             return { ...state, marks_modified: action.payload }
             case "SET_FICHE_PAIE":

@@ -82,13 +82,12 @@ const FichesPointsCourses = () => {
         if (course_id !== null || marks_edit.length !== 0) {
             let BaseURL = http + url_server + "/yambi_class_SMIS/API/edit_marks.php";
 
-            fetch(BaseURL,
-                {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        marks: marks_edit
-                    })
+            fetch(BaseURL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    marks: marks_edit
                 })
+            })
                 .then((response) => response.json())
                 .then((response) => {
                     if (response.success === '1' || response.success === '2') {
@@ -156,8 +155,11 @@ const FichesPointsCourses = () => {
             setMarks_edit(global_marks);
         }
 
-        if (parseInt(marks) > findCourse(course).total_marks) {
-            setErrors([...errors, pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period)]);
+        if (parseInt(marks) > findCourse(course).total_marks || parseInt(marks) < 0) {
+            if (errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period)) === undefined) {
+                setErrors([...errors, pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period)]);
+            }
+
         } else {
             setErrors(errors.filter((element) => !(pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period)).includes(element)));
         }
@@ -173,6 +175,9 @@ const FichesPointsCourses = () => {
         if (classe.courses[0] !== undefined) {
             setCourse_id(classe.courses[0].course_id);
         }
+
+        setErrors([]);
+        setMarks_edit([]);
 
     }, [classe.courses]);
 
@@ -238,7 +243,7 @@ const FichesPointsCourses = () => {
                                                 {show_periode("S2", "S2") ?
                                                     <th style={{ width: 50, textAlign: 'center' }}>S2</th> : null}
 
-                                                {show_periode("*","*") ?
+                                                {show_periode("*", "*") ?
                                                     <th style={{ width: 50, textAlign: 'center' }}>TOTAL</th> : null}
                                             </tr>
                                         </thead>
@@ -314,7 +319,7 @@ const FichesPointsCourses = () => {
                                                                 {parseInt(render_period_marks(pupil.marks, course_id, 3)) + parseInt(render_period_marks(pupil.marks, course_id, 4)) + parseInt(render_period_marks(pupil.marks, course_id, 11))}
                                                             </td> : null}
 
-                                                        {show_periode("*","*") ?
+                                                        {show_periode("*", "*") ?
                                                             <td style={{ width: 50, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
                                                                 {parseInt(render_period_marks(pupil.marks, course_id, 3)) + parseInt(render_period_marks(pupil.marks, course_id, 4)) + parseInt(render_period_marks(pupil.marks, course_id, 11)) + parseInt(render_period_marks(pupil.marks, course_id, 1)) + parseInt(render_period_marks(pupil.marks, course_id, 2)) + parseInt(render_period_marks(pupil.marks, course_id, 10))}
                                                             </td> : null}

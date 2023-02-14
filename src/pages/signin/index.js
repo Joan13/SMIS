@@ -82,6 +82,9 @@ const Signin = () => {
                     }
                 })
                 .catch((error) => {
+                    setEmpty_error(false);
+                        setIncorrect(false);
+                        setIs_loading(false);
                     dispatch({
                         type: "SET_MODAL_INFO",
                         payload: {
@@ -148,7 +151,7 @@ const Signin = () => {
                                     marginLeft: 10,
                                     fontSize: !see_pass && password !== "" ? 35 : 13,
                                     height: !see_pass && password !== "" ? 25 : 25,
-                                    letterSpacing: !see_pass && password !== "" ? 2 : null,
+                                    letterSpacing: !see_pass && password !== "" ? 1 : null,
                                 }}
                                 className="input"
                                 type={see_pass ? "text" : "password"}
