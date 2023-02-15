@@ -1,10 +1,10 @@
 import { connect, useSelector } from 'react-redux';
-import {home_redirect, http} from '../../global_vars'
+import { home_redirect, http } from '../../global_vars'
 import { mapStateToProps } from '../../store/state_props';
 function FicheIdentites() {
 
-    const autres = useSelector(state=>state.autres);
-    const classe = useSelector(state=>state.classe);
+    const autres = useSelector(state => state.autres);
+    const classe = useSelector(state => state.classe);
 
     function printContent(divName) {
 
@@ -20,12 +20,12 @@ function FicheIdentites() {
     }
 
     return (
-        <div class="center-fixedd" style={{ marginBottom: 50, paddingTop: 0 }}>
+        <div className="center-fixedd" style={{ marginBottom: 50, paddingTop: 0 }}>
             <span onClick={() => printContent("identities")} className="add-minus" style={{ fontWeight: 'bold' }}>
-                    IMPRIMER LA FICHE
-                </span><br /><br />
+                IMPRIMER LA FICHE
+            </span><br /><br />
 
-                <div id="identities">
+            <div id="identities">
                 <table style={{ width: '100%' }}>
                     <tbody>
                         <tr>
@@ -80,9 +80,6 @@ function FicheIdentites() {
                                     ))}
                                 </table>
                             </td>
-                            {/* <td valign="top" style={{ paddingLeft: 30 }} className="td-courses">
-                                <Courses />
-                            </td> */}
                         </tr>
                     </tbody>
                 </table>

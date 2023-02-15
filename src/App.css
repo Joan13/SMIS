@@ -332,24 +332,42 @@ h5 {
 }
 
 .main-div-modal {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0px;
   bottom: 0px;
   left: 0px;
   right: 0px;
+  display:flex;
+  justify-content: center;
+  align-items:center;
 }
 
 .main-modal {
   background-color: white;
-  width: 40%;
-  position: fixed;
-  height: 20%;
-  left: 30%;
-  top: 25%;
-  border-radius: 5px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
+  border-radius: 15px;
+  padding-top:25px;
+  max-width: 300px;
+}
+
+.button-modal {
+  border-top:1px solid rgb(190, 190, 190);
+  border-bottom: 1px solid rgb(190, 190, 190);
+  /* height:35px; */
+  padding-top:12px;
+  padding-bottom:15px;
+  text-align: center;
+  cursor:pointer;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  font-weight: bold;
+  transition: 0.6s;
+}
+
+.button-modal:hover {
+  color:white;
+  background-color: rgba(0, 80, 180, 1);
+  transition: 0.6s;
 }
 
 .main-modal-view {
@@ -374,19 +392,6 @@ h5 {
   text-align: center;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
-}
-
-.title-modal {
-  display: block;
-  margin-right: 30px;
-  margin-left: 35px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-.main-text-modal {
-  padding-left: 35px;
-  padding-right: 30px;
 }
 
 .title-big {
@@ -666,6 +671,7 @@ h5 {
   border-collapse: collapse;
   margin-top: -27px;
   border: 1px solid black;
+  /* height:100%; */
 }
 
 .full-table-liste-marks {

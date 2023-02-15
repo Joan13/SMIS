@@ -418,7 +418,7 @@ class Courses extends Component {
                             </thead>
                             {this.props.classe.data.courses.map((course, index) => (
                                 <tbody key={index}>
-                                    <tr key={index + 1}>
+                                    <tr key={index + 1}  style={{ backgroundColor: index % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
                                         <td style={{ paddingLeft: 10, paddingRight: 10 }}>
                                             {index + 1}
                                         </td>
@@ -490,6 +490,7 @@ class Courses extends Component {
                                     textAlign:'center',
                                 }}>
                                 <table style={{display:'inline-block'}}>
+                                    <tbody>
                                     <tr>
                                         <td>
                                             <input
@@ -507,6 +508,7 @@ class Courses extends Component {
                                                 className="input-normall" />
                                         </td>
                                     </tr>
+                                    </tbody>
                                 </table>
                                 </div>
 <span style={{

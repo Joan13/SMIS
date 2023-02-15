@@ -219,252 +219,259 @@ class PalmaresPupils extends Component {
         window.location.replace(http + this.props.url_server + home_redirect);
     }
 
-    componentDidMount() {
-        // this.open_class();
+    // componentDidMount() {
+    //     // this.open_class();
 
-        // if (this.state.can_mount < 5) {
-        //     this.intervalID = setInterval(() => {
-        //         let classe = sessionStorage.getItem('classeYambiSMIS');
-        //         classe = JSON.parse(classe);
+    //     // if (this.state.can_mount < 5) {
+    //     //     this.intervalID = setInterval(() => {
+    //     //         let classe = sessionStorage.getItem('classeYambiSMIS');
+    //     //         classe = JSON.parse(classe);
 
-        //         if (classe.id_classes !== this.state.classe.id_classes) {
-        //             this.open_class();
-        //             console.log("can mount palmares")
-        //         }
-        //     }, 500);
+    //     //         if (classe.id_classes !== this.state.classe.id_classes) {
+    //     //             this.open_class();
+    //     //             console.log("can mount palmares")
+    //     //         }
+    //     //     }, 500);
 
-        //     this.setState({ can_mount: this.state.can_mount + 1 });
-        // }
-    }
+    //     //     this.setState({ can_mount: this.state.can_mount + 1 });
+    //     // }
+    // }
 
-    componentWillUnmount() {
-        clearInterval(this.intervalID);
-    }
+    // componentWillUnmount() {
+    //     clearInterval(this.intervalID);
+    // }
 
     render() {
         return (
-            <div style={{ paddingTop: 0, marginLeft: 15 }} className="center-fixed">
+            <div style={{ paddingTop: 0, marginLeft: 15, paddingBottom:50 }} className="center-fixed">
 
                 {!this.props.loading_footer ?
-                    <table style={{ width: '98%', marginRight:15 }}>
-                    <tbody>
-                        <tr>
-                            <td valign="top">
-                                <div className="float-menu-right">
-                                    <select
-                                        onChange={(val) => this.assign_periode(val.target.value)}
-                                        style={{ color: 'rgba(0, 80, 180)' }}
-                                        value={this.state.periode}
-                                        className="select-no-border-select">
-                                        {/* <option value="12">Toutes les périodes</option>
-                        <option>- - - - - - - - - - - -</option> */}
-                                        <option value="1">Première période</option>
-                                        <option value="2">Deuxième période</option>
-                                        <option value="3">Troisième période</option>
-                                        <option value="4">Quatrième période</option>
-                                        <option>- - - - - - - - - - - -</option>
-                                        <option value="10">Examen premier semestre</option>
-                                        <option value="11">Examen deuxième semestre</option>
-                                        <option>- - - - - - - - - - - -</option>
-                                        <option value="40">Premier semestre</option>
-                                        <option value="50">Deuxième semestre</option>
-                                    </select>
-                                </div>
-
-                                <div onClick={() => this.printContent("print-palmares")} className="span-blockk">
-                                    IMPRIMER
-                                </div>
-
-
-                                <div id="print-palmares" style={{ marginTop: -20 }}>
-
-                                    <div>
-                                        <strong>{this.props.autres.school_name}</strong><br />
-                                        <strong>{this.props.autres.school_bp}</strong><br />
-                                        <strong>{this.props.autres.school_commune}</strong>
+                    <table style={{ width: '98%', marginRight: 15 }}>
+                        <tbody>
+                            <tr>
+                                <td valign="top">
+                                    <div className="float-menu-right">
+                                        <select
+                                            onChange={(val) => this.assign_periode(val.target.value)}
+                                            style={{ color: 'rgba(0, 80, 180)' }}
+                                            value={this.state.periode}
+                                            className="select-no-border-select">
+                                            <option value="1">Première période</option>
+                                            <option value="2">Deuxième période</option>
+                                            <option value="3">Troisième période</option>
+                                            <option value="4">Quatrième période</option>
+                                            <option>- - - - - - - - - - - -</option>
+                                            <option value="10">Examen premier semestre</option>
+                                            <option value="11">Examen deuxième semestre</option>
+                                            <option>- - - - - - - - - - - -</option>
+                                            <option value="40">Premier semestre</option>
+                                            <option value="50">Deuxième semestre</option>
+                                        </select>
                                     </div>
 
-                                    <div className="float-right-div">
-                                        <strong>{this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.order_id}</strong><br />
-                                        <strong>Année scolaire : {this.props.autres.annee}</strong>
+                                    <div onClick={() => this.printContent("print-palmares")} className="span-blockk">
+                                        IMPRIMER
                                     </div>
-                                    <h3>PALMARÈS DES RÉSULTATS {this.state.periode_full}</h3>
-                                    <table className="full-table-liste-markss" style={{ marginTop: 10 }}>
-                                        <thead>
-                                            <tr>
-                                                <th rowSpan="2" style={{ width: 30, textAlign: 'center' }}>No</th>
-                                                <th rowSpan="2" style={{ paddingLeft: 10, textAlign: 'left' }}>Noms de l'élève</th>
-                                                {this.state.periode === "1" ?
-                                                    <th colSpan="2" style={{ textAlign: 'center' }}>P1</th> : null}
-
-                                                {this.state.periode === "2" ?
-                                                    <th colSpan="2" style={{ textAlign: 'center' }}>P2</th> : null}
-
-                                                {this.state.periode === "10" ?
-                                                    <th colSpan="2" style={{ textAlign: 'center' }}>EX1</th> : null}
-
-                                                {this.state.periode === "40" ?
-                                                    <th colSpan="2" style={{ textAlign: 'center' }}>S1</th> : null}
-
-                                                {this.state.periode === "3" ?
-                                                    <th colSpan="2" style={{ textAlign: 'center' }}>P3</th> : null}
-
-                                                {this.state.periode === "4" ?
-                                                    <th colSpan="2" style={{ textAlign: 'center' }}>P4</th> : null}
-
-                                                {this.state.periode === "11" ?
-                                                    <th colSpan="2" style={{ textAlign: 'center' }}>EX2</th> : null}
-
-                                                {this.state.periode === "50" ?
-                                                    <th colSpan="2" style={{ textAlign: 'center' }}>S2</th> : null}
-
-                                                {this.state.periode === "12" ?
-                                                    <th colSpan="2" style={{ textAlign: 'center' }}>TOTAL</th> : null}
-                                            </tr>
-                                            <tr>
-                                                {this.state.periode === "1" ?
-                                                    <th style={{ textAlign: 'center' }}>%</th> : null}
-                                                {this.state.periode === "1" ?
-                                                    <th style={{ textAlign: 'center' }}>Place</th> : null}
-
-                                                {this.state.periode === "2" ?
-                                                    <th style={{ textAlign: 'center' }}>%</th> : null}
-                                                {this.state.periode === "2" ?
-                                                    <th style={{ textAlign: 'center' }}>Place</th> : null}
-
-                                                {this.state.periode === "10" ?
-                                                    <th style={{ textAlign: 'center' }}>%</th> : null}
-                                                {this.state.periode === "10" ?
-                                                    <th style={{ textAlign: 'center' }}>Place</th> : null}
-
-                                                {this.state.periode === "40" ?
-                                                    <th style={{ textAlign: 'center' }}>%</th> : null}
-                                                {this.state.periode === "40" ?
-                                                    <th style={{ textAlign: 'center' }}>Place</th> : null}
-
-                                                {this.state.periode === "3" ?
-                                                    <th style={{ textAlign: 'center' }}>%</th> : null}
-                                                {this.state.periode === "3" ?
-                                                    <th style={{ textAlign: 'center' }}>Place</th> : null}
-
-                                                {this.state.periode === "4" ?
-                                                    <th style={{ textAlign: 'center' }}>%</th> : null}
-                                                {this.state.periode === "4" ?
-                                                    <th style={{ textAlign: 'center' }}>Place</th> : null}
-
-                                                {this.state.periode === "11" ?
-                                                    <th style={{ textAlign: 'center' }}>%</th> : null}
-                                                {this.state.periode === "11" ?
-                                                    <th style={{ textAlign: 'center' }}>Place</th> : null}
-
-                                                {/* {this.state.periode == "12" ?
-                                    <th style={{ textAlign: 'center' }}>%</th> :null}
-                                        {this.state.periode == "12" ?
-                                    <th style={{ textAlign: 'center' }}>Place</th> :null} */}
-
-                                                {this.state.periode === "50" ?
-                                                    <th style={{ textAlign: 'center' }}>%</th> : null}
-                                                {this.state.periode === "50" ?
-                                                    <th style={{ textAlign: 'center' }}>Place</th> : null}
-                                            </tr>
-                                        </thead>
-                                        {this.state.periode === "1" ?
-                                            this.props.classe.data.array_places_1.map((place, index_p) => (
-                                                this.props.classe.data.pupils.map((pupil, index) => {
-                                                    if (place.pupil_id === pupil.pupil.pupil_id) {
-                                                        return (
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                                    <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                    <td style={{ textAlign: 'center' }}>
-                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 1) * 100) / this.render_total_marks_courses(1)).toString().substr(0, 4)}
-                                                                    </td>
-                                                                    <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        )
-                                                    }
-                                                })
-                                            ))
-                                            : null}
-
-                                        {this.state.periode === "2" ?
-                                            this.props.classe.data.array_places_2.map((place, index_p) => (
-                                                this.props.classe.data.pupils.map((pupil, index) => {
-                                                    if (place.pupil_id === pupil.pupil.pupil_id) {
-                                                        return (
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                                    <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                    <td style={{ textAlign: 'center' }}>
-                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 2) * 100) / this.render_total_marks_courses(2)).toString().substr(0, 4)}
-                                                                    </td>
-                                                                    <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        )
-                                                    }
-                                                })
-                                            ))
-                                            : null}
-
-                                        {this.state.periode === "10" ?
-                                            this.props.classe.data.array_places_10.map((place, index_p) => (
-                                                this.props.classe.data.pupils.map((pupil, index) => {
-                                                    if (place.pupil_id === pupil.pupil.pupil_id) {
-                                                        return (
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                                    <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                    <td style={{ textAlign: 'center' }}>
-                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 10) * 100) / this.render_total_marks_courses(10)).toString().substr(0, 4)}
-                                                                    </td>
-                                                                    <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        )
-                                                    }
-                                                })
-                                            ))
-                                            : null}
 
 
-                                        {this.state.periode === "40" ?
-                                            this.props.classe.data.array_places_tot1.map((place, index_p) => (
-                                                this.props.classe.data.pupils.map((pupil, index) => {
-                                                    if (place.pupil_id === pupil.pupil.pupil_id) {
-                                                        return (
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                                    <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                    <td style={{ textAlign: 'center' }}>
-                                                                        {((parseInt(this.render_pupil_marks_trim(pupil.pupil.pupil_id, '1', '2', '10') * 100) / this.render_total_marks_courses(40)).toString().substr(0, 4))}
-                                                                    </td>
-                                                                    <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        )
-                                                    }
-                                                })
-                                            ))
-                                            : null}
+                                    <div id="print-palmares" style={{ marginTop: -20 }}>
 
+                                        <div>
+                                            <strong>{this.props.autres.school_name}</strong><br />
+                                            <strong>{this.props.autres.school_bp}</strong><br />
+                                            <strong>{this.props.autres.school_commune}</strong>
+                                        </div>
 
-                                        {this.state.periode === "3" ?
-                                            this.props.classe.data.array_places_3.map((place, index_p) => (
-                                                this.props.classe.data.pupils.map((pupil, index) => {
-                                                    if (place.pupil_id === pupil.pupil.pupil_id) {
+                                        <div className="float-right-div">
+                                            <strong>{this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.order_id}</strong><br />
+                                            <strong>Année scolaire : {this.props.autres.annee}</strong>
+                                        </div>
+                                        <h3>PALMARÈS DES RÉSULTATS {this.state.periode_full}</h3>
+                                        <table className="full-table-liste-markss" style={{ marginTop: 10 }}>
+                                            <thead>
+                                                <tr>
+                                                    <th rowSpan="2" style={{ width: 30, textAlign: 'center' }}>No</th>
+                                                    <th rowSpan="2" style={{ paddingLeft: 10, textAlign: 'left' }}>Noms de l'élève</th>
+                                                    {this.state.periode === "1" ?
+                                                        <th colSpan="2" style={{ textAlign: 'center' }}>P1</th> : null}
 
-                                                        let pourcent_stage = ((this.render_pupil_marks(pupil.pupil.pupil_id, 3) * 100) / this.render_total_marks_courses(3)).toString().substr(0, 4);
+                                                    {this.state.periode === "2" ?
+                                                        <th colSpan="2" style={{ textAlign: 'center' }}>P2</th> : null}
 
-                                                        if (pourcent_stage >= "60") {
+                                                    {this.state.periode === "10" ?
+                                                        <th colSpan="2" style={{ textAlign: 'center' }}>EX1</th> : null}
+
+                                                    {this.state.periode === "40" ?
+                                                        <th colSpan="2" style={{ textAlign: 'center' }}>S1</th> : null}
+
+                                                    {this.state.periode === "3" ?
+                                                        <th colSpan="2" style={{ textAlign: 'center' }}>P3</th> : null}
+
+                                                    {this.state.periode === "4" ?
+                                                        <th colSpan="2" style={{ textAlign: 'center' }}>P4</th> : null}
+
+                                                    {this.state.periode === "11" ?
+                                                        <th colSpan="2" style={{ textAlign: 'center' }}>EX2</th> : null}
+
+                                                    {this.state.periode === "50" ?
+                                                        <th colSpan="2" style={{ textAlign: 'center' }}>S2</th> : null}
+
+                                                    {this.state.periode === "12" ?
+                                                        <th colSpan="2" style={{ textAlign: 'center' }}>TOTAL</th> : null}
+                                                </tr>
+                                                <tr>
+                                                    {this.state.periode === "1" ?
+                                                        <th style={{ textAlign: 'center' }}>%</th> : null}
+                                                    {this.state.periode === "1" ?
+                                                        <th style={{ textAlign: 'center' }}>Place</th> : null}
+
+                                                    {this.state.periode === "2" ?
+                                                        <th style={{ textAlign: 'center' }}>%</th> : null}
+                                                    {this.state.periode === "2" ?
+                                                        <th style={{ textAlign: 'center' }}>Place</th> : null}
+
+                                                    {this.state.periode === "10" ?
+                                                        <th style={{ textAlign: 'center' }}>%</th> : null}
+                                                    {this.state.periode === "10" ?
+                                                        <th style={{ textAlign: 'center' }}>Place</th> : null}
+
+                                                    {this.state.periode === "40" ?
+                                                        <th style={{ textAlign: 'center' }}>%</th> : null}
+                                                    {this.state.periode === "40" ?
+                                                        <th style={{ textAlign: 'center' }}>Place</th> : null}
+
+                                                    {this.state.periode === "3" ?
+                                                        <th style={{ textAlign: 'center' }}>%</th> : null}
+                                                    {this.state.periode === "3" ?
+                                                        <th style={{ textAlign: 'center' }}>Place</th> : null}
+
+                                                    {this.state.periode === "4" ?
+                                                        <th style={{ textAlign: 'center' }}>%</th> : null}
+                                                    {this.state.periode === "4" ?
+                                                        <th style={{ textAlign: 'center' }}>Place</th> : null}
+
+                                                    {this.state.periode === "11" ?
+                                                        <th style={{ textAlign: 'center' }}>%</th> : null}
+                                                    {this.state.periode === "11" ?
+                                                        <th style={{ textAlign: 'center' }}>Place</th> : null}
+
+                                                    {this.state.periode === "50" ?
+                                                        <th style={{ textAlign: 'center' }}>%</th> : null}
+                                                    {this.state.periode === "50" ?
+                                                        <th style={{ textAlign: 'center' }}>Place</th> : null}
+                                                </tr>
+                                            </thead>
+                                            {this.state.periode === "1" ?
+                                                this.props.classe.data.array_places_1.map((place, index_p) => (
+                                                    this.props.classe.data.pupils.map((pupil, index) => {
+                                                        if (place.pupil_id === pupil.pupil.pupil_id) {
                                                             return (
-                                                                <tbody>
-                                                                    <tr>
+                                                                <tbody key={index}>
+                                                                    <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
+                                                                        <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                        <td style={{ textAlign: 'center' }}>
+                                                                            {((this.render_pupil_marks(pupil.pupil.pupil_id, 1) * 100) / this.render_total_marks_courses(1)).toString().substr(0, 4)}
+                                                                        </td>
+                                                                        <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            )
+                                                        }
+                                                    })
+                                                ))
+                                                : null}
+
+                                            {this.state.periode === "2" ?
+                                                this.props.classe.data.array_places_2.map((place, index_p) => (
+                                                    this.props.classe.data.pupils.map((pupil, index) => {
+                                                        if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                            return (
+                                                                <tbody key={index}>
+                                                                    <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
+                                                                        <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                        <td style={{ textAlign: 'center' }}>
+                                                                            {((this.render_pupil_marks(pupil.pupil.pupil_id, 2) * 100) / this.render_total_marks_courses(2)).toString().substr(0, 4)}
+                                                                        </td>
+                                                                        <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            )
+                                                        }
+                                                    })
+                                                ))
+                                                : null}
+
+                                            {this.state.periode === "10" ?
+                                                this.props.classe.data.array_places_10.map((place, index_p) => (
+                                                    this.props.classe.data.pupils.map((pupil, index) => {
+                                                        if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                            return (
+                                                                <tbody key={index}>
+                                                                    <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
+                                                                        <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                        <td style={{ textAlign: 'center' }}>
+                                                                            {((this.render_pupil_marks(pupil.pupil.pupil_id, 10) * 100) / this.render_total_marks_courses(10)).toString().substr(0, 4)}
+                                                                        </td>
+                                                                        <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            )
+                                                        }
+                                                    })
+                                                ))
+                                                : null}
+
+
+                                            {this.state.periode === "40" ?
+                                                this.props.classe.data.array_places_tot1.map((place, index_p) => (
+                                                    this.props.classe.data.pupils.map((pupil, index) => {
+                                                        if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                            return (
+                                                                <tbody key={index}>
+                                                                    <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
+                                                                        <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                        <td style={{ textAlign: 'center' }}>
+                                                                            {((parseInt(this.render_pupil_marks_trim(pupil.pupil.pupil_id, '1', '2', '10') * 100) / this.render_total_marks_courses(40)).toString().substr(0, 4))}
+                                                                        </td>
+                                                                        <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            )
+                                                        }
+                                                    })
+                                                ))
+                                                : null}
+
+
+                                            {this.state.periode === "3" ?
+                                                this.props.classe.data.array_places_3.map((place, index_p) => (
+                                                    this.props.classe.data.pupils.map((pupil, index) => {
+                                                        if (place.pupil_id === pupil.pupil.pupil_id) {
+
+                                                            let pourcent_stage = ((this.render_pupil_marks(pupil.pupil.pupil_id, 3) * 100) / this.render_total_marks_courses(3)).toString().substr(0, 4);
+
+                                                            if (pourcent_stage >= "60") {
+                                                                return (
+                                                                    <tbody key={index}>
+                                                                        <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
+                                                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                                            <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                            <td style={{ textAlign: 'center' }}>
+                                                                                {((this.render_pupil_marks(pupil.pupil.pupil_id, 3) * 100) / this.render_total_marks_courses(3)).toString().substr(0, 4)}
+                                                                            </td>
+                                                                            <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                )
+                                                            }
+
+                                                            return (
+                                                                <tbody key={index}>
+                                                                    <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
                                                                         <td style={{ textAlign: 'center' }}>{index + 1}</td>
                                                                         <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
                                                                         <td style={{ textAlign: 'center' }}>
@@ -475,101 +482,84 @@ class PalmaresPupils extends Component {
                                                                 </tbody>
                                                             )
                                                         }
+                                                    })
+                                                ))
+                                                : null}
 
-                                                        return (
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                                    <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                    <td style={{ textAlign: 'center' }}>
-                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 3) * 100) / this.render_total_marks_courses(3)).toString().substr(0, 4)}
-                                                                    </td>
-                                                                    <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        )
-                                                    }
-                                                })
-                                            ))
-                                            : null}
+                                            {this.state.periode === "4" ?
+                                                this.props.classe.data.array_places_4.map((place, index_p) => (
+                                                    this.props.classe.data.pupils.map((pupil, index) => {
+                                                        if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                            return (
+                                                                <tbody key={index}>
+                                                                    <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
+                                                                        <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                        <td style={{ textAlign: 'center' }}>
+                                                                            {((this.render_pupil_marks(pupil.pupil.pupil_id, 4) * 100) / this.render_total_marks_courses(4)).toString().substr(0, 4)}
+                                                                        </td>
+                                                                        <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            )
+                                                        }
+                                                    })
+                                                ))
+                                                : null}
 
-                                        {this.state.periode === "4" ?
-                                            this.props.classe.data.array_places_4.map((place, index_p) => (
-                                                this.props.classe.data.pupils.map((pupil, index) => {
-                                                    if (place.pupil_id === pupil.pupil.pupil_id) {
-                                                        return (
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                                    <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                    <td style={{ textAlign: 'center' }}>
-                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 4) * 100) / this.render_total_marks_courses(4)).toString().substr(0, 4)}
-                                                                    </td>
-                                                                    <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        )
-                                                    }
-                                                })
-                                            ))
-                                            : null}
-
-                                        {this.state.periode === "11" ?
-                                            this.props.classe.data.array_places_11.map((place, index_p) => (
-                                                this.props.classe.data.pupils.map((pupil, index) => {
-                                                    if (place.pupil_id === pupil.pupil.pupil_id) {
-                                                        return (
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                                    <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                    <td style={{ textAlign: 'center' }}>
-                                                                        {((this.render_pupil_marks(pupil.pupil.pupil_id, 11) * 100) / this.render_total_marks_courses(11)).toString().substr(0, 4)}
-                                                                    </td>
-                                                                    <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        )
-                                                    }
-                                                })
-                                            ))
-                                            : null}
+                                            {this.state.periode === "11" ?
+                                                this.props.classe.data.array_places_11.map((place, index_p) => (
+                                                    this.props.classe.data.pupils.map((pupil, index) => {
+                                                        if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                            return (
+                                                                <tbody key={index}>
+                                                                    <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
+                                                                        <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                        <td style={{ textAlign: 'center' }}>
+                                                                            {((this.render_pupil_marks(pupil.pupil.pupil_id, 11) * 100) / this.render_total_marks_courses(11)).toString().substr(0, 4)}
+                                                                        </td>
+                                                                        <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            )
+                                                        }
+                                                    })
+                                                ))
+                                                : null}
 
 
-                                        {this.state.periode === "50" ?
-                                            this.props.classe.data.array_places_11.map((place, index_p) => (
-                                                this.props.classe.data.pupils.map((pupil, index) => {
-                                                    if (place.pupil_id === pupil.pupil.pupil_id) {
-                                                        return (
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                                    <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                    <td style={{ textAlign: 'center' }}>
-                                                                        {((parseInt(this.render_pupil_marks_trim(pupil.pupil.pupil_id, '3', '4', '11')) * 100) / this.render_total_marks_courses(50)).toString().substr(0, 4)}
-                                                                    </td>
-                                                                    <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        )
-                                                    }
-                                                })
-                                            ))
-                                            : null}
-                                    </table>
-                                </div>
-                            </td>
-                            {/* <td valign="top" style={{ paddingLeft: 30 }} className="td-courses">
-                                <Courses />
-                            </td> */}
-                        </tr>
-                    </tbody>
-                </table>
-                :
-                <div className="progress-center-progress">
-                                <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
-                                Chargement des palmarès...
-                            </div>}
+                                            {this.state.periode === "50" ?
+                                                this.props.classe.data.array_places_11.map((place, index_p) => (
+                                                    this.props.classe.data.pupils.map((pupil, index) => {
+                                                        if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                            return (
+                                                                <tbody key={index}>
+                                                                    <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
+                                                                        <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                        <td style={{ textAlign: 'center' }}>
+                                                                            {((parseInt(this.render_pupil_marks_trim(pupil.pupil.pupil_id, '3', '4', '11')) * 100) / this.render_total_marks_courses(50)).toString().substr(0, 4)}
+                                                                        </td>
+                                                                        <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            )
+                                                        }
+                                                    })
+                                                ))
+                                                : null}
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    :
+                    <div className="progress-center-progress">
+                        <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
+                        Chargement du palmarès...
+                    </div>}
 
             </div>
         )

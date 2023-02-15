@@ -79,7 +79,7 @@ const ClassePaiementCategorisation = () => {
     }
 
     return (
-        <div style={{marginRight:10}}>
+        <div style={{marginRight:10, marginBottom:50}}>
             <div style={{ float: 'right', marginBottom: -60, paddingTop: 10 }}>
                 <span onClick={() => printContent("paiement_categories")} className="add-minus" style={{ fontWeight: 'bold', marginBottom: 10 }}>
                     <FiPrinter /> IMPRIMER LA FICHE

@@ -14,6 +14,7 @@ const Signin = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const user_data = useSelector(state => state.user_data);
+    const url = useSelector(state=>state.url_server);
     const [url_server, setUrl_erver] = useState(url_online);
     const [connection_type, setConnection_type] = useState(0);
     const [is_loading, setIs_loading] = useState(false);
@@ -83,15 +84,14 @@ const Signin = () => {
                 })
                 .catch((error) => {
                     setEmpty_error(false);
-                        setIncorrect(false);
-                        setIs_loading(false);
+                    setIncorrect(false);
+                    setIs_loading(false);
                     dispatch({
-                        type: "SET_MODAL_INFO",
+                        type: "SET_MODAL_VIEW",
                         payload: {
-                            modal_title: "Information erreur",
+                            modal_title: "Erreur de connexion",
                             modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.",
                             modal_view: true,
-                            is_loading: false,
                         }
                     });
                 });
@@ -102,6 +102,23 @@ const Signin = () => {
         console.log(user_data)
     }, []);
 
+
+    // if(user_data.length !== 0) {
+
+    //     const promise = new Promise((resolve, reject) => {
+    //         sessionStorage.setItem("yambi_smis_url_server", url);
+    //                     sessionStorage.setItem("assemble_user_data", JSON.stringify(user_data));
+    //                     dispatch({ type: "SET_USER_CONNECTED", payload: user_data });
+    //                     dispatch({ type: "SET_URL_SERVER", payload: url });
+
+    //                     resolve();
+    //     })
+
+    //     promise.finally(()=>{
+    //         return (<Navigate to={'/'} />);
+    //     });
+        
+    // } else 
     if ((redirectToReferrer && sessionStorage.getItem('assemble_user_data'))) {
         return (<Navigate to={'/'} />);
     } else {
@@ -258,20 +275,9 @@ const Signin = () => {
                                 </div>
                             </div>
                             : null}
-
-
-
                     </div>
                     <div style={{ marginTop: 100 }}><span style={{ color: 'rgba(0, 80, 180)' }}> Contact -</span> Tous droits réservés © Agisha Migani Joan - Yambi, Inc. {year}</div>
                 </div><br /><br />
-
-                {/* {this.state.modal_view ?
-                    <div className="main-div-modal">
-                        {modalView(this.state.modal_title, this.state.modal_main_text)}
-                        <div className="sub-div-modal">
-                            <Button onClick={() => this.setState({ modal_view: false })} variant="outlined" style={{ color: 'black', borderWidth: 1, borderColor: 'rgba(0, 0, 0, 0.3)' }}>Fermer</Button>
-                        </div>
-                    </div> : null} */}
             </div>
         )
     }

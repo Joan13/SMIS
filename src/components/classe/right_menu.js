@@ -137,9 +137,9 @@ export default function RightClasseMenu() {
                                                 style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'transparent' }} className={`select-no-border ${middle_func === 5 ? "select-no-border-bold" : ""}`}>
                                                 <option value="">Sélectionner une fiche</option>
                                                 <option value="FI">Fiche des identités</option>
-                                                <option value="FO">Fiche d'observation</option>
+                                                {/* <option value="FO">Fiche d'observation</option> */}
                                                 <option value="E13">Fiche E13</option>
-                                                <option value="E80">Fiche E80</option>
+                                                {/* <option value="E80">Fiche E80</option> */}
                                             </select>
                                         </span>
                                     </div>

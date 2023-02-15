@@ -1155,13 +1155,13 @@ class Home extends Component {
                     {this.props.modal_libelles ?
                         <Libelles /> : null}
 
-                    {this.state.modal_view ?
+                    {/* {this.state.modal_view ?
                         <div className="main-div-modal">
-                            {modalView(this.state.modal_title, this.state.modal_main_text)}
+                            {ModalView(this.state.modal_title, this.state.modal_main_text)}
                             <div className="sub-div-modal">
                                 <Button onClick={() => this.setState({ modal_view: false })} variant="outlined" style={{ color: 'black', borderWidth: 1, borderColor: 'rgba(0, 0, 0, 0.3)' }}>Fermer</Button>
                             </div>
-                        </div> : null}
+                        </div> : null} */}
                 </div>
             </div>
         )

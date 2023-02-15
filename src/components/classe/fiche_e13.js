@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { mapStateToProps } from '../../store/state_props';
 import { home_redirect, http } from "./../../global_vars";
 import { connect } from 'react-redux';
+import { CircularProgress } from '@material-ui/core';
 
 class FicheE13 extends Component {
 
@@ -309,23 +310,23 @@ class FicheE13 extends Component {
         const periode = 4;
         let return_value = 0;
 
-        for (let i in this.props.classe.data.courses) {
-            if (this.props.classe.data.courses[i].considered !== "5" && periode !== 2) {
-                return_value = return_value + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
-            }
+        //     for (let i in this.props.classe.data.courses) {
+        //         if (this.props.classe.data.courses[i].considered !== "5" && periode !== 2) {
+        //             return_value = return_value + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
+        //         }
 
-            if (this.props.classe.data.courses[i].considered !== "5" && periode === 2) {
-                return_value = return_value + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
-            }
+        //         if (this.props.classe.data.courses[i].considered !== "5" && periode === 2) {
+        //             return_value = return_value + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
+        //         }
 
-            if (this.props.classe.data.courses[i].considered === "5" && periode === 2) {
-                return_value = return_value;
-            }
+        //         if (this.props.classe.data.courses[i].considered === "5" && periode === 2) {
+        //             return_value = return_value;
+        //         }
 
-            if (this.props.classe.data.courses[i].considered === "5" && periode !== 2) {
-                return_value = return_value + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
-            }
-    }
+        //         if (this.props.classe.data.courses[i].considered === "5" && periode !== 2) {
+        //             return_value = return_value + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
+        //         }
+        // }
 
         return return_value * 8;
     }
@@ -338,7 +339,6 @@ class FicheE13 extends Component {
         window.print();
 
         document.body.innerHTML = originalContents;
-        // window.location.reload();
         window.location.href = http + this.props.url_server + home_redirect;
         window.location.replace(http + this.props.url_server + home_redirect);
     }
@@ -346,190 +346,137 @@ class FicheE13 extends Component {
     render() {
         return (
             <div style={{ marginBottom: 50, paddingTop: 10 }}>
+                {this.props.loading_footer ?
+                    <div className="progress-center-progress">
+                        <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
+                        Chargement de la fiche E13...
+                    </div>
+                    :
+                    <div>
+                        <span onClick={() => this.printContent("e13")} className="add-minus" style={{ fontWeight: 'bold' }}>
+                            IMPRIMER LA FICHE
+                        </span><br /><br />
 
-                <div className="float-right-div">
-                    <select
-                        onChange={(val) => this.setState({ periode: val.target.value })}
-                        style={{ color: 'rgba(0, 80, 180)' }}
-                        value={this.state.periode}
-                        className="select-no-border-select">
-                        <option>Choisissez période/Total</option>
-                        <option value="*">Total général</option>
-                        <option>- - - - - - - - - - - -</option>
-                        <option value="P1">Première période</option>
-                        <option value="P2">Deuxième période</option>
-                        <option value="P3">Troisième période</option>
-                        <option value="P4">Quatrième période</option>
-                        {/* <option>- - - - - - - - - - - -</option>
-                    <option value="EX1">Examen premier semestre</option>
-                    <option value="EX2">Examen deuxième semestre</option> */}
-                        <option>- - - - - - - - - - - -</option>
-                        <option value="S1">Premier semestre</option>
-                        <option value="S2">Deuxième semestre</option>
-                    </select>
-                </div>
+                        <div id="e13">
 
-                <span onClick={() => this.printContent("e13")} className="add-minus" style={{ fontWeight: 'bold' }}>
-                    IMPRIMER LA FICHE
-                </span><br /><br />
-
-                <div id="e13">
-
-                    <table style={{ width: '100%' }}>
-                        <tbody>
-                            <tr>
-                                <td valign="top">
-                                    {/* <div>
-                                        <strong>{this.state.autres.school_name}</strong><br />
-                                        <strong>{this.state.autres.school_bp}</strong><br />
-                                        <strong>Année scolaire : {this.state.autres.annee}</strong>
-                                    </div> */}
-                                    <table className="full-table-liste">
-                                        <caption style={{ color: 'transparent' }}>
-                                            <h4>
-                                                FICHE E13 <br />
-                                                {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.cycle_id + " " + this.props.classe.order_id}
-                                            </h4>
-                                        </caption>
-                                        <thead>
-                                            <tr>
-                                                <th style={{ width: 30, textAlign: 'center' }}>No</th>
-                                                <th style={{ paddingLeft: 10, textAlign: 'left' }}>NOMS ET POSTNOM / PRENOM</th>
-                                                <th style={{ width: 50, textAlign: 'center' }}> S </th>
-                                                <th style={{ width: 100, textAlign: 'center' }}><input placeholder={this.maxima_generaux()} className="input-no-borderr" /></th>
-                                                <th style={{ width: 50, textAlign: 'center' }}><input placeholder="%" className="input-no-borderr" /></th>
-                                            </tr>
-                                        </thead>
-                                        {this.props.classe.pupils.map((pupil, index) => {
-                                            return (
-                                                <tbody>
+                            <table style={{ width: '100%' }}>
+                                <tbody>
+                                    <tr>
+                                        <td valign="top">
+                                            <table className="full-table-liste">
+                                                <caption style={{ color: 'transparent' }}>
+                                                    <h4>
+                                                        FICHE E13 <br />
+                                                        {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.cycle_id + " " + this.props.classe.order_id}
+                                                    </h4>
+                                                </caption>
+                                                <thead>
                                                     <tr>
-                                                        <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-
-                                                        <td style={{ width: 50, textAlign: 'center' }}>
-                                                            {pupil.pupil.gender === "1" ? "M" : "F"}
-                                                        </td>
-
-                                                        <td style={{ width: 50, textAlign: 'center' }}>
-                                                            {this.render_total_main_marks(pupil.pupil.pupil_id)}
-                                                        </td>
-
-                                                        {this.state.periode === "P1" ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
-                                                                {this.render_period_marks(pupil.pupil.pupil_id, 1)}
-                                                            </td> : null}
-
-                                                        {this.state.periode === "P2" ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
-                                                                {this.render_period_marks(pupil.pupil.pupil_id, 2)}
-                                                            </td> : null}
-
-                                                        {this.state.periode === "S1" ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
-                                                                {this.render_semester_marks(pupil.pupil.pupil_id, 1, 2, 10)}
-                                                            </td> : null}
-
-                                                        {this.state.periode === "P3" ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
-                                                                {this.render_period_marks(pupil.pupil.pupil_id, 3)}
-                                                            </td> : null}
-
-                                                        {this.state.periode === "P4" ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
-                                                                {this.render_period_marks(pupil.pupil.pupil_id, 4)}
-                                                            </td> : null}
-
-                                                        {this.state.periode === "S2" ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
-                                                                {this.render_semester_marks(pupil.pupil.pupil_id, 3, 4, 11)}
-                                                            </td> : null}
-
-                                                        {this.state.periode === "*" ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
-                                                                {this.render_total_marks(pupil.pupil.pupil_id)}
-                                                            </td> : null}
-
+                                                        <th style={{ width: 30, textAlign: 'center' }}>No</th>
+                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }}>NOMS ET POSTNOM / PRENOM</th>
+                                                        <th style={{ width: 50, textAlign: 'center' }}> S </th>
+                                                        <th style={{ width: 100, textAlign: 'center' }}><input placeholder={this.maxima_generaux()} className="input-no-borderr" /></th>
+                                                        <th style={{ width: 50, textAlign: 'center' }}><input placeholder="%" className="input-no-borderr" /></th>
                                                     </tr>
-                                                </tbody>
-                                            )
-                                        })}
-                                    </table>
-                                </td>
-                                <td valign="top" style={{height:'100%'}}>
-                                    <span style={{ color: 'transparent' }}>guygyugu</span><br/>
-                                    <span style={{ color: 'transparent' }}>guygyugu</span><br/>
-                                    <table className="full-table-listee13">
-                                        <caption>
-                                            <h4 style={{ color: 'transparent' }}>
-                                                FICHE E13<br />
-                                                {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.order_id}
-                                            </h4>
-                                        </caption>
-                                        <thead>
-                                            <tr>
-                                                <th colSpan="2" style={{ paddingLeft: 10, textAlign: 'center', minWidth: 60 }}>E13</th>
-                                            </tr>
-                                            <tr>
-                                                <td style={{ backgroundColor: 'transparent', height: 50 }}>
-                                                    <div className="vertical_text">
-                                                        <input className="input-no-border" style={{ borderWidth: 0, width: "100%" }} />
-                                                    </div>
-                                                </td>
+                                                </thead>
+                                                {this.props.classe.data.pupils.map((pupil, index) => {
+                                                    return (
+                                                        <tbody key={index}>
+                                                            <tr>
+                                                                <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
+                                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
 
-                                                <td style={{ backgroundColor: 'transparent', height: 50 }}>
-                                                    <div className="vertical_text">
-                                                        <input className="input-no-border" style={{ borderWidth: 0, width: "100%" }} />
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style={{ textAlign: 'right', backgroundColor: 'transparent' }}>
-                                                    <div className="vertical_text">
-                                                        <div className="div-centre"><br />NOMBRE DES CANDIDATS</div>
-                                                    </div>
-                                                </td>
-                                                <td style={{ textAlign: 'right', backgroundColor: 'transparent' }}>
-                                                    <div className="vertical_text">
-                                                        <div className="div-centre"><br />NOMBRE TOTAL DES PLACES</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colSpan="2" style={{ textAlign: 'right', backgroundColor: 'transparent' }}>
-                                                    <div className="vertical_text">
-                                                        <div className="div-centre2"><br /><br />{this.state.school_name_uc}</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colSpan="2" style={{ textAlign: 'right', backgroundColor: 'transparent' }}>
-                                                    <div className="vertical_text">
-                                                        <div className="div-centre2"><br /><br />NOM DE L'ETABLISSEMENT</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colSpan="2" style={{ textAlign: 'right', backgroundColor: 'transparent' }}>
-                                                    <div className="vertical_text">
-                                                        <div className="div-centre2"><br /><br />SCEAU LEGER</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colSpan="2" style={{ textAlign: 'right', backgroundColor: 'transparent' }}>
-                                                    <div className="vertical_text">
-                                                        <div className="div-centre2"><br /><br />RAPPEL</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                                                <td style={{ width: 50, textAlign: 'center' }}>
+                                                                    {parseInt(pupil.pupil.gender) === 1 ? "M" : "F"}
+                                                                </td>
+
+                                                                <td style={{ width: 50, textAlign: 'center' }}>
+                                                                    {parseInt(pupil.tmarks.sem1 + pupil.tmarks.sem2)}
+                                                                </td>
+
+                                                                {this.state.periode === "*" ?
+                                                                    <td style={{ width: 50, textAlign: 'center' }}>
+                                                                        {/* {this.render_total_marks(pupil.pupil.pupil_id)} */}
+                                                                    </td> : null}
+                                                            </tr>
+                                                        </tbody>
+                                                    )
+                                                })}
+                                            </table>
+                                        </td>
+                                        <td valign="top" style={{ height: '100%' }}>
+                                            <table className="full-table-listee13">
+                                                <caption>
+                                                    <h4 style={{ color: 'transparent' }}>
+                                                        FICHE E13<br />
+                                                        {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.order_id}
+                                                    </h4>
+                                                </caption>
+                                                <thead>
+                                                    <tr>
+                                                        <th colSpan="2" style={{ paddingLeft: 10, textAlign: 'center', minWidth: 60 }}>E13</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style={{ backgroundColor: 'transparent', height: 50 }}>
+                                                            <div className="vertical_text">
+                                                                <input className="input-no-border" style={{ borderWidth: 0, width: "100%" }} />
+                                                            </div>
+                                                        </td>
+
+                                                        <td style={{ backgroundColor: 'transparent', height: 50 }}>
+                                                            <div className="vertical_text">
+                                                                <input className="input-no-border" style={{ borderWidth: 0, width: "100%" }} />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style={{ textAlign: 'right', backgroundColor: 'transparent' }}>
+                                                            <div className="vertical_text">
+                                                                <div className="div-centre"><br />NOMBRE DES CANDIDATS</div>
+                                                            </div>
+                                                        </td>
+                                                        <td style={{ textAlign: 'right', backgroundColor: 'transparent' }}>
+                                                            <div className="vertical_text">
+                                                                <div className="div-centre"><br />NOMBRE TOTAL DES PLACES</div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colSpan="2" style={{ textAlign: 'right', backgroundColor: 'transparent' }}>
+                                                            <div className="vertical_text">
+                                                                <div className="div-centre2"><br /><br />{this.state.school_name_uc}</div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colSpan="2" style={{ textAlign: 'right', backgroundColor: 'transparent' }}>
+                                                            <div className="vertical_text">
+                                                                <div className="div-centre2"><br /><br />NOM DE L'ETABLISSEMENT</div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colSpan="2" style={{ textAlign: 'right', backgroundColor: 'transparent' }}>
+                                                            <div className="vertical_text">
+                                                                <div className="div-centre2"><br /><br />SCEAU LEGER</div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colSpan="2" style={{ textAlign: 'right', backgroundColor: 'transparent' }}>
+                                                            <div className="vertical_text">
+                                                                <div className="div-centre2"><br /><br />RAPPEL</div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>}
             </div>
         )
     }

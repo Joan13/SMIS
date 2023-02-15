@@ -1,18 +1,18 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, HashRouter } from 'react-router-dom';
+import { Routes, Route, HashRouter } from 'react-router-dom';
 import Home from './pages/home';
 import Settings from './pages/settings';
 import Signin from './pages/signin';
-import { home_redirect } from './global_vars';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducer from './store/reducer';
-
-const store = createStore(reducer);
+import { useSelector } from 'react-redux';
+import ModalView from './includes/modal';
+import { Button } from '@material-ui/core';
+import { useState } from 'react';
 
 const App = () => {
+
+  const modal_view = useSelector(state => state.modal_view);
   return (
-    <Provider store={store}>
+    <div>
       <HashRouter>
         <Routes>
           <Route path="/signin" element={<Signin />} exact />
@@ -20,7 +20,12 @@ const App = () => {
           <Route path="/" element={<Home />} />
         </Routes>
       </HashRouter>
-    </Provider>
+
+      {modal_view.modal_view ?
+        <div className="main-div-modal">
+          {ModalView(modal_view.modal_title, modal_view.modal_main_text)}
+        </div> : null}
+    </div>
   );
 }
 

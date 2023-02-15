@@ -261,398 +261,374 @@ class PalmaresFinal extends Component {
         // }
     }
 
-    componentWillUnmount() {
-        clearInterval(this.intervalID);
-    }
+    // componentWillUnmount() {
+    //     clearInterval(this.intervalID);
+    // }
 
     render() {
         return (
-            <div style={{ paddingTop: 0, marginLeft:15 }} className="center-fixed">
+            <div style={{ paddingTop: 10, marginLeft: 15, paddingBottom: 50 }}>
 
-               {!this.props.loading_footer ?
-                <table style={{ width: '98%' }}>
-                    <tbody>
-                        <tr>
-                            <td valign="top">
-
-                                <div onClick={() => this.printContent("print-palmares")} className="span-blockk">
-                                    IMPRIMER
-                                </div>
+                {!this.props.loading_footer ?
+                    <div>
+                        <div onClick={() => this.printContent("print-palmares")} className="span-blockk">
+                            IMPRIMER
+                        </div>
 
 
-                                <div id="print-palmares" style={{ marginTop: -20 }}>
-                                    <div>
-                                        <strong>{this.props.autres.school_name}</strong><br />
-                                        <strong>{this.props.autres.school_bp}</strong><br />
-                                        <strong>{this.props.autres.school_commune}</strong>
-                                    </div>
+                        <div id="print-palmares" style={{ marginTop: -20 }}>
+                            <div>
+                                <strong>{this.props.autres.school_name}</strong><br />
+                                <strong>{this.props.autres.school_bp}</strong><br />
+                                <strong>{this.props.autres.school_commune}</strong>
+                            </div>
 
-                                    <div className="float-right-div">
-                                        <strong>{this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.order_id}</strong><br />
-                                        <strong>Année scolaire : {this.props.autres.annee}</strong>
-                                    </div>
-                                    <h3>PALMARÈS FINAL DES RÉSULTATS DE FIN D'ANNÉE</h3>
-                                    <table className="full-table-liste-markss" style={{ marginTop: 10 }}>
-                                        <thead>
-                                            <tr>
-                                                <th rowSpan="2" style={{ width: 30, textAlign: 'center' }}>No</th>
-                                                <th rowSpan="2" style={{ paddingLeft: 10, textAlign: 'left' }}>Noms de l'élève</th>
+                            <div className="float-right-div">
+                                <strong>{this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.order_id}</strong><br />
+                                <strong>Année scolaire : {this.props.autres.annee}</strong>
+                            </div>
+                            <h3>PALMARÈS FINAL DES RÉSULTATS DE FIN D'ANNÉE</h3>
+                            <table className="full-table-liste-markss" style={{ marginTop: 10 }}>
+                                <thead>
+                                    <tr>
+                                        <th rowSpan="2" style={{ width: 30, textAlign: 'center' }}>No</th>
+                                        <th rowSpan="2" style={{ paddingLeft: 10, textAlign: 'left' }}>Noms de l'élève</th>
 
-
-                                                {this.state.periode === "*" ?
-                                                    <th colSpan="2" style={{ textAlign: 'center' }}>TOTAL</th> : null}
-                                            </tr>
-                                            <tr>
-                                                {this.state.periode === "*" ?
-                                                    <th style={{ textAlign: 'center' }}>%</th> : null}
-                                                {/* {this.state.periode === "*" ?
+                                        {this.state.periode === "*" ?
+                                            <th colSpan="2" style={{ textAlign: 'center' }}>TOTAL</th> : null}
+                                    </tr>
+                                    <tr>
+                                        {this.state.periode === "*" ?
+                                            <th style={{ textAlign: 'center' }}>%</th> : null}
+                                        {/* {this.state.periode === "*" ?
                                                     <th style={{ textAlign: 'center' }}>Place</th> : null} */}
-                                            </tr>
-                                        </thead>
+                                    </tr>
+                                </thead>
 
-                                        <tr><td colSpan="4" style={{ paddingLeft: 10 }}><h3>Les élèves qui passent dans la classe supérieure (à la première session)</h3></td></tr>
-                                        {this.props.classe.data.conseil_deliberation.map((conseil) => {
+                                <tbody>
+                                    <tr><td colSpan="4" style={{ paddingLeft: 10 }}><h3>Les élèves qui passent dans la classe supérieure (à la première session)</h3></td></tr>
+                                    {this.props.classe.data.conseil_deliberation.map((conseil) => {
+                                        if (conseil.main_conseil === "0") {
+
+                                            let title = "";
+
                                             if (conseil.main_conseil === "0") {
-
-                                                let title = "";
-
-                                                if (conseil.main_conseil === "0") {
-                                                    title = "Les élèves qui sont passé dans la classe supérieure";
-                                                } else if (conseil.main_conseil === "1") {
-                                                    title = "Les élèves qui doublent la classe";
-                                                } else if (conseil.main_conseil === "2") {
-                                                    title = "Les élèves qui sont orientés ailleurs";
-                                                } else if (conseil.main_conseil === "6") {
-                                                    title = "Abandon";
-                                                } else if (conseil.main_conseil === "3") {
-                                                    title = "Les élèves qui passent dans la classe supérieure après 2e session";
-                                                } else if (conseil.main_conseil === "4") {
-                                                    title = "Les élèves qui doublent la classe après 2e session";
-                                                } else if (conseil.main_conseil === "5") {
-                                                    title = "Les élèves qui sont orientés ailleurs apres 2e session";
-                                                } else {
-                                                    title = "ok";
-                                                }
-
-                                                return (
-                                                    <>
-                                                        {this.state.periode === "*" ?
-                                                            this.state.pupils.map((pupil, index) => {
-                                                                if (conseil.pupil_id === pupil.pupil.pupil_id) {
-                                                                    return (
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td style={{ textAlign: 'center' }}> {index + 1}</td>
-                                                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
-                                                                                {/* <td style={{ textAlign: 'center' }}>{index_p + 1}</td> */}
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    )
-                                                                }
-                                                            })
-                                                            : null}
-                                                    </>
-                                                )
+                                                title = "Les élèves qui sont passé dans la classe supérieure";
+                                            } else if (conseil.main_conseil === "1") {
+                                                title = "Les élèves qui doublent la classe";
+                                            } else if (conseil.main_conseil === "2") {
+                                                title = "Les élèves qui sont orientés ailleurs";
+                                            } else if (conseil.main_conseil === "6") {
+                                                title = "Abandon";
+                                            } else if (conseil.main_conseil === "3") {
+                                                title = "Les élèves qui passent dans la classe supérieure après 2e session";
+                                            } else if (conseil.main_conseil === "4") {
+                                                title = "Les élèves qui doublent la classe après 2e session";
+                                            } else if (conseil.main_conseil === "5") {
+                                                title = "Les élèves qui sont orientés ailleurs apres 2e session";
+                                            } else {
+                                                title = "ok";
                                             }
-                                        })}
+
+                                            return (
+                                                <>
+                                                    {this.state.periode === "*" ?
+                                                        this.state.pupils.map((pupil, index) => {
+                                                            if (conseil.pupil_id === pupil.pupil.pupil_id) {
+                                                                return (
+                                                                    <tr>
+                                                                        <td style={{ textAlign: 'center' }}> {index + 1}</td>
+                                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
+                                                                        {/* <td style={{ textAlign: 'center' }}>{index_p + 1}</td> */}
+                                                                    </tr>
+                                                                )
+                                                            }
+                                                        })
+                                                        : null}
+                                                </>
+                                            )
+                                        }
+                                    })}
 
 
-                                        <tr><td colSpan="4" style={{ paddingLeft: 10 }}><h3>Les élèves qui doublent la classe (à la première session)</h3></td></tr>
-                                        {this.props.classe.data.conseil_deliberation.map((conseil) => {
-                                            if (conseil.main_conseil === "1") {
+                                    <tr><td colSpan="4" style={{ paddingLeft: 10 }}><h3>Les élèves qui doublent la classe (à la première session)</h3></td></tr>
+                                    {this.props.classe.data.conseil_deliberation.map((conseil) => {
+                                        if (conseil.main_conseil === "1") {
 
-                                                let title = "";
+                                            let title = "";
 
-                                                if (conseil.main_conseil === "0") {
-                                                    title = "Les élèves qui sont passé dans la classe supérieure";
-                                                } else if (conseil.main_conseil === "1") {
-                                                    title = "Les élèves qui doublent la classe";
-                                                } else if (conseil.main_conseil === "2") {
-                                                    title = "Les élèves qui sont orientés ailleurs";
-                                                } else if (conseil.main_conseil === "6") {
-                                                    title = "Abandon";
-                                                } else if (conseil.main_conseil === "3") {
-                                                    title = "Les élèves qui passent dans la classe supérieure après 2e session";
-                                                } else if (conseil.main_conseil === "4") {
-                                                    title = "Les élèves qui doublent la classe après 2e session";
-                                                } else if (conseil.main_conseil === "5") {
-                                                    title = "Les élèves qui sont orientés ailleurs apres 2e session";
-                                                } else {
-                                                    title = "ok";
-                                                }
-
-                                                return (
-                                                    <>
-                                                        {this.state.periode === "*" ?
-                                                            this.props.classe.data.pupils.map((pupil, index) => {
-                                                                if (conseil.pupil_id === pupil.pupil.pupil_id) {
-                                                                    return (
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td style={{ textAlign: 'center' }}> {index + 1}</td>
-                                                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
-                                                                                {/* <td style={{ textAlign: 'center' }}>{index_p + 1}</td> */}
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    )
-                                                                }
-                                                            })
-                                                            : null}
-                                                    </>
-                                                )
+                                            if (conseil.main_conseil === "0") {
+                                                title = "Les élèves qui sont passé dans la classe supérieure";
+                                            } else if (conseil.main_conseil === "1") {
+                                                title = "Les élèves qui doublent la classe";
+                                            } else if (conseil.main_conseil === "2") {
+                                                title = "Les élèves qui sont orientés ailleurs";
+                                            } else if (conseil.main_conseil === "6") {
+                                                title = "Abandon";
+                                            } else if (conseil.main_conseil === "3") {
+                                                title = "Les élèves qui passent dans la classe supérieure après 2e session";
+                                            } else if (conseil.main_conseil === "4") {
+                                                title = "Les élèves qui doublent la classe après 2e session";
+                                            } else if (conseil.main_conseil === "5") {
+                                                title = "Les élèves qui sont orientés ailleurs apres 2e session";
+                                            } else {
+                                                title = "ok";
                                             }
-                                        })}
 
-                                        <tr><td colSpan="4" style={{ paddingLeft: 10 }}><h3>Les élèves orienté(e)s ailleurs (Exclu(e)s) (à la première session)</h3></td></tr>
-                                        {this.props.classe.data.conseil_deliberation.map((conseil) => {
-                                            if (conseil.main_conseil === "2") {
+                                            return (
+                                                <>
+                                                    {this.state.periode === "*" ?
+                                                        this.props.classe.data.pupils.map((pupil, index) => {
+                                                            if (conseil.pupil_id === pupil.pupil.pupil_id) {
+                                                                return (
+                                                                    <tr>
+                                                                        <td style={{ textAlign: 'center' }}> {index + 1}</td>
+                                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
+                                                                        {/* <td style={{ textAlign: 'center' }}>{index_p + 1}</td> */}
+                                                                    </tr>
+                                                                )
+                                                            }
+                                                        })
+                                                        : null}
+                                                </>
+                                            )
+                                        }
+                                    })}
 
-                                                let title = "";
+                                    <tr><td colSpan="4" style={{ paddingLeft: 10 }}><h3>Les élèves orienté(e)s ailleurs (Exclu(e)s) (à la première session)</h3></td></tr>
+                                    {this.props.classe.data.conseil_deliberation.map((conseil) => {
+                                        if (conseil.main_conseil === "2") {
 
-                                                if (conseil.main_conseil === "0") {
-                                                    title = "Les élèves qui sont passé dans la classe supérieure";
-                                                } else if (conseil.main_conseil === "1") {
-                                                    title = "Les élèves qui doublent la classe";
-                                                } else if (conseil.main_conseil === "2") {
-                                                    title = "Les élèves qui sont orientés ailleurs";
-                                                } else if (conseil.main_conseil === "6") {
-                                                    title = "Abandon";
-                                                } else if (conseil.main_conseil === "3") {
-                                                    title = "Les élèves qui passent dans la classe supérieure après 2e session";
-                                                } else if (conseil.main_conseil === "4") {
-                                                    title = "Les élèves qui doublent la classe après 2e session";
-                                                } else if (conseil.main_conseil === "5") {
-                                                    title = "Les élèves qui sont orientés ailleurs apres 2e session";
-                                                } else {
-                                                    title = "ok";
-                                                }
+                                            let title = "";
 
-                                                return (
-                                                    <>
-                                                        {this.state.periode === "*" ?
-                                                            this.props.classe.data.pupils.map((pupil, index) => {
-                                                                if (conseil.pupil_id === pupil.pupil.pupil_id) {
-                                                                    return (
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td style={{ textAlign: 'center' }}> {index + 1}</td>
-                                                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
-                                                                                {/* <td style={{ textAlign: 'center' }}>{index_p + 1}</td> */}
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    )
-                                                                }
-                                                            })
-                                                            : null}
-                                                    </>
-                                                )
+                                            if (conseil.main_conseil === "0") {
+                                                title = "Les élèves qui sont passé dans la classe supérieure";
+                                            } else if (conseil.main_conseil === "1") {
+                                                title = "Les élèves qui doublent la classe";
+                                            } else if (conseil.main_conseil === "2") {
+                                                title = "Les élèves qui sont orientés ailleurs";
+                                            } else if (conseil.main_conseil === "6") {
+                                                title = "Abandon";
+                                            } else if (conseil.main_conseil === "3") {
+                                                title = "Les élèves qui passent dans la classe supérieure après 2e session";
+                                            } else if (conseil.main_conseil === "4") {
+                                                title = "Les élèves qui doublent la classe après 2e session";
+                                            } else if (conseil.main_conseil === "5") {
+                                                title = "Les élèves qui sont orientés ailleurs apres 2e session";
+                                            } else {
+                                                title = "ok";
                                             }
-                                        })}
 
-                                        <tr><td colSpan="4" style={{ paddingLeft: 10 }}><h3>Les élèves qui passent dans la classe supérieure (après 2e session)</h3></td></tr>
-                                        {this.props.classe.data.conseil_deliberation.map((conseil) => {
-                                            if (conseil.main_conseil === "3") {
+                                            return (
+                                                <>
+                                                    {this.state.periode === "*" ?
+                                                        this.props.classe.data.pupils.map((pupil, index) => {
+                                                            if (conseil.pupil_id === pupil.pupil.pupil_id) {
+                                                                return (
+                                                                    <tr>
+                                                                        <td style={{ textAlign: 'center' }}> {index + 1}</td>
+                                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
+                                                                        {/* <td style={{ textAlign: 'center' }}>{index_p + 1}</td> */}
+                                                                    </tr>
+                                                                )
+                                                            }
+                                                        })
+                                                        : null}
+                                                </>
+                                            )
+                                        }
+                                    })}
 
-                                                let title = "";
+                                    <tr><td colSpan="4" style={{ paddingLeft: 10 }}><h3>Les élèves qui passent dans la classe supérieure (après 2e session)</h3></td></tr>
+                                    {this.props.classe.data.conseil_deliberation.map((conseil) => {
+                                        if (conseil.main_conseil === "3") {
 
-                                                if (conseil.main_conseil === "0") {
-                                                    title = "Les élèves qui sont passé dans la classe supérieure";
-                                                } else if (conseil.main_conseil === "1") {
-                                                    title = "Les élèves qui doublent la classe";
-                                                } else if (conseil.main_conseil === "2") {
-                                                    title = "Les élèves qui sont orientés ailleurs";
-                                                } else if (conseil.main_conseil === "6") {
-                                                    title = "Abandon";
-                                                } else if (conseil.main_conseil === "3") {
-                                                    title = "Les élèves qui passent dans la classe supérieure après 2e session";
-                                                } else if (conseil.main_conseil === "4") {
-                                                    title = "Les élèves qui doublent la classe après 2e session";
-                                                } else if (conseil.main_conseil === "5") {
-                                                    title = "Les élèves qui sont orientés ailleurs apres 2e session";
-                                                } else {
-                                                    title = "ok";
-                                                }
+                                            let title = "";
 
-                                                return (
-                                                    <>
-                                                        {this.state.periode === "*" ?
-                                                            this.props.classe.data.pupils.map((pupil, index) => {
-                                                                if (conseil.pupil_id === pupil.pupil.pupil_id) {
-                                                                    return (
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td style={{ textAlign: 'center' }}> {index + 1}</td>
-                                                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
-                                                                                {/* <td style={{ textAlign: 'center' }}>{index_p + 1}</td> */}
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    )
-                                                                }
-                                                            })
-                                                            : null}
-                                                    </>
-                                                )
+                                            if (conseil.main_conseil === "0") {
+                                                title = "Les élèves qui sont passé dans la classe supérieure";
+                                            } else if (conseil.main_conseil === "1") {
+                                                title = "Les élèves qui doublent la classe";
+                                            } else if (conseil.main_conseil === "2") {
+                                                title = "Les élèves qui sont orientés ailleurs";
+                                            } else if (conseil.main_conseil === "6") {
+                                                title = "Abandon";
+                                            } else if (conseil.main_conseil === "3") {
+                                                title = "Les élèves qui passent dans la classe supérieure après 2e session";
+                                            } else if (conseil.main_conseil === "4") {
+                                                title = "Les élèves qui doublent la classe après 2e session";
+                                            } else if (conseil.main_conseil === "5") {
+                                                title = "Les élèves qui sont orientés ailleurs apres 2e session";
+                                            } else {
+                                                title = "ok";
                                             }
-                                        })}
 
-                                        <tr><td colSpan="4" style={{ paddingLeft: 10 }}><h3>Les élèves qui doublent la classe (après 2e session)</h3></td></tr>
-                                        {this.props.classe.data.conseil_deliberation.map((conseil) => {
-                                            if (conseil.main_conseil === "4") {
+                                            return (
+                                                <>
+                                                    {this.state.periode === "*" ?
+                                                        this.props.classe.data.pupils.map((pupil, index) => {
+                                                            if (conseil.pupil_id === pupil.pupil.pupil_id) {
+                                                                return (
+                                                                    <tr>
+                                                                        <td style={{ textAlign: 'center' }}> {index + 1}</td>
+                                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
+                                                                        {/* <td style={{ textAlign: 'center' }}>{index_p + 1}</td> */}
+                                                                    </tr>
+                                                                )
+                                                            }
+                                                        })
+                                                        : null}
+                                                </>
+                                            )
+                                        }
+                                    })}
 
-                                                let title = "";
+                                    <tr><td colSpan="4" style={{ paddingLeft: 10 }}><h3>Les élèves qui doublent la classe (après 2e session)</h3></td></tr>
+                                    {this.props.classe.data.conseil_deliberation.map((conseil) => {
+                                        if (conseil.main_conseil === "4") {
 
-                                                if (conseil.main_conseil === "0") {
-                                                    title = "Les élèves qui sont passé dans la classe supérieure";
-                                                } else if (conseil.main_conseil === "1") {
-                                                    title = "Les élèves qui doublent la classe";
-                                                } else if (conseil.main_conseil === "2") {
-                                                    title = "Les élèves qui sont orientés ailleurs";
-                                                } else if (conseil.main_conseil === "6") {
-                                                    title = "Abandon";
-                                                } else if (conseil.main_conseil === "3") {
-                                                    title = "Les élèves qui passent dans la classe supérieure après 2e session";
-                                                } else if (conseil.main_conseil === "4") {
-                                                    title = "Les élèves qui doublent la classe après 2e session";
-                                                } else if (conseil.main_conseil === "5") {
-                                                    title = "Les élèves qui sont orientés ailleurs apres 2e session";
-                                                } else {
-                                                    title = "ok";
-                                                }
+                                            let title = "";
 
-                                                return (
-                                                    <>
-                                                        {this.state.periode === "*" ?
-                                                            this.props.classe.data.pupils.map((pupil, index) => {
-                                                                if (conseil.pupil_id === pupil.pupil.pupil_id) {
-                                                                    return (
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td style={{ textAlign: 'center' }}> {index + 1}</td>
-                                                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
-                                                                                {/* <td style={{ textAlign: 'center' }}>{index_p + 1}</td> */}
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    )
-                                                                }
-                                                            })
-                                                            : null}
-                                                    </>
-                                                )
+                                            if (conseil.main_conseil === "0") {
+                                                title = "Les élèves qui sont passé dans la classe supérieure";
+                                            } else if (conseil.main_conseil === "1") {
+                                                title = "Les élèves qui doublent la classe";
+                                            } else if (conseil.main_conseil === "2") {
+                                                title = "Les élèves qui sont orientés ailleurs";
+                                            } else if (conseil.main_conseil === "6") {
+                                                title = "Abandon";
+                                            } else if (conseil.main_conseil === "3") {
+                                                title = "Les élèves qui passent dans la classe supérieure après 2e session";
+                                            } else if (conseil.main_conseil === "4") {
+                                                title = "Les élèves qui doublent la classe après 2e session";
+                                            } else if (conseil.main_conseil === "5") {
+                                                title = "Les élèves qui sont orientés ailleurs apres 2e session";
+                                            } else {
+                                                title = "ok";
                                             }
-                                        })}
 
-                                        <tr><td colSpan="4" style={{ paddingLeft: 10 }}><h3>Les élèves orienté(e)s ailleurs (après 2e session)</h3></td></tr>
-                                        {this.props.classe.data.conseil_deliberation.map((conseil) => {
-                                            if (conseil.main_conseil === "5") {
+                                            return (
+                                                <>
+                                                    {this.state.periode === "*" ?
+                                                        this.props.classe.data.pupils.map((pupil, index) => {
+                                                            if (conseil.pupil_id === pupil.pupil.pupil_id) {
+                                                                return (
+                                                                    <tr>
+                                                                        <td style={{ textAlign: 'center' }}> {index + 1}</td>
+                                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
+                                                                    </tr>
+                                                                )
+                                                            }
+                                                        })
+                                                        : null}
+                                                </>
+                                            )
+                                        }
+                                    })}
 
-                                                let title = "";
+                                    <tr><td colSpan="4" style={{ paddingLeft: 10 }}><h3>Les élèves orienté(e)s ailleurs (après 2e session)</h3></td></tr>
+                                    {this.props.classe.data.conseil_deliberation.map((conseil) => {
+                                        if (conseil.main_conseil === "5") {
 
-                                                if (conseil.main_conseil === "0") {
-                                                    title = "Les élèves qui sont passé dans la classe supérieure";
-                                                } else if (conseil.main_conseil === "1") {
-                                                    title = "Les élèves qui doublent la classe";
-                                                } else if (conseil.main_conseil === "2") {
-                                                    title = "Les élèves qui sont orientés ailleurs";
-                                                } else if (conseil.main_conseil === "6") {
-                                                    title = "Abandon";
-                                                } else if (conseil.main_conseil === "3") {
-                                                    title = "Les élèves qui passent dans la classe supérieure après 2e session";
-                                                } else if (conseil.main_conseil === "4") {
-                                                    title = "Les élèves qui doublent la classe après 2e session";
-                                                } else if (conseil.main_conseil === "5") {
-                                                    title = "Les élèves qui sont orientés ailleurs apres 2e session";
-                                                } else {
-                                                    title = "ok";
-                                                }
+                                            let title = "";
 
-                                                return (
-                                                    <>
-                                                        {this.state.periode === "*" ?
-                                                            this.props.classe.data.pupils.map((pupil, index) => {
-                                                                if (conseil.pupil_id === pupil.pupil.pupil_id) {
-                                                                    return (
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td style={{ textAlign: 'center' }}> {index + 1}</td>
-                                                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
-                                                                                {/* <td style={{ textAlign: 'center' }}>{index_p + 1}</td> */}
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    )
-                                                                }
-                                                            })
-                                                            : null}
-                                                    </>
-                                                )
+                                            if (conseil.main_conseil === "0") {
+                                                title = "Les élèves qui sont passé dans la classe supérieure";
+                                            } else if (conseil.main_conseil === "1") {
+                                                title = "Les élèves qui doublent la classe";
+                                            } else if (conseil.main_conseil === "2") {
+                                                title = "Les élèves qui sont orientés ailleurs";
+                                            } else if (conseil.main_conseil === "6") {
+                                                title = "Abandon";
+                                            } else if (conseil.main_conseil === "3") {
+                                                title = "Les élèves qui passent dans la classe supérieure après 2e session";
+                                            } else if (conseil.main_conseil === "4") {
+                                                title = "Les élèves qui doublent la classe après 2e session";
+                                            } else if (conseil.main_conseil === "5") {
+                                                title = "Les élèves qui sont orientés ailleurs apres 2e session";
+                                            } else {
+                                                title = "ok";
                                             }
-                                        })}
 
-                                        <tr><td colSpan="4" style={{ paddingLeft: 10 }}><h3>Cas d'abandon</h3></td></tr>
-                                        {this.props.classe.data.conseil_deliberation.map((conseil) => {
-                                            if (conseil.main_conseil === "6") {
+                                            return (
+                                                <>
+                                                    {this.state.periode === "*" ?
+                                                        this.props.classe.data.pupils.map((pupil, index) => {
+                                                            if (conseil.pupil_id === pupil.pupil.pupil_id) {
+                                                                return (
+                                                                    <tr>
+                                                                        <td style={{ textAlign: 'center' }}> {index + 1}</td>
+                                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
+                                                                        {/* <td style={{ textAlign: 'center' }}>{index_p + 1}</td> */}
+                                                                    </tr>
+                                                                )
+                                                            }
+                                                        })
+                                                        : null}
+                                                </>
+                                            )
+                                        }
+                                    })}
 
-                                                let title = "";
+                                    <tr><td colSpan="4" style={{ paddingLeft: 10 }}><h3>Cas d'abandon</h3></td></tr>
+                                    {this.props.classe.data.conseil_deliberation.map((conseil) => {
+                                        if (conseil.main_conseil === "6") {
 
-                                                if (conseil.main_conseil === "0") {
-                                                    title = "Les élèves qui sont passé dans la classe supérieure";
-                                                } else if (conseil.main_conseil === "1") {
-                                                    title = "Les élèves qui doublent la classe";
-                                                } else if (conseil.main_conseil === "2") {
-                                                    title = "Les élèves qui sont orientés ailleurs";
-                                                } else if (conseil.main_conseil === "6") {
-                                                    title = "Abandon";
-                                                } else if (conseil.main_conseil === "3") {
-                                                    title = "Les élèves qui passent dans la classe supérieure après 2e session";
-                                                } else if (conseil.main_conseil === "4") {
-                                                    title = "Les élèves qui doublent la classe après 2e session";
-                                                } else if (conseil.main_conseil === "5") {
-                                                    title = "Les élèves qui sont orientés ailleurs apres 2e session";
-                                                } else {
-                                                    title = "ok";
-                                                }
+                                            let title = "";
 
-                                                return (
-                                                    <>
-                                                        {this.state.periode === "*" ?
-                                                            this.props.classe.data.pupils.map((pupil, index) => {
-                                                                if (conseil.pupil_id === pupil.pupil.pupil_id) {
-                                                                    return (
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td style={{ textAlign: 'center' }}> {index + 1}</td>
-                                                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
-                                                                                {/* <td style={{ textAlign: 'center' }}>{index_p + 1}</td> */}
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    )
-                                                                }
-                                                            })
-                                                            : null}
-                                                    </>
-                                                )
+                                            if (conseil.main_conseil === "0") {
+                                                title = "Les élèves qui sont passé dans la classe supérieure";
+                                            } else if (conseil.main_conseil === "1") {
+                                                title = "Les élèves qui doublent la classe";
+                                            } else if (conseil.main_conseil === "2") {
+                                                title = "Les élèves qui sont orientés ailleurs";
+                                            } else if (conseil.main_conseil === "6") {
+                                                title = "Abandon";
+                                            } else if (conseil.main_conseil === "3") {
+                                                title = "Les élèves qui passent dans la classe supérieure après 2e session";
+                                            } else if (conseil.main_conseil === "4") {
+                                                title = "Les élèves qui doublent la classe après 2e session";
+                                            } else if (conseil.main_conseil === "5") {
+                                                title = "Les élèves qui sont orientés ailleurs apres 2e session";
+                                            } else {
+                                                title = "ok";
                                             }
-                                        })}
-                                    </table>
-                                </div>
-                            </td>
-                            {/* <td valign="top" style={{ paddingLeft: 30 }} className="td-courses">
-                                <Courses />
-                            </td> */}
-                        </tr>
-                    </tbody>
-                </table>
-               :
-               <div className="progress-center-progress">
-                                <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
-                                Chargement des palmarès...
-                            </div>}
+
+                                            return (
+                                                <>
+                                                    {this.state.periode === "*" ?
+                                                        this.props.classe.data.pupils.map((pupil, index) => {
+                                                            if (conseil.pupil_id === pupil.pupil.pupil_id) {
+                                                                return (
+                                                                    <tr>
+                                                                        <td style={{ textAlign: 'center' }}> {index + 1}</td>
+                                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
+                                                                        {/* <td style={{ textAlign: 'center' }}>{index_p + 1}</td> */}
+                                                                    </tr>
+                                                                )
+                                                            }
+                                                        })
+                                                        : null}
+                                                </>
+                                            )
+                                        }
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    :
+                    <div className="progress-center-progress">
+                        <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
+                        Chargement des palmarès...
+                    </div>}
 
             </div>
         )

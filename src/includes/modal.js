@@ -1,13 +1,38 @@
-import { FaInfoCircle } from 'react-icons/fa';
+import { useDispatch } from "react-redux";
 
-export default function modalView(title, mainText) {
-    return(
+const  ModalView=(title, mainText)=> {
+
+    const dispatch = useDispatch();
+    return (
         <div className="main-modal">
-            <h2 className="title-modal">
-            <FaInfoCircle style={{ color: 'gray', marginRight: 10 }} size={20} />
-            {title}
-            </h2>
-            <div className="main-text-modal">{mainText}</div>
+            <div style={{
+                paddingRight: 25,
+                paddingLeft: 25
+            }}>
+                <div style={{
+                    textAlign: 'center',
+                    fontSize: 17,
+                    fontWeight: 'bold'
+                }}> {title}</div>
+                <div style={{
+                    marginTop: 20,
+                    color: 'gray',
+                    marginBottom: 20,
+                    textAlign: 'center'
+                }}>{mainText}</div>
+            </div>
+
+            <div onClick={()=>{
+                dispatch({type:'SET_MODAL_VIEW', payload:{
+                    modal_title:'',
+                    modal_main_text:'',
+                    modal_view:false,
+                }})
+            }} className='button-modal'>
+                Fermer
+            </div>
         </div>
     )
 }
+
+export default ModalView;

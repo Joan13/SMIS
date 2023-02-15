@@ -89,10 +89,11 @@ const initialState = {
 }
 
 const reducer = (state = initialState, action) => {
-
     switch (action.type) {
         case "SET_MODAL_PAIEMENT_CATEGORIES":
             return { ...state, modal_paiement_categories: action.payload }
+            case "SET_MODAL_VIEW":
+            return { ...state, modal_view: action.payload }
             case "SET_CONDUITES":
             return { ...state, conduites: action.payload }
             case "SET_MARKS_MODIFIED":
