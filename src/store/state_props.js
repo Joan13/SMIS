@@ -84,6 +84,8 @@ export const mapStateToProps = (state) => {
         edit_pupil: state.edit_pupil,
         marks_modified:state.marks_modified,
         conduites:state.conduites,
+        modal_selections:state.modal_selections,
+        classes_selected:state.classes_selected,
     }
 }
 

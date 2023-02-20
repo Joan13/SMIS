@@ -9,8 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { http, online, url_online, year } from '../../global_vars';
 import ButtonNormal from '../../components/includes/button_normal';
 
-const Signin = () => {
+// const { ipcRenderer } = window.require("electron");
+// const ipc = ipcRenderer;
 
+const Signin = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const user_data = useSelector(state => state.user_data);
@@ -234,7 +236,9 @@ const Signin = () => {
                             <>
                                 <ButtonNormal text="Connexion" style={{ width: '100%' }} onPress={() => signin()} />
                                 <div style={{ marginTop: 10, textAlign: 'right', fontSize: 15 }}>Besoin d'aide ?
-                                    <span onClick={() => { }}
+                                    <span onClick={() => { 
+                                        // ipc.send('closeApp')
+                                    }}
                                         style={{ color: 'rgba(0, 80, 180)' }} className="pointer"> Cliquez ici.
                                     </span>
                                 </div>

@@ -28,8 +28,8 @@ class Courses extends Component {
             new_course_name: "",
             maxima_new_course: "",
             toggle_action: false,
-            enter_new_course:false,
-            erreur_new_course:"",
+            enter_new_course: false,
+            erreur_new_course: "",
         }
     }
 
@@ -76,7 +76,7 @@ class Courses extends Component {
     new_course() {
 
         if (this.state.new_course_name !== "" || this.state.maxima_new_course !== "") {
-            
+
             this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
             let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/new_course.php";
 
@@ -103,7 +103,7 @@ class Courses extends Component {
                     // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
                 });
         } else {
-            this.setState({ erreur_new_course:"Tous les champs sont obligatoires pour enregistrer un cours" });
+            this.setState({ erreur_new_course: "Tous les champs sont obligatoires pour enregistrer un cours" });
         }
     }
 
@@ -377,48 +377,48 @@ class Courses extends Component {
                 {!this.props.loading_footer ?
                     <div>
                         <div style={{
-                            marginTop:10,
-                            marginBottom:-20
+                            marginTop: 10,
+                            marginBottom: -20
                         }}>
                             <span style={{
-                                fontSize:15,
-                                fontWeight:'bold'
-                                }}>Cours </span>
-                            <span 
-                                    onClick={()=>this.setState({enter_new_course:true})}
-                                    style={{
-                                        display:'inline-block',
-                                        backgroundColor:'rgb(0,80,180)',
-                                        padding:5,
-                                        cursor:'pointer',
-                                        borderRadius:20,
-                                        paddingBottom:3,
-                                        marginLeft:10
-                                    }}>
-                                        <FiPlus color='white' size={15} />
-                                    </span>
-                                    </div>
+                                fontSize: 15,
+                                fontWeight: 'bold'
+                            }}>Cours </span>
+                            <span
+                                onClick={() => this.setState({ enter_new_course: true })}
+                                style={{
+                                    display: 'inline-block',
+                                    backgroundColor: 'rgb(0,80,180)',
+                                    padding: 5,
+                                    cursor: 'pointer',
+                                    borderRadius: 20,
+                                    paddingBottom: 3,
+                                    marginLeft: 10
+                                }}>
+                                <FiPlus color='white' size={15} />
+                            </span>
+                        </div>
                         <div className="menu-float-right-normal">
                             <span style={{ color: 'rgb(0,80,180)', cursor: 'pointer' }} onClick={() => this.state.toggle_action ? this.setState({ toggle_action: false }) : this.setState({ toggle_action: true })}>Supprimer un cours</span>
                         </div>
                         <table className="full-table-liste-markss" style={{
-                            marginTop:0
+                            marginTop: 0
                         }}>
                             <thead>
                                 <tr>
-                                
-                                <th style={{ width: 30, paddingLeft: 10, paddingRight: 10 }}>No</th>
-                                <th style={{ textAlign: 'left', paddingLeft: 10 }}>Intitulé du cours</th>
-                                <th style={{ width: 100 }}>Maxima</th>
-                                <th style={{ width: 100 }}>Ex. ?</th>
-                                {this.state.toggle_action ?
-                                    <th>Option</th> : null}
-                                
-                            </tr>
+
+                                    <th style={{ width: 30, paddingLeft: 10, paddingRight: 10 }}>No</th>
+                                    <th style={{ textAlign: 'left', paddingLeft: 10 }}>Intitulé du cours</th>
+                                    <th style={{ width: 100 }}>Maxima</th>
+                                    <th style={{ width: 100 }}>Ex. ?</th>
+                                    {this.state.toggle_action ?
+                                        <th>Option</th> : null}
+
+                                </tr>
                             </thead>
                             {this.props.classe.data.courses.map((course, index) => (
                                 <tbody key={index}>
-                                    <tr key={index + 1}  style={{ backgroundColor: index % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
+                                    <tr key={index + 1} style={{ backgroundColor: index % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
                                         <td style={{ paddingLeft: 10, paddingRight: 10 }}>
                                             {index + 1}
                                         </td>
@@ -464,63 +464,63 @@ class Courses extends Component {
 
                         {this.state.enter_new_course ?
                             <div className="new_course_modal_transparent">
-                            <div className="new_course_modal">
-                                <div style={{
-                                    textAlign:'right',
-                                    backgroundColor:'rgb(240,240,240)',
-                                    borderTopLeftRadius:5,
-                                    borderTopRightRadius:5
-                                }}>
-                                    <span 
-                                    onClick={()=>this.setState({enter_new_course:false})}
-                                    style={{
-                                        display:'inline-block',
-                                        backgroundColor:'red',
-                                        padding:5,
-                                        cursor:'pointer',
-                                        borderTopRightRadius:5
+                                <div className="new_course_modal">
+                                    <div style={{
+                                        textAlign: 'right',
+                                        backgroundColor: 'rgb(240,240,240)',
+                                        borderTopLeftRadius: 5,
+                                        borderTopRightRadius: 5
                                     }}>
-                                        <FiX color='white' size={20} />
-                                    </span>
-                                </div>
-                                <h3>Ajouter un nouveau cours pour cette classe la {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.cycle_id}</h3>
-                                <br />
+                                        <span
+                                            onClick={() => this.setState({ enter_new_course: false })}
+                                            style={{
+                                                display: 'inline-block',
+                                                backgroundColor: 'red',
+                                                padding: 5,
+                                                cursor: 'pointer',
+                                                borderTopRightRadius: 5
+                                            }}>
+                                            <FiX color='white' size={20} />
+                                        </span>
+                                    </div>
+                                    <h3>Ajouter un nouveau cours pour cette classe la {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.cycle_id}</h3>
+                                    <br />
 
-                                <div style={{
-                                    textAlign:'center',
-                                }}>
-                                <table style={{display:'inline-block'}}>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <input
-                                                onChange={(text) => this.setState({ new_course_name: text.target.value })}
-                                                placeholder="Intitulé du cours"
-                                                value={this.state.new_course_name}
-                                                className="input-normall" />
-                                        </td>
-                                        <td>
-                                            <input
-                                                onChange={(text) => this.setState({ maxima_new_course: text.target.value })}
-                                                type='number'
-                                                placeholder="Maxima"
-                                                value={this.state.maxima_new_course}
-                                                className="input-normall" />
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                    <div style={{
+                                        textAlign: 'center',
+                                    }}>
+                                        <table style={{ display: 'inline-block' }}>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input
+                                                            onChange={(text) => this.setState({ new_course_name: text.target.value })}
+                                                            placeholder="Intitulé du cours"
+                                                            value={this.state.new_course_name}
+                                                            className="input-normall" />
+                                                    </td>
+                                                    <td>
+                                                        <input
+                                                            onChange={(text) => this.setState({ maxima_new_course: text.target.value })}
+                                                            type='number'
+                                                            placeholder="Maxima"
+                                                            value={this.state.maxima_new_course}
+                                                            className="input-normall" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <span style={{
+                                        color: '#780006'
+                                    }}>{this.state.erreur_new_course}</span><br />
+                                    <button
+                                        className="button-primary"
+                                        style={{ marginLeft: 2, paddingLeft: 35, paddingRight: 35, marginTop: 10 }}
+                                        onClick={(text) => this.new_course()}
+                                    >Enregistrer le cours</button>
                                 </div>
-<span style={{
-    color:'#780006'
-}}>{this.state.erreur_new_course}</span><br/>
-                                <button
-                                    className="button-primary"
-                                    style={{ marginLeft: 2, paddingLeft: 35, paddingRight: 35, marginTop: 10 }}
-                                    onClick={(text) => this.new_course()}
-                                >Enregistrer le cours</button>
-                            </div>
-                        </div>:null}
+                            </div> : null}
 
                         {this.state.modal_view ?
                             <div className="main-div-modal">

@@ -14,7 +14,6 @@ import PalmaresPupils from '../../components/classe/palmares_classe';
 import FicheObservationPoints from '../../components/classe/fiche_observation';
 import NewPupil from '../../components/pupil/new_pupil';
 import ListeNomminative from '../../components/classe/liste_nomminative';
-import ClassOverView from '../../components/classe/class_overview';
 import Bulletins from '../../components/classe/bulletins';
 import StatistiquesCaisse from '../../components/paiements/stats_caisse';
 import FicheE13 from '../../components/classe/fiche_e13';
@@ -46,6 +45,8 @@ import BulletinsBrouillon from '../../components/classe/fiches_brouillon/bulleti
 import BulletinsType2Brouillon from '../../components/classe/fiches_brouillon/bulletins_type2_brouillon';
 import ViewWorker from '../../components/workers/view_worker';
 import Conduites from '../../components/classe/conduite';
+import ModalFrame from '../../components/modals';
+import Classes from '../../includes/classes';
 
 class Home extends Component {
 
@@ -339,36 +340,26 @@ class Home extends Component {
     };
 
     request_synthese_change(periode) {
-        // this.setState({ periode_syhntese: periode });
         this.props.dispatch({ type: "SET_PERIODE_FULL", payload: periode });
         this.props.dispatch({ type: "SET_TITLE", payload: "Fiche synthèse des résultats / " });
         if (periode === "1") {
             this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DE LA 1ère PÉRIODE" });
-            // this.setState({ periode_full: "DE LA 1ère PÉRIODE" });
         } else if (periode === "2") {
             this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DE LA 2e PÉRIODE" });
-            // this.setState({ periode_full: "DE LA 2e PÉRIODE" });
         } else if (periode === "3") {
             this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DE LA 3e PÉRIODE" });
-            // this.setState({ periode_full: "DE LA 3e PÉRIODE" });
         } else if (periode === "4") {
             this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DE LA 4e PÉRIODE" });
-            // this.setState({ periode_full: "DE LA 4e PÉRIODE" });
         } else if (periode === "10") {
             this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DES EXAMENS DU PREMIER SEMESTRE" });
-            // this.setState({ periode_full: "DES EXAMENS DU 1er SEMESTRE" });
         } else if (periode === "11") {
             this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DES EXAMENS DU DEUXIÈME SEMESTRE" });
-            // this.setState({ periode_full: "DES EXAMENS DU 2e SEMESTRE" });
         } else if (periode === "40") {
             this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DU PREMIER SEMESTRE" });
-            // this.setState({ periode_full: "DU PREMIER SEMESTRE" });
         } else if (periode === "50") {
             this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DU DEUXIÈME SEMESTRE" });
-            // this.setState({ periode_full: "DU SECOND SEMESTRE" });
         } else if (periode === "12") {
             this.props.dispatch({ type: "SET_PERIODE_FULL", payload: "DE FIN D'ANNÉE" });
-            // this.setState({ periode_full: "DE FIN D'ANNÉE" });
         }
 
         this.get_synthese_marks(periode);
@@ -441,7 +432,7 @@ class Home extends Component {
                         {this.props.classes_synthese.map((classe, index) => {
                             return (
                                 <tbody>
-                                    <tr>
+                                    <tr style={{ backgroundColor: index % 2 === 0 ? "rgba(0,0,0,0.015)" : "rgba(0,0,0,0.050)" }}>
                                         <td style={{ textAlign: 'center' }}>{index + 1}</td>
                                         <td style={{ paddingLeft: 10 }}>{classe.class_id + " " + classe.section_id + " " + classe.order_id}</td>
                                         <td style={{ textAlign: 'center' }}>{classe.pupils_count}</td>
@@ -459,7 +450,7 @@ class Home extends Component {
                             )
                         })}
                         <tfoot>
-                            <tr>
+                            <tr style={{ backgroundColor: "rgba(0,0,0,0.1)" }}>
                                 <td rowSpan="2" style={{ textAlign: 'center', fontWeight: 'bold' }}>+</td>
                                 <td rowSpan="2" style={{ paddingLeft: 10, fontWeight: 'bold' }}>{this.props.nbr_classes}</td>
                                 <td rowSpan="2" style={{ textAlign: 'center', fontWeight: 'bold' }}>{this.props.all_pupils}</td>
@@ -473,7 +464,7 @@ class Home extends Component {
                                 <td rowSpan="2" style={{ textAlign: 'center', fontWeight: 'bold' }}></td>
                                 <td rowSpan="2" style={{ textAlign: 'center', fontWeight: 'bold' }}></td>
                             </tr>
-                            <tr>
+                            <tr style={{ backgroundColor: "rgba(0,0,0,0.1)" }}>
                                 <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{((parseInt(this.props.nbr_ee) * 100) / this.props.all_pupils).toString().substr(0, 4)}</td>
                                 <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{((parseInt(this.props.nbr_tb) * 100) / this.props.all_pupils).toString().substr(0, 4)}</td>
                                 <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{((parseInt(this.props.nbr_bb1) * 100) / this.props.all_pupils).toString().substr(0, 4)}</td>
@@ -498,83 +489,6 @@ class Home extends Component {
 
             </div>
         )
-    }
-
-    color_body(number) {
-        if (number <= 25) {
-            return 'green';
-        } else if (number >= 26 && number <= 40) {
-            return 'rgb(0, 80, 180)';
-        } else if (number > 40 && number <= 50) {
-            return 'rgb(160, 160, 0)';
-        } else if (number >= 51 && number <= 69) {
-            return 'rgb(166, 83, 0)';
-        } else {
-            return 'rgb(128, 0, 0)';
-        }
-    }
-
-    open_classe(classe) {
-        this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: true });
-        this.props.dispatch({ type: "SET_CLASSE", payload: classe });
-        this.props.dispatch({ type: "SET_CLASSE_OPEN", payload: true });
-        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
-
-        if (this.props.middle_func === 23 || this.props.middle_func === 22) {
-            this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Horaires" });
-            this.props.dispatch({ type: "SET_COURSE", payload: classe.courses[0] });
-        } else {
-            this.props.dispatch({ type: "SET_TITLE_MAIN", payload: classe.class_id + " " + classe.section_id + " " + classe.cycle_id + " " + classe.order_id });
-        }
-
-        if (this.props.middle_func !== 2) {
-            this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
-        }
-
-        if (this.props.middle_func === 15 || this.props.middle_func === 16 || this.props.middle_func === 17 || this.props.middle_func === 0 || this.props.middle_func === 30) {
-            this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
-        }
-
-        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_class_info.php";
-
-        fetch(BaseURL, {
-            method: 'POST',
-            body: JSON.stringify({
-                cycle_id: classe.cycle,
-                class_id: classe.class,
-                order_id: classe.order,
-                section_id: classe.section,
-                option_id: classe.option,
-                school_year: classe.school_year,
-            })
-        })
-            .then((response) => response.json())
-            .then((response) => {
-
-                if (this.props.middle_func !== 0) {
-                    classe.data = response;
-                    this.props.dispatch({ type: "SET_CLASSE", payload: classe });
-                    this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
-
-                    if (this.props.middle_func === 0 || this.props.middle_func === 4 || this.props.middle_func === 6 || this.props.middle_func === 11 || this.props.middle_func === 12) {
-                        this.props.dispatch({ type: "SET_MIDDLE_FUNC", payload: 1 });
-                        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
-                    }
-
-                    if (this.props.middle_func === 0) {
-                        this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
-                    }
-
-                    this.props.dispatch({ type: "SET_MARKS_MODIFIED", payload: false });
-
-                } else {
-                    this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
-                }
-            }).catch((error) => {
-                console.log(error.toString());
-                this.props.dispatch({ type: "SET_LOADING_FOOTER", payload: false });
-                this.setState({ can_load_data: false, modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_class: false, class_loading: 0 });
-            });
     }
 
     back_home() {
@@ -792,6 +706,13 @@ class Home extends Component {
                             </span>
 
                             <span
+                                title="Notifications"
+                                onClick={() => this.dispatch({ type: "SET_MODAL_SELECTIONS", payload: true })}
+                                className="user-home-tools">
+                                <FaBell color="black" size={20} />
+                            </span>
+
+                            <span
                                 title="Rafraîchir les données"
                                 onClick={() => this.refresh_window()}
                                 className="user-home-tools">
@@ -818,14 +739,14 @@ class Home extends Component {
                                 onClick={() => this.state.logout_open ? this.setState({ logout_open: false }) : this.setState({ logout_open: true })}
                                 style={{ display: 'inline-block', textAlign: 'right', marginRight: 10 }}>
                                 <strong style={{ fontSize: 13 }}>{this.props.user_poste.toUpperCase()}</strong><br />
-                                <span style={{ display: 'inline-block' }}>{this.props.user_data.username}</span>
+                                <span style={{ display: 'inline-block' }}>{this.props.user_data.user_name}</span>
                             </span>
-                                <span onClick={() => this.state.logout_open ? this.setState({ logout_open: false }) : this.setState({ logout_open: true })}
-                                    className="user-home">
-                                    <FiUser
-                                        color="black"
-                                        size={15} />
-                                </span>
+                            <span onClick={() => this.state.logout_open ? this.setState({ logout_open: false }) : this.setState({ logout_open: true })}
+                                className="user-home">
+                                <FiUser
+                                    color="black"
+                                    size={15} />
+                            </span>
                             <FaCircle style={{ marginLeft: -13, marginBottom: -13, paddingTop: 20 }} size={13} color="rgb(0, 180, 0)" />
                         </div>
 
@@ -920,7 +841,8 @@ class Home extends Component {
                     </div>
 
                     <div className="main-menu-left">
-                        {this.props.is_loading_home ?
+                        <Classes type={1} />
+                        {/* {this.props.is_loading_home ?
                             <div className="progress-center">
                                 <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
                                 Chargement des données...
@@ -949,7 +871,9 @@ class Home extends Component {
                                     </div>
                                 )
                             })
-                        }
+                        } */}
+
+
                     </div>
 
 
@@ -1063,7 +987,7 @@ class Home extends Component {
                                                 </div>
                                                 : null}
 
-{this.props.middle_func === 31 ?
+                                            {this.props.middle_func === 31 ?
                                                 <div id="view_worker">
                                                     <Conduites />
                                                 </div>
@@ -1154,6 +1078,11 @@ class Home extends Component {
 
                     {this.props.modal_libelles ?
                         <Libelles /> : null}
+
+
+                    {this.props.modal_selections ?
+                        <ModalFrame type={1} />
+                        : null}
 
                     {/* {this.state.modal_view ?
                         <div className="main-div-modal">

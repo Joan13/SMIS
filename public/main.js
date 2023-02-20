@@ -1,9 +1,11 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 // const { autoUpdater } = require("electron-updater");
 const path = require('path');
+const fs = require("fs");
+const ipc = ipcMain;
 const isDev = require('electron-is-dev');
 require('@electron/remote/main').initialize();
 
@@ -12,21 +14,25 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 1500,
     height: 850,
-    icon:"logo192.png",
+    icon:"logo.ico",
+    // frame: false,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
-      javascript:true
+      contextIsolation: false,
+      javascript:true,
     },
-    // frame:false,
     autoHideMenuBar: true,
   })
 
   mainWindow.loadURL(
     isDev
       ? 'http://localhost:3000'
-      : `file://${path.join(__dirname, '../build/index.html')}`
-  )
+      : `file://${path.join(__dirname, '../build/index.html')}`)
+
+      ipc.on('closeApp', ()=>{
+console.log("Close App");
+      })
 
   // alert(isDev)
 

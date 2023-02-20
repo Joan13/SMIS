@@ -185,7 +185,7 @@ const FichesPointsPupils = () => {
         }
     }
 
-    const find_error=(pupill, course, period)=>{
+    const find_error = (pupill, course, period) => {
         const value = pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (parseInt(pupill.pupil.pupil_id) + course + period);
 
         return value;

@@ -1,7 +1,7 @@
 {
   "homepage": ".",
-  "name": "yambi_smis",
-  "version": "8.4.2",
+  "name": "yambi-smis",
+  "version": "8.4.9",
   "private": true,
   "author": {
     "name": "Joan Migani",
@@ -27,6 +27,8 @@
     "convertir-nombre-lettre": "^1.0.2",
     "electron-is-dev": "^2.0.0",
     "electron-updater": "^5.3.0",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
     "react": "^18.2.0",
     "react-anchor-link-smooth-scroll": "^1.0.12",
     "react-charts": "^2.0.0-beta.7",
@@ -46,11 +48,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject",
     "electron:serve": "concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn electron:start\"",
-    "electron:build": "yarn build && electron-builder --win -c.extraMetadata.main=build/main.js",
-    "electron:start": "wait-on tcp:3000 && electron .",
+    "electron:build": "yarn build && electron-builder -w -c.extraMetadata.main=build/main.js",
+    "electron:start": "wait-on http://127.0.0.1:3000 && electron .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
@@ -63,7 +65,7 @@
         "snap",
         "rpm"
       ],
-      "category": "Utility"
+      "category": "Education"
     },
     "files": [
       "dist/**/*",

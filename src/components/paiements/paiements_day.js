@@ -318,7 +318,7 @@ const PaiementsDay = () => {
 
                                                     if (total_frais !== 0) {
                                                         return (
-                                                            <tr style={{ backgroundColor: 'rgba(0, 80, 180, 0.2)' }}>
+                                                            <tr key={index} style={{ backgroundColor: 'rgba(0, 80, 180, 0.2)' }}>
                                                                 <td colSpan={4} style={{ padding: 10, fontSize: 13, fontWeight: 'bold', textAlign: 'right' }}>Total payé {libelle.description_libelle}</td>
                                                                 <td style={{ textAlign: 'center', fontSize: 13 }}><strong>{total_frais}</strong></td>
                                                             </tr>
@@ -403,7 +403,6 @@ const PaiementsDay = () => {
                                                 <caption>
                                                     <h4 style={{ float: 'right', textAlign: 'center' }}>
                                                         DÉTAILLÉ DU RAPPORT JOURNALIER DE PAIEMENT DES FRAIS SCOLAIRES<br />
-                                                        {/* Journée du {find_date2(day)} */}
                                                     </h4>
                                                 </caption>
                                                 <thead>
@@ -411,7 +410,6 @@ const PaiementsDay = () => {
                                                         <th style={{ width: 30, textAlign: 'center' }} rowSpan={2}>No</th>
                                                         <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Noms de l'élève</th>
                                                         <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Classe</th>
-                                                        {/* <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Prénom</th> */}
                                                         <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Motif de paiement</th>
                                                         <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} rowSpan={2}>Montant (USD)</th>
                                                     </tr>
@@ -423,16 +421,9 @@ const PaiementsDay = () => {
                                                     return (
                                                         <tbody key={index}>
                                                             <tr onClick={() => view_pupil(find_pupil_data(paiement.pupil_id))}>
-                                                                {/* <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                                <td style={{ paddingLeft: 10 }}>{find_pupil_data(paiement.pupil_id).pupil.first_name.toUpperCase()} {find_pupil_data(paiement.pupil_id).pupil.second_name.toUpperCase()} {find_pupil_data(paiement.pupil_id).pupil.last_name.toUpperCase()}</td>
-                                                                <td style={{ paddingLeft: 10 }}>{find_class_number(find_pupil_data(paiement.pupil_id).pupil.class_school)} {find_cycle(find_pupil_data(paiement.pupil_id).pupil.cycle_school)} {find_class_order(find_pupil_data(paiement.pupil_id).pupil.class_order)}</td>
-                                                                <td style={{ paddingLeft: 10 }}>{libelle[0].description_libelle}</td>
-                                                                <td style={{ width: 50, textAlign: 'center' }}>{paiement.montant_paye} </td> */}
-
                                                                 <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
                                                                 <td style={{ paddingLeft: 10 }}>{paiement.first_name.toUpperCase()} {paiement.second_name.toUpperCase()} {paiement.last_name.toUpperCase()}</td>
                                                                 <td style={{ paddingLeft: 10 }}>{find_class_number(paiement.class_school)} {find_cycle(paiement.cycle_school)} {find_class_order(paiement.class_order)}</td>
-                                                                {/* <td style={{ paddingLeft: 10 }}></td> */}
                                                                 <td style={{ paddingLeft: 10 }}>{libelle[0].description_libelle}</td>
                                                                 <td style={{ width: 50, textAlign: 'center' }}>{paiement.montant_paye} </td>
                                                             </tr>
@@ -462,7 +453,6 @@ const PaiementsDay = () => {
                                                 <caption>
                                                     <h4 style={{ float: 'right', textAlign: 'center' }}>
                                                         DÉTAILLÉ DU RAPPORT JOURNALIER DE PAIEMENT DES FRAIS DIVERS<br />
-                                                        {/* Journée du {find_date2(day)} */}
                                                     </h4>
                                                 </caption>
                                                 <thead>
@@ -480,16 +470,9 @@ const PaiementsDay = () => {
                                                     return (
                                                         <tbody key={index}>
                                                             <tr onClick={() => view_pupil(find_pupil_data(frais_divers.pupil_id))}>
-                                                                {/* <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                                <td style={{ paddingLeft: 10 }}>{find_pupil_data(frais_divers.pupil_id).pupil.first_name.toUpperCase()} {find_pupil_data(frais_divers.pupil_id).pupil.second_name.toUpperCase()} {find_pupil_data(frais_divers.pupil_id).pupil.last_name.toUpperCase()}</td>
-                                                                <td style={{ paddingLeft: 10 }}>{find_class_number(find_pupil_data(frais_divers.pupil_id).pupil.class_school)} {find_cycle(find_pupil_data(frais_divers.pupil_id).pupil.cycle_school)} {find_class_order(find_pupil_data(frais_divers.pupil_id).pupil.class_order)}</td>
-                                                                <td style={{ paddingLeft: 10 }}>{libelle[0].description_libelle}</td>
-                                                                <td style={{ width: 50, textAlign: 'center' }}>{frais_divers.montant} </td> */}
-
                                                                 <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
                                                                 <td style={{ paddingLeft: 10 }}>{frais_divers.first_name.toUpperCase()} {frais_divers.second_name.toUpperCase()} {frais_divers.last_name.toUpperCase()}</td>
                                                                 <td style={{ paddingLeft: 10 }}>{find_class_number(frais_divers.class_school)} {find_cycle(frais_divers.cycle_school)} {find_class_order(frais_divers.class_order)}</td>
-                                                                {/* <td style={{ paddingLeft: 10 }}></td> */}
                                                                 <td style={{ paddingLeft: 10 }}>{libelle[0].description_libelle}</td>
                                                                 <td style={{ width: 50, textAlign: 'center' }}>{frais_divers.montant} </td>
                                                             </tr>
@@ -500,7 +483,6 @@ const PaiementsDay = () => {
                                                 <tfoot>
                                                     {libelles.map((libelle, index) => {
                                                         let total_frais = 0;
-                                                        {/* const frais_divers_day = libelles.filter(libellle=>libellle.libelle_id === libelle.libelle_id); */ }
 
                                                         for (let i in frais_divers_day) {
                                                             if (frais_divers_day[i].libelle === libelle.libelle_id) {
@@ -510,7 +492,7 @@ const PaiementsDay = () => {
 
                                                         if (total_frais !== 0) {
                                                             return (
-                                                                <tr style={{ backgroundColor: 'rgba(0, 80, 180, 0.2)' }}>
+                                                                <tr key={index} style={{ backgroundColor: 'rgba(0, 80, 180, 0.2)' }}>
                                                                     <td colSpan={4} style={{ padding: 10, fontSize: 13, fontWeight: 'bold', textAlign: 'right' }}>Total payé {libelle.description_libelle}</td>
                                                                     <td style={{ textAlign: 'center', fontSize: 13 }}><strong>{total_frais}</strong></td>
                                                                 </tr>
@@ -570,16 +552,9 @@ const PaiementsDay = () => {
                                                 return (
                                                     <tbody key={index}>
                                                         <tr onClick={() => view_pupil(find_pupil_data(paiement.pupil_id))}>
-                                                            {/* <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{find_pupil_data(paiement.pupil_id).pupil.first_name.toUpperCase()} {find_pupil_data(paiement.pupil_id).pupil.second_name.toUpperCase()} {find_pupil_data(paiement.pupil_id).pupil.last_name.toUpperCase()}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{find_class_number(find_pupil_data(paiement.pupil_id).pupil.class_school)} {find_cycle(find_pupil_data(paiement.pupil_id).pupil.cycle_school)} {find_class_order(find_pupil_data(paiement.pupil_id).pupil.class_order)}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{libelle[0].description_libelle}</td>
-                                                            <td style={{ width: 50, textAlign: 'center' }}>{paiement.montant_paye} </td> */}
-
                                                             <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
                                                             <td style={{ paddingLeft: 10 }}>{paiement.first_name.toUpperCase()} {paiement.second_name.toUpperCase()} {paiement.last_name.toUpperCase()}</td>
                                                             <td style={{ paddingLeft: 10 }}>{find_class_number(paiement.class_school)} {find_cycle(paiement.cycle_school)} {find_class_order(paiement.class_order)}</td>
-                                                            {/* <td style={{ paddingLeft: 10 }}></td> */}
                                                             <td style={{ paddingLeft: 10 }}>{libelle[0].description_libelle}</td>
                                                             <td style={{ width: 50, textAlign: 'center' }}>{paiement.montant_paye} </td>
                                                         </tr>
@@ -619,16 +594,9 @@ const PaiementsDay = () => {
                                                 return (
                                                     <tbody key={index}>
                                                         <tr onClick={() => view_pupil(find_pupil_data(frais_divers.pupil_id))}>
-                                                            {/* <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                                <td style={{ paddingLeft: 10 }}>{find_pupil_data(frais_divers.pupil_id).pupil.first_name.toUpperCase()} {find_pupil_data(frais_divers.pupil_id).pupil.second_name.toUpperCase()} {find_pupil_data(frais_divers.pupil_id).pupil.last_name.toUpperCase()}</td>
-                                                                <td style={{ paddingLeft: 10 }}>{find_class_number(find_pupil_data(frais_divers.pupil_id).pupil.class_school)} {find_cycle(find_pupil_data(frais_divers.pupil_id).pupil.cycle_school)} {find_class_order(find_pupil_data(frais_divers.pupil_id).pupil.class_order)}</td>
-                                                                <td style={{ paddingLeft: 10 }}>{libelle[0].description_libelle}</td>
-                                                                <td style={{ width: 50, textAlign: 'center' }}>{frais_divers.montant} </td> */}
-
                                                             <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
                                                             <td style={{ paddingLeft: 10 }}>{frais_divers.first_name.toUpperCase()} {frais_divers.second_name.toUpperCase()} {frais_divers.last_name.toUpperCase()}</td>
                                                             <td style={{ paddingLeft: 10 }}>{find_class_number(frais_divers.class_school)} {find_cycle(frais_divers.cycle_school)} {find_class_order(frais_divers.class_order)}</td>
-                                                            {/* <td style={{ paddingLeft: 10 }}></td> */}
                                                             <td style={{ paddingLeft: 10 }}>{libelle[0].description_libelle}</td>
                                                             <td style={{ width: 50, textAlign: 'center' }}>{frais_divers.montant} </td>
                                                         </tr>

@@ -5,14 +5,15 @@ import Settings from './pages/settings';
 import Signin from './pages/signin';
 import { useSelector } from 'react-redux';
 import ModalView from './includes/modal';
-import { Button } from '@material-ui/core';
 import { useState } from 'react';
+import Header from './includes/header';
 
 const App = () => {
 
   const modal_view = useSelector(state => state.modal_view);
   return (
     <div>
+      {/* <Header /> */}
       <HashRouter>
         <Routes>
           <Route path="/signin" element={<Signin />} exact />

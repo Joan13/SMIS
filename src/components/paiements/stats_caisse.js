@@ -19,8 +19,8 @@ class StatistiquesCaisse extends React.Component {
             montant: 0,
             date: new Date().getFullYear() + "-" + parseInt(new Date().getMonth() + 1) + "-" + new Date().getDate(),
             makuta_day: 0,
-            stats_tab:0,
-            loading_stats_day:false,
+            stats_tab: 0,
+            loading_stats_day: false,
         }
 
         this.set_stats = this.set_stats.bind(this);
@@ -51,7 +51,7 @@ class StatistiquesCaisse extends React.Component {
     }
 
     generate_day_stats(date) {
-        this.setState({ date: date, loading_stats_day:true });
+        this.setState({ date: date, loading_stats_day: true });
         this.props.dispatch({ type: "SET_DAY", payload: date });
 
         let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/stats_caisse.php";
@@ -67,11 +67,12 @@ class StatistiquesCaisse extends React.Component {
             .then((response) => response.json())
             .then((response) => {
 
-                this.setState({ 
-                    makuta_day: response.paiements_day, 
+                this.setState({
+                    makuta_day: response.paiements_day,
                     paiements: response.paiements,
-                frais_divers: response.frais_divers,
-                loading_stats_day:false });
+                    frais_divers: response.frais_divers,
+                    loading_stats_day: false
+                });
 
                 this.props.dispatch({ type: "SET_PAIEMENTS_DAY", payload: response.paiements });
                 this.props.dispatch({ type: "SET_FRAIS_DIVERS_DAY", payload: response.frais_divers });
@@ -91,7 +92,7 @@ class StatistiquesCaisse extends React.Component {
             day = date.getDate();
         }
 
-        if ((parseInt(date.getMonth()+1).toString()).length === 1) {
+        if ((parseInt(date.getMonth() + 1).toString()).length === 1) {
             month = "0" + parseInt(date.getMonth() + 1);
         } else {
             month = date.getMonth() + 1;
@@ -101,45 +102,45 @@ class StatistiquesCaisse extends React.Component {
 
     render() {
         return (
-            <div style={{marginRight:10, marginBottom:30}}><br/>
+            <div style={{ marginRight: 10, marginBottom: 30 }}><br />
                 <div>
                     <div>
-                    {this.state.stats_tab !== 1 ?
-                        <div 
-                    onClick={() => {
-                        this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "État général de caisse" });
-                        this.setState({stats_tab:1});
-                        }}
-                    style={{ fontWeight: 'bold' }}>
-                <span className="add-minus"><FiChevronRight /> État général de caisse</span>
-            </div>
-            :
-            <div 
-                    onClick={() => this.setState({stats_tab:0})} 
-                    style={{ fontWeight: 'bold' }}>
-                <span className="add-minus"><FiChevronLeft /> État Journalier de paiement</span>
-            </div>}
+                        {this.state.stats_tab !== 1 ?
+                            <div
+                                onClick={() => {
+                                    this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "État général de caisse" });
+                                    this.setState({ stats_tab: 1 });
+                                }}
+                                style={{ fontWeight: 'bold' }}>
+                                <span className="add-minus"><FiChevronRight /> État général de caisse</span>
+                            </div>
+                            :
+                            <div
+                                onClick={() => this.setState({ stats_tab: 0 })}
+                                style={{ fontWeight: 'bold' }}>
+                                <span className="add-minus"><FiChevronLeft /> État Journalier de paiement</span>
+                            </div>}
 
-            {this.state.stats_tab === 0 ?
-            <div>
-                <div style={{ marginBottom: 10, float:'right', marginRight: 20, marginTop:-15  }}>
-                                            Sélectionner une date<br />
-                                            <input type="date" className='input-normall' style={{paddingRight: 15}} onChange={(text) => this.generate_day_stats(text.target.value)} />
-                                        </div><br/><br/>
-                                        <div style={{ marginTop: 70, marginBottom: 70, textAlign: 'center', fontWeight: 'bold', fontSize: 17 }}>
-                        Montant total perçu dans la journée du {find_date2(this.props.day)}<br />
-                        <strong style={{ color: "rgb(0, 80, 180)", fontSize: 22 }}>{this.state.makuta_day} dollars Américains</strong><br/>
-                        
-                        {this.state.loading_stats_day ?
+                        {this.state.stats_tab === 0 ?
                             <div>
-                        <CircularProgress size={20} color="rgb(0, 80, 180)" /><br/>
-                        <span style={{fontSize:13,fontWeight:400}}>Chargement des données...</span>
-                        </div>:<div><br/><br/></div>}
-                    </div>
-            </div>:null}
+                                <div style={{ marginBottom: 10, float: 'right', marginRight: 20, marginTop: -15 }}>
+                                    Sélectionner une date<br />
+                                    <input type="date" className='input-normall' style={{ paddingRight: 15 }} onChange={(text) => this.generate_day_stats(text.target.value)} />
+                                </div><br /><br />
+                                <div style={{ marginTop: 70, marginBottom: 70, textAlign: 'center', fontWeight: 'bold', fontSize: 17 }}>
+                                    Montant total perçu dans la journée du {find_date2(this.props.day)}<br />
+                                    <strong style={{ color: "rgb(0, 80, 180)", fontSize: 22 }}>{this.state.makuta_day} dollars Américains</strong><br />
+
+                                    {this.state.loading_stats_day ?
+                                        <div>
+                                            <CircularProgress size={20} style={{ color: "rgb(0, 80, 180)" }} /><br />
+                                            <span style={{ fontSize: 13, fontWeight: 400 }}>Chargement des données...</span>
+                                        </div> : <div><br /><br /></div>}
+                                </div>
+                            </div> : null}
                     </div>
 
-{this.state.stats_tab === 0 ? <PaiementsDay /> : <GeneralStatsCaisse />}
+                    {this.state.stats_tab === 0 ? <PaiementsDay /> : <GeneralStatsCaisse />}
                 </div>
             </div>
         )

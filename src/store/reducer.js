@@ -84,6 +84,8 @@ const initialState = {
     paiements_day_deleted: [],
     frais_divers_day_deleted: [],
     fiche_paie: [],
+    modal_selections:true,
+    classes_selected: [],
     day: "",
     marks_modified: false,
 }
@@ -92,6 +94,10 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_MODAL_PAIEMENT_CATEGORIES":
             return { ...state, modal_paiement_categories: action.payload }
+            case "SET_CLASSES_SELECTED":
+            return { ...state, classes_selected: action.payload }
+            case "SET_MODAL_SELECTIONS":
+            return { ...state, modal_selections: action.payload }
             case "SET_MODAL_VIEW":
             return { ...state, modal_view: action.payload }
             case "SET_CONDUITES":

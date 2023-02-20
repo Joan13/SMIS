@@ -55,38 +55,8 @@ const GeneralStatsCaisse = () => {
         })
             .then((response) => response.json())
             .then((response) => {
-                // console.log(paiements);
 
                 const promise_general_stats = new Promise((resolve, reject) => {
-                    //         const paiements = response.paiements;
-                    //         for (let i in pupils) {
-                    // // if(pupils[i].pupil.pupil)
-                    // // console.log(pupils[i].pupil.pupil_id);
-                    // if (pupils[i].pupil.paiement_category === "0") {
-
-                    // } else {
-                    //     let category = [];
-                    // category = paiement_categories.filter(category=>category.category_id === pupils[i].pupil.paiement_category);
-                    // if(category.length === 0)  category[0] = paiement_categories[0];
-
-                    // // const ttrim1 = total_annee/3;
-                    // // const ttrim2 = ttrim1*2;
-                    // // const ttrim3 = ttrim1*3;
-
-                    // // setTotal_annee(total_annee + parseInt(category[0].category_amount));
-                    // // setTotal_trim1(total_trim1 + parseInt(ttrim1));
-                    // // setTotal_trim2(total_trim2 + parseInt(ttrim2));
-                    // // setTotal_trim3(total_trim3 + parseInt(ttrim3));
-
-                    // for (let j in pupils[i].pupil.paiements) {
-                    //     const paiement = pupils[i].pupil.paiements[j];
-
-                    //     if(paiement.length !== 0)
-                    //         console.log(paiement);
-                    // }
-                    // }
-
-                    // }
 
                     const t1_percentages = response.t1_percentages;
                     const t2_percentages = response.t2_percentages;
@@ -108,9 +78,6 @@ const GeneralStatsCaisse = () => {
                         t3ps = t3ps + parseInt(t3_percentages[i]);
                     }
 
-                    // setTrim1(t1ps/t1_percentages.length);
-                    // setTrim2(t2ps/t1_percentages.length);
-                    // setTrim3(t3ps/t2_percentages.length);
                     setTrim1((response.t1_payed * 100) / response.ttrims);
                     setTrim2((response.t2_payed * 100) / response.ttrims);
                     setTrim3((response.t3_payed * 100) / response.ttrims);
@@ -126,8 +93,6 @@ const GeneralStatsCaisse = () => {
                     setFrais_divers_stats(response.frais_divers);
                     setFfmontant(response.ffmontant);
                     setFfnombre(response.ffnombre);
-
-                    // console.log(response)
 
                     resolve();
                 }).then(() => { });
@@ -157,7 +122,6 @@ const GeneralStatsCaisse = () => {
 
     return (
         <div>
-
             {loading_stats ?
                 <div style={{ textAlign: 'center', marginTop: 100 }}>
                     <CircularProgress size={40} style={{ color: "rgb(0, 80, 180)" }} /><br />
@@ -165,8 +129,6 @@ const GeneralStatsCaisse = () => {
                 </div>
                 :
                 <div>
-                    {/* <h3 style={{textAlign:'center', display:'block', marginTop:20, marginBottom:30}}>Statistiques générales de la caisse</h3> */}
-
                     <span onClick={() => printContent("general-stats")} className="add-minus" style={{ fontWeight: 'bold', float: 'right' }}>
                         <FiPrinter /> IMPRIMER LA FICHE
                     </span>
@@ -242,12 +204,6 @@ const GeneralStatsCaisse = () => {
                                         <strong style={{ color: 'rgb(0,80,180)', fontSize: 17 }}> {((payes * 100) / total_annee).toString().substr(0, 5)} </strong>
                                         %</td>
                                 </tr>
-                                {/* <tr>
-                            <td style={{ paddingTop: 10, paddingBottom: 10, textAlign: 'center' }} colSpan="3"><strong style={{ color: 'rgb(0, 80, 180)', fontSize: 16 }}>Montant déjà payé {payes} dollars Américains</strong></td>
-                        </tr>
-                        <tr>
-                            <td style={{ paddingTop: 10, paddingBottom: 10, textAlign: 'center' }} colSpan="3"><strong style={{ color: 'rgb(0, 80, 180)', fontSize: 16 }}>Montant à totaliser {total_annee} dollars Américains</strong></td>
-                        </tr> */}
                             </tfoot>
                         </table>
 

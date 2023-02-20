@@ -52,8 +52,6 @@ const PupilsRightMenu = () => {
 
                 dispatch({ type: "SET_SEARCHING_PUPIL", payload: false });
                 dispatch({ type: "SET_PUPIL", payload: response.pupil });
-
-                console.log(pupill);
             })
             .catch((error) => { });
     };

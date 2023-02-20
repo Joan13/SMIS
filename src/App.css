@@ -5,6 +5,26 @@
   font-weight: normal;
 }
 
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+   background: rgb(0, 80, 180);
+}
+
 html {
   font-size: 13px;
 
@@ -13,6 +33,7 @@ html {
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  /* -webkit-app-region:drag; */
   user-select: none;
 
   margin: 0;
@@ -22,6 +43,10 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+}
+
+#root-app {
+  border-radius: 5px;
 }
 
 code {
@@ -136,6 +161,24 @@ input::-webkit-inner-spin-button {
   cursor: pointer;
 }
 
+.div-in-modal {
+  /* height: 50px; */
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.button-primary-disabled {
+  color: black;
+  background-color: gray;
+  outline: none;
+  transition: 0.6s;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: none;
+  cursor:no-drop;
+  border-radius: 5px;
+}
+
 h1,
 h2,
 h3,
@@ -216,12 +259,15 @@ h5 {
   background-color: white;
   width: 75%;
   position: fixed;
+  display: flex;
   left: 25%;
-  height: 10px;
+  height: 20px;
   bottom: 0px;
   margin-top: 70px;
+  justify-content: flex-end;
+  align-items: center ;
   /* padding-top: 5px; */
-  padding-bottom: 7px;
+  /* padding-bottom: 7px; */
   text-align: right;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -341,6 +387,10 @@ h5 {
   display:flex;
   justify-content: center;
   align-items:center;
+}
+
+.modal-frame {
+  /* border-radius: 15px; */
 }
 
 .main-modal {
@@ -885,14 +935,13 @@ h5 {
   display: inline-block;
   float: right;
   font-size: 14px;
-  /* background-color: #680006; */
 }
 
 .menu-right {
   position: fixed;
   /* background-color: green; */
-  top: 105px;
-  bottom: 15px;
+  top: 82px;
+  bottom: 22px;
   right: 0px;
   width: 20%;
   /* border-left: 1px solid rgba(0, 0, 0, 0.2); */
@@ -904,7 +953,7 @@ h5 {
   position: fixed;
   /* background-color: aqua; */
   top: 80px;
-  bottom: 15px;
+  bottom: 22px;
   width: 54.3%;
   left: 25%;
   border-right: 1px solid rgba(0, 0, 0, 0.2);
