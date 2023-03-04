@@ -146,6 +146,11 @@ const FichesPointsCourses = () => {
         markks.modified = modified;
         markks.marks = marks;
 
+        let totall = findCourse(course).total_marks;
+
+        if(period === 10 || period === 11)
+            totall = parseInt(findCourse(course).total_marks*2);
+
         const main_marks = global_marks.filter(marks => marks.id === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period));
         if (main_marks.length !== 0) {
             main_marks[0].marks = marks;
@@ -155,7 +160,7 @@ const FichesPointsCourses = () => {
             setMarks_edit(global_marks);
         }
 
-        if (parseInt(marks) > findCourse(course).total_marks || parseInt(marks) < 0) {
+        if (parseInt(marks) > totall || parseInt(marks) < 0) {
             if (errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period)) === undefined) {
                 setErrors([...errors, pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period)]);
             }
@@ -237,7 +242,7 @@ const FichesPointsCourses = () => {
                                                 {show_periode("P4", "S2") ?
                                                     <th style={{ width: 50, textAlign: 'center' }}>P4</th> : null}
 
-                                                {show_periode("EX1", "S2") ?
+                                                {show_periode("EX2", "S2") ?
                                                     <th style={{ width: 50, textAlign: 'center' }}>EX2</th> : null}
 
                                                 {show_periode("S2", "S2") ?

@@ -107,17 +107,19 @@ class Bulletins extends React.Component {
     }
 
     render_period_marks(pupil_id, course_id, periode) {
-        let return_value = "0";
+        let return_value = "";
 
         for (let i in this.props.classe.data.pupils_marks) {
             if (this.props.classe.data.pupils_marks[i].pupil == pupil_id && this.props.classe.data.pupils_marks[i].course == course_id && this.props.classe.data.pupils_marks[i].school_period == periode) {
-                return_value = this.props.classe.data.pupils_marks[i].main_marks;
+                if (this.props.classe.data.pupils_marks[i].date_entry !== "") {
+                    return_value = this.props.classe.data.pupils_marks[i].main_marks;
+                }
             }
         }
 
-        if (return_value === "0") {
-            return_value = "";
-        }
+        // if (return_value === "0") {
+        //     return_value = "";
+        // }
 
         return return_value;
     }
@@ -195,7 +197,7 @@ class Bulletins extends React.Component {
         }
 
         if (main_marks != 0) {
-            pourcentage = (main_marks * 100) / total_marks;
+            pourcentage = (main_marks * 100) / this.maxima(periode);
             return (pourcentage).toString().substr(0, 4);
         } else {
             return "";
@@ -215,7 +217,7 @@ class Bulletins extends React.Component {
         }
 
         if (main_marks != 0) {
-            pourcentage = (main_marks * 100) / total_marks;
+            pourcentage = (main_marks * 100) / this.maxima(40);
             return (pourcentage).toString().substr(0, 4);
         } else {
             return "";
@@ -254,18 +256,20 @@ class Bulletins extends React.Component {
 
         if (main_conduite === "") {
             return "-";
-        } else if (main_conduite === "1") {
+        } else if (parseInt(main_conduite) === 1) {
             return "E";
-        } else if (main_conduite === "2") {
+        } else if (parseInt(main_conduite) === 2) {
             return "TB";
-        } else if (main_conduite === "3") {
+        } else if (parseInt(main_conduite) === 3) {
             return "B";
-        } else if (main_conduite === "4") {
+        } else if (parseInt(main_conduite) === 4) {
             return "AB";
-        } else if (main_conduite === "5") {
+        } else if (parseInt(main_conduite) === 5) {
             return "M";
-        } else {
+        } else if(parseInt(main_conduite) === 6){
             return "MA";
+        } else {
+            return "-";
         }
     }
 
@@ -303,16 +307,70 @@ class Bulletins extends React.Component {
         }
     }
 
-    maxima_generaux(pupil_id, periode) {
-        let return_value = 0;
-
-        for (let i in this.props.classe.data.pupils_marks) {
-            if (this.props.classe.data.pupils_marks[i].pupil == pupil_id && this.props.classe.data.pupils_marks[i].school_period == periode) {
-                return_value = parseInt(return_value) + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
+    maxima(period) {
+        let total = 0;
+        let considered = 0;
+        let moins = 0;
+        
+        for (let i in this.props.classe.data.courses) {
+            total = total + parseInt(this.props.classe.data.courses[i].total_marks);
+            
+            if(parseInt(this.props.classe.data.courses[i].considered) === 5) {
+                considered = parseInt(this.props.classe.data.courses[i].considered);
+                moins = parseInt(this.props.classe.data.courses[i].total_marks) * 2;
             }
         }
 
-        return return_value;
+        if (period === 40 || period === 50) {
+            if(considered === 5) {
+                total = (total * 4) - moins;
+            } else {
+                total = (total * 4) - moins;
+            }
+        }
+
+        if (parseInt(period) === 10 || parseInt(period) === 11) {
+            if(considered === 5) {
+                total = (total * 2) - moins;
+            } else {
+                total = (total * 2) - moins;
+            }
+        }
+
+        return total;
+    }
+
+    maxima_generaux(pupil_id, periode) {
+        let total = 0;
+        let considered = 0;
+        let moins = 0;
+        
+        for (let i in this.props.classe.data.courses) {
+            total = total + parseInt(this.props.classe.data.courses[i].total_marks);
+            
+            if(parseInt(this.props.classe.data.courses[i].considered) === 5) {
+                considered = parseInt(this.props.classe.data.courses[i].considered);
+                moins = parseInt(this.props.classe.data.courses[i].total_marks) * 2;
+            }
+        }
+
+        if (parseInt(periode) === 40 || parseInt(periode) === 50) {
+            if(considered === 5) {
+                total = (total * 4) - moins;
+            } else {
+                total = (total * 4) - moins;
+            }
+        }
+
+        if (parseInt(periode) === 10 || parseInt(periode) === 11) {
+            if(considered === 5) {
+                total = (total * 2) - moins;
+            } else {
+                total = (total * 2) - moins;
+            }
+        }
+
+        return total;
     }
 
     totaux_generaux(pupil_id, periode) {
@@ -1078,7 +1136,7 @@ class Bulletins extends React.Component {
                                 </div>
                                 :
                                 <div id="bulletins-p">
-                                    <PreviewA4>
+                                    {/* <PreviewA4> */}
                                        
                                     {this.props.classe.pupils.map((pupil, index) => {
 
@@ -1403,15 +1461,6 @@ class Bulletins extends React.Component {
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 1)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 2)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 10)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
 
-                                                            {/* <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(1)}</strong></td>
-                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(1)}</strong></td>
-                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(2)}</strong></td>
-                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(4)}</strong></td>
-                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(1)}</strong></td>
-                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(1)}</strong></td>
-                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(2)}</strong></td>
-                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(4)}</strong></td>
-                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(8)}</strong></td> */}
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
                                                                 <span style={{ color: 'black', color: 'transparent' }}>00</span>
                                                             </td>
@@ -1659,7 +1708,7 @@ class Bulletins extends React.Component {
                                         }
                                     })}
 
-                    </PreviewA4>
+                    {/* </PreviewA4> */}
                                 </div>
                         }
                     </div>

@@ -47,6 +47,7 @@ import ViewWorker from '../../components/workers/view_worker';
 import Conduites from '../../components/classe/conduite';
 import ModalFrame from '../../components/modals';
 import Classes from '../../includes/classes';
+import FichesPoints from '../../components/classe/fiche_points';
 
 class Home extends Component {
 
@@ -203,8 +204,10 @@ class Home extends Component {
                     this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Année scolaire" });
                     this.props.dispatch({ type: "SET_PUPILS_SCHOOL", payload: response.pupils });
                     this.props.dispatch({ type: "SET_PUPILS", payload: response.pupils });
+                    this.props.dispatch({ type: "SET_SELECTIONS", payload: response.selections });
                     this.props.dispatch({ type: "SET_PAIEMENT_CATEGORIES", payload: response.paiement_categories });
 
+                    console.log(this.props.selections)
                     resolve();
                 }).then(() => { });
 
@@ -287,16 +290,8 @@ class Home extends Component {
 
     get_synthese_marks(periode) {
 
-        // this.setState({
-        //     loading_middle: true,
-        //     middle_func: 4,
-        //     class_open: false,
-        //     class_loading: 0
-        // });
-
         this.props.dispatch({ type: "SET_CLASSE_OPEN", payload: false });
         this.props.dispatch({ type: "SET_LOADING_MIDDLE", payload: true });
-        // this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
 
         let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_synthese.php";
 
@@ -309,18 +304,6 @@ class Home extends Component {
         })
             .then((response) => response.json())
             .then((response) => {
-                // this.setState({
-                //     classes_synthese: response.classes,
-                //     loading_middle: false,
-                //     all_pupils: response.all_pupils,
-                //     nbr_ee: response.nbr_ee,
-                //     nbr_tb: response.nbr_tb,
-                //     nbr_bb1: response.nbr_bb1,
-                //     nbr_bb2: response.nbr_bb2,
-                //     nbr_me: response.nbr_me,
-                //     nbr_ma: response.nbr_ma,
-                //     nbr_classes: response.nbr_classes
-                // })
 
                 this.props.dispatch({ type: "SET_CLASSES_SYNTHESE", payload: response.classes });
                 this.props.dispatch({ type: "SET_LOADING_MIDDLE", payload: false });
@@ -332,6 +315,8 @@ class Home extends Component {
                 this.props.dispatch({ type: "SET_NBR_ME", payload: response.nbr_me });
                 this.props.dispatch({ type: "SET_NBR_MA", payload: response.nbr_ma });
                 this.props.dispatch({ type: "SET_NBR_CLASSES", payload: response.nbr_classes });
+                this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
+                this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
             })
             .catch((error) => {
                 // alert(error.toString());
@@ -684,36 +669,31 @@ class Home extends Component {
                                     <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} size={20} />
                                 </span> : null}
 
-                            <span
-                                title="Revenir au menu principal"
+                            <span title="Revenir au menu principal"
                                 className="user-home-tools" onClick={() => this.back_home()}>
                                 <FaHome color="black" size={20} />
                             </span>
 
                             {!online ?
-                                <span
-                                    title="Synchroniser les données"
+                                <span title="Synchroniser les données"
                                     onClick={() => this.collect_data()}
                                     className="user-home-tools">
                                     <FaCloudUploadAlt color="black" size={22} />
                                 </span>
                                 : null}
 
-                            <span
-                                title="Notifications"
+                            <span title="Notifications"
                                 className="user-home-tools">
                                 <FaBell color="black" size={20} />
                             </span>
 
-                            <span
-                                title="Notifications"
-                                onClick={() => this.dispatch({ type: "SET_MODAL_SELECTIONS", payload: true })}
+                            {/* <span title="Notifications"
+                                onClick={() => this.props.dispatch({ type: "SET_MODAL_SELECTIONS", payload: true })}
                                 className="user-home-tools">
                                 <FaBell color="black" size={20} />
-                            </span>
+                            </span> */}
 
-                            <span
-                                title="Rafraîchir les données"
+                            <span title="Rafraîchir les données"
                                 onClick={() => this.refresh_window()}
                                 className="user-home-tools">
                                 <FiRefreshCcw color="black" size={20} />
@@ -727,8 +707,7 @@ class Home extends Component {
                             </Link>
 
                             {this.state.logout_open ?
-                                <span
-                                    title="Déconnexion"
+                                <span title="Déconnexion"
                                     onClick={() => this.logout_session()} className="user-home-tools" style={{ fontSize: 15 }}>
                                     <div className="deconnexion">
                                         <FiLogOut color="white" size={12} style={{ marginRight: 10 }} />
@@ -774,16 +753,14 @@ class Home extends Component {
                                     Uploader une classe</span> */}
 
                                 {this.props.middle_func === 15 ?
-                                    <span
-                                        onClick={() => this.new_worker()}
+                                    <span onClick={() => this.new_worker()}
                                         style={{ color: 'rgba(0, 80, 180)' }}
                                         className={`select-no-border ${this.props.middle_func === 6 ? "select-no-border-bold" : ""}`}>
                                         <FaUserPlus style={{ marginRight: 5 }} />
                                         Nouveau membre</span>
                                     :
                                     this.props.middle_func === 23 ?
-                                        <span
-                                            onClick={() => this.timetable_settings()}
+                                        <span onClick={() => this.timetable_settings()}
                                             style={{ color: 'rgba(0, 80, 180)' }}
                                             className={`select-no-border ${this.props.middle_func === 22 ? "select-no-border-bold" : ""}`}>
                                             <FaUserPlus style={{ marginRight: 5 }} />
@@ -797,40 +774,35 @@ class Home extends Component {
                                     className={`select-no-border ${this.props.middle_func === 22 ? "select-no-border-bold" : ""}`}>
                                     <FaUserPlus style={{ marginRight: 5 }} />
                                     Gestion des dépenses</span> */}
-                                                <span
-                                                    onClick={() => this.paiement_categories()}
+                                                <span onClick={() => this.paiement_categories()}
                                                     style={{ color: 'rgba(0, 80, 180)' }}
                                                     className={`select-no-border ${this.props.middle_func === 22 ? "select-no-border-bold" : ""}`}>
                                                     <FaUserPlus style={{ marginRight: 5 }} />
                                                     Catégories de paiement</span>
                                             </>
                                             :
-                                            <span
-                                                onClick={() => this.new_pupil()}
+                                            <span onClick={() => this.new_pupil()}
                                                 style={{ color: 'rgba(0, 80, 180)' }}
                                                 className={`select-no-border ${this.props.middle_func === 6 ? "select-no-border-bold" : ""}`}>
                                                 <FaUserPlus style={{ marginRight: 5 }} />
                                                 Nouveau</span>}
 
                                 {this.props.middle_func === 12 ?
-                                    <span
-                                        onClick={() => this.open_libelles()}
+                                    <span onClick={() => this.open_libelles()}
                                         style={{ color: 'rgba(0, 80, 180)' }}
                                         className={`select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold" : ""}`}>
                                         <span className="divider-menu-topbar"></span>
                                         <FiEdit style={{ size: 17, marginRight: 5 }} />
                                         Libéllés</span>
                                     :
-                                    <span
-                                        onClick={() => this.new_classe_import()}
+                                    <span onClick={() => this.new_classe_import()}
                                         style={{ color: 'rgba(0, 80, 180)' }}
                                         className={`select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold" : ""}`}>
                                         <span className="divider-menu-topbar"></span>
                                         <FaClipboard style={{ size: 17, marginRight: 5 }} />
                                         Uploader une classe</span>}
 
-                                <span
-                                    onClick={() => this.fetch_synthese()}
+                                <span onClick={() => this.fetch_synthese()}
                                     style={{ color: 'rgba(0, 80, 180)' }}
                                     className={`select-no-border ${this.props.middle_func === 4 ? "select-no-border-bold" : ""}`}>
                                     <span className="divider-menu-topbar"></span>
@@ -842,38 +814,6 @@ class Home extends Component {
 
                     <div className="main-menu-left">
                         <Classes type={1} />
-                        {/* {this.props.is_loading_home ?
-                            <div className="progress-center">
-                                <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
-                                Chargement des données...
-                            </div>
-                            :
-                            this.props.classes.map((classe, index) => {
-                                return (
-                                    <div
-                                        key={index}
-                                        onClick={() => this.open_classe(classe)}
-                                        className={`classes-div ${this.props.classe.id_classes === classe.id_classes ? this.props.class_open ? "classes-div-selected" : "" : ""}`}>
-                                        <div className="float-left-image">
-                                            {this.props.class_loading === classe.id_classes ?
-                                                <CircularProgress size={22} /> :
-                                                <FcFolder color="orange" size={22} />}
-                                        </div>
-                                        <strong>{classe.class_id} {classe.section_id} {classe.order_id}</strong>
-                                        <span style={{ backgroundColor: this.color_body(classe.pupils_count), color: 'white', paddingLeft: 5, paddingRight: 5, paddingTop: 2, paddingBottom: 2, marginTop: -5 }} className="float-class-pupils">{classe.pupils_count}</span>
-                                        <br />
-                                        <span style={{ fontSize: 12 }}>{(classe.cycle_id + "").toUpperCase()}</span>
-                                        <span className="float-class-pupils">
-                                            Garcons : {classe.pupils_count_male} |
-                                            Filles : {classe.pupils_count_female}
-                                        </span>
-                                        <div className="border-bottom-classes"></div>
-                                    </div>
-                                )
-                            })
-                        } */}
-
-
                     </div>
 
 
@@ -892,106 +832,95 @@ class Home extends Component {
                                     {this.props.middle_func === 22 ?
                                         <div className="menu-right">
                                             <CoursesTimetableConfigurator />
-                                        </div>
-                                        : null}
+                                        </div> : null}
 
                                     {this.props.allow_right_menu && this.props.class_open ?
                                         <RightClasseMenu /> : null}
 
                                     {this.props.allow_right_menu_pupils ?
-                                        <PupilsRightMenu />
-                                        : null}
+                                        <PupilsRightMenu /> : null}
+
                                     <div className="center-fixed">
                                         <div style={{ paddingLeft: 20, paddingRight: 10 }}>
                                             {this.props.middle_func === 1 ?
                                                 <div id="liste-nomminative">
                                                     <ListeNomminative />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 11 ?
                                                 <div id="view_pupil">
                                                     <ViewPupil />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 12 ?
                                                 <div id="stats_caisse">
                                                     <StatistiquesCaisse />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 13 ?
                                                 <div id="class-import">
                                                     <NewClasseImport />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 15 ?
                                                 <div id="gestion-personnel">
                                                     <GestionPersonnel />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 16 ?
                                                 <div id="add-worker">
                                                     <AddWorker />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 22 ?
                                                 <div id="timetable-settings">
                                                     <TimetableSettings />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 24 ?
                                                 <div id="paiement-categorisation">
                                                     <ClassePaiementCategorisation />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 14 ?
                                                 <div id="settings-bulletins">
                                                     <SettingsBulletins />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 26 ?
                                                 <div id="fiche-points-b">
                                                     <FichePointsBrouillon />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 27 ?
                                                 <div id="fiche-synthese-points-b">
                                                     <FicheSynthesePointsBrouillon />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 28 ?
                                                 <div id="fiche-synthese-points-b">
                                                     <BulletinsBrouillon />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 29 ?
                                                 <div id="fiche-synthese-points-b">
                                                     <BulletinsType2Brouillon />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 30 ?
                                                 <div id="view_worker">
                                                     <ViewWorker />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 31 ?
                                                 <div id="view_worker">
                                                     <Conduites />
-                                                </div>
-                                                : null}
+                                                </div> : null}
+
+                                                {this.props.middle_func === 32 ?
+                                                <div id="view_worker">
+                                                    <FichesPoints />
+                                                </div> : null}
 
                                             {this.props.middle_func === 5 ?
                                                 <div id="fiches">
@@ -1014,26 +943,22 @@ class Home extends Component {
                                                         <div id="fiche-e800">
                                                             {/* {<FicheE80 />} */}
                                                         </div> : null}
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 9 ?
                                                 <div>
                                                     <Courses />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 8 ?
                                                 <div>
                                                     <PaiementsClasse />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 0 ?
                                                 <div>
                                                     <MenuHome />
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 2 ?
                                                 <div>
@@ -1042,30 +967,24 @@ class Home extends Component {
 
                                                     {this.props.marks_tab === "FPC" ?
                                                         <FichesPointsCourses /> : null}
-                                                </div>
-                                                : null}
+                                                </div> : null}
 
                                             {this.props.middle_func === 3 ?
-                                                <PalmaresPupils />
-                                                : null}
+                                                <PalmaresPupils /> : null}
 
                                             {this.props.middle_func === 10 ?
-                                                <PalmaresFinal />
-                                                : null}
+                                                <PalmaresFinal /> : null}
 
                                             {this.props.middle_func === 4 ?
-                                                this.render_synthese()
-                                                : null}
+                                                this.render_synthese() : null}
 
                                             {this.props.middle_func === 6 ?
-                                                <NewPupil />
-                                                : null}
+                                                <NewPupil /> : null}
 
                                             {this.props.middle_func === 7 ?
                                                 <div id="liste-bulletins">
                                                     <Bulletins />
-                                                </div>
-                                                : null}
+                                                </div> : null}
                                         </div>
                                     </div>
                                 </div>}
@@ -1081,8 +1000,7 @@ class Home extends Component {
 
 
                     {this.props.modal_selections ?
-                        <ModalFrame type={1} />
-                        : null}
+                        <ModalFrame type={1} /> : null}
 
                     {/* {this.state.modal_view ?
                         <div className="main-div-modal">

@@ -12,6 +12,7 @@ const ModalFrame = (props) => {
     const [loading_middle, setLoading_middle] = useState(false);
     const url_server = useSelector(state => state.url_server);
     const user_data = useSelector(state => state.user_data);
+    const classes_selected = useSelector(state => state.classes_selected);
     const [selection_name, setSelection_name] = useState('');
     const [selection_type, setSelection_type] = useState('');
     const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const ModalFrame = (props) => {
     }
 
     const create_selection = () => {
-        if (selection_name !== "") {
+        if (selection_name !== "" && selection_type !== "" && classes_selected.length !== 0) {
             let BaseURL = http + url_server + "/yambi_class_SMIS/API/new_selection.php";
 
             fetch(BaseURL, {
@@ -39,21 +40,32 @@ const ModalFrame = (props) => {
                     selection_name: selection_name,
                     selection_type: selection_type,
                     selection_privacy: '0',
-                    user_id: 4
+                    user_id: user_data.worker_id,
+                    school_year: user_data.worker_year,
+                    selection_data: classes_selected
                 })
             })
                 .then((response) => response.json())
                 .then((response) => {
-
-                    // this.load_class_data(this.props.classe);
-
+                    if (parseInt(response.success) === 1) {
+                        dispatch({ type: "SET_CLASSES_SELECTED", payload: [] });
+                        setSelection_name('')
+                        setSelection_type('');
+                        setSuccess("Sélection enregistrée avec succèss");
+                    }
                 })
-                .catch((error) => {
-                    // Alert.alert(strings.error, strings.connection_failed);
-                    // alert(error.toString())
-                    // this.setState({ loading_class: false, pupils_see: false });
-                });
+                .catch((error) => { });
+        } else {
+            alert("Vous devez sélectionner entrer l'intitulé de la sélection, le type et sélectionner les classes avant de procéder");
         }
+    }
+
+    const can_show_classes = () => {
+        if (selection_name !== '' && selection_type !== '') {
+            return true;
+        }
+
+        return false;
     }
 
     return (
@@ -119,23 +131,29 @@ const ModalFrame = (props) => {
                                     marginTop: 10
                                 }}>
                                     <input type="text"
+                                        value={selection_name}
                                         className="input-montant"
                                         onChange={(e) => setSelection_name(e.target.value)}
                                         placeholder="Intilulé de la sélection" /><br /><br />
 
-                                    <select style={{
-                                        color: 'rgba(0, 80, 180)',
-                                        backgroundColor: 'white',
-                                        marginBottom: 10,
-                                        width: '67%'
-                                    }} className="select-borderr"
+                                    <select
+                                        value={selection_type}
+                                        style={{
+                                            color: 'rgba(0, 80, 180)',
+                                            backgroundColor: 'white',
+                                            marginBottom: 10,
+                                            width: '67%'
+                                        }} className="select-borderr"
                                         onChange={(e) => setSelection_type(e.target.value)} >
                                         <option value="">Type de sélection</option>
                                         <option value="1">Groupement des Classes</option>
                                     </select><br />
 
-                                    Liste des classes a groupper
-                                    <Classes type={2} />
+                                    {can_show_classes() ?
+                                        <div><br />
+                                            Liste des classes à groupper<br /><br />
+                                            <Classes type={2} />
+                                        </div> : null}
 
                                     {success !== "" ?
                                         <><span style={{ color: 'green', marginBottom: 5 }}>

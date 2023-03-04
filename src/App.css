@@ -1454,6 +1454,24 @@ h5 {
   width: 45px;
 }
 
+.vertical-course {
+  text-orientation: mixed;
+  writing-mode: sideways-lr;
+  text-align: center;
+  /* align-content: left;
+  align-items: flex-start;
+  justify-content: flex-start; */
+  /* background-color: aqua; */
+}
+
+/* .two-lines-course {
+  display: block; 
+  width: 100px; 
+  overflow: hidden; 
+  word-wrap: break-word; 
+    text-overflow: ellipsis;
+} */
+
 .input-no-border {
   outline: none;
   font-weight: bold;
@@ -1759,4 +1777,17 @@ background-color: rgba(0, 80, 180, 0.4);
 
 .tr-background2 {
   background-color: rgba(0,0,0,0.080);
+}
+
+.fiche-points td, th {
+border:1px solid gray;
+}
+
+.fiche-points th {
+  background-color: rgba(0, 80, 180, 0.3);
+}
+
+.fiche-points {
+  border:1px solid gray;
+  border-collapse: collapse;
 }

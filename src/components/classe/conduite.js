@@ -165,17 +165,17 @@ const Conduites = () => {
         }
     }
 
-    const options_select=()=>{
-        return(
+    const options_select = () => {
+        return (
             <>
-        <option value=""> </option>
-                                                                    <option value="1">E</option>
-                                                                    <option value="2">TB</option>
-                                                                    <option value="3">B</option>
-                                                                    <option value="4">AB</option>
-                                                                    <option value="5">M</option>
-                                                                    <option value="6">MA</option>
-        </>
+                <option value=""> </option>
+                <option value="1">E</option>
+                <option value="2">TB</option>
+                <option value="3">B</option>
+                <option value="4">AB</option>
+                <option value="5">M</option>
+                <option value="6">MA</option>
+            </>
         );
     }
 
@@ -234,7 +234,7 @@ const Conduites = () => {
                                         {classe.data.pupils.map((pupil, index) => {
                                             return (
                                                 <tbody key={index}>
-                                                    <tr className={ `hover-tr ${index % 2 === 0 ? "tr-background1" : "tr-background2" }`}>
+                                                    <tr className={`hover-tr ${index % 2 === 0 ? "tr-background1" : "tr-background2"}`}>
                                                         <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
                                                         <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
 
@@ -267,7 +267,7 @@ const Conduites = () => {
 
                                                         {show_periode("P4", "S2") ?
                                                             <td style={{ width: 50, textAlign: 'center' }}>
-                                                               <select className='input-marks'
+                                                                <select className='input-marks'
                                                                     defaultValue={render_conduite(pupil, 4)}
                                                                     onChange={(text) => handle_change(pupil, 4, text.target.value, true)}>
                                                                     {options_select()}
@@ -283,10 +283,10 @@ const Conduites = () => {
                         </tbody>
                     </table>
 
-                    {conduites.lengh === 0 ? null 
-                    : 
-                    <div style={{ textAlign: 'right', paddingRight: 7 }}>
-                                <button className='button-enter-marks' onClick={() => edit_conduites()}>Finir et envoyer</button>
+                    {conduites.lengh === 0 ? null
+                        :
+                        <div style={{ textAlign: 'right', paddingRight: 7 }}>
+                            <button className='button-enter-marks' onClick={() => edit_conduites()}>Finir et envoyer</button>
                         </div>}
                 </div>
                 :

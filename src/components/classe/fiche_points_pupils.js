@@ -133,6 +133,33 @@ const FichesPointsPupils = () => {
         dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: menu_left });
     }
 
+    const per=()=>{
+        let sp = '';
+        if(periode === 'P1') {
+            sp = 1;
+        }
+        else if(periode === 'P2'){ 
+            sp = 2;
+        }
+        else if(periode === 'EX1') { 
+            sp = 10;
+        }
+        else if(periode === 'P3'){
+            sp = 3;
+        }
+        else if(periode === 'P4') {
+            sp = 4;
+        }
+        else if(periode === 'EX2') {
+            sp = 11;
+        } 
+        else {
+
+        }
+
+                return sp;
+    }
+
     const handle_change = (pupill, course, period, marks, modified) => {
             let sp = '';
             if(period === 'P1') 
@@ -145,8 +172,13 @@ const FichesPointsPupils = () => {
                 sp = 3;
             if(period === 'P4')
                 sp = 4;
-            if(period === 'Ex2')
+            if(period === 'EX2')
                 sp = 11;
+
+            let totall = findCourse(course).total_marks;
+
+            if(sp === 10 || sp === 11)
+                totall = parseInt(findCourse(course).total_marks*2);
     
             let markks = {};
             let global_marks = [];
@@ -169,7 +201,7 @@ const FichesPointsPupils = () => {
                 setMarks_edit(global_marks);
             }
     
-            if (parseInt(marks) > findCourse(course).total_marks || parseInt(marks) < 0) {
+            if (parseInt(marks) > totall || parseInt(marks) < 0) {
                 if(errors.find(error => error === pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (parseInt(pupill.pupil.pupil_id) + course + period)) === undefined) {
                     setErrors([...errors, pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period)]);
                 }
@@ -183,12 +215,41 @@ const FichesPointsPupils = () => {
         if ((periode === period || semester === periode || periode === "*") && pupil !== null) {
             return true;
         }
+
+        return false
+    }
+
+    const periode_classique = () => {
+        if (periode === "P1" || periode === "P2" || periode === "P3" || periode === "P4" || periode === "EX1" || periode === "EX2") {
+            return true;
+        }
+
+        return false;
     }
 
     const find_error = (pupill, course, period) => {
         const value = pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (parseInt(pupill.pupil.pupil_id) + course + period);
 
         return value;
+    }
+
+    const delete_marks = (pupil, period) => {
+            let BaseURL = http + url_server + "/yambi_class_SMIS/API/delete_marks.php";
+
+            fetch(BaseURL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    pupil_id: pupil,
+                    periode: period
+                })
+            })
+                .then((response) => response.json())
+                .then((response) => {
+                    open_classe();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
     }
 
     useEffect(() => {
@@ -256,7 +317,7 @@ const FichesPointsPupils = () => {
                                                 {show_periode("P4", "S2") ?
                                                     <th style={{ width: 50, textAlign: 'center' }}>P4</th> : null}
 
-                                                {show_periode("EX1", "S2") ?
+                                                {show_periode("EX2", "S2") ?
                                                     <th style={{ width: 50, textAlign: 'center' }}>EX2</th> : null}
 
                                                 {show_periode("S2", "S2") ?
@@ -369,6 +430,13 @@ const FichesPointsPupils = () => {
                         </tbody>
                     </table>
 
+                                     {periode_classique() ? 
+                                     <div style={{float:'left'}}>
+                                     <button
+                                     onClick={() => delete_marks(pupil.pupil.pupil_id, per())}
+                                     >Supprimer les points<br/>de la période courante<br/> pour l'élève</button>
+                                 </div>:null}
+
                     {marks_edit.lengh !== 0 ?
                         <div style={{ textAlign: 'right', paddingRight: 7 }}>
                             {errors.length === 0 ?
@@ -414,16 +482,3 @@ export default FichesPointsPupils;
 //                     <option value="">. . . . . . . . . . . . . . . . . . . .</option>
 //                     <option value="6">Abandon</option>
 //                 </select>
-
-//                 <div className="float-right">
-//                     <button
-//                     onClick={() => this.delete_marks(this.state.pupil_id, this.state.periode)}
-//                     >Supprimer les points<br/>de la période courante<br/> pour l'élève</button>
-//                 </div>
-                
-//             </div>
-//                 :
-//                 <div className="progress-center-progress">
-//                                 <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
-//                                 Chargement de la fiche des points...
-//                             </div>

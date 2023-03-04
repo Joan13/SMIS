@@ -1,7 +1,7 @@
 const initialState = {
     user_data: [],
     data_session: [],
-    employee:[],
+    employee: [],
     user_poste: "",
     url_server: "",
     classes: [],
@@ -75,7 +75,7 @@ const initialState = {
     trics_timetable: [],
     timetable: [],
     course: [],
-    conduites:[],
+    conduites: [],
     paiement_categories: [],
     modal_paiement_categories: false,
     modal_libelles: false,
@@ -84,29 +84,35 @@ const initialState = {
     paiements_day_deleted: [],
     frais_divers_day_deleted: [],
     fiche_paie: [],
-    modal_selections:true,
+    modal_selections: false,
     classes_selected: [],
+    selections: [],
     day: "",
     marks_modified: false,
+    echecs:[],
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_MODAL_PAIEMENT_CATEGORIES":
             return { ...state, modal_paiement_categories: action.payload }
-            case "SET_CLASSES_SELECTED":
+            case "SET_ECHECS":
+            return { ...state, echecs: action.payload }
+        case "SET_CLASSES_SELECTED":
             return { ...state, classes_selected: action.payload }
-            case "SET_MODAL_SELECTIONS":
+        case "SET_MODAL_SELECTIONS":
             return { ...state, modal_selections: action.payload }
-            case "SET_MODAL_VIEW":
+        case "SET_SELECTIONS":
+            return { ...state, selections: action.payload }
+        case "SET_MODAL_VIEW":
             return { ...state, modal_view: action.payload }
-            case "SET_CONDUITES":
+        case "SET_CONDUITES":
             return { ...state, conduites: action.payload }
-            case "SET_MARKS_MODIFIED":
+        case "SET_MARKS_MODIFIED":
             return { ...state, marks_modified: action.payload }
-            case "SET_FICHE_PAIE":
+        case "SET_FICHE_PAIE":
             return { ...state, fiche_paie: action.payload }
-            case "SET_EMPLOYEE":
+        case "SET_EMPLOYEE":
             return { ...state, employee: action.payload }
         case "SET_DATA_SESSION":
             return { ...state, data_session: action.payload }

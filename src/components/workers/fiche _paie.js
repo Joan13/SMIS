@@ -41,7 +41,7 @@ const FichePaie = () => {
                         <tbody key={index}>
                             <tr style={{ backgroundColor: index % 2 === 0 ? "rgba(0,0,0,0.015)" : "rgba(0,0,0,0.050)" }}>
                                 <td>{index + 1}</td>
-                                <td>{find_date(fiche.date_entry)}</td>
+                                <td>{find_date2(fiche.date_entry)}</td>
                                 <td>{fiche.montant_paye} USD</td>
                                 <td>{generateMonth(parseInt(fiche.month_paye))}</td>
                                 <td>{annees.filter(annee => annee.year_id == fiche.school_year)[0].year_name}</td>

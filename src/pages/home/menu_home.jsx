@@ -11,6 +11,7 @@ const MenuHome = () => {
     const dispatch = useDispatch();
     const url_server = useSelector(state => state.url_server);
     const annee = useSelector(state => state.annee);
+    const user_data = useSelector(state => state.user_data);
 
     const fetch_workers = () => {
         let BaseURL = http + url_server + "/yambi_class_SMIS/API/fetch_workers.php";
@@ -68,6 +69,12 @@ const MenuHome = () => {
         fetch_tricks_timetable();
     }
 
+    const open_gestion_personnel = () => {
+        if (parseInt(user_data.poste) === 1 || parseInt(user_data.poste) === 4 || parseInt(user_data.poste) === 3) {
+            gestion_personnel();
+        }
+    }
+
     return (
         <div>
             <div style={{ marginBottom: 40 }} className='menu-home-block'>
@@ -82,7 +89,7 @@ const MenuHome = () => {
                 </div>
 
                 <div
-                    onClick={() => gestion_personnel()} 
+                    onClick={() => open_gestion_personnel()}
                     className="div-menu-home-circle">
                     <div style={{ width: '100%', height: 120 }}><br /><br /><br /><FcConferenceCall size={70} /><br /><br /></div>
                     <span style={{ fontSize: 15, fontWeight: '500' }}>Gestion du<br />personnel<br /></span>
@@ -92,7 +99,7 @@ const MenuHome = () => {
             <div style={{ marginBottom: 40 }} className='menu-home-block'>
 
                 <div
-                    // onClick={() => timetable()} 
+                    // onClick={() => timetable()}
                     className="div-menu-home-circle" style={{ marginRight: 70 }}>
                     <div style={{ width: '100%', height: 120 }}><br /><br /><br /><FcCalendar size={70} /><br /><br /></div>
                     <span style={{ fontSize: 15, fontWeight: '500' }}>Table des<br /> horaires<br /></span>

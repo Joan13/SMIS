@@ -1,7 +1,8 @@
-export const home_redirect = "/";
+export const home_redirect = "/cirezi";
 export const year = "2018 - 2023";
 export const http = "http://";
 // export const url_online = "gestion.collegeafajiri.net";
+// export const url_online = "192.168.10.2";
 export const url_online = "";
 export const online = false;
 

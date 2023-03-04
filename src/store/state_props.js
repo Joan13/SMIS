@@ -82,10 +82,12 @@ export const mapStateToProps = (state) => {
         frais_divers_day_deleted: state.frais_divers_day_deleted,
         day: state.day,
         edit_pupil: state.edit_pupil,
-        marks_modified:state.marks_modified,
-        conduites:state.conduites,
-        modal_selections:state.modal_selections,
-        classes_selected:state.classes_selected,
+        marks_modified: state.marks_modified,
+        conduites: state.conduites,
+        modal_selections: state.modal_selections,
+        classes_selected: state.classes_selected,
+        selections: state.selections,
+        echecs:state.echecs,
     }
 }
 

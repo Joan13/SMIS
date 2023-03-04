@@ -275,18 +275,20 @@ class BulletinsType2 extends React.Component {
 
         if (main_conduite === "") {
             return "-";
-        } else if (main_conduite === "1") {
+        } else if (parseInt(main_conduite) === 1) {
             return "E";
-        } else if (main_conduite === "2") {
+        } else if (parseInt(main_conduite) === 2) {
             return "TB";
-        } else if (main_conduite === "3") {
+        } else if (parseInt(main_conduite) === 3) {
             return "B";
-        } else if (main_conduite === "4") {
+        } else if (parseInt(main_conduite) === 4) {
             return "AB";
-        } else if (main_conduite === "5") {
+        } else if (parseInt(main_conduite) === 5) {
             return "M";
-        } else {
+        } else if(parseInt(main_conduite) === 6){
             return "MA";
+        } else {
+            return "-";
         }
     }
 

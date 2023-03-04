@@ -101,7 +101,7 @@ export default function RightClasseMenu() {
                                     <strong className="block-menu-right" style={{ marginTop: 10, color: 'rgb(0, 0, 0)' }}> Notes des élèves</strong>
 
                                     <div className="item-menu-right">
-                                        <span onClick={() => set_page(2, "NPC", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 20 ? "select-no-border-bold" : ""}`}>
+                                        <span onClick={() => set_page(32, "", true, false)} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${middle_func === 20 ? "select-no-border-bold" : ""}`}>
                                             <FcDataSheet style={{ marginRight: 7 }} />
                                             Fiche des points
                                         </span>

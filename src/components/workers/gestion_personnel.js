@@ -8,6 +8,7 @@ export default function GestionPersonnel() {
     const employees = useSelector(state => state.workers);
     const url_server = useSelector(state => state.url_server);
     const dispatch = useDispatch();
+    const user_data = useSelector(state => state.user_data);
 
     const Poste = (poste) => {
         if (parseInt(poste) === 0) {
@@ -59,30 +60,30 @@ export default function GestionPersonnel() {
         // let user = sessionStorage.getItem('assemble_user_data');
         // user = JSON.parse(user);
 
-        // if (user.poste === "4") {
+        if (parseInt(user_data.poste) === 3) {
 
-        let BaseURL = http + url_server + "/yambi_class_SMIS/API/modify_salaire.php";
+            let BaseURL = http + url_server + "/yambi_class_SMIS/API/modify_salaire.php";
 
-        fetch(BaseURL, {
-            method: 'POST',
-            body: JSON.stringify({
-                worker_id: worker_id,
-                salaire: salaire,
-                school_year: school_year
+            fetch(BaseURL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    worker_id: worker_id,
+                    salaire: salaire,
+                    school_year: school_year
+                })
             })
-        })
-            .then((response) => response.json())
-            .then((response) => {
+                .then((response) => response.json())
+                .then((response) => {
 
-                dispatch({ type: "SET_WORKERS", payload: response.employees });
+                    dispatch({ type: "SET_WORKERS", payload: response.employees });
 
-            })
-            .catch((error) => {
-                this.setState({ loading_class: false, pupils_see: false });
-            });
-        // } else {
-        //     alert("Vous ne pouvez pas modifier ce cours si vous n'êtes pas secrétaire");
-        // }
+                })
+                .catch((error) => {
+                    this.setState({ loading_class: false, pupils_see: false });
+                });
+        } else {
+            alert("Vous ne pouvez pas modifier le salaire du personnel si vous n'êtes pas Financier/Économe");
+        }
     }
 
     return (
@@ -112,7 +113,7 @@ export default function GestionPersonnel() {
                             <th style={{ width: 35 }}>Sexe</th>
                             <th>Fonction</th>
                             <th>Salaire (USD)</th>
-                            <th>Effacer</th>
+                            {/* <th>Effacer</th> */}
                         </tr>
                     </thead>
                     <tbody>

@@ -71,7 +71,7 @@ const NewPaiementWorker = () => {
                     worker_id: employee.worker_id,
                     montant_paie: montant_paie,
                     month_paie: month_paie,
-                    user_id: user_data.user_id,
+                    user_id: user_data.worker_id,
                     school_year: employee.worker_year,
                     date_entry: date
                 })
