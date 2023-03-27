@@ -42,6 +42,7 @@
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
+    "sha1": "^1.1.1",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },
@@ -53,12 +54,13 @@
     "electron:serve": "concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn electron:start\"",
     "electron:build": "yarn build && electron-builder -w -c.extraMetadata.main=build/main.js",
     "electron:start": "wait-on http://127.0.0.1:3000 && electron .",
+    "build:publish": "react-scripts build && electron-builder --win --publish always",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
   "build": {
     "extends": null,
-    "appId": "com.class.yambi",
+    "appId": "com.yambi.class",
     "linux": {
       "target": [
         "deb",
@@ -66,6 +68,11 @@
         "rpm"
       ],
       "category": "Education"
+    },
+    "win": {
+      "publish": [
+        "github"
+      ]
     },
     "files": [
       "dist/**/*",

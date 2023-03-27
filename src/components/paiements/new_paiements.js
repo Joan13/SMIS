@@ -42,7 +42,6 @@ class NewPaiements extends Component {
     }
 
     new_frais_divers() {
-
         let date = new Date();
 
         let montant = this.state.montant_frais;
@@ -67,7 +66,6 @@ class NewPaiements extends Component {
         date = day + "/" + month + "/" + date.getFullYear();
 
         if (montant !== "" && libelle !== "") {
-
             let url_server = sessionStorage.getItem('yambi_smis_url_server');
             this.setState({ loading_middle2: true });
 
@@ -95,10 +93,12 @@ class NewPaiements extends Component {
                 })
                 .catch((error) => {
                     console.log(error)
-                    this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
+                    alert("Erreur");
+                    // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
                 });
         } else {
-            this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à l'enregistrement dupaiement des frais divers. Tous les champs sont obligatoires, notamment le libellé et le champ du montant.", modal_view: true, loading_middle: false });
+            alert("Vous devez renseigner le libellé et le montant avant de procéder");
+            // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à l'enregistrement dupaiement des frais divers. Tous les champs sont obligatoires, notamment le libellé et le champ du montant.", modal_view: true, loading_middle: false });
         }
     }
 
@@ -161,11 +161,13 @@ class NewPaiements extends Component {
                     this.props.dispatch({ type: "SET_PUPIL", payload: response.pupil });
                 })
                 .catch((error) => {
-                    console.log(error)
-                    this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
+                    // console.log(error)
+                    alert("Erreur");
+                    // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
                 });
         } else {
-            this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à l'enregistrement du nouveau paiement. Tous les champs sont obligatoires, notamment le libellé et les champs des montants.", modal_view: true, loading_middle: false });
+            alert("Vous devez renseigner le libellé et le montant avant de procéder");
+            // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à l'enregistrement du nouveau paiement. Tous les champs sont obligatoires, notamment le libellé et les champs des montants.", modal_view: true, loading_middle: false });
         }
     }
 
@@ -320,13 +322,13 @@ class NewPaiements extends Component {
                 </table>
 
 
-                {this.state.modal_view ?
+                {/* {this.state.modal_view ?
                     <div className="main-div-modal">
                         {modalView(this.state.modal_title, this.state.modal_main_text)}
                         <div className="sub-div-modal">
                             <Button onClick={() => this.setState({ modal_view: false })} variant="outlined" style={{ color: 'black', borderWidth: 1, borderColor: 'rgba(0, 0, 0, 0.3)' }}>Fermer</Button>
                         </div>
-                    </div> : null}
+                    </div> : null} */}
 
             </div>
         )

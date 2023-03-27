@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiX } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { http } from '../../global_vars';
@@ -12,13 +12,16 @@ const Libelles = () => {
     const [description_libelle, setDescription_libelle] = useState("");
     const user_data = useSelector(state => state.user_data);
 
+    useEffect(() => {
+        console.log(libelles);
+    }, []);
+
     const add_libelle = () => {
 
         let gender_libelle = "";
         if (user_data.poste === "6") gender_libelle = 1;
         if (user_data.poste === "3") gender_libelle = 0;
-
-        alert(user_data.poste)
+        if (user_data.poste === "4") gender_libelle = 0;
 
         if (description_libelle !== "" && gender_libelle !== "") {
             let BaseURL = http + url_server + "/yambi_class_SMIS/API/add_libelle.php";
@@ -82,7 +85,7 @@ const Libelles = () => {
                         </tr>
                         {libelles.map((libelle, index) => {
                             return (
-                                <tr>
+                                <tr key={index}>
                                     <td className="td-border" style={{ textAlign: 'center' }}>{index + 1}</td>
                                     <td className="td-border" style={{ textAlign: 'left', paddingLeft: 10, paddingTop: 10, paddingBottom: 10 }} key={index}>{libelle.description_libelle}</td>
                                     {/* <td className="td-border" style={{textAlign:'center'}}>{category.category_amount}</td>

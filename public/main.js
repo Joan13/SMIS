@@ -1,8 +1,8 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain } = require('electron');
-// const { autoUpdater } = require("electron-updater");
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { autoUpdater } = require("electron-updater");
 const path = require('path');
 const fs = require("fs");
 const ipc = ipcMain;
@@ -14,13 +14,13 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 1500,
     height: 850,
-    icon:"logo.ico",
+    icon: "logo.ico",
     // frame: false,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
       contextIsolation: false,
-      javascript:true,
+      javascript: true,
     },
     autoHideMenuBar: true,
   })
@@ -30,14 +30,18 @@ const createWindow = () => {
       ? 'http://localhost:3000'
       : `file://${path.join(__dirname, '../build/index.html')}`)
 
-      ipc.on('closeApp', ()=>{
-console.log("Close App");
-      })
+  //       ipc.on('closeApp', ()=>{
+  // console.log("Close App");
+  //       })
 
   // alert(isDev)
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
+
+  if (!isDev) {
+    autoUpdater.checkForUpdates();
+  }
 }
 
 // This method will be called when Electron has finished
@@ -53,12 +57,38 @@ app.whenReady().then(() => {
   })
 })
 
+autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
+  const dialogOpts = {
+    type: 'info',
+    buttons: ['OK'],
+    title: 'Notification de mise à jour',
+    message: process.platform === 'win32' ? releaseNotes : releaseName,
+    detail: 'Une nouvelle version du Logiciel est en téléchargement...'
+  }
+  dialog.showMessageBox(dialogOpts, (response) => {
+
+  });
+})
+
+autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
+  const dialogOpts = {
+    type: 'info',
+    buttons: ['Redémarrer', 'Me le rappeler plus tard'],
+    title: 'Mise à jour Yambi Class SMIS',
+    message: process.platform === 'win32' ? releaseNotes : releaseName,
+    detail: 'Une nouvelle version du Logiciel a été téléchargée. Redémarrer Yambi Class SMIS pour appliquer les modifications.'
+  };
+  dialog.showMessageBox(dialogOpts).then((returnValue) => {
+    if (returnValue.response === 0) autoUpdater.quitAndInstall()
+  })
+});
+
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
-})
+});
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

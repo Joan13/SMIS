@@ -36,7 +36,6 @@ const ClassePaiementCategorisation = () => {
     }
 
     const find_pupil = (pupil) => {
-
         dispatch({ type: "SET_SEARCHING_PUPIL", payload: true });
         dispatch({ type: "SET_NEW_PAIEMENT", payload: false });
         dispatch({ type: "SET_PAIEMENTS_FRAIS_DIVERS", payload: false });
