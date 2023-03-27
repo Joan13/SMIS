@@ -1,7 +1,8 @@
 {
   "homepage": ".",
   "name": "yambi-smis",
-  "version": "8.4.9",
+  "description": "School Management Information System",
+  "version": "8.5.0",
   "private": true,
   "author": {
     "name": "Joan Migani",
@@ -54,7 +55,7 @@
     "electron:serve": "concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn electron:start\"",
     "electron:build": "yarn build && electron-builder -w -c.extraMetadata.main=build/main.js",
     "electron:start": "wait-on http://127.0.0.1:3000 && electron .",
-    "build:publish": "react-scripts build && electron-builder --win --publish always",
+    "build:publish": "set GH_TOKEN=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 && yarn build && electron-builder -w -c.extraMetadata.main=build/main.js --win --publish always",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
@@ -70,6 +71,7 @@
       "category": "Education"
     },
     "win": {
+      "icon": "logo.png",
       "publish": [
         "github"
       ]
@@ -78,7 +80,12 @@
       "dist/**/*",
       "build/**/*",
       "node_modules/**/*",
-      "package.json"
+      "package.json",
+      {
+        "from": "public/main.js",
+        "to": "build",
+        "filter": "**/*"
+      }
     ],
     "directories": {
       "buildResources": "assets"
