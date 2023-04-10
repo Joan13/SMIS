@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FaCheckCircle, FaEye, FaEyeSlash, FaLock, FaServer, FaUser } from 'react-icons/fa';
 import { FiCheckSquare, FiSquare } from 'react-icons/fi';
 import { Navigate } from 'react-router-dom';
-import logo from "./../../../src/assets/yambi_red.png"
+import vector from "./../../../src/assets/8401.jpg"
+import logo from "./../../../src/assets/logo.PNG"
 // import modalView from '../../includes/modal';
 import { CircularProgress, LinearProgress } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
@@ -125,54 +126,56 @@ const Signin = () => {
         return (<Navigate to={'/'} />);
     } else {
         return (
-            <div style={{ marginTop: 40 }}>
-                <div style={{ textAlign: 'center' }}>
-                    <img src={logo} width='200' height="130" /><br /><br />
-                    <div className="title-big">School Managment Information System</div><br />
+<section className='bg-background-100 min-h-screen flex items-center justify-center'>
 
-                    <div style={{ marginBottom: 40 }}>
+
+
+    <div className="bg-background-50 flex rounded-2xl shadow-lg max-w-3xlg p-5">
+<div className='md:w-1/2 px-16'>
+<div className='block mt-10 2xl:hidden xl:hidden lg:hidden md:hidden w-full place-items-center bg-background-100 py-8 rounded-xl'>
+    <img className='rounded-2xl w-40 mx-auto' src={logo} alt='vector' />
+</div>
+                    <h2 className="font-bold text-2xl text-text-100 mt-10">Connectez-vous</h2>
+
+                    {/* <div style={{ marginBottom: 40 }}>
                         <span onClick={() => setConnection_type(0)} className="header-signin" style={{ fontWeight: connection_type === 0 ? 'bold' : '450' }}>Principal</span>
                         <span onClick={() => setConnection_type(1)} className="header-signin" style={{ fontWeight: connection_type === 1 ? 'bold' : '450' }}>Parent (élève)</span>
-                    </div>
+                    </div> */}
 
-                    <div style={{ textAlign: 'left', width: '25%', marginLeft: '37%' }}>
-                        Connectez-vous<br />
+                    <div className='flex flex-col gap-4 border-b border-gray-50 mb-5 pb-5'>
 
                         {!online ?
-                            <div className="input-div-border-icon">
-                                <FaServer style={{ marginBottom: -3 }} />
+                            <div className='flex items-center bg-background-100 w-full align-center p-3 mt-10 pl-5 rounded-xl border border-gray-50'>
+                                <FaServer className='text-gray-100' />
                                 <input
                                     placeholder="URL de connexion au serveur"
-                                    style={{ width: '85%', marginLeft: 10 }}
-                                    className="input"
+                                    className="w-full h-full ml-5 outline-none"
                                     value={url_server}
                                     onChange={(text) => setUrl_erver(text.target.value)} />
                             </div>
                             : null}
 
-                        <div className="input-div-border-icon">
-                            <FaUser style={{ marginBottom: -3 }} />
+                        <div className="flex items-center bg-background-100 w-full align-center p-3  pl-5 rounded-xl border border-gray-50">
+                            <FaUser className='text-gray-100' />
                             <input
                                 placeholder="Nom d'utilisateur"
                                 style={{ width: '85%', marginLeft: 10 }}
-                                className="input"
+                                className="w-full h-full ml-5 outline-none"
                                 value={username}
                                 onChange={(text) => setUsername(text.target.value)} />
                         </div>
 
-                        <div className="input-div-border-icon">
-                            <FaLock style={{ marginBottom: -3 }} />
+                        <div className="flex items-center bg-background-100 w-full align-center p-3  pl-5 rounded-xl border border-gray-50">
+                            <FaLock className='text-gray-100' />
 
                             <input
                                 placeholder="Mot de passe"
                                 style={{
-                                    width: '77%',
-                                    marginLeft: 10,
-                                    fontSize: !see_pass && password !== "" ? 35 : 13,
-                                    height: !see_pass && password !== "" ? 25 : 25,
-                                    letterSpacing: !see_pass && password !== "" ? 1 : null,
+                                    // fontSize: !see_pass && password !== "" ? 20 : 13,
+                                    // height: !see_pass && password !== "" ? '' : 25,
+                                    // letterSpacing: !see_pass && password !== "" ? 1 : null,
                                 }}
-                                className="input"
+                                className="w-full h-full ml-5 outline-none"
                                 type={see_pass ? "text" : "password"}
                                 value={password}
                                 onChange={(text) => setPassword(text.target.value)} />
@@ -182,9 +185,9 @@ const Signin = () => {
                                 onClick={() => setSee_pass(!see_pass)}
                                 className="no-decoration">
                                 {see_pass ?
-                                    <FaEye style={{ marginBottom: -3, marginLeft: 10 }} size={15} />
+                                    <FaEye className='text-text-100' />
                                     :
-                                    <FaEyeSlash style={{ marginBottom: -3, marginLeft: 10 }} size={15} />}
+                                    <FaEyeSlash  className='text-text-100' />}
                             </button>
 
                         </div>
@@ -204,37 +207,41 @@ const Signin = () => {
                         <br />
 
                         {message1 !== "" ?
-                            <><span style={{ color: 'green', marginBottom: 15, height: 30 }}>
-                                <FaCheckCircle color="green" size={11} style={{ marginRight: 5 }} />
+                            <><span className='w-80 flex items-center text-success  truncate ...'>
+                                <FaCheckCircle color="green" size={11} className='mr-3' />
                                 {message1}
                             </span><br /></> : null}
 
                         {message2 !== "" ?
-                            <><span style={{ color: 'green', marginBottom: 5 }}>
-                                <FaCheckCircle color="green" size={11} style={{ marginRight: 5, marginTop: 10 }} />
+                            <><div className='w-80 flex items-center text-success truncate ...'>
+                                <FaCheckCircle color="green" size={11} className='mr-3' />
                                 {message2}
-                            </span><br /><br /></> : null}
+                            </div><br /><br /></> : null}
 
                         {is_loading ?
-                            <div style={{ textAlign: 'center', marginTop: 12 }}>
-                                <LinearProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
+                            <div className='text-gray-100 w-80 truncate ... '>
+                                <LinearProgress /><br />
                                 <span>{message_user}</span><br /><br />
                             </div> : null}
 
                         {empty_error ?
-                            <div style={{ marginTop: 20, marginBottom: 20, fontWeight: 'bold', alignContent: 'center', color: '#780006' }}>Tous les champs sont obligatoires</div>
+                            <div className='flex items-center text-error'>Tous les champs sont obligatoires</div>
                             :
                             null}
 
                         {incorrect ?
-                            <div style={{ marginTop: 20, marginBottom: 20, fontWeight: 'bold', alignContent: 'center', color: '#780006' }}>Coordonées invalides. Réessayez.</div>
+                            <div className='flex items-center text-error'>Coordonées invalides. Réessayez.</div>
                             :
                             null}
 
 
                         {!is_loading ?
                             <>
-                                <ButtonNormal text="Connexion" style={{ width: '100%' }} onPress={() => signin()} />
+                                {/* <ButtonNormal text="Connexion" style={{ width: '100%' }} onPress={() => signin()} /> */}
+
+                                <button
+                                onClick={()=>signin()} 
+                                className='bg-primary-100 rounded-xl text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>Connexion</button>
                                 <div style={{ marginTop: 10, textAlign: 'right', fontSize: 15 }}>Besoin d'aide ?
                                     <span onClick={() => { 
                                         // ipc.send('closeApp')
@@ -244,45 +251,15 @@ const Signin = () => {
                                 </div>
                             </>
                             : null}
-
-                        {aide ?
-                            <div className="box-border">
-                                <div>
-                                    Pour les utilisateurs principaux, qui sont les membres directs de l'administration de l'école, leurs noms d'utilisateur se classent de cette manière :<br />
-                                    <span className="spann">
-                                        - Pour la section Promoteur / Recteur / Préfet :
-                                        <strong> principal@yambi.class</strong>
-                                    </span><br />
-                                    <span className="spann">
-                                        - Pour la section Directeur des Études / Proviseur :
-                                        <strong> etudes@yambi.class</strong>
-                                    </span><br />
-                                    <span className="spann">
-                                        - Pour la section Directeur de discipline :
-                                        <strong> discipline@yambi.class</strong>
-                                    </span><br />
-                                    <span className="spann">
-                                        - Pour la section Directeur des Finances :
-                                        <strong> finances@yambi.class</strong>
-                                    </span><br />
-                                    <span className="spann">
-                                        - Pour la section Secrétaire :
-                                        <strong> secretaire@yambi.class</strong>
-                                    </span><br />
-                                    <span className="spann">
-                                        - Pour la section Caisse :
-                                        <strong> caisse@yambi.class</strong>
-                                    </span><br /><br />
-
-                                    Pour les enseignants, leurs noms d'utilisateur leur seront donnés par l'administrateur de leurs comptes, soit le Directeur des études ou le sécrétaire en charge de cette tâche.<br /><br />
-                                    Chaque élève possède un identifiant unique qui pourrait lui servir pour se connecter et se rendre compte de sa situation scolaire ou financière sans pour autant s'adresser à l'administration.
-                                </div>
-                            </div>
-                            : null}
                     </div>
-                    <div style={{ marginTop: 100 }}><span style={{ color: 'rgba(0, 80, 180)' }}> Contact -</span> Tous droits réservés © Agisha Migani Joan - Yambi, Inc. {year}</div>
-                </div><br /><br />
-            </div>
+                    <div><span style={{ color: 'rgba(0, 80, 180)' }}> </span> Tous droits réservés © <br/> Agisha Migani Joan - Yambi, Inc. {year}</div>
+</div>
+
+<div className='md:block hidden w-1/2'>
+    <img className='rounded-2xl' src={vector} alt='vector' />
+</div>
+    </div>
+</section>
         )
     }
 }
