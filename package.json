@@ -114,6 +114,7 @@
     "cross-env": "^7.0.3",
     "electron": "^22.0.0",
     "electron-builder": "^23.6.0",
+    "tailwindcss": "^3.3.1",
     "wait-on": "^7.0.1"
   }
 }
