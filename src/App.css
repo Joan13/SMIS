@@ -231,11 +231,11 @@ h5 {
 } */
 
 .top-bar-app {
-  width: 75%;
   position: fixed;
   left: 25%;
   top: 0px;
-  height: 80px;
+  right: 15px;
+  height: 90px;
   -webkit-app-region:drag;
 }
 
@@ -244,9 +244,9 @@ h5 {
   width: 75%;
   position: fixed;
   left: 25%;
-  top: 0px;
+  top: 120px;
   bottom: 30px;
-  margin-top: 100px;
+  margin-top: 110px;
   overflow-y: auto;
 }
 
@@ -958,9 +958,9 @@ h5 {
 .menu-right {
   position: fixed;
   /* background-color: green; */
-  top: 82px;
-  bottom: 22px;
-  right: 0px;
+  top: 90px;
+  bottom: 25px;
+  right: 15px;
   width: 20%;
   /* border-left: 1px solid rgba(0, 0, 0, 0.2); */
   padding-left: 10px;
@@ -970,8 +970,8 @@ h5 {
 .center-fixed {
   position: fixed;
   /* background-color: aqua; */
-  top: 80px;
-  bottom: 22px;
+  top: 90px;
+  bottom: 25px;
   width: 54.3%;
   left: 25%;
   border-right: 1px solid rgba(0, 0, 0, 0.2);
@@ -982,8 +982,8 @@ h5 {
 
 .center-fixed-extended {
   position: fixed;
-  background-color: aqua;
-  top: 103px;
+  background-color: aqua; 
+  top: 90px;
   bottom: 0;
   left: 25%;
   right: 5%;

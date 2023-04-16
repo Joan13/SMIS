@@ -88,6 +88,7 @@ export const mapStateToProps = (state) => {
         classes_selected: state.classes_selected,
         selections: state.selections,
         echecs:state.echecs,
+        theme:state.theme,
     }
 }
 

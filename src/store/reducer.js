@@ -89,14 +89,17 @@ const initialState = {
     selections: [],
     day: "",
     marks_modified: false,
-    echecs:[],
+    echecs: [],
+    theme: 'light',
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_MODAL_PAIEMENT_CATEGORIES":
             return { ...state, modal_paiement_categories: action.payload }
-            case "SET_ECHECS":
+        case "SET_THEME":
+            return { ...state, theme: action.payload }
+        case "SET_ECHECS":
             return { ...state, echecs: action.payload }
         case "SET_CLASSES_SELECTED":
             return { ...state, classes_selected: action.payload }
