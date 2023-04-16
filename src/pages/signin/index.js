@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaCheckCircle, FaEye, FaEyeSlash, FaLock, FaServer, FaUser } from 'react-icons/fa';
-import { FiCheckSquare, FiSquare } from 'react-icons/fi';
+import { FiCheckSquare, FiSquare, FiX } from 'react-icons/fi';
 import { Navigate } from 'react-router-dom';
 import vector from "./../../../src/assets/8401.jpg"
 import logo from "./../../../src/assets/logo.PNG"
@@ -9,15 +9,13 @@ import { CircularProgress, LinearProgress } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { http, online, url_online, year } from '../../global_vars';
 import ButtonNormal from '../../components/includes/button_normal';
-
-// const { ipcRenderer } = window.require("electron");
-// const ipc = ipcRenderer;
+import JSONPackageFile from './../../../package.json';
 
 const Signin = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const user_data = useSelector(state => state.user_data);
-    const url = useSelector(state=>state.url_server);
+    const url = useSelector(state => state.url_server);
     const [url_server, setUrl_erver] = useState(url_online);
     const [connection_type, setConnection_type] = useState(0);
     const [is_loading, setIs_loading] = useState(false);
@@ -66,7 +64,7 @@ const Signin = () => {
                         dispatch({ type: "SET_URL_SERVER", payload: url_server });
 
                         setTimeout(() => {
-                            setMessage_user("Récupération et compression des données de l'utilisateur...");
+                            setMessage_user("Récupération et compression des données...");
                         }, 1000);
 
                         setTimeout(() => {
@@ -120,146 +118,157 @@ const Signin = () => {
     //     promise.finally(()=>{
     //         return (<Navigate to={'/'} />);
     //     });
-        
+
     // } else 
     if ((redirectToReferrer && sessionStorage.getItem('assemble_user_data'))) {
         return (<Navigate to={'/'} />);
     } else {
         return (
-<section className='bg-background-100 min-h-screen flex items-center justify-center'>
+            <div className="bg-background-50 rounded-xl">
+                <div className="bgimagesignin rounded-xl">
+                    <section className='bg-transparent-50 rounded-xl backdrop-blur-md min-h-screen flex items-center justify-center backdropfilter'>
 
+                        <div className="bg-background-50 flex rounded-2xl shadow-lg max-w-3xlg p-5">
+                            <div className='md:w-1/2 px-16'>
+                                <div className='block mt-10 2xl:hidden xl:hidden lg:hidden md:hidden w-full place-items-center bg-background-100 py-8 rounded-xl'>
+                                    <img className='rounded-2xl w-40 mx-auto' src={logo} alt='vector' />
+                                </div>
+                                <h2 className="font-bold text-2xl text-text-100 mt-10">Connectez-vous</h2>
 
-
-    <div className="bg-background-50 flex rounded-2xl shadow-lg max-w-3xlg p-5">
-<div className='md:w-1/2 px-16'>
-<div className='block mt-10 2xl:hidden xl:hidden lg:hidden md:hidden w-full place-items-center bg-background-100 py-8 rounded-xl'>
-    <img className='rounded-2xl w-40 mx-auto' src={logo} alt='vector' />
-</div>
-                    <h2 className="font-bold text-2xl text-text-100 mt-10">Connectez-vous</h2>
-
-                    {/* <div style={{ marginBottom: 40 }}>
+                                {/* <div style={{ marginBottom: 40 }}>
                         <span onClick={() => setConnection_type(0)} className="header-signin" style={{ fontWeight: connection_type === 0 ? 'bold' : '450' }}>Principal</span>
                         <span onClick={() => setConnection_type(1)} className="header-signin" style={{ fontWeight: connection_type === 1 ? 'bold' : '450' }}>Parent (élève)</span>
                     </div> */}
 
-                    <div className='flex flex-col gap-4 border-b border-gray-50 mb-5 pb-5'>
+                                <div className='flex flex-col gap-4 border-b border-gray-50 mb-5 pb-5'>
 
-                        {!online ?
-                            <div className='flex items-center bg-background-100 w-full align-center p-3 mt-10 pl-5 rounded-xl border border-gray-50'>
-                                <FaServer className='text-gray-100' />
-                                <input
-                                    placeholder="URL de connexion au serveur"
-                                    className="w-full h-full ml-5 outline-none"
-                                    value={url_server}
-                                    onChange={(text) => setUrl_erver(text.target.value)} />
-                            </div>
-                            : null}
+                                    {!online ?
+                                        <div className='flex items-center bg-background-100 w-full align-center p-3 mt-10 pl-5 rounded-xl border border-gray-50'>
+                                            <FaServer className='text-gray-100' />
+                                            <input
+                                                placeholder="URL de connexion au serveur"
+                                                className="w-full h-full ml-5 outline-none"
+                                                value={url_server}
+                                                onChange={(text) => setUrl_erver(text.target.value)} />
+                                        </div>
+                                        : null}
 
-                        <div className="flex items-center bg-background-100 w-full align-center p-3  pl-5 rounded-xl border border-gray-50">
-                            <FaUser className='text-gray-100' />
-                            <input
-                                placeholder="Nom d'utilisateur"
-                                style={{ width: '85%', marginLeft: 10 }}
-                                className="w-full h-full ml-5 outline-none"
-                                value={username}
-                                onChange={(text) => setUsername(text.target.value)} />
-                        </div>
+                                    <div className="flex items-center bg-background-100 w-full align-center p-3  pl-5 rounded-xl border border-gray-50">
+                                        <FaUser className='text-gray-100' />
+                                        <input
+                                            placeholder="Nom d'utilisateur"
+                                            style={{ width: '85%', marginLeft: 10 }}
+                                            className="w-full h-full ml-5 outline-none"
+                                            value={username}
+                                            onChange={(text) => setUsername(text.target.value)} />
+                                    </div>
 
-                        <div className="flex items-center bg-background-100 w-full align-center p-3  pl-5 rounded-xl border border-gray-50">
-                            <FaLock className='text-gray-100' />
+                                    <div className="flex items-center bg-background-100 w-full align-center p-3  pl-5 rounded-xl border border-gray-50">
+                                        <FaLock className='text-gray-100' />
 
-                            <input
-                                placeholder="Mot de passe"
-                                style={{
-                                    // fontSize: !see_pass && password !== "" ? 20 : 13,
-                                    // height: !see_pass && password !== "" ? '' : 25,
-                                    // letterSpacing: !see_pass && password !== "" ? 1 : null,
-                                }}
-                                className="w-full h-full ml-5 outline-none"
-                                type={see_pass ? "text" : "password"}
-                                value={password}
-                                onChange={(text) => setPassword(text.target.value)} />
+                                        <input
+                                            placeholder="Mot de passe"
+                                            style={{
+                                                // fontSize: !see_pass && password !== "" ? 20 : 13,
+                                                // height: !see_pass && password !== "" ? '' : 25,
+                                                // letterSpacing: !see_pass && password !== "" ? 1 : null,
+                                            }}
+                                            className="w-full h-full ml-5 outline-none"
+                                            type={see_pass ? "text" : "password"}
+                                            value={password}
+                                            onChange={(text) => setPassword(text.target.value)} />
 
-                            <button
-                                style={{ width: '10%' }}
-                                onClick={() => setSee_pass(!see_pass)}
-                                className="no-decoration">
-                                {see_pass ?
-                                    <FaEye className='text-text-100' />
-                                    :
-                                    <FaEyeSlash  className='text-text-100' />}
-                            </button>
+                                        <button
+                                            style={{ width: '10%' }}
+                                            onClick={() => setSee_pass(!see_pass)}
+                                            className="no-decoration">
+                                            {see_pass ?
+                                                <FaEye className='text-text-100' />
+                                                :
+                                                <FaEyeSlash className='text-text-100' />}
+                                        </button>
 
-                        </div>
+                                    </div>
 
-                        <div style={{
-                            display: 'flex',
-                            alignItems: 'center'
-                        }}>
-                            <div style={{ cursor: 'pointer' }} onClick={() => setSave_session(!save_session)}>
-                                {save_session ?
-                                    <FiCheckSquare size={17} style={{ color: 'rgb(0,80,180)' }} />
-                                    :
-                                    <FiSquare size={17} style={{ color: 'gray' }} />}
-                            </div>
-                            <span style={{ marginLeft: 10, }}>Garder ma session active</span>
-                        </div>
-                        <br />
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center'
+                                    }}>
+                                        <div style={{ cursor: 'pointer' }} onClick={() => setSave_session(!save_session)}>
+                                            {save_session ?
+                                                <FiCheckSquare size={17} style={{ color: 'rgb(0,80,180)' }} />
+                                                :
+                                                <FiSquare size={17} style={{ color: 'gray' }} />}
+                                        </div>
+                                        <span style={{ marginLeft: 10, }}>Garder ma session active</span>
+                                    </div>
+                                    <br />
 
-                        {message1 !== "" ?
-                            <><span className='w-80 flex items-center text-success  truncate ...'>
-                                <FaCheckCircle color="green" size={11} className='mr-3' />
-                                {message1}
-                            </span><br /></> : null}
+                                    {message1 !== "" ?
+                                        <><span className='w-80 flex items-center text-success  truncate ...'>
+                                            <FaCheckCircle color="green" size={11} className='mr-3' />
+                                            {message1}
+                                        </span><br /></> : null}
 
-                        {message2 !== "" ?
-                            <><div className='w-80 flex items-center text-success truncate ...'>
-                                <FaCheckCircle color="green" size={11} className='mr-3' />
-                                {message2}
-                            </div><br /><br /></> : null}
+                                    {message2 !== "" ?
+                                        <><div className='w-80 flex items-center text-success truncate ...'>
+                                            <FaCheckCircle color="green" size={11} className='mr-3' />
+                                            {message2}
+                                        </div><br /><br /></> : null}
 
-                        {is_loading ?
-                            <div className='text-gray-100 w-80 truncate ... '>
-                                <LinearProgress /><br />
-                                <span>{message_user}</span><br /><br />
-                            </div> : null}
+                                    {is_loading ?
+                                        <div className='text-gray-100 w-full truncate ... '>
+                                            <LinearProgress /><br />
+                                            <span>{message_user}</span><br /><br />
+                                        </div> : null}
 
-                        {empty_error ?
-                            <div className='flex items-center text-error'>Tous les champs sont obligatoires</div>
-                            :
-                            null}
+                                    {empty_error ?
+                                        <div className='flex items-center text-error'>Tous les champs sont obligatoires</div>
+                                        :
+                                        null}
 
-                        {incorrect ?
-                            <div className='flex items-center text-error'>Coordonées invalides. Réessayez.</div>
-                            :
-                            null}
+                                    {incorrect ?
+                                        <div className='flex items-center text-error'>Coordonées invalides. Réessayez.</div>
+                                        :
+                                        null}
 
 
-                        {!is_loading ?
-                            <>
-                                {/* <ButtonNormal text="Connexion" style={{ width: '100%' }} onPress={() => signin()} /> */}
+                                    {!is_loading ?
+                                        <>
+                                            {/* <ButtonNormal text="Connexion" style={{ width: '100%' }} onPress={() => signin()} /> */}
 
-                                <button
-                                onClick={()=>signin()} 
-                                className='bg-primary-100 rounded-xl text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>Connexion</button>
-                                <div style={{ marginTop: 10, textAlign: 'right', fontSize: 15 }}>Besoin d'aide ?
-                                    <span onClick={() => { 
-                                        // ipc.send('closeApp')
-                                    }}
-                                        style={{ color: 'rgba(0, 80, 180)' }} className="pointer"> Cliquez ici.
-                                    </span>
+                                            <button
+                                                onClick={() => signin()}
+                                                className='bg-primary-100 rounded-xl text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>Connexion</button>
+                                            <div style={{ marginTop: 10, textAlign: 'right', fontSize: 15 }}>Besoin d'aide ?
+                                                <span
+                                                    style={{ color: 'rgba(0, 80, 180)' }} className="pointer"> Cliquez ici.
+                                                </span>
+                                            </div>
+                                        </>
+                                        : null}
                                 </div>
-                            </>
-                            : null}
-                    </div>
-                    <div><span style={{ color: 'rgba(0, 80, 180)' }}> </span> Tous droits réservés © <br/> Agisha Migani Joan - Yambi, Inc. {year}</div>
-</div>
+                                <div><span style={{ color: 'rgba(0, 80, 180)' }}> </span> Tous droits réservés © <br /> Agisha Migani Joan - Yambi, Inc. {year}</div>
+                            </div>
 
-<div className='md:block hidden w-1/2'>
-    <img className='rounded-2xl' src={vector} alt='vector' />
-</div>
-    </div>
-</section>
+                            <div className='md:block hidden w-1/2'>
+                                <img className='rounded-2xl' src={vector} alt='vector' />
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                {JSONPackageFile.platform === "Desktop" ?
+                    <div className="bg-transparent-50 fixed top-2 right-2 rounded-xl  border border-gray-50 shadow-sm">
+                        <button onClick={() => {
+                            const { ipcRenderer } = window.require("electron");
+                            const ipc = ipcRenderer;
+                            ipc.send('closeApp');}}
+                            className='p-3 items-center  justify-center bg-background-100 hover:scale-105 active:scale-100 duration-300 rounded-xl text-text-100 hover:text-text-20 hover:bg-error'>
+                            Fermer
+                        </button>
+                    </div>
+                    : null}
+            </div>
         )
     }
 }

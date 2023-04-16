@@ -15,13 +15,14 @@ const createWindow = () => {
     width: 1500,
     height: 850,
     icon: "logo.ico",
-    // frame: false,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
       contextIsolation: false,
       javascript: true,
     },
+    transparent: true,
+    frame: false,
     autoHideMenuBar: true,
   })
 
@@ -30,9 +31,9 @@ const createWindow = () => {
       ? 'http://localhost:3000'
       : `file://${path.join(__dirname, '../build/index.html')}`)
 
-  //       ipc.on('closeApp', ()=>{
-  // console.log("Close App");
-  //       })
+  ipc.on('closeApp', () => {
+    app.quit()
+  })
 
   // alert(isDev)
 

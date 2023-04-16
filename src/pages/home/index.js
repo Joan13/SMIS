@@ -1,32 +1,9 @@
 import React, { Component } from "react";
 import { Button, LinearProgress } from "@material-ui/core";
 import Footer from "../../includes/footer";
-import {
-    FaCircle,
-    FaSearch,
-    FaCheck,
-    FaHome,
-    FaUserPlus,
-    FaClipboard,
-    FaUsers,
-    FaFolder,
-    FaUser,
-    FaPaperclip,
-    FaDatabase,
-    FaStarHalfAlt,
-    FaEdit,
-    FaBell,
-    FaCloudUploadAlt,
-    FaPiedPiperAlt,
-} from "react-icons/fa";
+import { FaCircle, FaCheck, FaHome, FaUserPlus, FaClipboard, FaPaperclip, FaEdit, FaBell, FaCloudUploadAlt, } from "react-icons/fa";
 import { RiSettings4Fill } from "react-icons/ri";
-import {
-    FiAlertOctagon,
-    FiEdit,
-    FiLogOut,
-    FiRefreshCcw,
-    FiUser,
-} from "react-icons/fi";
+import { FiEdit, FiLogOut, FiRefreshCcw, FiUser } from "react-icons/fi";
 import modalView from "../../includes/modal";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Link, Navigate } from "react-router-dom";
@@ -71,6 +48,7 @@ import Conduites from "../../components/classe/conduite";
 import ModalFrame from "../../components/modals";
 import Classes from "../../includes/classes";
 import FichesPoints from "../../components/classe/fiche_points";
+import JSONPackageFile from './../../../package.json';
 
 class Home extends Component {
     constructor(props) {
@@ -935,22 +913,21 @@ class Home extends Component {
         }
 
         return (
-            <div className="main-container">
+            <div className={`bg-primary-100 ${JSONPackageFile.platform === "Desktop" ? "rounded-xl" : null} fixed top-0 bottom-0 right-0 left-0`}>
+                <div className=" rounded-xl">
                 <div>
-                    <div className="top-bar-app">
+                    <div className="top-bar-app bg-background-50 rounded-xl">
                         {this.props.loadding_header ? <LinearProgress /> : null}
-                        <span className="topbar-title">
-                            <FcOpenedFolder
-                                color="orange"
-                                size={22}
-                                style={{ marginRight: 10, marginLeft: 20 }}
-                            />
-                            {this.props.school_name_abb}
-                            <span style={{ color: "gray", fontSize: 17, marginLeft: 20 }}>
+                        <div className="h-4 bg-error"></div>
+                        <div className="flex items-center w-full">
+                        <div className="flex items-center flex-auto">
+                            <FcOpenedFolder color="orange"   size={22}  style={{ marginRight: 10, marginLeft: 20 }}   />
+                            <h2 className="text-2xl font-bold text-text-100 ">{this.props.school_name_abb.toUpperCase()}</h2>
+                            <div className="ml-5 text-xl text-gray-100">
                                 {" "}
                                 / Dossiers / {this.props.annee_scolaire.year_name}{" "}
-                            </span>
-                        </span>
+                            </div>
+                        </div>
 
                         <div className="float-menu-topbar">
                             {this.props.loading_footer ? (
@@ -965,23 +942,21 @@ class Home extends Component {
                             <span
                                 title="Revenir au menu principal"
                                 className="user-home-tools"
-                                onClick={() => this.back_home()}
-                            >
-                                <FaHome color="black" size={20} />
+                                onClick={() => this.back_home()}>
+                                <FaHome  className="text-text-100" size={20} />
                             </span>
 
                             {!online ? (
                                 <span
                                     title="Synchroniser les données"
                                     onClick={() => this.collect_data()}
-                                    className="user-home-tools"
-                                >
-                                    <FaCloudUploadAlt color="black" size={22} />
+                                    className="user-home-tools">
+                                    <FaCloudUploadAlt  className="text-text-100" size={22} />
                                 </span>
                             ) : null}
 
                             <span title="Notifications" className="user-home-tools">
-                                <FaBell color="black" size={20} />
+                                <FaBell  className="text-text-100" size={20} />
                             </span>
 
                             {/* <span title="Notifications"
@@ -993,53 +968,44 @@ class Home extends Component {
                             <span
                                 title="Rafraîchir les données"
                                 onClick={() => this.refresh_window()}
-                                className="user-home-tools"
-                            >
-                                <FiRefreshCcw color="black" size={20} />
+                                className="user-home-tools">
+                                <FiRefreshCcw className="text-text-100" size={20} />
                             </span>
 
                             <Link
                                 title="Configurations"
                                 className="user-home-tools"
-                                to={"/settings"}
-                            >
-                                <RiSettings4Fill color="black" size={22} />
+                                to={"/settings"}>
+                                <RiSettings4Fill  className="text-text-100" size={22} />
                             </Link>
 
-                            {this.state.logout_open ? (
+                            {/* {this.state.logout_open ? (
                                 <span
                                     title="Déconnexion"
                                     onClick={() => this.logout_session()}
                                     className="user-home-tools"
-                                    style={{ fontSize: 15 }}
-                                >
+                                    style={{ fontSize: 15 }}>
                                     <div className="deconnexion">
                                         <FiLogOut
                                             color="white"
                                             size={12}
                                             style={{ marginRight: 10 }}
                                         />
-                                        Quitter
+                                        Quitter wfhgirhiuewhgiuhreuighweiughiurehgiuerhiu
                                     </div>
                                 </span>
-                            ) : null}
-                            <span
-                                onClick={() =>
-                                    this.state.logout_open
-                                        ? this.setState({ logout_open: false })
-                                        : this.setState({ logout_open: true })
-                                }
+                            ) : null} */}
+                            <span onClick={() => this.state.logout_open ? this.setState({ logout_open: false }) : this.setState({ logout_open: true })}
                                 style={{
                                     display: "inline-block",
                                     textAlign: "right",
                                     marginRight: 10,
-                                }}
-                            >
+                                }}>
                                 <strong style={{ fontSize: 13 }}>
                                     {this.props.user_poste.toUpperCase()}
                                 </strong>
                                 <br />
-                                <span style={{ display: "inline-block" }}>
+                                <span className="text-gray-100">
                                     {this.props.user_data.user_name}
                                 </span>
                             </span>
@@ -1058,6 +1024,7 @@ class Home extends Component {
                                 size={13}
                                 color="rgb(0, 180, 0)"
                             />
+                        </div>
                         </div>
 
                         <div className="menu-top-middle">
@@ -1196,7 +1163,7 @@ class Home extends Component {
                         </div>
                     </div>
 
-                    <div className="main-menu-left">
+                    <div className="main-menu-left rounded-xl mt-11">
                         <Classes type={1} />
                     </div>
 
@@ -1418,6 +1385,7 @@ class Home extends Component {
                             </div>
                         </div> : null} */}
                 </div>
+            </div>
             </div>
         );
     }

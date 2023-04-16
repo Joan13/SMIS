@@ -24,9 +24,14 @@ module.exports = {
       },
       success: 'green',
       error: '#780006',
-      transparent: 'transparent',
+      transparent: {
+        100:'rgba(255, 255, 255, 0.6)',
+        50: 'rgba(255, 255, 255, 0.3)'
+      },
     },
-    extend: {},
+    extend: {
+      backgroundImage: "url('logo.png')",
+    },
   },
   plugins: [],
 }
