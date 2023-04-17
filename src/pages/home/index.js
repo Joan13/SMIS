@@ -915,11 +915,11 @@ class Home extends Component {
 
         return (
             <div className={`bg-primary-100 text-text-100 dark:text-text-20 ${JSONPackageFile.platform === "Desktop" ? "rounded-xl" : null} fixed top-0 bottom-0 right-0 left-0`}>
-                <div className=" rounded-xl">
+                <div className=" rounded-lg">
                     <div>
-                        <div className="top-bar-app bg-background-100 dark:bg-background-20 rounded-xl">
+                        <div className="top-bar-app bg-background-100 dark:bg-background-20 rounded-tr-lg shadow-md">
                             {this.props.loadding_header ? <LinearProgress /> : null}
-                            <div className="h-5 bg-background-100 dark:bg-background-20"></div>
+                            <div className="h-5 bg-primary-100 dark:bg-background-20 rounded-tr-lg"></div>
                             <div className="flex items-center w-full">
                                 <div className="flex items-center flex-auto ml-5">
                                     <FcOpenedFolder color="orange" size={30} />
@@ -1118,11 +1118,11 @@ class Home extends Component {
                                     </div>
                                 </div>
 
-                                <div className="main-menu-left rounded-xl">
+                                <div className="main-menu-left">
                                     <Classes type={1} />
                                 </div>
 
-                                <div className="main-middle-page">
+                                <div className="main-middle-page bg-background-100 dark:bg-background-20">
                                     <div className="sub-div-main">
                                         {this.props.loading_middle ? (
                                             <div

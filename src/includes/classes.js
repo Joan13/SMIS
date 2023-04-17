@@ -113,7 +113,7 @@ const Classes = (props) => {
 
     return (
         <div className="flex">
-            <div className="fixed top-0 left-0 bottom-0 bg-background-100 border border-gray-100 dark:bg-background-20 textcenter w-14 content-centershadow-xl items-center rounded-xl hover:scale-100 hover:w-15  duration-300">
+            <div className="fixed top-0 left-0 bottom-0 bg-background-100 border border-background-30 dark:bg-background-20 textcenter w-14 content-centershadow-xl items-center rounded-l-lg hover:scale-100 hover:w-15  duration-300">
                 <HeaderMenuLeft />
             </div>
 
@@ -123,7 +123,7 @@ const Classes = (props) => {
                     Chargement des données...
                 </div>
                 :
-                <div className="flex-auto ml-14">
+                <div className="flex-auto ml-14 bg-background-50 dark:bg-background-20">
 
                     {/* <Selections /> */}
 
@@ -159,8 +159,8 @@ const Classes = (props) => {
                                 <strong>{classee.class_id} {classee.section_id} {classee.order_id}</strong>
                                 <span style={{ backgroundColor: color_body(classee.pupils_count), color: 'white', paddingLeft: 5, paddingRight: 5, paddingTop: 2, paddingBottom: 2, marginTop: -5 }} className="float-class-pupils">{classee.pupils_count}</span>
                                 <br />
-                                <span style={{ fontSize: 12 }}>{(classee.cycle_id + "").toUpperCase()}</span>
-                                <span className="float-class-pupils">
+                                <span style={{ fontSize: 12 }} className="text-gray-100">{(classee.cycle_id + "").toUpperCase()}</span>
+                                <span className="float-class-pupils text-gray-100">
                                     Garcons : {classee.pupils_count_male} |
                                     Filles : {classee.pupils_count_female}
                                 </span>

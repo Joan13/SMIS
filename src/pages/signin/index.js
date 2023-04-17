@@ -263,7 +263,7 @@ const Signin = () => {
                             const { ipcRenderer } = window.require("electron");
                             const ipc = ipcRenderer;
                             ipc.send('closeApp');}}
-                            className='p-3 items-center  justify-center bg-background-100 hover:scale-105 active:scale-100 duration-300 rounded-xl text-text-100 hover:text-text-20 hover:bg-error'>
+                            className='p-3 items-center justify-center bg-background-100 hover:scale-105 active:scale-100 duration-300 rounded-xl text-text-100 hover:text-text-20 hover:bg-error'>
                             Fermer
                         </button>
                     </div>

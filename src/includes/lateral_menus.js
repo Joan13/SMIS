@@ -2,7 +2,7 @@ import { FaMoon } from 'react-icons/fa';
 import { FiSun } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 
-const ThemeSwitcher = () => {
+const LateralMenus = () => {
     const theme = useSelector(state => state.theme);
     const element = document.documentElement;
     const darkQuery = window.matchMedia("(prefers-color-scheme : dark)");
@@ -31,11 +31,11 @@ const ThemeSwitcher = () => {
     return (
         <div
             title="Revenir au menu principal"
-            className="flex items-center justify-center bg-primary-50 pt-2 pb-2 cursor-pointer"
+            className="flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20 pt-2 pb-2 cursor-pointer rounded-3xl"
             onClick={() => { setTheme() }}>
-            {theme === 'dark' ? <FiSun size={20} /> : <FaMoon size={20} />}
+            {theme === 'dark' ? <FiSun size={15} /> : <FaMoon size={15} />}
         </div>
     )
 }
 
-export default ThemeSwitcher;
+export default LateralMenus;

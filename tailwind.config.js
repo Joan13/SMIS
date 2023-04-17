@@ -13,11 +13,13 @@ module.exports = {
       background: {
         100: '#ffffff',
         50: '#e6f1ff',
+        30: '#cccccc',
         20: '#262626'
       },
       gray: {
         100: 'gray',
-        50: '#d9d9d9'
+        50: '#d9d9d9',
+        20: 'rgba(255, 255, 255, 0.1)'
       },
       text: {
         100: '#000000',
