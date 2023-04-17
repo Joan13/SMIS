@@ -31,7 +31,7 @@ const ThemeSwitcher = () => {
     return (
         <div
             title="Revenir au menu principal"
-            className="user-home-tools"
+            className="flex items-center justify-center bg-primary-50 pt-2 pb-2 cursor-pointer"
             onClick={() => { setTheme() }}>
             {theme === 'dark' ? <FiSun size={20} /> : <FaMoon size={20} />}
         </div>

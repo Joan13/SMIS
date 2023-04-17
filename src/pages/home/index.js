@@ -1036,7 +1036,7 @@ class Home extends Component {
                                         <FaEdit />
                                         <select
                                             onChange={(val) => this.get_general_info(val.target.value)}
-                                            className="select-no-border-select bg-background-100 dark:bg-background-20 ml-2">
+                                            className="nodrag select-no-border-select bg-background-100 dark:bg-background-20 ml-2">
                                             <option value={this.props.annee}>Modifier année</option>
                                             {this.props.annees.map((annee, index) => (
                                                 <option key={index} value={annee.year_id}>
@@ -1051,14 +1051,14 @@ class Home extends Component {
                                             {this.props.middle_func === 15 ? (
                                                 <span
                                                     onClick={() => this.new_worker()}
-                                                    className={`select-no-border ${this.props.middle_func === 6 ? "select-no-border-bold"  : ""} flex items-center`}>
+                                                    className={`nodrag select-no-border ${this.props.middle_func === 6 ? "select-no-border-bold"  : ""} flex items-center`}>
                                                     <FaUserPlus style={{ marginRight: 5 }} />
                                                     Nouveau membre
                                                 </span>
                                             ) : this.props.middle_func === 23 ? (
                                                 <span
                                                     onClick={() => this.timetable_settings()}
-                                                    className={`select-no-border ${this.props.middle_func === 22
+                                                    className={`nodrag select-no-border ${this.props.middle_func === 22
                                                         ? "select-no-border-bold"
                                                         : ""
                                                         }`}>
@@ -1075,7 +1075,7 @@ class Home extends Component {
                                     Gestion des dépenses</span> */}
                                                     <span
                                                         onClick={() => this.paiement_categories()}
-                                                        className={`select-no-border ${this.props.middle_func === 22 ? "select-no-border-bold"  : "" } flex items-center`}>
+                                                        className={`nodrag select-no-border ${this.props.middle_func === 22 ? "select-no-border-bold"  : "" } flex items-center`}>
                                                         <FaUserPlus style={{ marginRight: 5 }} />
                                                         Catégories de paiement
                                                     </span>
@@ -1083,7 +1083,7 @@ class Home extends Component {
                                             ) : (
                                                 <div
                                                     onClick={() => this.new_pupil()}
-                                                    className={`select-no-border ${this.props.middle_func === 6 ? "select-no-border-bold"  : "" } flex items-center`}>
+                                                    className={`nodrag select-no-border ${this.props.middle_func === 6 ? "select-no-border-bold"  : "" } flex items-center`}>
                                                     <FaUserPlus style={{ marginRight: 5 }} />
                                                     Nouveau
                                                 </div>
@@ -1092,7 +1092,7 @@ class Home extends Component {
                                             {this.props.middle_func === 12 ? (
                                                 <span
                                                     onClick={() => this.open_libelles()}
-                                                    className={`select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold"  : ""  } flex items-center`}>
+                                                    className={`nodrag select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold"  : ""  } flex items-center`}>
                                                     <span className="divider-menu-topbar"></span>
                                                     <FiEdit style={{ size: 17, marginRight: 5 }} />
                                                     Libéllés
@@ -1100,7 +1100,7 @@ class Home extends Component {
                                             ) : (
                                                 <span
                                                     onClick={() => this.new_classe_import()}
-                                                    className={`select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold" : ""  } flex items-center`}>
+                                                    className={`nodrag select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold" : ""  } flex items-center`}>
                                                     <span className="divider-menu-topbar"></span>
                                                     <FaClipboard style={{ size: 17, marginRight: 5 }} />
                                                     Uploader une classe
@@ -1109,7 +1109,7 @@ class Home extends Component {
 
                                             <span
                                                 onClick={() => this.fetch_synthese()}
-                                                className={`select-no-border ${this.props.middle_func === 4 ? "select-no-border-bold" : "" } flex items-center`}>
+                                                className={`nodrag select-no-border ${this.props.middle_func === 4 ? "select-no-border-bold" : "" } flex items-center`}>
                                                 <span className="divider-menu-topbar"></span>
                                                 <FaPaperclip style={{ size: 12 }} />
                                                 Synthèse des résultats
@@ -1118,8 +1118,7 @@ class Home extends Component {
                                     </div>
                                 </div>
 
-                                <div className="main-menu-left rounded-xl mt-11">
-                                    <HeaderMenuLeft />
+                                <div className="main-menu-left rounded-xl">
                                     <Classes type={1} />
                                 </div>
 
@@ -1128,8 +1127,7 @@ class Home extends Component {
                                         {this.props.loading_middle ? (
                                             <div
                                                 className="progress-center-main"
-                                                style={{ alignItems: "center" }}
-                                            >
+                                                style={{ alignItems: "center" }}>
                                                 <CircularProgress style={{ color: "rgb(0, 80, 180)" }} />
                                                 <br />
                                                 Chargement des données...

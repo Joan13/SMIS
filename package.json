@@ -10,7 +10,7 @@
   },
   "app_full_name": "Yambi Class - School Management Information System - (SMIS)",
   "branch": "stable",
-  "platform": "Web",
+  "platform": "Desktop",
   "productName": "Yambi Class SMIS",
   "main": "public/main.js",
   "dependencies": {

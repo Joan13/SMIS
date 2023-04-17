@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { http } from "../global_vars";
 import { useState } from 'react';
 import Selections from "./selections";
+import HeaderMenuLeft from "./header_menu_left";
 
 const Classes = (props) => {
 
@@ -111,14 +112,18 @@ const Classes = (props) => {
     }
 
     return (
-        <div>
+        <div className="flex">
+            <div className="fixed top-0 left-0 bottom-0 bg-background-100 border border-gray-100 dark:bg-background-20 textcenter w-14 content-centershadow-xl items-center rounded-xl hover:scale-100 hover:w-15  duration-300">
+                <HeaderMenuLeft />
+            </div>
+
             {is_loading_home ?
                 <div className="progress-center">
                     <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
                     Chargement des données...
                 </div>
                 :
-                <div>
+                <div className="flex-auto ml-14">
 
                     {/* <Selections /> */}
 
