@@ -1,5 +1,5 @@
 import { CircularProgress } from "@material-ui/core";
-import { FcFolder } from "react-icons/fc";
+import { FcFolder, FcOpenedFolder } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import { http } from "../global_vars";
 import { useState } from 'react';
@@ -112,8 +112,8 @@ const Classes = (props) => {
     }
 
     return (
-        <div className="flex">
-            <div className="fixed top-0 left-0 bottom-0 bg-background-100 border border-background-30 dark:bg-background-20 textcenter w-14 content-centershadow-xl items-center rounded-l-lg hover:scale-100 hover:w-15  duration-300">
+        <div className="flex bg-transparent-20 rounded-xl">
+            <div className="fixed top-0 left-0 bottom-0 bg-background-100 border border-gray-50 dark:border-gray-20 dark:bg-background-20 textcenter w-14 content-centershadow-xl items-center rounded-l-lg hover:scale-100 hover:w-15 duration-300">
                 <HeaderMenuLeft />
             </div>
 
@@ -123,7 +123,7 @@ const Classes = (props) => {
                     Chargement des données...
                 </div>
                 :
-                <div className="flex-auto ml-14 bg-background-50 dark:bg-background-20">
+                <div className="flex-auto ml-14">
 
                     {/* <Selections /> */}
 
@@ -131,40 +131,42 @@ const Classes = (props) => {
                         return (
                             <div key={index}
                                 onClick={() => { if (props.type === 1) { open_classe(classee) } }}
-                                className={`classes-div ${classe.id_classes === classee.id_classes ? class_open ? "classes-div-selected" : "" : ""}`}>
-                                <div className="float-left-image">
-                                    {props.type === 2 ?
-                                        <div>
-                                            <input
-                                                type="checkbox"
-                                                style={{ width: 25, height: 25 }}
-                                                onClick={() => open_classe(classee)}
-                                            />
-                                        </div> : null}
+                                className={`classes-div ${classe.id_classes === classee.id_classes ? class_open ? "classes-div-selected" : "" : ""} flex items-center pl-3 pr-5 w-full`}>
+                                <div className="w-18">
+                                    <div className="float-left-imageee border-gray-50 dark:border-gray-20 border mr-3 w-14  h-14 rounded-full flex justify-center items-center">
+                                        {props.type === 2 ?
+                                            <div>
+                                                <input
+                                                    type="checkbox"
+                                                    style={{ width: 25, height: 25 }}
+                                                    onClick={() => open_classe(classee)}
+                                                />
+                                            </div> : null}
 
-                                    {props.type === 3 ?
-                                        <div>
-                                            <input
-                                                type="checkbox"
-                                                style={{ width: 25, height: 25 }}
-                                                onClick={() => open_classe(classee)}
-                                            />
-                                        </div> : null}
+                                        {props.type === 3 ?
+                                            <div>
+                                                <input
+                                                    type="checkbox"
+                                                    style={{ width: 25, height: 25 }}
+                                                    onClick={() => open_classe(classee)}
+                                                />
+                                            </div> : null}
 
-                                    {props.type === 1 ?
-                                        class_loading === classee.id_classes ?
-                                            <CircularProgress size={22} /> :
-                                            <FcFolder color="orange" size={22} /> : null}
+                                        {props.type === 1 ? class_loading === classee.id_classes ? <CircularProgress size={20} /> :
+                                            classe.id_classes === classee.id_classes ? <FcOpenedFolder color="orange" size={25} /> : <FcFolder color="orange" size={25} />
+                                            : null}
+                                    </div>
                                 </div>
-                                <strong>{classee.class_id} {classee.section_id} {classee.order_id}</strong>
-                                <span style={{ backgroundColor: color_body(classee.pupils_count), color: 'white', paddingLeft: 5, paddingRight: 5, paddingTop: 2, paddingBottom: 2, marginTop: -5 }} className="float-class-pupils">{classee.pupils_count}</span>
-                                <br />
-                                <span style={{ fontSize: 12 }} className="text-gray-100">{(classee.cycle_id + "").toUpperCase()}</span>
-                                <span className="float-class-pupils text-gray-100">
-                                    Garcons : {classee.pupils_count_male} |
-                                    Filles : {classee.pupils_count_female}
-                                </span>
-                                <div className="border-bottom-classes"></div>
+                                <div className="border-b border-gray-50 dark:border-gray-20 w-full pt-4 pb-4">
+                                    <strong>{classee.class_id} {classee.section_id} {classee.order_id}</strong>
+                                    <span style={{ backgroundColor: color_body(classee.pupils_count), color: 'white', paddingLeft: 5, paddingRight: 5, paddingTop: 2, paddingBottom: 2, marginTop: -5 }} className="float-class-pupils">{classee.pupils_count}</span>
+                                    <br />
+                                    <span style={{ fontSize: 12 }} className="text-gray-100">{(classee.cycle_id + "").toUpperCase()}</span>
+                                    <span className="float-class-pupils text-gray-100">
+                                        Garcons : {classee.pupils_count_male} |
+                                        Filles : {classee.pupils_count_female}
+                                    </span>
+                                </div>
                             </div>
                         )
                     })}

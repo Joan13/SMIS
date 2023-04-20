@@ -28,9 +28,11 @@ module.exports = {
       },
       success: 'green',
       error: '#780006',
+      errror: 'rgb(255, 0, 0)',
       transparent: {
         100: 'rgba(255, 255, 255, 0.6)',
-        50: 'rgba(255, 255, 255, 0.3)'
+        50: 'rgba(255, 255, 255, 0.3)',
+        20: 'transparent'
       },
     },
     extend: {

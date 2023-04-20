@@ -13,7 +13,6 @@ const App = () => {
   const modal_view = useSelector(state => state.modal_view);
   return (
     <div>
-      {/* <Header /> */}
       <HashRouter>
         <Routes>
           <Route path="/signin" element={<Signin />} exact />

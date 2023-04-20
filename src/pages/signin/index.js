@@ -124,7 +124,7 @@ const Signin = () => {
         return (<Navigate to={'/'} />);
     } else {
         return (
-            <div className="bg-background-50 rounded-xl">
+            <div className="bg-background-100 rounded-xl draggg">
                 <div className="bgimagesignin rounded-xl">
                     <section className='bg-transparent-50 rounded-xl backdrop-blur-md min-h-screen flex items-center justify-center backdropfilter'>
 
@@ -143,7 +143,7 @@ const Signin = () => {
                                 <div className='flex flex-col gap-4 border-b border-gray-50 mb-5 pb-5'>
 
                                     {!online ?
-                                        <div className='flex items-center bg-background-100 w-full align-center p-3 mt-10 pl-5 rounded-xl border border-gray-50'>
+                                        <div className='nodrag flex items-center bg-background-100 w-full align-center p-3 mt-10 pl-5 rounded-xl border border-gray-50'>
                                             <FaServer className='text-gray-100' />
                                             <input
                                                 placeholder="URL de connexion au serveur"
@@ -153,7 +153,7 @@ const Signin = () => {
                                         </div>
                                         : null}
 
-                                    <div className="flex items-center bg-background-100 w-full align-center p-3  pl-5 rounded-xl border border-gray-50">
+                                    <div className="nodrag flex items-center bg-background-100 w-full align-center p-3  pl-5 rounded-xl border border-gray-50">
                                         <FaUser className='text-gray-100' />
                                         <input
                                             placeholder="Nom d'utilisateur"
@@ -163,7 +163,7 @@ const Signin = () => {
                                             onChange={(text) => setUsername(text.target.value)} />
                                     </div>
 
-                                    <div className="flex items-center bg-background-100 w-full align-center p-3  pl-5 rounded-xl border border-gray-50">
+                                    <div className="nodrag flex items-center bg-background-100 w-full align-center p-3  pl-5 rounded-xl border border-gray-50">
                                         <FaLock className='text-gray-100' />
 
                                         <input
@@ -190,11 +190,8 @@ const Signin = () => {
 
                                     </div>
 
-                                    <div style={{
-                                        display: 'flex',
-                                        alignItems: 'center'
-                                    }}>
-                                        <div style={{ cursor: 'pointer' }} onClick={() => setSave_session(!save_session)}>
+                                    <div className='cursor-pointer nodrag flex items-center' onClick={() => setSave_session(!save_session)}>
+                                        <div>
                                             {save_session ?
                                                 <FiCheckSquare size={17} style={{ color: 'rgb(0,80,180)' }} />
                                                 :
@@ -237,9 +234,9 @@ const Signin = () => {
                                         <>
                                             {/* <ButtonNormal text="Connexion" style={{ width: '100%' }} onPress={() => signin()} /> */}
 
-                                            <button
-                                                onClick={() => signin()}
-                                                className='bg-primary-100 rounded-xl text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>Connexion</button>
+                                            <button onClick={() => signin()} className='nodrag bg-primary-100 rounded-xl text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>
+                                                    Connexion
+                                                </button>
                                             <div style={{ marginTop: 10, textAlign: 'right', fontSize: 15 }}>Besoin d'aide ?
                                                 <span
                                                     style={{ color: 'rgba(0, 80, 180)' }} className="pointer"> Cliquez ici.
@@ -262,8 +259,12 @@ const Signin = () => {
                         <button onClick={() => {
                             const { ipcRenderer } = window.require("electron");
                             const ipc = ipcRenderer;
-                            ipc.send('closeApp');}}
-                            className='p-3 items-center justify-center bg-background-100 hover:scale-105 active:scale-100 duration-300 rounded-xl text-text-100 hover:text-text-20 hover:bg-error'>
+                            ipc.send('closeApp');
+                        }}
+                            className='nodrag p-3 pl-5 pr-5 flex items-center justify-center bg-background-100 hover:scale-100 active:scale-100 duration-300 rounded-xl text-text-100 hover:text-text-20 hover:bg-error'>
+                            <div className='mr-2 bg-errror text-background-100 rounded-full p-1'>
+                                <FiX />
+                            </div>
                             Fermer
                         </button>
                     </div>

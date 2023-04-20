@@ -32,7 +32,19 @@ const createWindow = () => {
       : `file://${path.join(__dirname, '../build/index.html')}`)
 
   ipc.on('closeApp', () => {
-    app.quit()
+    mainWindow.close();
+  })
+
+  ipc.on('maximizeApp', () => {
+    if (mainWindow.isMaximized()) {
+      mainWindow.restore();
+    } else {
+      mainWindow.maximize();
+    }
+  })
+
+  ipc.on('minimizeApp', () => {
+    mainWindow.minimize();
   })
 
   // alert(isDev)

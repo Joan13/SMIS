@@ -914,12 +914,12 @@ class Home extends Component {
         }
 
         return (
-            <div className={`bg-primary-100 text-text-100 dark:text-text-20 ${JSONPackageFile.platform === "Desktop" ? "rounded-xl" : null} fixed top-0 bottom-0 right-0 left-0`}>
-                <div className=" rounded-lg">
+            <div className={`bg-background-100 text-text-100 rounded-lg dark:text-text-20 ${JSONPackageFile.platform === "Desktop" ? "rounded-lg" : null} fixed top-0 bottom-0 right-0 left-0 border border-gray-50 dark:border-gray-20`}>
+                <div className="rounded-lg">
                     <div>
                         <div className="top-bar-app bg-background-100 dark:bg-background-20 rounded-tr-lg shadow-md">
                             {this.props.loadding_header ? <LinearProgress /> : null}
-                            <div className="h-5 bg-primary-100 dark:bg-background-20 rounded-tr-lg"></div>
+                            <div className="h-5 bg-background-100 dark:bg-background-20 rounded-tr-lg"></div>
                             <div className="flex items-center w-full">
                                 <div className="flex items-center flex-auto ml-5">
                                     <FcOpenedFolder color="orange" size={30} />
@@ -1025,7 +1025,7 @@ class Home extends Component {
                                 </div>
                             </div>
 
-                            <div className="menu-top-middlerere flex items-baseline ml-5 mr-5 mt-2">
+                            <div className="menu-top-middlerere flex items-baseline ml-5 mr-5 mt-2 pb-1 border-b border-gray-50 dark:border-gray-20">
                                 <div className="flex items-bottom flex-auto">
                                     <div className="font-bold text-lg">
                                         {this.props.title_main}{" "}
@@ -1118,7 +1118,7 @@ class Home extends Component {
                                     </div>
                                 </div>
 
-                                <div className="main-menu-left">
+                                <div className="main-menu-left bg-background-50 dark:bg-background-20 border-r border-gray-50 dark:border-gray-20 rounded-l-xl">
                                     <Classes type={1} />
                                 </div>
 
@@ -1150,7 +1150,7 @@ class Home extends Component {
                                                     <PupilsRightMenu />
                                                 ) : null}
 
-                                                <div className="center-fixed">
+                                                <div className="center-fixed border-r border-gray-50 dark:border-gray-20">
                                                     <div style={{ paddingLeft: 20, paddingRight: 10 }}>
                                                         {this.props.middle_func === 1 ? (
                                                             <div id="liste-nomminative">

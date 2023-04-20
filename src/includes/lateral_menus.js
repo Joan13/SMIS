@@ -24,6 +24,10 @@ const LateralMenus = () => {
         } else {
             element.classList.remove('dark');
         }
+
+        if (theme === 'light') {
+            element.classList.remove('dark');
+        }
     }
 
     onWindowMatch();

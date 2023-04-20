@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primaryy: transparent;
+  --secondaryy: rgb(178, 179, 182);
+}
+
+/* * {
+  scrollbar-width: 12px;
+  scrollbar-color: var(--secondaryy);
+} */
+
+*::-webkit-scrollbar {
+  width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--primaryy);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--secondaryy);
+  border-radius: 0px;
+  border: 3px solid var(--primaryy);
+}
+
 @font-face {
   font-family: "SansSerif";
   src: local("SansSerif"),
@@ -25,25 +49,25 @@ body{
   background-color: transparent;
 }
 
-::-webkit-scrollbar {
-  width: 7px;
+*::-webkit-scrollbar {
+  width: 10px;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
   background: transparent;
 }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 0px;
 }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+/* ::-webkit-scrollbar-thumb:hover {
    background: rgb(0, 80, 180);
-}
+} */
+/* 
+::-webkit-mask-size: {100% 20000px;}
+::-webkit-mask-position: left bottom; */
 
 html {
   font-size: 13px;
@@ -248,12 +272,16 @@ h5 {
   -webkit-app-region: no-drag;
 }
 
+.draggg {
+  -webkit-app-region:drag;
+}
+
 .main-middle-page {
   /* background-color: #780006; */
   width: 75%;
   position: fixed;
   left: 25%;
-  top: 91px;
+  top: 90px;
   bottom: 25px;
   /* margin-top: 110px; */
   overflow-y: auto;
@@ -288,13 +316,11 @@ h5 {
   position: fixed;
   display: flex;
   left: 25%;
-  height: 20px;
+  height: 30px;
   bottom: 0px;
   margin-top: 70px;
   justify-content: flex-end;
   align-items: center ;
-  /* padding-top: 5px; */
-  /* padding-bottom: 7px; */
   text-align: right;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -612,7 +638,7 @@ h5 {
   margin-right: 10px;
   border-radius: 50%;
   margin-top: -7px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  /* border: 1px solid rgba(0, 0, 0, 0.1); */
 }
 
 .border-bottom-smooth {
@@ -622,14 +648,14 @@ h5 {
 
 .classes-div {
   transition: 0.6s;
-  display: block;
+  /* display: block; */
   cursor: pointer;
-  padding-top: 15px;
+  /* padding-top: 15px; */
   /* padding-bottom: -10px; */
-  margin-top: 0px;
-  margin-bottom: 0px;
-  padding-left: 12px;
-  padding-right: 12px;
+  /* margin-top: 0px; */
+  /* margin-bottom: 0px; */
+  /* padding-left: 12px; */
+  /* padding-right: 12px; */
 }
 
 .border-bottom-classes {
@@ -973,7 +999,7 @@ h5 {
   position: fixed;
   /* background-color: green; */
   top: 90px;
-  bottom: 25px;
+  bottom: 30px;
   right: 0px;
   width: 20%;
   /* border-left: 1px solid rgba(0, 0, 0, 0.2); */
@@ -985,7 +1011,7 @@ h5 {
   position: fixed;
   /* background-color: aqua; */
   top: 90px;
-  bottom: 25px;
+  bottom: 30px;
   width: 54.3%;
   left: 25%;
   border-right: 1px solid rgba(0, 0, 0, 0.2);
