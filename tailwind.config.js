@@ -13,7 +13,7 @@ module.exports = {
       background: {
         100: '#ffffff',
         50: '#e6f1ff',
-        30: '#cccccc',
+        30: '#e6e6e6',
         20: '#262626'
       },
       gray: {

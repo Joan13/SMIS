@@ -12,7 +12,7 @@ const WindowActions = () => {
     const dispatch = useDispatch();
 
     return (
-        <div className='border-b border-gray-50 mb-8 pb-8'>
+        <div className='border-b border-gray-100 pb-8 mb-3'>
             <div
                 title="Quitter Yambi Class SMIS"
                 className="flex items-center justify-center cursor-pointer mb-3 mt-5">

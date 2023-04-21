@@ -113,7 +113,7 @@ const Classes = (props) => {
 
     return (
         <div className="flex bg-transparent-20 rounded-xl">
-            <div className="fixed top-0 left-0 bottom-0 bg-background-100 border border-gray-50 dark:border-gray-20 dark:bg-background-20 textcenter w-14 content-centershadow-xl items-center rounded-l-lg hover:scale-100 hover:w-15 duration-300">
+            <div className="fixed top-0 left-0 bottom-0 bg-background-100 border border-gray-50 dark:border-gray-20 dark:bg-background-20 textcenter w-16 content-centershadow-xl items-center rounded-l-lg hover:scale-100 hover:w-17 duration-300">
                 <HeaderMenuLeft />
             </div>
 
@@ -123,7 +123,7 @@ const Classes = (props) => {
                     Chargement des données...
                 </div>
                 :
-                <div className="flex-auto ml-14">
+                <div className="flex-auto ml-16">
 
                     {/* <Selections /> */}
 
@@ -133,7 +133,7 @@ const Classes = (props) => {
                                 onClick={() => { if (props.type === 1) { open_classe(classee) } }}
                                 className={`classes-div ${classe.id_classes === classee.id_classes ? class_open ? "classes-div-selected" : "" : ""} flex items-center pl-3 pr-5 w-full`}>
                                 <div className="w-18">
-                                    <div className="float-left-imageee border-gray-50 dark:border-gray-20 border mr-3 w-14  h-14 rounded-full flex justify-center items-center">
+                                    <div className="border-gray-50 dark:border-gray-20 border mr-3 w-14  h-14 rounded-full flex justify-center items-center">
                                         {props.type === 2 ?
                                             <div>
                                                 <input
