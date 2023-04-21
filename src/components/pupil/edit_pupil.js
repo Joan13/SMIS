@@ -109,19 +109,21 @@ const EditPupil = () => {
                     statut_scolaire: statut_scolaire,
                     paiement_category: paiement_category,
                     pupilIdentification: pupilIdentification,
-                    is_inactive: isInactive }),
+                    is_inactive: isInactive
+                }),
             })
                 .then((response) => response.json())
                 .then((response) => {
-                    if(response === '1')  { 
-                        if(isInactive !== '1')  {
-                        find_pupil();
-                        dispatch({type:"SET_EDIT_PUPIL", payload:false});
-                        alert("Les modifications ont été enregistrées avec succès");
-                    } else  {
-                        dispatch({type:"SET_EDIT_PUPIL", payload:false});
-                        alert("Vous avez effacé cet élève. Rechargez la page pour constater les modifications");
-                    } }
+                    if (response === '1') {
+                        if (isInactive !== '1') {
+                            find_pupil();
+                            dispatch({ type: "SET_EDIT_PUPIL", payload: false });
+                            alert("Les modifications ont été enregistrées avec succès");
+                        } else {
+                            dispatch({ type: "SET_EDIT_PUPIL", payload: false });
+                            alert("Vous avez effacé cet élève. Rechargez la page pour constater les modifications");
+                        }
+                    }
                 })
                 .catch((error) => {
                     // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
@@ -130,11 +132,15 @@ const EditPupil = () => {
     };
 
     return (
-        <div className="center-fixeddd" style={{ paddingRight: 20 }}>
+        <div className="pr-5 w-full">
+            <div className="float-right">
+                <button onClick={() => Edit_pupil()}
+                    className='nodrag bg-primary-100 rounded-xl text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md pl-6 pr-6'>
+                    Enregistrer les modifications
+                </button>
+            </div>
 
-            <ButtonNormal text="Enregistrer les modifications" style={{ float: 'right', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }} onPress={() => Edit_pupil()} />
-
-            <span className="title-background">I. DE L'IDENTITÉ DE BASE DE L'ÉLÈVE</span>
+            <span className="title-background mr-5">I. DE L'IDENTITÉ DE BASE DE L'ÉLÈVE</span>
             <table className="tables-new-pupil">
                 <tbody>
                     <tr>
@@ -142,7 +148,7 @@ const EditPupil = () => {
                             <input
                                 onChange={(val) => setFirst_name_pupil(val.target.value)}
                                 placeholder="Nom"
-                                className="input-normall"
+                                className="input-normall border border-gray-50 dark:border-gray-20"
                                 value={first_name_pupil}
                                 style={{ width: '96%' }}
                             />
@@ -151,7 +157,7 @@ const EditPupil = () => {
                             <input
                                 onChange={(val) => setSecond_name_pupil(val.target.value)}
                                 placeholder="Post-nom"
-                                className="input-normall"
+                                className="input-normall border border-gray-50 dark:border-gray-20"
                                 value={second_name_pupil}
                                 style={{ width: '96%' }}
                             />
@@ -163,17 +169,17 @@ const EditPupil = () => {
                             <input
                                 onChange={(val) => setLast_name_pupil(val.target.value)}
                                 placeholder="Prénom de l'élève"
-                                className="input-normall"
+                                className="input-normall border border-gray-50 dark:border-gray-20"
                                 value={last_name_pupil}
                                 style={{ width: '96%' }}
                             />
                         </td>
                         <td style={{ paddingLeft: 0, textAlign: 'right' }}>
                             <select
-                                className="select-normall"
+                                className="select-normall border border-gray-50 dark:border-gray-20"
                                 onChange={(val) => setGender_pupil(val.target.value)}
                                 value={gender_pupil}
-                                style={{ width: '100%', textAlign: 'left' }}>
+                                style={{ width: '96%', textAlign: 'left' }}>
                                 <option value="0">Féminin</option>
                                 <option value="1">Masculin</option>
                             </select>
@@ -186,7 +192,7 @@ const EditPupil = () => {
                             <input
                                 onChange={(val) => setBirth_place_pupil(val.target.value)}
                                 placeholder="Lieu de naissance"
-                                className="input-normall"
+                                className="input-normall border border-gray-50 dark:border-gray-20"
                                 value={birth_place_pupil}
                                 style={{ width: '96%' }}
                             />
@@ -195,7 +201,7 @@ const EditPupil = () => {
                             Date de naissance<br />
                             <input
                                 onChange={(val) => setBirth_date_pupil(val.target.value)}
-                                className="input-normall"
+                                className="input-normall border border-gray-50 dark:border-gray-20"
                                 placeholder="Date de naissance"
                                 type='date'
                                 value={birth_date_pupil}
@@ -209,17 +215,17 @@ const EditPupil = () => {
                             <input
                                 onChange={(val) => setNationality(val.target.value)}
                                 placeholder="Nationalité"
-                                className="input-normall"
+                                className="input-normall border border-gray-50 dark:border-gray-20"
                                 value={nationality}
                                 style={{ width: '96%' }}
                             />
                         </td>
                         <td style={{ paddingLeft: 0, textAlign: 'right' }}>
                             <select
-                                className="select-normall"
+                                className="select-normall border border-gray-50 dark:border-gray-20"
                                 onChange={(val) => setPaiement_category(val.target.value)}
                                 value={paiement_category}
-                                style={{ width: '100%', textAlign: 'left' }}>
+                                style={{ width: '96%', textAlign: 'left' }}>
                                 <option value="">Catégorie de paiement</option>
                                 {paiement_categories.map((category, index) => (
                                     <option value={category.category_id} key={index}>{category.category_name}</option>
@@ -230,17 +236,17 @@ const EditPupil = () => {
                 </tbody>
             </table>
 
-            <span className="title-background">II. DE L'ORIENTATION SCOLAIRE</span>
+            <span className="title-background mr-5">II. DE L'ORIENTATION SCOLAIRE</span>
             <table className="tables-new-pupil">
                 <tbody>
                     <tr>
                         <td style={{ paddingRight: 0, textAlign: 'left' }}>
                             <select
-                                className="select-normall"
+                                className="select-normall border border-gray-50 dark:border-gray-20"
                                 onChange={(val) => setCycle_school_pupil(val.target.value)}
                                 label="Cycle d'étude"
                                 value={cycle_school_pupil}
-                                style={{ width: '100%', textAlign: 'left' }}>
+                                style={{ width: '96%', textAlign: 'left' }}>
                                 <option value="0">Sélectionner le cycle</option>
                                 {cycles.map((cycle, index) => (
                                     <option value={cycle.cycle_id} key={index}>{cycle.cycle_name}</option>
@@ -249,11 +255,11 @@ const EditPupil = () => {
                         </td>
                         <td style={{ paddingLeft: 0, textAlign: 'right' }}>
                             <select
-                                className="select-normall"
+                                className="select-normall border border-gray-50 dark:border-gray-20"
                                 onChange={(val) => setClass_school_pupil(val.target.value)}
                                 placeholder="Classe"
                                 value={class_school_pupil}
-                                style={{ width: '100%', textAlign: 'left' }}>
+                                style={{ width: '96%', textAlign: 'left' }}>
                                 <option value="0">Séléctionner la classe</option>
                                 {class_numbers.map((classe, index) => (
                                     <option value={classe.class_id} key={index}>{classe.class_number}</option>
@@ -264,10 +270,10 @@ const EditPupil = () => {
                     <tr>
                         <td style={{ paddingRight: 0, textAlign: 'left' }}>
                             <select
-                                className="select-normall"
+                                className="select-normall border border-gray-50 dark:border-gray-20"
                                 onChange={(val) => setClass_order_pupil(val.target.value)}
                                 value={class_order_pupil}
-                                style={{ width: '100%', textAlign: 'left' }}>
+                                style={{ width: '96%', textAlign: 'left' }}>
                                 <option value="0">Sélectionner l'ordre de classe</option>
                                 {orders.map((order, index) => (
                                     <option value={order.order_id} key={index}>{order.order_name}</option>
@@ -276,10 +282,10 @@ const EditPupil = () => {
                         </td>
                         <td style={{ paddingLeft: 0, textAlign: 'right' }}>
                             <select
-                                className="select-normall"
+                                className="select-normall border border-gray-50 dark:border-gray-20"
                                 onChange={(val) => setClass_section_pupil(val.target.value)}
                                 value={class_section_pupil}
-                                style={{ width: '100%', textAlign: 'left' }}>
+                                style={{ width: '96%', textAlign: 'left' }}>
                                 <option value="0">Séléctionner la section</option>
                                 {sections.map((section, index) => (
                                     <option value={section.section_id} key={index}>{section.section_name}</option>
@@ -290,10 +296,10 @@ const EditPupil = () => {
                     <tr>
                         <td style={{ paddingRight: 0, textAlign: 'left', width: '50%' }}>
                             <select
-                                className="select-normall"
+                                className="select-normall border border-gray-50 dark:border-gray-20"
                                 onChange={(val) => setClass_option_pupil(val.target.value)}
                                 value={class_option_pupil}
-                                style={{ width: '100%', textAlign: 'left' }}>
+                                style={{ width: '96%', textAlign: 'left' }}>
                                 <option value="0">Séléctionner l'option</option>
                                 {options.map((option, index) => (
                                     <option value={option.option_id} key={index}>{option.option_name}</option>
@@ -318,7 +324,7 @@ const EditPupil = () => {
                             <input
                                 onChange={(val) => setId_number(val.target.value)}
                                 placeholder="Numéro d'identification"
-                                className="input-normall"
+                                className="input-normall border border-gray-50 dark:border-gray-20"
                                 value={id_number}
                                 style={{ width: '96%' }}
                             />
@@ -327,7 +333,7 @@ const EditPupil = () => {
                             <input
                                 onChange={(val) => setPerm_number(val.target.value)}
                                 placeholder="Numéro permanent"
-                                className="input-normall"
+                                className="input-normall border border-gray-50 dark:border-gray-20"
                                 value={perm_number}
                                 style={{ width: '96%' }}
                             />
@@ -500,23 +506,23 @@ const EditPupil = () => {
                     </tbody>
                 </table> */}
 
-                <span className="title-background">III. EFFACER L'ÉLÈVE</span>
+            <span className="title-background mr-5">III. EFFACER L'ÉLÈVE</span>
             <table className="tables-new-pupil">
-                    <tbody>
-                        <tr>
-                            <td style={{ paddingRight: 0, textAlign: 'left' }}>
+                <tbody>
+                    <tr>
+                        <td style={{ paddingRight: 0, textAlign: 'left' }}>
                             <select
-                                className="select-normall"
                                 onChange={(val) => setIsInactive(val.target.value)}
                                 value={isInactive}
-                                style={{ width: '100%', textAlign: 'left' }}>
-                                 <option value="0">Sélectionner option</option>
+                                style={{ width: '98%', textAlign: 'left' }}
+                                className="select-normall mr-5 border border-gray-50 dark:border-gray-20">
+                                <option value="0">Sélectionner option</option>
                                 <option value="1">Désactiver l'élève (Effacer)</option>
                             </select>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
             {/* {this.state.modal_view ?
                     <div className="main-div-modal">

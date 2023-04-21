@@ -177,13 +177,13 @@ class NewPaiements extends Component {
                 <table style={{ width: "100%" }}>
                     <thead>
                         <tr>
-                            <th style={{ width: "50%", textAlign: 'left', paddingLeft: 0 }}><strong>Paiement des frais scolaires</strong></th>
-                            <th style={{ width: "50%", textAlign: 'left', paddingLeft: 0 }}><strong>Paiement des frais divers</strong></th>
+                            <th className='border-none bg-background-50 dark:bg-background-20 pt-3 pb-3'><strong style={{marginLeft:-60}}>Paiement des frais scolaires</strong></th>
+                            <th className='border-none bg-background-50 dark:bg-background-20 pt-3 pb-3'><strong style={{marginLeft:-60}}>Paiement des frais divers</strong></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td className="td-border-right">
+                            <td>
                                 <table style={{ width: "100%" }}>
                                     <tbody>
                                         {
@@ -198,7 +198,7 @@ class NewPaiements extends Component {
                                                             <select
                                                                 value={this.state.libelle_paie}
                                                                 onChange={(val) => this.setState({ libelle_paie: val.target.value })}
-                                                                style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white', marginBottom: 10, width: '80%' }} className="select-no-border-select">
+                                                                style={{ marginBottom: 10, width: '80%', marginTop: 20 }} className="select-normall w-full  border border-gray-50 dark:border-gray-20">
                                                                 <option value="">Sélectionner le libellé</option>
                                                                 {this.props.libelles.map((libelle, index) => {
                                                                     if (parseInt(libelle.gender_libelle) === 1) { return (<option key={index} value={libelle.libelle_id}>{libelle.description_libelle}</option>) }
@@ -218,7 +218,8 @@ class NewPaiements extends Component {
                                                                 }}
                                                                 placeholder="Ex: 130"
                                                                 maxLength={14}
-                                                                className="input-montant"
+                                                                className="input-normall w-full  border border-gray-50 dark:border-gray-20"
+                                                                style={{width:'80%'}}
                                                                 type="number" />
                                                         </td>
                                                     </tr>
@@ -226,31 +227,33 @@ class NewPaiements extends Component {
                                                     <tr>
                                                         <td style={{ paddingTop: 10 }}>
                                                             {this.state.montant_paie !== "" ?
-                                                                <div><strong style={{ color: 'rgb(0, 80, 180)' }}>{this.state.montant_text_paie} </strong>dollars Américains<br /></div> : null}
+                                                                <div><strong style={{ color: 'rgb(51 143 255)' }}>{this.state.montant_text_paie} </strong>dollars Américains<br /></div> : null}
                                                         </td>
                                                     </tr>
 
                                                     <tr>
                                                         <td style={{ paddingTop: 10 }}>
-                                                            Catégorie : <span style={{ fontWeight: 'bold', color: 'rgb(0, 80, 180)' }}>{this.state.category.category_name} </span>  |
-                                                            Montant total à payer : <span style={{ fontWeight: 'bold', color: 'rgb(0, 80, 180)' }}> {this.state.category.category_amount}</span>
+                                                            Catégorie : <span style={{ fontWeight: 'bold', color: 'rgb(51 143 255)' }}>{this.state.category.category_name} </span>  |
+                                                            Montant total à payer : <span style={{ fontWeight: 'bold', color: 'rgb(51 143 255)' }}> {this.state.category.category_amount}</span>
                                                         </td>
                                                     </tr>
 
                                                     <tr>
                                                         <td>
                                                             {this.state.success !== "" ?
-                                                                <><span style={{ color: 'green', marginBottom: 5 }}>
-                                                                    <FaCheckCircle color="green" size={11} style={{ marginRight: 5, marginTop: 10 }} />
+                                                                <><span style={{ color: 'green', marginBottom: 5 }} className='flex items-center'>
+                                                                    <FaCheckCircle color="green" size={11} style={{ marginRight: 5 }} />
                                                                     {this.state.success}
                                                                 </span><br /></> : null}
                                                             <br />
                                                             {this.state.loading_middle ?
                                                                 <><CircularProgress style={{ color: 'rgb(0, 80, 180)', marginLeft: '35%' }} /><br /></>
                                                                 :
-                                                                <><button
-                                                                    onClick={() => this.new_paiement()}
-                                                                    className="button-primary" style={{ width: '83%' }}>Valider le paiement</button></>
+                                                                <button onClick={() => this.new_paiement()}
+                                                                style={{width: '80%'}}
+                    className='nodrag bg-primary-100 rounded-xl text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md pl-6 pr-6'>
+                    Valider le paiement
+                </button>
                                                             }
                                                         </td>
                                                     </tr>
@@ -261,7 +264,7 @@ class NewPaiements extends Component {
                             </td>
 
 
-                            <td valign="top">
+                            <td valign="top"  className='pl-5 border-l border-gray-50 dark:border-gray-20'>
                                 <table style={{ width: "100%" }}>
                                     <tbody>
                                         <tr>
@@ -269,7 +272,7 @@ class NewPaiements extends Component {
                                                 <select
                                                     value={this.state.libelle_frais}
                                                     onChange={(val) => this.setState({ libelle_frais: val.target.value })}
-                                                    style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white', marginBottom: 10, width: '80%' }} className="select-no-border-select">
+                                                    style={{ marginBottom: 10, width: '80%', marginTop: 20 }} className="select-normall w-full  border border-gray-50 dark:border-gray-20">
                                                     <option value="">Sélectionner le libellé</option>
                                                     {this.props.libelles.map((libelle, index) => {
                                                         if (parseInt(libelle.gender_libelle) === 1) { return (<option key={index} value={libelle.libelle_id}>{libelle.description_libelle}</option>) }
@@ -285,7 +288,8 @@ class NewPaiements extends Component {
                                                     value={this.state.montant_frais}
                                                     onChange={(value) => this.setState({ montant_frais: value.target.value })}
                                                     placeholder="Ex: 10"
-                                                    className="input-montant"
+                                                    className="input-normall w-full  border border-gray-50 dark:border-gray-20"
+                                                                style={{width:'80%'}}
                                                     type="number" />
                                             </td>
                                         </tr>
@@ -293,24 +297,26 @@ class NewPaiements extends Component {
                                         <tr>
                                             <td style={{ paddingTop: 10 }}>
                                                 {this.state.montant_frais !== "" ?
-                                                    <div><strong style={{ color: 'rgb(0, 80, 180)' }}>{NumberToLetter(this.state.montant_frais)} </strong>dollars Américains<br /></div> : null}
+                                                    <div><strong style={{ color: 'rgb(51 143 255)' }}>{NumberToLetter(this.state.montant_frais)} </strong>dollars Américains<br /></div> : null}
                                             </td>
                                         </tr>
 
                                         <tr>
                                             <td>
                                                 {this.state.success_2 !== "" ?
-                                                    <><span style={{ color: 'green', marginBottom: 5 }}>
-                                                        <FaCheckCircle color="green" size={11} style={{ marginRight: 5, marginTop: 10 }} />
+                                                    <><span style={{ color: 'green', marginBottom: 5 }} className='flex items-center'>
+                                                        <FaCheckCircle color="green" size={11} style={{ marginRight: 5 }} />
                                                         {this.state.success_2}
                                                     </span><br /></> : null}
                                                 <br />
                                                 {this.state.loading_middle2 ?
-                                                    <><CircularProgress style={{ color: 'rgb(0, 80, 180)', marginLeft: '35%' }} /><br /></>
+                                                    <><CircularProgress style={{ color: 'rgb(51 143 255)', marginLeft: '35%' }} /><br /></>
                                                     :
-                                                    <><button
-                                                        onClick={() => this.new_frais_divers()}
-                                                        className="button-primary" style={{ width: '83%' }}>Enregistrer les frais</button></>
+                                                    <button onClick={() => this.new_frais_divers()}
+                                                                style={{width: '80%'}}
+                    className='nodrag bg-primary-100 rounded-xl text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md pl-6 pr-6'>
+                    Enregistrer les frais
+                </button>
                                                 }
                                             </td>
                                         </tr>

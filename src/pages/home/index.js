@@ -973,7 +973,7 @@ class Home extends Component {
                                 </div>
                             </div>
 
-                            <div className="menu-top-middlerere flex items-baseline ml-5 mr-5 pb-1 border-b border-gray-50 dark:border-gray-20">
+                            <div className="menu-top-middlerere flex items-baseline ml-5  mt-2 mr-5 pb-1 border-b border-gray-50 dark:border-gray-20">
                                 <div className="flex items-bottom flex-auto">
                                     <div className="font-bold text-lg">
                                         {this.props.title_main}{" "}

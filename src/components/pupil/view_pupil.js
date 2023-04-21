@@ -168,7 +168,7 @@ class ViewPupil extends React.Component {
             <div>
                 {!this.props.loading_footer ?
                     <div style={{ marginBottom: 50, paddingTop: 0, marginLeft: 0, marginRight: 10 }}>
-                        <div className="div-div">
+                        <div className="div-divd">
                             <div style={{ fontWeight: 'bold', fontSize: 15, marginTop: 10, marginBottom: 5 }}>Identité de l'élève</div>
                             <div id="nomminative" style={{ marginBottom: 5, marginLeft: 0 }}>
 
@@ -179,25 +179,25 @@ class ViewPupil extends React.Component {
                                                 <table>
                                                     <tbody>
                                                         <tr>
-                                                            <td>Sexe  </td>
+                                                            <td className='text-gray-100'>Sexe  </td>
                                                             <td>
                                                                 <strong> : {parseInt(this.props.pupil.pupil.gender) === 1 ? "Masculin (M)" : "Féminin (F)"}</strong>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Nationalité  </td>
+                                                            <td className='text-gray-100'>Nationalité  </td>
                                                             <td>
                                                                 <strong> : {this.props.pupil.pupil.nationality !== "" ? this.props.pupil.pupil.nationality : "Non défini"}</strong>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Date de naissance  </td>
+                                                            <td className='text-gray-100'>Date de naissance  </td>
                                                             <td>
                                                                 <strong> : {this.find_date(this.props.pupil.pupil.birth_date)}</strong>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Lieu de naissance  </td>
+                                                            <td className='text-gray-100'>Lieu de naissance  </td>
                                                             <td>
                                                                 <strong> : {this.props.pupil.pupil.birth_place !== "" ? this.props.pupil.pupil.birth_place : "Non défini"}</strong>
                                                             </td>
@@ -209,19 +209,19 @@ class ViewPupil extends React.Component {
                                                 <table>
                                                     <tbody>
                                                         <tr>
-                                                            <td>Classe  </td>
+                                                            <td className='text-gray-100'>Classe  </td>
                                                             <td>
                                                                 <strong> : {this.find_class_number(this.props.pupil.pupil.class_school)} {this.find_cycle(this.props.pupil.pupil.cycle_school)} {this.find_section(this.props.pupil.pupil.class_section)} {this.find_class_order(this.props.pupil.pupil.class_order)}</strong>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Noms du père  </td>
+                                                            <td className='text-gray-100'>Noms du père  </td>
                                                             <td>
                                                                 <strong> : {this.props.pupil.pupil.father_names !== "" ? this.props.pupil.pupil.father_names : "Non défini"}</strong>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Noms de la mère  </td>
+                                                            <td className='text-gray-100'>Noms de la mère  </td>
                                                             <td>
                                                                 <strong> : {this.props.pupil.pupil.mother_names !== "" ? this.props.pupil.pupil.mother_names : "Non défini"}</strong>
                                                             </td>
@@ -234,19 +234,19 @@ class ViewPupil extends React.Component {
                                                 <table>
                                                     <tbody>
                                                         <tr>
-                                                            <td>Adresse  </td>
+                                                            <td className='text-gray-100'>Adresse  </td>
                                                             <td>
                                                                 <strong> : {this.props.pupil.pupil.physical_address !== "" ? this.props.pupil.pupil.physical_address : "Non défini"}</strong>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Email  </td>
+                                                            <td className='text-gray-100'>Email  </td>
                                                             <td>
                                                                 <strong> : {this.props.pupil.pupil.email_address !== "" ? this.props.pupil.pupil.email_address : "Non défini"}</strong>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Téléphone  </td>
+                                                            <td className='text-gray-100'>Téléphone  </td>
                                                             <td>
                                                                 <strong> : {this.props.pupil.pupil.contact_phone_1 !== "" ? this.props.pupil.pupil.contact_phone_1 : "Non défini"}</strong>
                                                             </td>
@@ -283,43 +283,45 @@ class ViewPupil extends React.Component {
 
                             {this.props.edit_pupil ? <EditPupil /> : null}
 
-                            <div style={{ textAlign: 'left', marginTop: 20 }}>
-
-                                <span>
-                                    {this.props.edit_pupil ? <FaChevronUp color="rgb(0, 80, 180)" style={{ marginRight: 5 }} /> : <FaChevronDown color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />}
+                            <div className='flex items-center text-primary-50 mt-8'>
+                                <div className='flex cursor-pointer items-center mr-4'>
+                                    {this.props.edit_pupil ? <FaChevronUp style={{ marginRight: 5 }} /> : <FaChevronDown style={{ marginRight: 5 }} />}
                                     <span
-                                        onClick={() => this.props.dispatch({ type: "SET_EDIT_PUPIL", payload: !this.props.edit_pupil })}
-                                        className="add-minus">
+                                        onClick={() => this.props.dispatch({ type: "SET_EDIT_PUPIL", payload: !this.props.edit_pupil })}>
                                         MODIFIER L'ÉLÈVE
                                     </span>
-                                </span>
+                                </div>
 
-                                <span>
-                                    <span className="divider-menu-topbar"></span>
-                                    <FaPrint color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
-                                    <span onClick={() => this.printContent("nomminative")} className="add-minus">
+                                <div className='flex items-center border-l border-gray-50 dark:border-gray-20 pl-4 cursor-pointer'>
+                                    <FaPrint className='' style={{ marginRight: 5 }} />
+                                    <span onClick={() => this.printContent("nomminative")}>
                                         IMPRIMER LA FICHE DE L'ÉLÈVE
                                     </span>
-                                </span>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="div-div" style={{ paddingBottom: 0 }}>
-                            <h3>Paiements de l'élève</h3>
-                            <span onClick={() => this.newPaiement()} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${this.props.new_paiement ? "select-no-border-bold" : ""}`}>
-                                <span className="divider-menu-topbar"></span>
-                                <FaEdit style={{ size: 17, marginRight: 5 }} />
-                                Nouveaux paiements</span>
+                        <div className="">
+                            <div className="border-t border-b border-gray-50 dark:border-gray-20 flex items-center pt-4 mt-4 pb-4 mb-4">
+                                <strong className='text-lg mr-5'>Paiements de l'élève</strong>
+                                <div onClick={() => this.newPaiement()} className={`${this.props.new_paiement ? "underline" : ""} cursor-pointer text-primary-50 border-l text-lg border-gray-50 dark:border-gray-20 pl-4 flex items-center`}>
+                                    <span className=""></span>
+                                    <FaEdit style={{ size: 17, marginRight: 5 }} />
+                                    Nouveaux paiements
+                                </div>
 
-                            <span onClick={() => this.allPaiements()} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${this.props.all_paiements ? "select-no-border-bold" : ""}`}>
-                                <span className="divider-menu-topbar"></span>
-                                <FaMoneyCheck style={{ size: 17, marginRight: 5 }} />
-                                Paiements scolaires</span>
+                                <div onClick={() => this.allPaiements()} className={`${this.props.all_paiements ? "underline" : ""} cursor-pointer text-primary-50 border-l text-lg ml-5 border-gray-50 dark:border-gray-20 pl-4 flex items-center`}>
+                                    <span className=""></span>
+                                    <FaMoneyCheck style={{ size: 17, marginRight: 5 }} />
+                                    Paiements scolaires
+                                </div>
 
-                            <span onClick={() => this.fraisDiversPaiements()} style={{ color: 'rgba(0, 80, 180)' }} className={`select-no-border ${this.props.paiements_frais_divers ? "select-no-border-bold" : ""}`}>
-                                <span className="divider-menu-topbar"></span>
-                                <FaMoneyBillWave style={{ size: 17, marginRight: 5 }} />
-                                Paiements frais divers</span>
+                                <div onClick={() => this.fraisDiversPaiements()} className={`${this.props.paiements_frais_divers ? "underline" : ""} cursor-pointer text-primary-50 border-l ml-5 text-lg border-gray-50 dark:border-gray-20 pl-4 flex items-center`}>
+                                    <span className=""></span>
+                                    <FaMoneyBillWave style={{ size: 17, marginRight: 5 }} />
+                                    Paiements frais divers
+                                </div>
+                            </div>
 
                             {this.props.new_paiement ?
                                 <NewPaiements /> : null}
