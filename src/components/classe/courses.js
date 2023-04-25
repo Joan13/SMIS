@@ -368,61 +368,44 @@ class Courses extends Component {
         }
     }
 
-    componentDidMount() {
-    }
-
     render() {
         return (
             <div style={{ marginBottom: 50, marginRight: 10 }} className="div-courses">
                 {!this.props.loading_footer ?
                     <div>
-                        <div style={{
-                            marginTop: 10,
-                            marginBottom: -20
-                        }}>
-                            <span style={{
+                        <div className='flex items-center mt-5' style={{marginBottom: -40}}>
+                            <div style={{
                                 fontSize: 15,
-                                fontWeight: 'bold'
-                            }}>Cours </span>
-                            <span
+                                fontWeight: 'bold',
+                            }}>Cours </div>
+                            <div
                                 onClick={() => this.setState({ enter_new_course: true })}
-                                style={{
-                                    display: 'inline-block',
-                                    backgroundColor: 'rgb(0,80,180)',
-                                    padding: 5,
-                                    cursor: 'pointer',
-                                    borderRadius: 20,
-                                    paddingBottom: 3,
-                                    marginLeft: 10
-                                }}>
+                                className='bg-primary-50 rounded-full h-9 w-9 flex items-center justify-center ml-5'>
                                 <FiPlus color='white' size={15} />
-                            </span>
+                            </div>
                         </div>
                         <div className="menu-float-right-normal">
-                            <span style={{ color: 'rgb(0,80,180)', cursor: 'pointer' }} onClick={() => this.state.toggle_action ? this.setState({ toggle_action: false }) : this.setState({ toggle_action: true })}>Supprimer un cours</span>
+                            <span className='text-primary-50' style={{ cursor: 'pointer' }} onClick={() => this.state.toggle_action ? this.setState({ toggle_action: false }) : this.setState({ toggle_action: true })}>Supprimer un cours</span>
                         </div>
-                        <table className="full-table-liste-markss" style={{
-                            marginTop: 0
-                        }}>
+                        <table className="full-table-liste-marksssss w-full">
                             <thead>
                                 <tr>
 
-                                    <th style={{ width: 30, paddingLeft: 10, paddingRight: 10 }}>No</th>
-                                    <th style={{ textAlign: 'left', paddingLeft: 10 }}>Intitulé du cours</th>
-                                    <th style={{ width: 100 }}>Maxima</th>
-                                    <th style={{ width: 100 }}>Ex. ?</th>
+                                    <th className='border pt-2 pb-2 border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 30, paddingLeft: 10, paddingRight: 10 }}>No</th>
+                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'left', paddingLeft: 10 }}>Intitulé du cours</th>
+                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 100 }}>Maxima</th>
+                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 100 }}>Ex. ?</th>
                                     {this.state.toggle_action ?
-                                        <th>Option</th> : null}
-
+                                        <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20'>Option</th> : null}
                                 </tr>
                             </thead>
                             {this.props.classe.data.courses.map((course, index) => (
                                 <tbody key={index}>
                                     <tr key={index + 1} style={{ backgroundColor: index % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
-                                        <td style={{ paddingLeft: 10, paddingRight: 10 }}>
+                                        <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10, paddingRight: 10 }}>
                                             {index + 1}
                                         </td>
-                                        <td style={{ paddingLeft: 10 }}>
+                                        <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>
                                             <input
                                                 onChange={(text) => this.setState({ text_course_name: text.target.value, being_modified: course.course_id })}
                                                 placeholder={course.course_name}
@@ -434,13 +417,13 @@ class Courses extends Component {
                                                     onClick={(text) => this.modify_course_name(course.course_id, course.total_marks)}
                                                 >Enregistrer</button> : null}
                                         </td>
-                                        <td style={{ width: 50 }}>
+                                        <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50 }}>
                                             <input
                                                 onChange={(text) => this.modify_course(course.course_id, course.course_name, text.target.value)}
                                                 value={course.total_marks}
                                                 className="input-no-borderr" />
                                         </td>
-                                        <td style={{ paddingLeft: 10 }}>
+                                        <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>
                                             <button
                                                 className={`button-primary-small-normal ${course.considered == "5" ? "" : "button-primary-small"}`}
                                                 onClick={(text) => this.course_ex_bulletin(course.course_id, "")}
@@ -452,7 +435,7 @@ class Courses extends Component {
                                             >Non</button>
                                         </td>
                                         {this.state.toggle_action ?
-                                            <td style={{ textAlign: 'center' }}>
+                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
                                                 <span
                                                     onClick={() => this.delete_course_ask(course.course_id)}
                                                     className="menu-float-rightt">Supprimer</span>
@@ -492,14 +475,14 @@ class Courses extends Component {
                                         <table style={{ display: 'inline-block' }}>
                                             <tbody>
                                                 <tr>
-                                                    <td>
+                                                    <td className='border border-gray-50 dark:border-gray-20'>
                                                         <input
                                                             onChange={(text) => this.setState({ new_course_name: text.target.value })}
                                                             placeholder="Intitulé du cours"
                                                             value={this.state.new_course_name}
                                                             className="input-normall" />
                                                     </td>
-                                                    <td>
+                                                    <td className='border border-gray-50 dark:border-gray-20'>
                                                         <input
                                                             onChange={(text) => this.setState({ maxima_new_course: text.target.value })}
                                                             type='number'

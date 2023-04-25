@@ -91,12 +91,18 @@ const initialState = {
     marks_modified: false,
     echecs: [],
     theme: 'light',
+    today: new Date().getFullYear() + "-" + parseInt(new Date().getMonth() + 1) + "-" + new Date().getDate(),
+    makuta_day: 0,
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_MODAL_PAIEMENT_CATEGORIES":
             return { ...state, modal_paiement_categories: action.payload }
+            case "SET_TODAY":
+                return { ...state, today: action.payload }
+                case "SET_MAKUTA_DAY":
+                    return { ...state, makuta_day: action.payload }
         case "SET_THEME":
             return { ...state, theme: action.payload }
         case "SET_ECHECS":

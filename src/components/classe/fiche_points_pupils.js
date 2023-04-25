@@ -82,11 +82,11 @@ const FichesPointsPupils = () => {
             let BaseURL = http + url_server + "/yambi_class_SMIS/API/edit_marks.php";
 
             fetch(BaseURL, {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        marks: marks_edit
-                    })
+                method: 'POST',
+                body: JSON.stringify({
+                    marks: marks_edit
                 })
+            })
                 .then((response) => response.json())
                 .then((response) => {
                     if (response.success === '1' || response.success === '2') {
@@ -133,82 +133,82 @@ const FichesPointsPupils = () => {
         dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: menu_left });
     }
 
-    const per=()=>{
+    const per = () => {
         let sp = '';
-        if(periode === 'P1') {
+        if (periode === 'P1') {
             sp = 1;
         }
-        else if(periode === 'P2'){ 
+        else if (periode === 'P2') {
             sp = 2;
         }
-        else if(periode === 'EX1') { 
+        else if (periode === 'EX1') {
             sp = 10;
         }
-        else if(periode === 'P3'){
+        else if (periode === 'P3') {
             sp = 3;
         }
-        else if(periode === 'P4') {
+        else if (periode === 'P4') {
             sp = 4;
         }
-        else if(periode === 'EX2') {
+        else if (periode === 'EX2') {
             sp = 11;
-        } 
+        }
         else {
 
         }
 
-                return sp;
+        return sp;
     }
 
     const handle_change = (pupill, course, period, marks, modified) => {
-            let sp = '';
-            if(period === 'P1') 
-                sp = 1;
-            if(period === 'P2') 
-                sp = 2;
-            if(period === 'EX1') 
-                sp = 10;
-            if(period === 'P3')
-                sp = 3;
-            if(period === 'P4')
-                sp = 4;
-            if(period === 'EX2')
-                sp = 11;
+        let sp = '';
+        if (period === 'P1')
+            sp = 1;
+        if (period === 'P2')
+            sp = 2;
+        if (period === 'EX1')
+            sp = 10;
+        if (period === 'P3')
+            sp = 3;
+        if (period === 'P4')
+            sp = 4;
+        if (period === 'EX2')
+            sp = 11;
 
-            let totall = findCourse(course).total_marks;
+        let totall = findCourse(course).total_marks;
 
-            if(sp === 10 || sp === 11)
-                totall = parseInt(findCourse(course).total_marks*2);
-    
-            let markks = {};
-            let global_marks = [];
-            global_marks = marks_edit;
-            markks.id = pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period);
-            markks.pupil_id = pupill.pupil.pupil_id;
-            markks.course_id = course;
-            markks.period = sp;
-            markks.school_year = pupill.pupil.school_year;
-            markks.total_marks = findCourse(course).total_marks;
-            markks.modified = modified;
-            markks.marks = marks;
-    
-            const main_marks = global_marks.filter(marks => marks.id === pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period));
-            if (main_marks.length !== 0) {
-                main_marks[0].marks = marks;
-                setMarks_edit(global_marks);
-            } else {
-                global_marks = [...global_marks, markks];
-                setMarks_edit(global_marks);
+        if (sp === 10 || sp === 11)
+            totall = parseInt(findCourse(course).total_marks * 2);
+
+        let markks = {};
+        let global_marks = [];
+        global_marks = marks_edit;
+        markks.id = pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period);
+        markks.pupil_id = pupill.pupil.pupil_id;
+        markks.course_id = course;
+        markks.period = sp;
+        markks.school_year = pupill.pupil.school_year;
+        markks.total_marks = findCourse(course).total_marks;
+        markks.modified = modified;
+        markks.marks = marks;
+
+        const main_marks = global_marks.filter(marks => marks.id === pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period));
+        if (main_marks.length !== 0) {
+            main_marks[0].marks = marks;
+            setMarks_edit(global_marks);
+        } else {
+            global_marks = [...global_marks, markks];
+            setMarks_edit(global_marks);
+        }
+
+        if (parseInt(marks) > totall || parseInt(marks) < 0) {
+            if (errors.find(error => error === pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (parseInt(pupill.pupil.pupil_id) + course + period)) === undefined) {
+                setErrors([...errors, pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period)]);
             }
-    
-            if (parseInt(marks) > totall || parseInt(marks) < 0) {
-                if(errors.find(error => error === pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (parseInt(pupill.pupil.pupil_id) + course + period)) === undefined) {
-                    setErrors([...errors, pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period)]);
-                }
-                
-            } else {
-                setErrors(errors.filter((element) => !(pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period)).includes(element)));
-            }
+
+        } else {
+            setErrors(errors.filter((element) => !(pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period)).includes(element)));
+        }
     }
 
     const show_periode = (period, semester) => {
@@ -234,22 +234,22 @@ const FichesPointsPupils = () => {
     }
 
     const delete_marks = (pupil, period) => {
-            let BaseURL = http + url_server + "/yambi_class_SMIS/API/delete_marks.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/delete_marks.php";
 
-            fetch(BaseURL, {
-                method: 'POST',
-                body: JSON.stringify({
-                    pupil_id: pupil,
-                    periode: period
-                })
+        fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                pupil_id: pupil,
+                periode: period
             })
-                .then((response) => response.json())
-                .then((response) => {
-                    open_classe();
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                open_classe();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     useEffect(() => {
@@ -266,10 +266,10 @@ const FichesPointsPupils = () => {
                             <tr>
                                 <td valign="top">
 
-                                    {pupil !== null ? 
-                                    <strong style={{ fontSize: 20 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</strong>
-                                    :
-                                    <span>Cliquez sur le nom d'un élève pour commencer</span> 
+                                    {pupil !== null ?
+                                        <strong style={{ fontSize: 20 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</strong>
+                                        :
+                                        <span>Cliquez sur le nom d'un élève pour commencer</span>
                                     }
 
                                     <div className="float-menu-right">
@@ -291,51 +291,50 @@ const FichesPointsPupils = () => {
                                             <option value="S1">Premier semestre</option>
                                             <option value="S2">Deuxième semestre</option>
                                         </select>
-
                                     </div>
 
-                                    <table className="full-table-liste-markss" style={{ marginTop: 10, width: '100%' }}>
+                                    <table className="full-table-liste-marksssss" style={{ marginTop: 10, width: '100%' }}>
                                         <thead>
                                             <tr>
-                                                <th style={{ width: 30, textAlign: 'center' }}>No</th>
-                                                <th style={{ paddingLeft: 10, textAlign: 'left' }}>Noms des élèves</th>
+                                                <th className='border border-gray-50 dark:border-gray-20 pt-2 pb-2 bg-background-50 dark:bg-background-20' style={{ width: 30, textAlign: 'center' }}>No</th>
+                                                <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }}>Noms des élèves</th>
                                                 {show_periode("P1", "S1") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>P1</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P1</th> : null}
 
                                                 {show_periode("P2", "S1") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>P2</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P2</th> : null}
 
                                                 {show_periode("EX1", "S1") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>EX1</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>EX1</th> : null}
 
                                                 {show_periode("S1", "S1") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>S1</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>S1</th> : null}
 
                                                 {show_periode("P3", "S2") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>P3</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P3</th> : null}
 
                                                 {show_periode("P4", "S2") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>P4</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P4</th> : null}
 
                                                 {show_periode("EX2", "S2") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>EX2</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>EX2</th> : null}
 
                                                 {show_periode("S2", "S2") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>S2</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>S2</th> : null}
 
                                                 {show_periode("*", "*") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>TOTAL</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>TOTAL</th> : null}
                                             </tr>
                                         </thead>
                                         {classe.courses.map((course, index) => {
                                             return (
                                                 <tbody key={index}>
                                                     <tr style={{ backgroundColor: index % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
-                                                        <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                        <td style={{ paddingLeft: 10 }}>{course.course_name + " / " + course.total_marks}</td>
+                                                        <td className='border border-gray-50 dark:border-gray-20' style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
+                                                        <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{course.course_name + " / " + course.total_marks}</td>
 
                                                         {show_periode("P1", "S1") ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + (parseInt(pupil.pupil.pupil_id) + course.course_id + 'P1')) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course.course_id, 1)}
@@ -344,7 +343,7 @@ const FichesPointsPupils = () => {
                                                             </td> : null}
 
                                                         {show_periode("P2", "S1") ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + (parseInt(pupil.pupil.pupil_id) + course.course_id + 'P2')) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course.course_id, 2)}
@@ -353,7 +352,7 @@ const FichesPointsPupils = () => {
                                                             </td> : null}
 
                                                         {show_periode("EX1", "S1") ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <input className={`input-marks ${errors.find(error => error === find_error(pupil, course.course_id, 'EX1')) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course.course_id, 10)}
@@ -362,12 +361,12 @@ const FichesPointsPupils = () => {
                                                             </td> : null}
 
                                                         {show_periode("S1", "S1") ?
-                                                            <td style={{ width: 50, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }}>
                                                                 {parseInt(render_period_marks(pupil.marks, course.course_id, 1)) + parseInt(render_period_marks(pupil.marks, course.course_id, 2)) + parseInt(render_period_marks(pupil.marks, course.course_id, 10))}
                                                             </td> : null}
 
                                                         {show_periode("P3", "S2") ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + (parseInt(pupil.pupil.pupil_id) + course.course_id + 'P3')) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course.course_id, 3)}
@@ -376,7 +375,7 @@ const FichesPointsPupils = () => {
                                                             </td> : null}
 
                                                         {show_periode("P4", "S2") ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + (parseInt(pupil.pupil.pupil_id) + course.course_id + 'P4')) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course.course_id, 4)}
@@ -385,7 +384,7 @@ const FichesPointsPupils = () => {
                                                             </td> : null}
 
                                                         {show_periode("EX2", "S2") ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + (parseInt(pupil.pupil.pupil_id) + course.course_id + 'EX2')) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course.course_id, 11)}
@@ -394,12 +393,12 @@ const FichesPointsPupils = () => {
                                                             </td> : null}
 
                                                         {show_periode("S2", "S2") ?
-                                                            <td style={{ width: 50, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }}>
                                                                 {parseInt(render_period_marks(pupil.marks, course.course_id, 3)) + parseInt(render_period_marks(pupil.marks, course.course_id, 4)) + parseInt(render_period_marks(pupil.marks, course.course_id, 11))}
                                                             </td> : null}
 
                                                         {show_periode("*", "*") ?
-                                                            <td style={{ width: 50, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }}>
                                                                 {parseInt(render_period_marks(pupil.marks, course.course_id, 3)) + parseInt(render_period_marks(pupil.marks, course.course_id, 4)) + parseInt(render_period_marks(pupil.marks, course.course_id, 11)) + parseInt(render_period_marks(pupil.marks, course.course_id, 1)) + parseInt(render_period_marks(pupil.marks, course.course_id, 2)) + parseInt(render_period_marks(pupil.marks, course.course_id, 10))}
                                                             </td> : null}
                                                     </tr>
@@ -417,25 +416,25 @@ const FichesPointsPupils = () => {
                                     </strong><br />
 
                                     <h3>Liste des élèves</h3>
-                                {classe.data.pupils.map((pupill, index) => (
-                                    <span onClick={() => {
-                                        setPupil(pupill);
-                                        setErrors([]);
-                                        setMarks_edit([]);
-                                    }} 
-                                    className={`list-pupils ${pupil !== null ? parseInt(pupill.pupil.pupil_id) === parseInt(pupil.pupil.pupil_id) ? "list-pupils-selected" : "":""}`} key={pupill.pupil.pupil_id}>{index + 1} {pupill.pupil.first_name + " " + pupill.pupil.second_name + " " + pupill.pupil.last_name}</span>
-                                ))}
+                                    {classe.data.pupils.map((pupill, index) => (
+                                        <span onClick={() => {
+                                            setPupil(pupill);
+                                            setErrors([]);
+                                            setMarks_edit([]);
+                                        }}
+                                            className={`list-pupils ${pupil !== null ? parseInt(pupill.pupil.pupil_id) === parseInt(pupil.pupil.pupil_id) ? "list-pupils-selected" : "" : ""}`} key={pupill.pupil.pupil_id}>{index + 1} {pupill.pupil.first_name + " " + pupill.pupil.second_name + " " + pupill.pupil.last_name}</span>
+                                    ))}
                                 </td>
                             </tr>
                         </tbody>
                     </table>
 
-                                     {periode_classique() ? 
-                                     <div style={{float:'left'}}>
-                                     <button
-                                     onClick={() => delete_marks(pupil.pupil.pupil_id, per())}
-                                     >Supprimer les points<br/>de la période courante<br/> pour l'élève</button>
-                                 </div>:null}
+                    {periode_classique() ?
+                        <div style={{ float: 'left' }}>
+                            <button
+                                onClick={() => delete_marks(pupil.pupil.pupil_id, per())}
+                            >Supprimer les points<br />de la période courante<br /> pour l'élève</button>
+                        </div> : null}
 
                     {marks_edit.lengh !== 0 ?
                         <div style={{ textAlign: 'right', paddingRight: 7 }}>
@@ -454,7 +453,7 @@ const FichesPointsPupils = () => {
                     <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
                     Chargement de la fiche des points...
                 </div>}
-                {/* <button className='button-enter-marks' onClick={() => edit_marks()}>Finir et envoyer</button> */}
+            {/* <button className='button-enter-marks' onClick={() => edit_marks()}>Finir et envoyer</button> */}
         </div>
     )
 }

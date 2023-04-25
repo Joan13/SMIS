@@ -129,48 +129,48 @@ class ListeNomminative extends React.Component {
                     </>}
 
                 <div id="nomminative" style={{ marginTop: 0 }}>
-                    <table style={{ width: '100%' }}>
+                    {/* <table style={{ width: '100%' }}>
                         <tbody>
                             <tr>
-                                <td valign="top">
+                                <td valign="top"> */}
                                     <div>
                                         <strong>{(this.props.autres.school_name).toUpperCase()}</strong><br />
                                         <strong>{this.props.autres.school_bp}</strong><br />
                                         <strong>Année scolaire : {this.props.annee_scolaire.year_name}</strong>
                                     </div>
-                                    <table className="full-table-liste">
+                                    <table className="w-full" style={{marginTop:-40}}>
                                         <caption>
-                                            <h4>
+                                            <h4 className='font-bold'>
                                                 LISTE NOMMINATIVE<br />
                                                 {this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.cycle_id + " " + this.props.classe.order_id}
                                             </h4>
                                         </caption>
                                         <thead>
                                             <tr>
-                                                <th style={{ width: 30, textAlign: 'center' }}>No</th>
-                                                <th style={{ paddingLeft: 10, textAlign: 'left' }}>Nom</th>
-                                                <th style={{ paddingLeft: 10, textAlign: 'left' }}>Post-nom</th>
-                                                <th style={{ paddingLeft: 10, textAlign: 'left' }}>Prénom</th>
-                                                <th style={{ width: 50, textAlign: 'center' }}>Sexe</th>
+                                                <th className='border pt-2 pb-2 border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 30, textAlign: 'center' }}>No</th>
+                                                <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }}>Nom</th>
+                                                <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }}>Post-nom</th>
+                                                <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }}>Prénom</th>
+                                                <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>Sexe</th>
                                             </tr>
                                         </thead>
                                         {this.props.classe.pupils.map((pupil, index) => (
                                             <tbody key={index}>
                                                 <tr onClick={() => this.find_pupil(pupil)}>
-                                                    <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                    <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name.toUpperCase()}</td>
-                                                    <td style={{ paddingLeft: 10 }}>{pupil.pupil.second_name.toUpperCase()}</td>
-                                                    <td style={{ paddingLeft: 10 }}>{pupil.pupil.last_name.toUpperCase()}</td>
-                                                    <td style={{ width: 50, textAlign: 'center' }}>{pupil.pupil.gender === "0" ? "F" : "M"} </td>
+                                                    <td className='border border-gray-50 dark:border-gray-20' style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
+                                                    <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name.toUpperCase()}</td>
+                                                    <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.second_name.toUpperCase()}</td>
+                                                    <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.last_name.toUpperCase()}</td>
+                                                    <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>{pupil.pupil.gender === "0" ? "F" : "M"} </td>
                                                 </tr>
                                             </tbody>
                                         )
                                         )}
                                     </table>
-                                </td>
+                                {/* </td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table> */}
                 </div>
 
                 {this.state.modal_view ?

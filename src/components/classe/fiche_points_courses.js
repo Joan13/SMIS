@@ -219,48 +219,48 @@ const FichesPointsCourses = () => {
 
                                     </div>
 
-                                    <table className="full-table-liste-markss" style={{ marginTop: 10, width: '100%' }}>
+                                    <table className="full-table-liste-marksssss" style={{ marginTop: 10, width: '100%' }}>
                                         <thead>
                                             <tr>
-                                                <th style={{ width: 30, textAlign: 'center' }}>No</th>
-                                                <th style={{ paddingLeft: 10, textAlign: 'left' }}>Noms des élèves</th>
+                                                <th className='border border-gray-50 pt-2 pb-2 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 30, textAlign: 'center' }}>No</th>
+                                                <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }}>Noms des élèves</th>
                                                 {show_periode("P1", "S1") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>P1</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P1</th> : null}
 
                                                 {show_periode("P2", "S1") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>P2</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P2</th> : null}
 
                                                 {show_periode("EX1", "S1") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>EX1</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>EX1</th> : null}
 
                                                 {show_periode("S1", "S1") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>S1</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>S1</th> : null}
 
                                                 {show_periode("P3", "S2") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>P3</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P3</th> : null}
 
                                                 {show_periode("P4", "S2") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>P4</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P4</th> : null}
 
                                                 {show_periode("EX2", "S2") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>EX2</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>EX2</th> : null}
 
                                                 {show_periode("S2", "S2") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>S2</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>S2</th> : null}
 
                                                 {show_periode("*", "*") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>TOTAL</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>TOTAL</th> : null}
                                             </tr>
                                         </thead>
                                         {classe.data.pupils.map((pupil, index) => {
                                             return (
                                                 <tbody key={index}>
                                                     <tr style={{ backgroundColor: index % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
-                                                        <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                        <td className='border border-gray-50 dark:border-gray-20' style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
+                                                        <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
 
                                                         {show_periode("P1", "S1") ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 1)) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     // value={render_period_marks(pupil.marks, course_id, 1)}
@@ -270,7 +270,7 @@ const FichesPointsCourses = () => {
                                                             </td> : null}
 
                                                         {show_periode("P2", "S1") ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 2)) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course_id, 2)}
@@ -279,7 +279,7 @@ const FichesPointsCourses = () => {
                                                             </td> : null}
 
                                                         {show_periode("EX1", "S1") ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 10)) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course_id, 10)}
@@ -288,12 +288,12 @@ const FichesPointsCourses = () => {
                                                             </td> : null}
 
                                                         {show_periode("S1", "S1") ?
-                                                            <td style={{ width: 50, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }}>
                                                                 {parseInt(render_period_marks(pupil.marks, course_id, 1)) + parseInt(render_period_marks(pupil.marks, course_id, 2)) + parseInt(render_period_marks(pupil.marks, course_id, 10))}
                                                             </td> : null}
 
                                                         {show_periode("P3", "S2") ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 3)) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course_id, 3)}
@@ -302,7 +302,7 @@ const FichesPointsCourses = () => {
                                                             </td> : null}
 
                                                         {show_periode("P4", "S2") ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 4)) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course_id, 4)}
@@ -311,7 +311,7 @@ const FichesPointsCourses = () => {
                                                             </td> : null}
 
                                                         {show_periode("EX2", "S2") ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 11)) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course_id, 11)}
@@ -320,12 +320,12 @@ const FichesPointsCourses = () => {
                                                             </td> : null}
 
                                                         {show_periode("S2", "S2") ?
-                                                            <td style={{ width: 50, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }}>
                                                                 {parseInt(render_period_marks(pupil.marks, course_id, 3)) + parseInt(render_period_marks(pupil.marks, course_id, 4)) + parseInt(render_period_marks(pupil.marks, course_id, 11))}
                                                             </td> : null}
 
                                                         {show_periode("*", "*") ?
-                                                            <td style={{ width: 50, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }}>
                                                                 {parseInt(render_period_marks(pupil.marks, course_id, 3)) + parseInt(render_period_marks(pupil.marks, course_id, 4)) + parseInt(render_period_marks(pupil.marks, course_id, 11)) + parseInt(render_period_marks(pupil.marks, course_id, 1)) + parseInt(render_period_marks(pupil.marks, course_id, 2)) + parseInt(render_period_marks(pupil.marks, course_id, 10))}
                                                             </td> : null}
                                                     </tr>

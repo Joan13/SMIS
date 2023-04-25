@@ -343,7 +343,7 @@ const FichesPoints = () => {
                     </span><br /><br />
 
                     <div id="fiche-points-print">
-                        <table className="fiche-points" style={{ width: '100%' }}>
+                        <table className="fiche-pointsdede" style={{ width: '100%' }}>
                             <caption>
                                 <div style={{ textAlign: 'left', marginBottom: -30 }}>
                                     <strong>{autres.school_name.toUpperCase()}</strong><br />
@@ -357,13 +357,13 @@ const FichesPoints = () => {
                             </caption>
                             <thead>
                                 <tr>
-                                    <th style={{ width: 30, textAlign: 'center' }}>No</th>
-                                    <th style={{ paddingLeft: 10, textAlign: 'left' }}>Noms des élèves</th>
+                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 30, textAlign: 'center' }}>No</th>
+                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }}>Noms des élèves</th>
 
-                                    {classe.data.courses.map((course, index) => (<th contentEditable style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} className="vertical-course" key={index}>{total_marks(course.total_marks)} / {course.course_name.toUpperCase().substr(0, 25)}</th>))}
-                                    <th contentEditable style={{ paddingLeft: 15, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} className="vertical-course" >TOTAL</th>
-                                    <th contentEditable style={{ paddingLeft: 15, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} className="vertical-course" >MAXIMA</th>
-                                    <th contentEditable style={{ paddingLeft: 15, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} className="vertical-course"  >POURCENTAGE</th>
+                                    {classe.data.courses.map((course, index) => (<th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} key={index}>{total_marks(course.total_marks)} / {course.course_name.toUpperCase().substr(0, 25)}</th>))}
+                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 15, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }}>TOTAL</th>
+                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 15, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }}>MAXIMA</th>
+                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 15, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }}  >POURCENTAGE</th>
                                 </tr>
                             </thead>
 
@@ -371,22 +371,22 @@ const FichesPoints = () => {
                                 return (
                                     <tbody key={index}>
                                         <tr style={{ backgroundColor: index % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
-                                            <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                            <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
+                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
 
                                             {classe.data.courses.map((course, index) => (
-                                                <td key={index} style={{ textAlign: 'center', minWidth: 32 }}>
+                                                <td className='border border-gray-50 dark:border-gray-20' key={index} style={{ textAlign: 'center', minWidth: 32 }}>
                                                     {render_period_marks(pupil.marks, course.course_id)}
                                                 </td>
                                             ))}
 
-                                            <td style={{ width: 40, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
+                                            <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 40, textAlign: 'center', fontWeight: 'bold' }}>
                                                 {render_period_main_marks(pupil.marks)}
                                             </td>
-                                            <td style={{ width: 40, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
+                                            <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 40, textAlign: 'center', fontWeight: 'bold' }}>
                                                 {maxima(periode)}
                                             </td>
-                                            <td style={{ width: 50, textAlign: 'center', fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.3)' }}>
+                                            <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }}>
                                                 {render_period_pourcentage(pupil.marks)}
                                             </td>
                                         </tr>

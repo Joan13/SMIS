@@ -83,20 +83,20 @@ const SoldeTrimesters = () => {
                                     <strong>{autres.school_bp}</strong><br />
                                     <strong>Année scolaire : {annee_scolaire.year_name}</strong>
                                 </div>
-                                <table className="full-table-liste">
+                                <table className="full-table-listeeeeee w-full" style={{marginTop: -40}}>
                                     <caption>
-                                        <h4>
+                                        <h4 className='font-bold'>
                                             FICHE DES INSOLVABLES T{trimester}<br />
                                             {classe.class_id + " " + classe.section_id + " " + classe.cycle_id + " " + classe.order_id}
                                         </h4>
                                     </caption>
                                     <thead>
                                         <tr>
-                                            <th style={{ width: 30, textAlign: 'center' }} rowSpan={2}>No</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Nom</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Post-nom</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Prénom</th>
-                                            <th style={{ textAlign: 'center' }}>Soldes</th>
+                                            <th className='border pt-2 pb-2 border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 30, textAlign: 'center' }}>No</th>
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }}>Nom</th>
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }}>Post-nom</th>
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }}>Prénom</th>
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>Soldes</th>
                                         </tr>
                                     </thead>
                                     {classe.data.pupils.map((pupil, index) => {
@@ -106,32 +106,32 @@ const SoldeTrimesters = () => {
                                                     {trimester === 1 ?
                                                         parseInt(pupil.soldes_paiements.solde1) !== 0 ?
                                                             <>
-                                                                <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name.toUpperCase()}</td>
-                                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.second_name.toUpperCase()}</td>
-                                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.last_name.toUpperCase()}</td>
-                                                                <td style={{ width: 50, textAlign: 'center' }}>{pupil.soldes_paiements.solde1} </td>
+                                                                <td className='border border-gray-50 dark:border-gray-20' style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
+                                                                <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name.toUpperCase()}</td>
+                                                                <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.second_name.toUpperCase()}</td>
+                                                                <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.last_name.toUpperCase()}</td>
+                                                                <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>{pupil.soldes_paiements.solde1} </td>
                                                             </>
                                                             : null : null}
 
                                                     {trimester === 2 ? parseInt(pupil.soldes_paiements.solde2) !== 0 ?
                                                         <>
-                                                            <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name.toUpperCase()}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{pupil.pupil.second_name.toUpperCase()}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{pupil.pupil.last_name.toUpperCase()}</td>
-                                                            <td style={{ width: 50, textAlign: 'center' }}>{pupil.soldes_paiements.solde2} </td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name.toUpperCase()}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.second_name.toUpperCase()}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.last_name.toUpperCase()}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>{pupil.soldes_paiements.solde2} </td>
                                                         </>
 
                                                         : null : null}
 
                                                     {trimester === 3 ? parseInt(pupil.soldes_paiements.solde3) !== 0 ?
                                                         <>
-                                                            <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name.toUpperCase()}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{pupil.pupil.second_name.toUpperCase()}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{pupil.pupil.last_name.toUpperCase()}</td>
-                                                            <td style={{ width: 50, textAlign: 'center' }}>{pupil.soldes_paiements.solde3} </td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name.toUpperCase()}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.second_name.toUpperCase()}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.last_name.toUpperCase()}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>{pupil.soldes_paiements.solde3} </td>
                                                         </>
                                                         : null : null}
                                                 </tr>

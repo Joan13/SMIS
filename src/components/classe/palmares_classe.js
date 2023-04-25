@@ -331,86 +331,86 @@ class PalmaresPupils extends Component {
                             <div>
                                 <strong>{this.props.autres.school_name}</strong><br />
                                 <strong>{this.props.autres.school_bp}</strong><br />
-                                <strong>{this.props.autres.school_commune}</strong>
+                                {/* <strong>{this.props.autres.school_commune}</strong> */}
                             </div>
 
-                            <div className="float-right-div">
+                            <div className="float-right-div" style={{marginTop:-20}}>
                                 <strong>{this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.order_id}</strong><br />
                                 <strong>Année scolaire : {this.props.autres.annee}</strong>
                             </div>
-                            <h3>PALMARÈS DES RÉSULTATS {this.state.periode_full}</h3>
-                            <table className="full-table-liste-markss" style={{ marginTop: 10 }}>
+                            <h3 className='text-lg font-bold'>PALMARÈS DES RÉSULTATS {this.state.periode_full}</h3>
+                            <table className="full-table-liste-markssdde w-full" style={{ marginTop: 10 }}>
                                 <thead>
                                     <tr>
-                                        <th rowSpan="2" style={{ width: 30, textAlign: 'center' }}>No</th>
-                                        <th rowSpan="2" style={{ paddingLeft: 10, textAlign: 'left' }}>Noms de l'élève</th>
+                                        <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' rowSpan="2" style={{ width: 30, textAlign: 'center' }}>No</th>
+                                        <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' rowSpan="2" style={{ paddingLeft: 10, textAlign: 'left' }}>Noms de l'élève</th>
                                         {this.state.periode === "1" ?
-                                            <th colSpan="2" style={{ textAlign: 'center' }}>P1</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' colSpan="2" style={{ textAlign: 'center' }}>P1</th> : null}
 
                                         {this.state.periode === "2" ?
-                                            <th colSpan="2" style={{ textAlign: 'center' }}>P2</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' colSpan="2" style={{ textAlign: 'center' }}>P2</th> : null}
 
                                         {this.state.periode === "10" ?
-                                            <th colSpan="2" style={{ textAlign: 'center' }}>EX1</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' colSpan="2" style={{ textAlign: 'center' }}>EX1</th> : null}
 
                                         {this.state.periode === "40" ?
-                                            <th colSpan="2" style={{ textAlign: 'center' }}>S1</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' colSpan="2" style={{ textAlign: 'center' }}>S1</th> : null}
 
                                         {this.state.periode === "3" ?
-                                            <th colSpan="2" style={{ textAlign: 'center' }}>P3</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' colSpan="2" style={{ textAlign: 'center' }}>P3</th> : null}
 
                                         {this.state.periode === "4" ?
-                                            <th colSpan="2" style={{ textAlign: 'center' }}>P4</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' colSpan="2" style={{ textAlign: 'center' }}>P4</th> : null}
 
                                         {this.state.periode === "11" ?
-                                            <th colSpan="2" style={{ textAlign: 'center' }}>EX2</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' colSpan="2" style={{ textAlign: 'center' }}>EX2</th> : null}
 
                                         {this.state.periode === "50" ?
-                                            <th colSpan="2" style={{ textAlign: 'center' }}>S2</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' colSpan="2" style={{ textAlign: 'center' }}>S2</th> : null}
 
                                         {this.state.periode === "12" ?
-                                            <th colSpan="2" style={{ textAlign: 'center' }}>TOTAL</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' colSpan="2" style={{ textAlign: 'center' }}>TOTAL</th> : null}
                                     </tr>
                                     <tr>
                                         {this.state.periode === "1" ?
-                                            <th style={{ textAlign: 'center' }}>%</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>%</th> : null}
                                         {this.state.periode === "1" ?
-                                            <th style={{ textAlign: 'center' }}>Place</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>Place</th> : null}
 
                                         {this.state.periode === "2" ?
-                                            <th style={{ textAlign: 'center' }}>%</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>%</th> : null}
                                         {this.state.periode === "2" ?
-                                            <th style={{ textAlign: 'center' }}>Place</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>Place</th> : null}
 
                                         {this.state.periode === "10" ?
-                                            <th style={{ textAlign: 'center' }}>%</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>%</th> : null}
                                         {this.state.periode === "10" ?
-                                            <th style={{ textAlign: 'center' }}>Place</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>Place</th> : null}
 
                                         {this.state.periode === "40" ?
-                                            <th style={{ textAlign: 'center' }}>%</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>%</th> : null}
                                         {this.state.periode === "40" ?
-                                            <th style={{ textAlign: 'center' }}>Place</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>Place</th> : null}
 
                                         {this.state.periode === "3" ?
-                                            <th style={{ textAlign: 'center' }}>%</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>%</th> : null}
                                         {this.state.periode === "3" ?
-                                            <th style={{ textAlign: 'center' }}>Place</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>Place</th> : null}
 
                                         {this.state.periode === "4" ?
-                                            <th style={{ textAlign: 'center' }}>%</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>%</th> : null}
                                         {this.state.periode === "4" ?
-                                            <th style={{ textAlign: 'center' }}>Place</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>Place</th> : null}
 
                                         {this.state.periode === "11" ?
-                                            <th style={{ textAlign: 'center' }}>%</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>%</th> : null}
                                         {this.state.periode === "11" ?
-                                            <th style={{ textAlign: 'center' }}>Place</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>Place</th> : null}
 
                                         {this.state.periode === "50" ?
-                                            <th style={{ textAlign: 'center' }}>%</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>%</th> : null}
                                         {this.state.periode === "50" ?
-                                            <th style={{ textAlign: 'center' }}>Place</th> : null}
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>Place</th> : null}
                                     </tr>
                                 </thead>
                                 {this.state.periode === "1" ?
@@ -420,12 +420,12 @@ class PalmaresPupils extends Component {
                                                 return (
                                                     <tbody key={index}>
                                                         <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
-                                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                            <td style={{ textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
                                                                 {((this.render_period_main_marks(pupil.marks) * 100) / this.maxima()).toString().substr(0, 4)}
                                                             </td>
-                                                            <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                         </tr>
                                                     </tbody>
                                                 )
@@ -441,12 +441,12 @@ class PalmaresPupils extends Component {
                                                 return (
                                                     <tbody key={index}>
                                                         <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
-                                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                            <td style={{ textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
                                                                 {((this.render_period_main_marks(pupil.marks) * 100) / this.maxima()).toString().substr(0, 4)}
                                                             </td>
-                                                            <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                         </tr>
                                                     </tbody>
                                                 )
@@ -462,12 +462,12 @@ class PalmaresPupils extends Component {
                                                 return (
                                                     <tbody key={index}>
                                                         <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
-                                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                            <td style={{ textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
                                                                 {((this.render_period_main_marks(pupil.marks) * 100) / this.maxima(10)).toString().substr(0, 4)}
                                                             </td>
-                                                            <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                         </tr>
                                                     </tbody>
                                                 )
@@ -484,12 +484,12 @@ class PalmaresPupils extends Component {
                                                 return (
                                                     <tbody key={index}>
                                                         <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
-                                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                            <td style={{ textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
                                                                 {((parseInt(this.render_period_main_marks(pupil.marks) * 100) / this.maxima(40)).toString().substr(0, 4))}
                                                             </td>
-                                                            <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                         </tr>
                                                     </tbody>
                                                 )
@@ -510,12 +510,12 @@ class PalmaresPupils extends Component {
                                                     return (
                                                         <tbody key={index}>
                                                             <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
-                                                                <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                                <td style={{ textAlign: 'center' }}>
+                                                                <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                                <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
                                                                     {((this.render_period_main_marks(pupil.marks) * 100) / this.maxima(3)).toString().substr(0, 4)}
                                                                 </td>
-                                                                <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                                <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                             </tr>
                                                         </tbody>
                                                     )
@@ -524,12 +524,12 @@ class PalmaresPupils extends Component {
                                                 return (
                                                     <tbody key={index}>
                                                         <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
-                                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                            <td style={{ textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
                                                                 {((this.render_pupil_marks(pupil.pupil.pupil_id, 3) * 100) / this.maxima(3)).toString().substr(0, 4)}
                                                             </td>
-                                                            <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                         </tr>
                                                     </tbody>
                                                 )
@@ -545,12 +545,12 @@ class PalmaresPupils extends Component {
                                                 return (
                                                     <tbody key={index}>
                                                         <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
-                                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                            <td style={{ textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
                                                                 {((this.render_pupil_marks(pupil.pupil.pupil_id, 4) * 100) / this.maxima(4)).toString().substr(0, 4)}
                                                             </td>
-                                                            <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                         </tr>
                                                     </tbody>
                                                 )
@@ -566,12 +566,12 @@ class PalmaresPupils extends Component {
                                                 return (
                                                     <tbody key={index}>
                                                         <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
-                                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                            <td style={{ textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
                                                                 {((this.render_pupil_marks(pupil.pupil.pupil_id, 11) * 100) / this.maxima(11)).toString().substr(0, 4)}
                                                             </td>
-                                                            <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                         </tr>
                                                     </tbody>
                                                 )
@@ -588,12 +588,12 @@ class PalmaresPupils extends Component {
                                                 return (
                                                     <tbody key={index}>
                                                         <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
-                                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                            <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                            <td style={{ textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
                                                                 {((parseInt(this.render_pupil_marks_trim(pupil.pupil.pupil_id, '3', '4', '11')) * 100) / this.maxima(50)).toString().substr(0, 4)}
                                                             </td>
-                                                            <td style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                         </tr>
                                                     </tbody>
                                                 )

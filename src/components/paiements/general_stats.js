@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { home_redirect, http } from "../../global_vars";
 import Classes from "../../includes/classes";
 import MyChart from "./charts/global_charts";
+import PrintDocument from "../includes/print";
 
 let ff = 0;
 
@@ -169,21 +170,12 @@ const GeneralStatsCaisse = () => {
         <div>
             <div>
                 {!loading_stats ?
-                    <div style={{ float: 'right', }} className="flex mb-4 text-text-50">
-                        <span style={{ cursor: 'pointer', marginRight: 20 }} onClick={() => setFilters(!filters)}>FILTRER LES FICHES</span>
-
+                    <div style={{ float: 'right', }} className="flex items-center mb-4 text-text-50">
+                        <div style={{ cursor: 'pointer', marginRight: 20 }} onClick={() => setFilters(!filters)}>FILTRER LES FICHES</div>
                         {filters ?
-                        <div className="flex text-text-50 items-center">
-                        <FiPrinter /> <span onClick={() => printContent("filter-data")} style={{ fontWeight: 'bold', float: 'right' }}>
-                         IMPRIMER LA FICHE
-                       </span>
-                       </div>
-                    :
-                    <div  className="flex text-text-50 items-center">
-                    <FiPrinter /> <span onClick={() => printContent("general-stats")} style={{ fontWeight: 'bold', float: 'right' }}>
-                     IMPRIMER LA FICHE
-                </span>
-                </div>}
+                            <PrintDocument div={"filter-data"} />
+                            :
+                            <PrintDocument div={"general-stats"} />}
                     </div> : null}
             </div>
 
@@ -197,37 +189,37 @@ const GeneralStatsCaisse = () => {
                     <div style={{ marginTop: 50 }}>
 
                         {filter_data !== 0 ?
-                        <div id="filter-data">
-                            <table style={{ width: "100%" }} className="table-borderr">
-                            <thead>
-                                <tr>
-                                    <td style={{ paddingTop: 15, paddingBottom: 15, textAlign: 'center', fontSize: 13, backgroundColor: 'rgba(0, 80, 180, 0.1)' }} colSpan={paiement_categories.length + 1}>
-                                        <strong><span contentEditable>NOMMER LA SELECTION</span> | TOTAL : {totalFilles + totalGarcons} ÉLÈVES</strong>
-                                    </td>
-                                </tr>
-                            </thead>
+                            <div id="filter-data">
+                                <table style={{ width: "100%" }} className="table-borderr">
+                                    <thead>
+                                        <tr>
+                                            <td style={{ paddingTop: 15, paddingBottom: 15, textAlign: 'center', fontSize: 13, backgroundColor: 'rgba(0, 80, 180, 0.1)' }} colSpan={paiement_categories.length + 1}>
+                                                <strong><span contentEditable>NOMMER LA SELECTION</span> | TOTAL : {totalFilles + totalGarcons} ÉLÈVES</strong>
+                                            </td>
+                                        </tr>
+                                    </thead>
 
-                            {/* {classes_stats.map((classe, index) => {
+                                    {/* {classes_stats.map((classe, index) => {
                                     return ( */}
-                            <tbody>
-                                <tr>
-                                    <td colSpan={paiement_categories.length + 1} style={{ textAlign: 'left', paddingLeft: 15, paddingTop: 10, paddingBottom: 10, fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.1)' }}>
-                                        Nommer la selection
-                                        <span style={{ marginLeft: 50, marginRight: 20, color: 'gray' }}>Total : {totalFilles + totalGarcons} | Filles : {totalFilles} | Garçons : {totalGarcons}</span>
-                                    </td>
-                                </tr>
-                                {/* <tr>
+                                    <tbody>
+                                        <tr>
+                                            <td colSpan={paiement_categories.length + 1} style={{ textAlign: 'left', paddingLeft: 15, paddingTop: 10, paddingBottom: 10, fontWeight: 'bold', backgroundColor: 'rgba(0, 80, 180, 0.1)' }}>
+                                                Nommer la selection
+                                                <span style={{ marginLeft: 50, marginRight: 20, color: 'gray' }}>Total : {totalFilles + totalGarcons} | Filles : {totalFilles} | Garçons : {totalGarcons}</span>
+                                            </td>
+                                        </tr>
+                                        {/* <tr>
                                                 <td style={{ textAlign: 'center', paddingTop: 10, paddingBottom: 10 }}>Exampté(e)(s)</td>
                                                 {paiement_categories.map((category, index1) => (
                                                     <td key={index1} style={{ textAlign: 'center', paddingTop: 10, paddingBottom: 10 }}><span style={{ color: 'transparent' }}>ooooo</span>{category.category_name}<span style={{ color: 'transparent' }}>ooooo</span></td>
                                                 ))}
                                             </tr> */}
-                                <tr>
-                                    {/* <td style={{ textAlign: 'center', paddingTop: 10, paddingBottom: 10 }}>
+                                        <tr>
+                                            {/* <td style={{ textAlign: 'center', paddingTop: 10, paddingBottom: 10 }}>
                                                     {classe.classe_categories.filter(cc => cc === '0').length}<br />
                                                     <div style={{ marginTop: 13, fontSize: 12, color: 'gray' }}>{(((classe.classe_categories.filter(cc => cc === '0').length) * 100) / classe.pupils).toString().substr(0, 5)} %</div>
                                                 </td> */}
-                                    {/* {paiement_categories.map((category, index2) => {
+                                            {/* {paiement_categories.map((category, index2) => {
                                                     const cat = classe.classe_categories.filter(cc => cc === category.category_id);
                                                     return (
                                                         <td key={index2} style={{ textAlign: 'center', paddingTop: 10, paddingBottom: 10 }}>
@@ -236,21 +228,21 @@ const GeneralStatsCaisse = () => {
                                                         </td>
                                                     )
                                                 })} */}
-                                </tr>
-                                <tr>
-                                    <td colSpan={7} style={{ paddingTop: 10, paddingBottom: 10, fontSize: 13, textAlign: 'right', paddingRight: 20 }}>
-                                        Montant total payé
-                                        <strong style={{ color: 'rgb(0,80,180)', fontSize: 15 }}> {filter_data} </strong>
-                                        sur
-                                        <strong style={{ color: 'rgb(0,80,180)', fontSize: 15 }}> {tot_filter} </strong>
-                                        soit
-                                        <strong style={{ color: 'rgb(0,80,180)', fontSize: 15 }}> {((filter_data * 100) / tot_filter).toString().substr(0, 5)} </strong>
-                                        %</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div className="border-bottom-smooth" style={{ marginTop: 20, marginBottom: 20 }}></div>
-                        </div>:null}
+                                        </tr>
+                                        <tr>
+                                            <td colSpan={7} style={{ paddingTop: 10, paddingBottom: 10, fontSize: 13, textAlign: 'right', paddingRight: 20 }}>
+                                                Montant total payé
+                                                <strong style={{ color: 'rgb(0,80,180)', fontSize: 15 }}> {filter_data} </strong>
+                                                sur
+                                                <strong style={{ color: 'rgb(0,80,180)', fontSize: 15 }}> {tot_filter} </strong>
+                                                soit
+                                                <strong style={{ color: 'rgb(0,80,180)', fontSize: 15 }}> {((filter_data * 100) / tot_filter).toString().substr(0, 5)} </strong>
+                                                %</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div className="border-bottom-smooth" style={{ marginTop: 20, marginBottom: 20 }}></div>
+                            </div> : null}
 
                         {classes_stats.map((classee, index) => {
                             return (

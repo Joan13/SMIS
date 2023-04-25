@@ -86,41 +86,41 @@ const ClassePaiementCategorisation = () => {
             </div>
 
                 <div id="paiement_categories" style={{ marginTop: 0 }}>
-                    <table style={{ width: '100%' }}>
+                    {/* <table style={{ width: '100%' }}>
                         <tbody>
                             <tr>
-                                <td valign="top">
+                                <td valign="top"> */}
                                     <div>
                                         <strong>{(autres.school_name).toUpperCase()}</strong><br />
                                         <strong>{autres.school_bp}</strong><br />
                                         <strong>Année scolaire : {annee_scolaire.year_name}</strong>
                                     </div>
-                                    <table className="full-table-liste">
+                                    <table className="w-full" style={{marginTop:-40}}>
                                         <caption>
-                                            <h4>
-                                                CATÉGORIESATION DES PAIEMENTS <br /> DES FRAIS SCOLAIRES <br />
+                                            <h4 className='font-bold'>
+                                                CATÉGORIESATION DE PAIEMENT <br /> DES FRAIS SCOLAIRES <br />
                                                 {classe.class_id + " " + classe.section_id + " " + classe.cycle_id + " " + classe.order_id}
                                             </h4>
                                         </caption>
                                         <thead>
                                             <tr>
-                                                <th style={{ width: 30, textAlign: 'center' }}>No</th>
-                                                <th style={{ paddingLeft: 10, textAlign: 'left' }}>Nom</th>
-                                                <th style={{ paddingLeft: 10, textAlign: 'left' }}>Post-nom</th>
-                                                <th style={{ paddingLeft: 10, textAlign: 'left' }}>Prénom</th>
-                                                <th style={{ width: 50, textAlign: 'center' }}>Sexe</th>
-                                                <th style={{ width: 120, textAlign: 'center' }}>Catégorie</th>
+                                                <th className='border pt-2 pb-2 border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 30, textAlign: 'center' }}>No</th>
+                                                <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }}>Nom</th>
+                                                <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }}>Post-nom</th>
+                                                <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }}>Prénom</th>
+                                                <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>Sexe</th>
+                                                <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20'style={{ width: 120, textAlign: 'center' }}>Catégorie</th>
                                             </tr>
                                         </thead>
                                         {classe.pupils.map((pupil, index) => (
                                             <tbody key={index}>
                                                 <tr>
-                                                    <td onClick={() => find_pupil(pupil)} style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                    <td onClick={() => find_pupil(pupil)} style={{ paddingLeft: 10 }}>{pupil.pupil.first_name.toUpperCase()}</td>
-                                                    <td onClick={() => find_pupil(pupil)} style={{ paddingLeft: 10 }}>{pupil.pupil.second_name.toUpperCase()}</td>
-                                                    <td onClick={() => find_pupil(pupil)} style={{ paddingLeft: 10 }}>{pupil.pupil.last_name.toUpperCase()}</td>
-                                                    <td onClick={() => find_pupil(pupil)} style={{ width: 50, textAlign: 'center' }}>{parseInt(pupil.pupil.gender) === 0 ? "F" : "M"} </td>
-                                                    <td style={{ textAlign: 'center' }}>
+                                                    <td className='border border-gray-50 dark:border-gray-20' onClick={() => find_pupil(pupil)} style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
+                                                    <td className='border border-gray-50 dark:border-gray-20' onClick={() => find_pupil(pupil)} style={{ paddingLeft: 10 }}>{pupil.pupil.first_name.toUpperCase()}</td>
+                                                    <td className='border border-gray-50 dark:border-gray-20' onClick={() => find_pupil(pupil)} style={{ paddingLeft: 10 }}>{pupil.pupil.second_name.toUpperCase()}</td>
+                                                    <td className='border border-gray-50 dark:border-gray-20' onClick={() => find_pupil(pupil)} style={{ paddingLeft: 10 }}>{pupil.pupil.last_name.toUpperCase()}</td>
+                                                    <td className='border border-gray-50 dark:border-gray-20' onClick={() => find_pupil(pupil)} style={{ width: 50, textAlign: 'center' }}>{parseInt(pupil.pupil.gender) === 0 ? "F" : "M"} </td>
+                                                    <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
                                                         <select
                                                             className="select-normall"
                                                             onChange={(val) => set_paiement_category(pupil.pupil.pupil_id, val.target.value)}
@@ -138,10 +138,10 @@ const ClassePaiementCategorisation = () => {
                                         )
                                         )}
                                     </table>
-                                </td>
+                                {/* </td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table> */}
                 </div>
         </div>
     )

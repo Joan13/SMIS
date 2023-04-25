@@ -190,10 +190,10 @@ const Conduites = () => {
         <div style={{ marginBottom: 50, paddingTop: 10, width: '100%' }}>
             {!loading_footer ?
                 <div>
-                    <table style={{ width: '100%' }}>
+                    {/* <table style={{ width: '100%' }}>
                         <tbody>
                             <tr>
-                                <td valign="top">
+                                <td valign="top"> */}
 
                                     <strong style={{ fontSize: 15 }}>Édition de conduite des élèves</strong>
 
@@ -213,33 +213,33 @@ const Conduites = () => {
 
                                     </div>
 
-                                    <table className="full-table-liste-markss" style={{ marginTop: 10, width: '100%' }}>
+                                    <table className="full-table-liste-marksssss" style={{ marginTop: 10, width: '100%' }}>
                                         <thead>
                                             <tr>
-                                                <th style={{ width: 30, textAlign: 'center' }}>No</th>
-                                                <th style={{ paddingLeft: 10, textAlign: 'left' }}>Noms des élèves</th>
+                                                <th className='border pt-2 pb-2 border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 30, textAlign: 'center' }}>No</th>
+                                                <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }}>Noms des élèves</th>
                                                 {show_periode("P1", "S1") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>P1</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P1</th> : null}
 
                                                 {show_periode("P2", "S1") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>P2</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P2</th> : null}
 
                                                 {show_periode("P3", "S2") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>P3</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P3</th> : null}
 
                                                 {show_periode("P4", "S2") ?
-                                                    <th style={{ width: 50, textAlign: 'center' }}>P4</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P4</th> : null}
                                             </tr>
                                         </thead>
                                         {classe.data.pupils.map((pupil, index) => {
                                             return (
                                                 <tbody key={index}>
                                                     <tr className={`hover-tr ${index % 2 === 0 ? "tr-background1" : "tr-background2"}`}>
-                                                        <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                        <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                        <td className='border border-gray-50 dark:border-gray-20' style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
+                                                        <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
 
                                                         {show_periode("P1", "S1") ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <select className='input-marks'
                                                                     defaultValue={render_conduite(pupil, 1)}
                                                                     onChange={(text) => handle_change(pupil, 1, text.target.value, true)}>
@@ -248,7 +248,7 @@ const Conduites = () => {
                                                             </td> : null}
 
                                                         {show_periode("P2", "S1") ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <select className='input-marks'
                                                                     defaultValue={render_conduite(pupil, 2)}
                                                                     onChange={(text) => handle_change(pupil, 2, text.target.value, true)}>
@@ -257,7 +257,7 @@ const Conduites = () => {
                                                             </td> : null}
 
                                                         {show_periode("P3", "S2") ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <select className='input-marks'
                                                                     defaultValue={render_conduite(pupil, 3)}
                                                                     onChange={(text) => handle_change(pupil, 3, text.target.value, true)}>
@@ -266,7 +266,7 @@ const Conduites = () => {
                                                             </td> : null}
 
                                                         {show_periode("P4", "S2") ?
-                                                            <td style={{ width: 50, textAlign: 'center' }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <select className='input-marks'
                                                                     defaultValue={render_conduite(pupil, 4)}
                                                                     onChange={(text) => handle_change(pupil, 4, text.target.value, true)}>
@@ -278,10 +278,10 @@ const Conduites = () => {
                                             )
                                         })}
                                     </table>
-                                </td>
+                                {/* </td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table> */}
 
                     {conduites.lengh === 0 ? null
                         :

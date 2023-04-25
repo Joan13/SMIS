@@ -64,45 +64,45 @@ const AllClassPaiements = () => {
                                 <strong>{autres.school_bp}</strong><br />
                                 <strong>Année scolaire : {annee_scolaire.year_name}</strong>
                             </div>
-                            <table className="full-table-liste">
+                            <table className="w-full" style={{marginTop:-40}}>
                                 <caption>
-                                    <h4>
-                                        FICHE DES PAIEMENTS<br />
+                                    <h4 className='font-bold'>
+                                        FICHE DE PAIEMENT<br />
                                         {classe.class_id + " " + classe.section_id + " " + classe.cycle_id + " " + classe.order_id}
                                     </h4>
                                 </caption>
                                 <thead>
                                     <tr>
-                                        <th style={{ width: 30, textAlign: 'center' }} rowSpan={2}>No</th>
-                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Nom</th>
-                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Post-nom</th>
-                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Prénom</th>
-                                        <th style={{ textAlign: 'center' }} colSpan={3}>Soldes</th>
+                                        <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 30, textAlign: 'center' }} rowSpan={2}>No</th>
+                                        <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Nom</th>
+                                        <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Post-nom</th>
+                                        <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Prénom</th>
+                                        <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }} colSpan={3}>Soldes</th>
                                     </tr>
                                     <tr>
-                                        <th style={{ width: 50, textAlign: 'center' }}>T1</th>
-                                        <th style={{ width: 50, textAlign: 'center' }}>T2</th>
-                                        <th style={{ width: 50, textAlign: 'center' }}>T3</th>
+                                        <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>T1</th>
+                                        <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>T2</th>
+                                        <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>T3</th>
                                     </tr>
                                 </thead>
                                 {classe.data.pupils.map((pupil, index) => {
                                     return (
                                         <tbody key={index}>
                                             <tr onClick={() => view_pupil(pupil)}  >
-                                                <td style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.first_name.toUpperCase()}</td>
-                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.second_name.toUpperCase()}</td>
-                                                <td style={{ paddingLeft: 10 }}>{pupil.pupil.last_name.toUpperCase()}</td>
-                                                <td style={{ width: 50, textAlign: 'center' }}>{pupil.soldes_paiements.solde1} </td>
-                                                <td style={{ width: 50, textAlign: 'center' }}>{pupil.soldes_paiements.solde2}</td>
-                                                <td style={{ width: 50, textAlign: 'center' }}>{pupil.soldes_paiements.solde3}</td>
+                                                <td className='border border-gray-50 dark:border-gray-20' style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
+                                                <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name.toUpperCase()}</td>
+                                                <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.second_name.toUpperCase()}</td>
+                                                <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.last_name.toUpperCase()}</td>
+                                                <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>{pupil.soldes_paiements.solde1} </td>
+                                                <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>{pupil.soldes_paiements.solde2}</td>
+                                                <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>{pupil.soldes_paiements.solde3}</td>
                                             </tr>
                                         </tbody>
                                     )
                                 })}
                                 <tfoot>
                                     <tr>
-                                        <td colSpan={7} style={{ paddingTop: 10, paddingBottom: 10, fontWeight: 'bold', fontSize: 15, textAlign: 'right', paddingRight: 20 }}>
+                                        <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' colSpan={7} style={{ paddingTop: 10, paddingBottom: 10, fontWeight: 'bold', fontSize: 15, textAlign: 'right', paddingRight: 20 }}>
                                             Montant total payé
                                             <strong style={{ color: 'rgb(0,80,180)', fontSize: 20 }}> {classe.data.paye_paiements} </strong>
                                             sur
