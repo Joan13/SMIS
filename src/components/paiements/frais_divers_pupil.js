@@ -173,76 +173,76 @@ class AllPupilPaiements extends Component {
                 </div>
                 <div className='border-double border-4 rounded-xl border-gray-50 dark:border-gray-20 p-5'>
                     <div id="recu-frais-divers">
-                    <table className='w-full'>
-                                        <tbody>
-                                            <tr>
-                                                <td className="td-border-right-recu" style={{ width: "50%", fontSize: 12 }}>
-                                                    <strong className="div-title-recu border-b border-gray-50 dark:border-gray-20">{(this.props.autres.school_name).toUpperCase()}</strong><br />
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td><span className='text-gray-100'>EMAIL</span> <span style={{ color: 'transparent' }}>Ybi</span></td>
-                                                                <td><span className='text-gray-100'>:</span> <strong>{this.props.autres.email_school}</strong></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><span className='text-gray-100'>TÉLÉPHONES</span> <span style={{ color: 'transparent' }}>Ybi</span></td>
-                                                                <td><span className='text-gray-100'>:</span> <strong>{this.props.autres.phone_1}</strong></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td> </td>
-                                                                <td><span style={{ color: 'transparent' }}>:</span> <strong>{this.props.autres.phone_2}</strong></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                                <td style={{ width: "50%", fontSize: 12, paddingLeft: 10 }}>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr style={{ padding: 20 }}>
-                                                                <td colSpan={2}><strong>REÇU DES FRAIS DIVERS</strong></td>
-                                                            </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
-                                                            <tr>
-                                                                <td><span className='text-gray-100'>ÉLÈVE :</span> <strong>{this.props.pupil.pupil.first_name.toUpperCase()} {this.props.pupil.pupil.second_name.toUpperCase()} {this.props.pupil.pupil.last_name}</strong>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><span className='text-gray-100'>CLASSE :</span> <strong>{this.find_class_number(this.props.pupil.pupil.class_school)} {this.find_cycle(this.props.pupil.pupil.cycle_school)} {this.find_class_order(this.props.pupil.pupil.class_order)}</strong>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><span className='text-gray-100'>ANNÉE SCOLAIRE :</span> <strong>{this.props.annee_scolaire.year_name}</strong>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div className="mt-5">
-                                                    <table style={{ width: "100%" }}>
-                                                        <thead>
-                                                            <tr style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
-                                                                <th className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-2 pb-2'>Date</th>
-                                                                <th style={{ textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 pl-5 dark:bg-background-20 pt-2 pb-2'>Raison du paiement</th>
-                                                                <th className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-2 pb-2'>Montant</th>
-                                                                <th className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-2 pb-2'>Année scolaire</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                        {this.props.pupil.frais_divers.map((frais, index) => {
-                            return (
-                                                            <tr key={index}>
-                                                                <td style={{ textAlign: 'center' }} className='border border-gray-50 dark:border-gray-20 pt-2 pb-2'>{find_date(frais.date_entry)}</td>
-                                                                <td className='pl-5 border border-gray-50 dark:border-gray-20 pt-2 pb-2'>{this.find_libelle(frais.libelle)}</td>
-                                                                <td style={{ textAlign: 'center' }} className='border border-gray-50 dark:border-gray-20 pt-2 pb-2'>{frais.montant}</td>
-                                                                <td style={{ textAlign: 'center' }} className='border border-gray-50 dark:border-gray-20 pt-2 pb-2'>{this.props.annee_scolaire.year_name}</td>
-                                                            </tr>
-                            )
-                        })}
-                        </tbody>
+                        <table className='w-full'>
+                            <tbody>
+                                <tr>
+                                    <td className="td-border-right-recu" style={{ width: "50%", fontSize: 12 }}>
+                                        <strong className="div-title-recu border-b border-gray-50 dark:border-gray-20">{(this.props.autres.school_name).toUpperCase()}</strong><br />
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td><span className='text-gray-100'>EMAIL</span> <span style={{ color: 'transparent' }}>Ybi</span></td>
+                                                    <td><span className='text-gray-100'>:</span> <strong>{this.props.autres.email_school}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span className='text-gray-100'>TÉLÉPHONES</span> <span style={{ color: 'transparent' }}>Ybi</span></td>
+                                                    <td><span className='text-gray-100'>:</span> <strong>{this.props.autres.phone_1}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td> </td>
+                                                    <td><span style={{ color: 'transparent' }}>:</span> <strong>{this.props.autres.phone_2}</strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td style={{ width: "50%", fontSize: 12, paddingLeft: 10 }}>
+                                        <table>
+                                            <tbody>
+                                                <tr style={{ padding: 20 }}>
+                                                    <td colSpan={2}><strong>REÇU DES FRAIS DIVERS</strong></td>
+                                                </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                                                <tr>
+                                                    <td><span className='text-gray-100'>ÉLÈVE :</span> <strong>{this.props.pupil.pupil.first_name.toUpperCase()} {this.props.pupil.pupil.second_name.toUpperCase()} {this.props.pupil.pupil.last_name}</strong>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span className='text-gray-100'>CLASSE :</span> <strong>{this.find_class_number(this.props.pupil.pupil.class_school)} {this.find_cycle(this.props.pupil.pupil.cycle_school)} {this.find_class_order(this.props.pupil.pupil.class_order)}</strong>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span className='text-gray-100'>ANNÉE SCOLAIRE :</span> <strong>{this.props.annee_scolaire.year_name}</strong>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
-                                </div>
+                        <div className="mt-5">
+                            <table style={{ width: "100%" }}>
+                                <thead>
+                                    <tr style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
+                                        <th className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-2 pb-2'>Date</th>
+                                        <th style={{ textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 pl-5 dark:bg-background-20 pt-2 pb-2'>Raison du paiement</th>
+                                        <th className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-2 pb-2'>Montant</th>
+                                        <th className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-2 pb-2'>Année scolaire</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.props.pupil.frais_divers.map((frais, index) => {
+                                        return (
+                                            <tr key={index}>
+                                                <td style={{ textAlign: 'center' }} className='border border-gray-50 dark:border-gray-20 pt-2 pb-2'>{find_date(frais.date_entry)}</td>
+                                                <td className='pl-5 border border-gray-50 dark:border-gray-20 pt-2 pb-2'>{this.find_libelle(frais.libelle)}</td>
+                                                <td style={{ textAlign: 'center' }} className='border border-gray-50 dark:border-gray-20 pt-2 pb-2'>{frais.montant}</td>
+                                                <td style={{ textAlign: 'center' }} className='border border-gray-50 dark:border-gray-20 pt-2 pb-2'>{this.props.annee_scolaire.year_name}</td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div style={{ textAlign: 'left', marginTop: 5 }}>

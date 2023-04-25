@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FiChevronRight, FiPrinter } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { home_redirect, find_date2, http } from '../../global_vars';
+import PrintDocument from '../includes/print';
 
 const PaiementsDay = () => {
     const dispatch = useDispatch();
@@ -131,76 +132,78 @@ const PaiementsDay = () => {
     return (
         <div style={{ marginBottom: 50, paddingTop: 0 }}>
 
-            <div onClick={() => printContent("total-day")} style={{ fontWeight: 'bold', float: 'right', paddingTop: 7 }}>
-                <span className="add-minus"><FiPrinter /> IMPRIMER LA FICHE</span>
-            </div>
+            {/* <div onClick={() => printContent("total-day")} style={{ fontWeight: 'bold', float: 'right', paddingTop: 7 }} className='flex text-text-50 items-center'>
+               <FiPrinter className='mr-2' /> <span> IMPRIMER LA FICHE</span>
+            </div> */}
+            <PrintDocument div={"total-day"} />
             <div id="total-day" style={{ marginTop: 30 }}>
-                <table style={{ width: '100%' }}>
+                {/* <table style={{ width: '100%' }}>
                     <tbody>
                         <tr>
-                            <td valign="top">
-                                <div>
-                                    <strong>{(autres.school_name).toUpperCase()}</strong><br />
-                                    <strong>{autres.school_bp}</strong><br />
-                                    <strong>Année scolaire : {annee_scolaire.year_name}</strong>
-                                </div>
-                                <table className="full-table-liste">
-                                    <caption>
-                                        <h4 style={{ float: 'right', textAlign: 'right' }}>
-                                            TOTAL FRAIS JOURNALIERS<br />
-                                            Journée du {find_date2(day)}
-                                        </h4>
-                                    </caption>
-                                    <thead>
-                                        <tr>
-                                            <th style={{ width: 30, textAlign: 'center' }}>No</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'left' }}>Libellé</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} rowSpan={2}>Montant (USD)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td style={{ width: 30, textAlign: 'center' }}>1</td>
-                                            <td style={{ padding: 15, fontSize: 15, fontWeight: 'bold' }}>Paiement des frais scolaires</td>
-                                            <td style={{ textAlign: 'center', fontSize: 15 }}><strong>{total_paiement}</strong></td>
-                                        </tr>
-                                        <tr>
-                                            <td style={{ width: 30, textAlign: 'center' }}>2</td>
-                                            <td style={{ padding: 15, fontSize: 15, fontWeight: 'bold' }}>Paiement des frais divers</td>
-                                            <td style={{ textAlign: 'center', fontSize: 15 }}><strong>{total_frais_divers}</strong></td>
-                                        </tr>
-                                        <tr style={{ backgroundColor: 'rgba(0, 80, 180, 0.2)' }}>
-                                            <td colSpan={2} style={{ padding: 15, fontSize: 13, fontWeight: 'bold', textAlign: 'right' }}>TOTAL JOURNALIER</td>
-                                            <td style={{ textAlign: 'center', fontSize: 15 }}><strong>{total_paiement + total_frais_divers}</strong></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
+                            <td valign="top"> */}
+                <div>
+                    <strong>{(autres.school_name).toUpperCase()}</strong><br />
+                    <strong>{autres.school_bp}</strong><br />
+                    <strong>Année scolaire : {annee_scolaire.year_name}</strong>
+                </div>
+                <table className="w-full" style={{ marginTop: -50 }}>
+                    <caption>
+                        <h4 style={{ float: 'right', textAlign: 'right' }}>
+                            <strong className='text-xl'>TOTAL FRAIS JOURNALIERS</strong><br />
+                            Journée du {find_date2(day)}
+                        </h4>
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th style={{ width: 30, textAlign: 'center' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3'>No</th>
+                            <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3'>Libellé</th>
+                            <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Montant (USD)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style={{ width: 30, textAlign: 'center' }}>1</td>
+                            <td style={{ padding: 15, fontSize: 15, fontWeight: 'bold' }}>Paiement des frais scolaires</td>
+                            <td style={{ textAlign: 'center', fontSize: 15 }}><strong>{total_paiement}</strong></td>
+                        </tr>
+                        <tr>
+                            <td style={{ width: 30, textAlign: 'center' }}>2</td>
+                            <td style={{ padding: 15, fontSize: 15, fontWeight: 'bold' }}>Paiement des frais divers</td>
+                            <td style={{ textAlign: 'center', fontSize: 15 }}><strong>{total_frais_divers}</strong></td>
+                        </tr>
+                        <tr style={{ backgroundColor: 'rgba(0, 80, 180, 0.2)' }}>
+                            <td colSpan={2} style={{ padding: 15, fontSize: 13, fontWeight: 'bold', textAlign: 'right' }}>TOTAL JOURNALIER</td>
+                            <td style={{ textAlign: 'center', fontSize: 15 }}><strong>{total_paiement + total_frais_divers}</strong></td>
                         </tr>
                     </tbody>
                 </table>
+                {/* </td>
+                        </tr>
+                    </tbody>
+                </table> */}
             </div><br />
 
-            <div onClick={() => setPaiements_tab(1)} style={{ fontWeight: 'bold' }}>
-                <span className="add-minus"><FiChevronRight /> Fiche journalière détaillée des frais scolaires</span>
+            <div onClick={() => setPaiements_tab(1)} style={{ fontWeight: 'bold' }} className="flex text-text-50 items-center">
+                <FiChevronRight /><span> Fiche journalière détaillée des frais scolaires</span>
             </div><br />
-            <div onClick={() => setPaiements_tab(2)} style={{ fontWeight: 'bold' }}>
-                <span className="add-minus"><FiChevronRight /> Fiche journalière détaillée des frais divers</span>
+            <div onClick={() => setPaiements_tab(2)} style={{ fontWeight: 'bold' }} className="flex text-text-50 items-center">
+                <FiChevronRight /><span> Fiche journalière détaillée des frais divers</span>
             </div><br />
-            <div onClick={() => setPaiements_tab(3)} style={{ fontWeight: 'bold' }}>
-                <span className="add-minus"><FiChevronRight /> Rapport journalier De paiement</span>
+            <div onClick={() => setPaiements_tab(3)} style={{ fontWeight: 'bold' }} className="flex text-text-50 items-center">
+                <FiChevronRight /> <span> Rapport journalier De paiement</span>
             </div><br />
-            <div onClick={() => setPaiements_tab(4)} style={{ fontWeight: 'bold' }}>
-                <span className="add-minus"><FiChevronRight /> Corbeille</span>
+            <div onClick={() => setPaiements_tab(4)} style={{ fontWeight: 'bold' }} className="flex text-text-50 items-center">
+                <FiChevronRight /><span> Corbeille</span>
             </div><br />
 
             {paiements_tab === 1 ?
                 <div>
-                    <div onClick={() => printContent("paiements-day")} style={{ fontWeight: 'bold', float: 'right', paddingTop: 30 }}>
-                        <span className="add-minus"><FiPrinter /> IMPRIMER LA FICHE</span>
-                    </div>
+                    {/* <div onClick={() => printContent("paiements-day")} style={{ fontWeight: 'bold', float: 'right', paddingTop: 30 }}>
+                       <FiPrinter /> <span> IMPRIMER LA FICHE</span>
+                    </div> */}
+                    <PrintDocument div={"paiements-day"} />
                     <div id="paiements-day">
-                        <table style={{ width: '100%' }}>
+                        <table style={{ width: '100%' }} className='w-full'>
                             <tbody>
                                 <tr>
                                     <td valign="top">
@@ -209,20 +212,20 @@ const PaiementsDay = () => {
                                             <strong>{autres.school_bp}</strong><br />
                                             <strong>Année scolaire : {annee_scolaire.year_name}</strong>
                                         </div>
-                                        <table className="full-table-liste">
+                                        <table className="w-full" style={{ marginTop: -40 }}>
                                             <caption>
                                                 <h4 style={{ float: 'right', textAlign: 'right' }}>
-                                                    DÉTAILLÉ DU RAPPORT JOURNALIER DE PAIEMENT DES FRAIS SCOLAIRES<br />
+                                                    <strong className='text-lg'>DÉTAILLÉ DU RAPPORT JOURNALIER DE PAIEMENT DES FRAIS SCOLAIRES</strong><br />
                                                     Journée du {find_date2(day)}
                                                 </h4>
                                             </caption>
                                             <thead>
                                                 <tr>
-                                                    <th style={{ width: 30, textAlign: 'center' }} rowSpan={2}>No</th>
-                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Noms de l'élève</th>
-                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Classe</th>
-                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Motif de paiement</th>
-                                                    <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} rowSpan={2}>Montant (USD)</th>
+                                                    <th style={{ width: 30, textAlign: 'center' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>No</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Noms de l'élève</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Classe</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Motif de paiement</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Montant (USD)</th>
                                                 </tr>
                                             </thead>
                                             {paiements_day.map((paiement, index) => {
@@ -243,7 +246,7 @@ const PaiementsDay = () => {
                                                 )
                                             })}
                                             <tfoot>
-                                                <tr style={{ backgroundColor: 'rgba(0, 80, 180, 0.2)' }}>
+                                                <tr className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3'>
                                                     <td colSpan={4} style={{ padding: 10, fontSize: 13, fontWeight: 'bold', textAlign: 'right' }}>Total</td>
                                                     <td style={{ textAlign: 'center', fontSize: 13 }}><strong>{total_paiement}</strong></td>
                                                 </tr>
@@ -258,12 +261,14 @@ const PaiementsDay = () => {
 
             {paiements_tab === 2 ?
                 <div>
-                    <div onClick={() => printContent("frais-divers-day")} style={{ fontWeight: 'bold', float: 'right', paddingTop: 7, marginTop: 30 }}>
-                        <span className="add-minus"><FiPrinter /> IMPRIMER LA FICHE</span>
-                    </div>
+                    {/* <div onClick={() => printContent("frais-divers-day")} style={{ fontWeight: 'bold', float: 'right', paddingTop: 7, marginTop: 30 }}>
+                        <FiPrinter /> <span className="add-minus"> IMPRIMER LA FICHE</span>
+                    </div> */}
+
+                    <PrintDocument div={"frais-divers-day"} />
 
                     <div id="frais-divers-day">
-                        <table style={{ width: '100%' }}>
+                        <table className='w-full'>
                             <tbody>
                                 <tr>
                                     <td valign="top">
@@ -272,21 +277,21 @@ const PaiementsDay = () => {
                                             <strong>{autres.school_bp}</strong><br />
                                             <strong>Année scolaire : {annee_scolaire.year_name}</strong>
                                         </div>
-                                        <table className="full-table-liste">
+                                        <table className="w-full" style={{ marginTop: -40 }}>
                                             <caption>
                                                 <h4 style={{ float: 'right', textAlign: 'right' }}>
-                                                    DÉTAILLÉ DU RAPPORT JOURNALIER DE PAIEMENT DES FRAIS DIVERS<br />
+                                                    <strong className='text-lg'>DÉTAILLÉ DU RAPPORT JOURNALIER DE PAIEMENT DES FRAIS DIVERS</strong><br />
                                                     Journée du {find_date2(day)}
                                                 </h4>
                                             </caption>
                                             <thead>
                                                 <tr>
-                                                    <th style={{ width: 30, textAlign: 'center' }} rowSpan={2}>No</th>
-                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Noms de l'élève</th>
-                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Classe</th>
+                                                    <th style={{ width: 30, textAlign: 'center' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>No</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Noms de l'élève</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Classe</th>
                                                     {/* <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Prénom</th> */}
-                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Motif de paiement</th>
-                                                    <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} rowSpan={2}>Montant (USD)</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Motif de paiement</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Montant (USD)</th>
                                                 </tr>
                                             </thead>
                                             {frais_divers_day.map((frais_divers, index) => {
@@ -318,7 +323,7 @@ const PaiementsDay = () => {
 
                                                     if (total_frais !== 0) {
                                                         return (
-                                                            <tr key={index} style={{ backgroundColor: 'rgba(0, 80, 180, 0.2)' }}>
+                                                            <tr key={index} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3'>
                                                                 <td colSpan={4} style={{ padding: 10, fontSize: 13, fontWeight: 'bold', textAlign: 'right' }}>Total payé {libelle.description_libelle}</td>
                                                                 <td style={{ textAlign: 'center', fontSize: 13 }}><strong>{total_frais}</strong></td>
                                                             </tr>
@@ -326,7 +331,7 @@ const PaiementsDay = () => {
                                                     }
 
                                                 })}
-                                                <tr style={{ backgroundColor: 'rgba(0, 80, 180, 0.2)' }}>
+                                                <tr className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3'>
                                                     <td colSpan={4} style={{ padding: 10, fontSize: 13, fontWeight: 'bold', textAlign: 'right' }}>Total</td>
                                                     <td style={{ textAlign: 'center', fontSize: 13 }}><strong>{total_frais_divers}</strong></td>
                                                 </tr>
@@ -336,18 +341,20 @@ const PaiementsDay = () => {
                                 </tr>
                             </tbody>
                         </table>
-                    </div><br /><br /><br />
+                    </div>
                 </div>
                 : null}
 
             {paiements_tab === 3 ?
                 <div>
-                    <div onClick={() => printContent("repport-day")} style={{ fontWeight: 'bold', float: 'right', paddingTop: 30 }}>
-                        <span className="add-minus"><FiPrinter /> IMPRIMER LA FICHE</span>
-                    </div>
+                    {/* <div onClick={() => printContent("repport-day")} style={{ fontWeight: 'bold', float: 'right', paddingTop: 30 }}>
+                       <FiPrinter /> <span className="add-minus"> IMPRIMER LA FICHE</span>
+                    </div> */}
+
+                    <PrintDocument div={"repport-day"} />
                     <div id="repport-day">
                         <div>
-                            <table style={{ width: '100%' }}>
+                            <table className='w-full'>
                                 <tbody>
                                     <tr>
                                         <td valign="top">
@@ -356,18 +363,18 @@ const PaiementsDay = () => {
                                                 <strong>{autres.school_bp}</strong><br />
                                                 <strong>Année scolaire : {annee_scolaire.year_name}</strong>
                                             </div>
-                                            <table className="full-table-liste">
+                                            <table className="w-full" style={{ marginTop: -40 }}>
                                                 <caption>
                                                     <h4 style={{ float: 'right', textAlign: 'right' }}>
-                                                        RAPPORT JOURNALIER TOTAL DE CAISSE<br />
+                                                        <strong className='text-lg'>JOURNAL DE CAISSE</strong><br />
                                                         Journée du {find_date2(day)}
                                                     </h4>
                                                 </caption>
                                                 <thead>
                                                     <tr>
-                                                        <th style={{ width: 30, textAlign: 'center' }}>No</th>
-                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }}>Libellé</th>
-                                                        <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} rowSpan={2}>Montant (USD)</th>
+                                                        <th style={{ width: 30, textAlign: 'center' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3'>No</th>
+                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3'>Libellé</th>
+                                                        <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Montant (USD)</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -381,7 +388,7 @@ const PaiementsDay = () => {
                                                         <td style={{ padding: 15, fontSize: 15, fontWeight: 'bold' }}>Paiement des frais divers</td>
                                                         <td style={{ textAlign: 'center', fontSize: 15 }}><strong>{total_frais_divers}</strong></td>
                                                     </tr>
-                                                    <tr style={{ backgroundColor: 'rgba(0, 80, 180, 0.2)' }}>
+                                                    <tr className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3'>
                                                         <td colSpan={2} style={{ padding: 15, fontSize: 13, fontWeight: 'bold', textAlign: 'right' }}>TOTAL JOURNALIER</td>
                                                         <td style={{ textAlign: 'center', fontSize: 15 }}><strong>{total_paiement + total_frais_divers}</strong></td>
                                                     </tr>
@@ -399,7 +406,7 @@ const PaiementsDay = () => {
                                 <tbody>
                                     <tr>
                                         <td valign="top">
-                                            <table className="full-table-liste">
+                                            <table className="w-full">
                                                 <caption>
                                                     <h4 style={{ float: 'right', textAlign: 'center' }}>
                                                         DÉTAILLÉ DU RAPPORT JOURNALIER DE PAIEMENT DES FRAIS SCOLAIRES<br />
@@ -407,11 +414,11 @@ const PaiementsDay = () => {
                                                 </caption>
                                                 <thead>
                                                     <tr>
-                                                        <th style={{ width: 30, textAlign: 'center' }} rowSpan={2}>No</th>
-                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Noms de l'élève</th>
-                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Classe</th>
-                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Motif de paiement</th>
-                                                        <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} rowSpan={2}>Montant (USD)</th>
+                                                        <th style={{ width: 30, textAlign: 'center' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>No</th>
+                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Noms de l'élève</th>
+                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Classe</th>
+                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Motif de paiement</th>
+                                                        <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Montant (USD)</th>
                                                     </tr>
                                                 </thead>
                                                 {paiements_day.map((paiement, index) => {
@@ -431,7 +438,7 @@ const PaiementsDay = () => {
                                                     )
                                                 })}
                                                 <tfoot>
-                                                    <tr style={{ backgroundColor: 'rgba(0, 80, 180, 0.2)' }}>
+                                                    <tr className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3'>
                                                         <td colSpan={4} style={{ padding: 10, fontSize: 13, fontWeight: 'bold', textAlign: 'right' }}>Total</td>
                                                         <td style={{ textAlign: 'center', fontSize: 13 }}><strong>{total_paiement}</strong></td>
                                                     </tr>
@@ -449,7 +456,7 @@ const PaiementsDay = () => {
                                 <tbody>
                                     <tr>
                                         <td valign="top">
-                                            <table className="full-table-liste">
+                                            <table className="w-full">
                                                 <caption>
                                                     <h4 style={{ float: 'right', textAlign: 'center' }}>
                                                         DÉTAILLÉ DU RAPPORT JOURNALIER DE PAIEMENT DES FRAIS DIVERS<br />
@@ -457,11 +464,11 @@ const PaiementsDay = () => {
                                                 </caption>
                                                 <thead>
                                                     <tr>
-                                                        <th style={{ width: 30, textAlign: 'center' }} rowSpan={2}>No</th>
-                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Noms de l'élève</th>
-                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Classe</th>
-                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Motif de paiement</th>
-                                                        <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} rowSpan={2}>Montant (USD)</th>
+                                                        <th style={{ width: 30, textAlign: 'center' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>No</th>
+                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Noms de l'élève</th>
+                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Classe</th>
+                                                        <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Motif de paiement</th>
+                                                        <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Montant (USD)</th>
                                                     </tr>
                                                 </thead>
                                                 {frais_divers_day.map((frais_divers, index) => {
@@ -492,7 +499,7 @@ const PaiementsDay = () => {
 
                                                         if (total_frais !== 0) {
                                                             return (
-                                                                <tr key={index} style={{ backgroundColor: 'rgba(0, 80, 180, 0.2)' }}>
+                                                                <tr key={index} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3'>
                                                                     <td colSpan={4} style={{ padding: 10, fontSize: 13, fontWeight: 'bold', textAlign: 'right' }}>Total payé {libelle.description_libelle}</td>
                                                                     <td style={{ textAlign: 'center', fontSize: 13 }}><strong>{total_frais}</strong></td>
                                                                 </tr>
@@ -500,7 +507,7 @@ const PaiementsDay = () => {
                                                         }
 
                                                     })}
-                                                    <tr style={{ backgroundColor: 'rgba(0, 80, 180, 0.2)' }}>
+                                                    <tr className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3'>
                                                         <td colSpan={4} style={{ padding: 10, fontSize: 13, fontWeight: 'bold', textAlign: 'right' }}>Total</td>
                                                         <td style={{ textAlign: 'center', fontSize: 13 }}><strong>{total_frais_divers}</strong></td>
                                                     </tr>
@@ -510,16 +517,18 @@ const PaiementsDay = () => {
                                     </tr>
                                 </tbody>
                             </table>
-                        </div><br /><br /><br />
+                        </div>
                     </div>
                 </div>
                 : null}
 
             {paiements_tab === 4 ?
                 <div>
-                    <div onClick={() => printContent("corbeille-day")} style={{ fontWeight: 'bold', float: 'right', paddingTop: 30 }}>
+                    {/* <div onClick={() => printContent("corbeille-day")} style={{ fontWeight: 'bold', float: 'right', paddingTop: 30 }}>
                         <span className="add-minus"><FiPrinter /> IMPRIMER LA FICHE</span>
-                    </div>
+                    </div> */}
+
+                    <PrintDocument div={"corbeille-day"} />
                     <div id="corbeille-day">
                         <table style={{ width: '100%' }}>
                             <tbody>
@@ -530,7 +539,7 @@ const PaiementsDay = () => {
                                             <strong>{autres.school_bp}</strong><br />
                                             <strong>Année scolaire : {annee_scolaire.year_name}</strong>
                                         </div>
-                                        <table className="full-table-liste">
+                                        <table className="w-full" style={{ marginTop: -40 }}>
                                             <caption>
                                                 <h4 style={{ float: 'right', textAlign: 'right' }}>
                                                     DÉTAILLÉ DE LA CORBEILLE (FRAIS SCOLAIRES)<br />
@@ -539,11 +548,11 @@ const PaiementsDay = () => {
                                             </caption>
                                             <thead>
                                                 <tr>
-                                                    <th style={{ width: 30, textAlign: 'center' }} rowSpan={2}>No</th>
-                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Noms de l'élève</th>
-                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Classe</th>
-                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Motif de paiement</th>
-                                                    <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} rowSpan={2}>Montant (USD)</th>
+                                                    <th style={{ width: 30, textAlign: 'center' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>No</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Noms de l'élève</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Classe</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Motif de paiement</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Montant (USD)</th>
                                                 </tr>
                                             </thead>
                                             {paiements_day_deleted.map((paiement, index) => {
@@ -571,7 +580,7 @@ const PaiementsDay = () => {
                             <tbody>
                                 <tr>
                                     <td valign="top">
-                                        <table className="full-table-liste">
+                                        <table className="w-full">
                                             <caption>
                                                 <h4 style={{ float: 'right', textAlign: 'center' }}>
                                                     DÉTAILLÉ DE LA CORBEILLE (FRAIS DIVERS)<br />
@@ -580,11 +589,11 @@ const PaiementsDay = () => {
                                             </caption>
                                             <thead>
                                                 <tr>
-                                                    <th style={{ width: 30, textAlign: 'center' }} rowSpan={2}>No</th>
-                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Noms de l'élève</th>
-                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Classe</th>
-                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} rowSpan={2}>Motif de paiement</th>
-                                                    <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} rowSpan={2}>Montant (USD)</th>
+                                                    <th style={{ width: 30, textAlign: 'center' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>No</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Noms de l'élève</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Classe</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Motif de paiement</th>
+                                                    <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3' rowSpan={2}>Montant (USD)</th>
                                                 </tr>
                                             </thead>
                                             {frais_divers_day_deleted.map((frais_divers, index) => {
@@ -608,8 +617,7 @@ const PaiementsDay = () => {
                                     </td>
                                 </tr>
                             </tbody>
-                        </table><br /><br /><br />
-
+                        </table>
                     </div>
                 </div> : null}
         </div>

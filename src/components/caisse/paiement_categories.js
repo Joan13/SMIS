@@ -44,7 +44,7 @@ const PaiementCategories = () => {
                     <div className='w-full text-center font-bold text-lg'>CATEGORISATION DES PAIEMENTS DES ÉLÈVES</div>
                     <span
                         onClick={() => dispatch({ type: "SET_MODAL_PAIEMENT_CATEGORIES", payload: false })}
-                        className='w-8 h-8 flex justify-center items-center'
+                        className='nodrag w-8 h-8 flex justify-center items-center'
                         style={{
                             float: 'right',
                             backgroundColor: '#780006',

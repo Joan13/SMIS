@@ -176,9 +176,9 @@ class NewPaiements extends Component {
             <div>
                 <table style={{ width: "100%" }}>
                     <thead>
-                        <tr>
-                            <th className='border-none bg-background-50 dark:bg-background-20 pt-3 pb-3'><strong style={{marginLeft:-60}}>Paiement des frais scolaires</strong></th>
-                            <th className='border-none bg-background-50 dark:bg-background-20 pt-3 pb-3'><strong style={{marginLeft:-60}}>Paiement des frais divers</strong></th>
+                        <tr className=' border border-background-50 dark:border-gray-20'>
+                            <th className='border-none bg-background-50 dark:bg-background-20 pt-3 pb-3'><strong style={{ marginLeft: -60 }}>Paiement des frais scolaires</strong></th>
+                            <th className='border-none bg-background-50 dark:bg-background-20 pt-3 pb-3'><strong style={{ marginLeft: -60 }}>Paiement des frais divers</strong></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -218,8 +218,8 @@ class NewPaiements extends Component {
                                                                 }}
                                                                 placeholder="Ex: 130"
                                                                 maxLength={14}
-                                                                className="input-normall w-full  border border-gray-50 dark:border-gray-20"
-                                                                style={{width:'80%'}}
+                                                                className="input-normall w-full border border-gray-50 dark:border-gray-20"
+                                                                style={{ width: '80%' }}
                                                                 type="number" />
                                                         </td>
                                                     </tr>
@@ -250,10 +250,10 @@ class NewPaiements extends Component {
                                                                 <><CircularProgress style={{ color: 'rgb(0, 80, 180)', marginLeft: '35%' }} /><br /></>
                                                                 :
                                                                 <button onClick={() => this.new_paiement()}
-                                                                style={{width: '80%'}}
-                    className='nodrag bg-primary-100 rounded-xl text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md pl-6 pr-6'>
-                    Valider le paiement
-                </button>
+                                                                    style={{ width: '80%' }}
+                                                                    className='nodrag bg-primary-100 rounded-xl text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md pl-6 pr-6'>
+                                                                    Valider le paiement
+                                                                </button>
                                                             }
                                                         </td>
                                                     </tr>
@@ -264,7 +264,7 @@ class NewPaiements extends Component {
                             </td>
 
 
-                            <td valign="top"  className='pl-5 border-l border-gray-50 dark:border-gray-20'>
+                            <td valign="top" className='pl-10 border-l border-gray-50 dark:border-gray-20'>
                                 <table style={{ width: "100%" }}>
                                     <tbody>
                                         <tr>
@@ -289,7 +289,7 @@ class NewPaiements extends Component {
                                                     onChange={(value) => this.setState({ montant_frais: value.target.value })}
                                                     placeholder="Ex: 10"
                                                     className="input-normall w-full  border border-gray-50 dark:border-gray-20"
-                                                                style={{width:'80%'}}
+                                                    style={{ width: '80%' }}
                                                     type="number" />
                                             </td>
                                         </tr>
@@ -313,10 +313,10 @@ class NewPaiements extends Component {
                                                     <><CircularProgress style={{ color: 'rgb(51 143 255)', marginLeft: '35%' }} /><br /></>
                                                     :
                                                     <button onClick={() => this.new_frais_divers()}
-                                                                style={{width: '80%'}}
-                    className='nodrag bg-primary-100 rounded-xl text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md pl-6 pr-6'>
-                    Enregistrer les frais
-                </button>
+                                                        style={{ width: '80%' }}
+                                                        className='nodrag bg-primary-100 rounded-xl text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md pl-6 pr-6'>
+                                                        Enregistrer les frais
+                                                    </button>
                                                 }
                                             </td>
                                         </tr>

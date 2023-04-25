@@ -6,6 +6,7 @@ import { format_date, find_date, find_date2, http } from '../../global_vars';
 import { mapStateToProps } from '../../store/state_props';
 import GeneralStatsCaisse from './general_stats';
 import PaiementsDay from './paiements_day';
+import Calendar from 'react-calendar';
 
 class StatistiquesCaisse extends React.Component {
 
@@ -111,25 +112,26 @@ class StatistiquesCaisse extends React.Component {
                                     this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "État général de caisse" });
                                     this.setState({ stats_tab: 1 });
                                 }}
-                                style={{ fontWeight: 'bold' }}>
-                                <span className="add-minus"><FiChevronRight /> État général de caisse</span>
+                                style={{ fontWeight: 'bold' }} className="flex text-text-50 items-center">
+                               <FiChevronRight /> <span> État général de caisse</span>
                             </div>
                             :
                             <div
                                 onClick={() => this.setState({ stats_tab: 0 })}
-                                style={{ fontWeight: 'bold' }}>
-                                <span className="add-minus"><FiChevronLeft /> État Journalier de paiement</span>
+                                style={{ fontWeight: 'bold' }}  className="flex text-text-50 items-center">
+                               <FiChevronLeft /> <span> État Journalier de paiement</span>
                             </div>}
 
                         {this.state.stats_tab === 0 ?
                             <div>
-                                <div style={{ marginBottom: 10, float: 'right', marginRight: 20, marginTop: -15 }}>
+                                <div style={{ marginBottom: 10, float: 'right',  marginTop: -15 }}>
                                     Sélectionner une date<br />
-                                    <input type="date" className='input-normall' style={{ paddingRight: 15 }} onChange={(text) => this.generate_day_stats(text.target.value)} />
+                                    <input type="date" name="day_choose_caisse" className='mt-2 text-right bg-background-100 dark:bg-background-20 pl-4 pr-4 pt-2 pb-2 outline-none rounded-lg border border-gray-50 dark:border-gray-20' onChange={(text) => this.generate_day_stats(text.target.value)} />
                                 </div><br /><br />
+                                
                                 <div style={{ marginTop: 70, marginBottom: 70, textAlign: 'center', fontWeight: 'bold', fontSize: 17 }}>
                                     Montant total perçu dans la journée du {find_date2(this.props.day)}<br />
-                                    <strong style={{ color: "rgb(0, 80, 180)", fontSize: 22 }}>{this.state.makuta_day} dollars Américains</strong><br />
+                                    <strong className='text-3xl text-text-50'>{this.state.makuta_day} dollars Américains</strong><br />
 
                                     {this.state.loading_stats_day ?
                                         <div>

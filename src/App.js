@@ -22,7 +22,7 @@ const App = () => {
       </HashRouter>
 
       {modal_view.modal_view ?
-        <div className="main-div-modal">
+        <div className="main-div-modal nodrag">
           {ModalView(modal_view.modal_title, modal_view.modal_main_text)}
         </div> : null}
     </div>

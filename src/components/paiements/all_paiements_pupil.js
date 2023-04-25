@@ -202,7 +202,7 @@ const AllPupilPaiements = () => {
                                                                     <td style={{ width: '50%' }} valign="top"><span className='text-gray-100'>Solde année :</span> <strong>{pupil.soldes.solde} dollars USD</strong>
                                                                     </td>
                                                                     <td><span className='text-gray-100'>Solde par trimestre</span>    <FaArrowDown size={10} style={{ marginLeft: 5 }} /><br />
-                                                                        <div style={{ marginTop: 5, paddingTop: 2 }} className="td-border-left-top dispp">
+                                                                        <div style={{ marginTop: 5, paddingTop: 2 }} className="td-border-left-topppp dispp border-t border-gray-50 dark:border-gray-20 pt-5">
                                                                             <span>T1 : <strong>{pupil.soldes.solde1}</strong></span><span style={{ marginLeft: 20, marginRight: 20, color: 'gray' }}> | </span>
                                                                             <span>T2 : <strong>{pupil.soldes.solde2}</strong></span><span style={{ marginLeft: 20, marginRight: 20, color: 'gray' }}> | </span>
                                                                             <span>T3 : <strong>{pupil.soldes.solde3}</strong></span>

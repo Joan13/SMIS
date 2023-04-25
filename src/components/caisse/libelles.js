@@ -52,7 +52,7 @@ const Libelles = () => {
                 <div style={{ margin: 20, marginTop: 10 }}>
                     <div className='w-full flex items-center justify-center'>
                         <div className='w-full text-center font-bold text-lg'>LIBELLES</div>
-                        <div className='w-8 h-8 flex justify-center items-center'
+                        <div className='nodrag w-8 h-8 flex justify-center items-center'
                             onClick={() => dispatch({ type: "SET_MODAL_LIBELLES", payload: false })}
                             style={{
                                 backgroundColor: '#780006',

@@ -259,9 +259,8 @@ const Signin = () => {
                         <button onClick={() => {
                             const { ipcRenderer } = window.require("electron");
                             const ipc = ipcRenderer;
-                            ipc.send('closeApp');
-                        }}
-                            className='nodrag p-3 pl-5 pr-5 flex items-center justify-center bg-background-100 hover:scale-100 active:scale-100 duration-300 rounded-xl text-text-100 hover:text-text-20 hover:bg-error'>
+                            ipc.send('closeApp');}}
+                            className='nodrag p-3 pl-5 pr-5 flex items-center justify-center bg-background-100 active:scale-100 duration-300 rounded-xl text-text-100 hover:text-text-20 hover:bg-error'>
                             <div className='mr-2 bg-errror text-background-100 rounded-full p-1'>
                                 <FiX />
                             </div>

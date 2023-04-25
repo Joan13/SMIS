@@ -169,16 +169,21 @@ const GeneralStatsCaisse = () => {
         <div>
             <div>
                 {!loading_stats ?
-                    <div style={{ float: 'right', }}>
-                        <span style={{ color: 'rgb(0, 80, 180)', cursor: 'pointer', marginRight: 20 }} onClick={() => setFilters(!filters)}>FILTRER LES FICHES</span>
+                    <div style={{ float: 'right', }} className="flex mb-4 text-text-50">
+                        <span style={{ cursor: 'pointer', marginRight: 20 }} onClick={() => setFilters(!filters)}>FILTRER LES FICHES</span>
 
                         {filters ?
-                        <span onClick={() => printContent("filter-data")} className="add-minus" style={{ fontWeight: 'bold', float: 'right' }}>
-                        <FiPrinter /> IMPRIMER LA FICHE
-                    </span>:
-                    <span onClick={() => printContent("general-stats")} className="add-minus" style={{ fontWeight: 'bold', float: 'right' }}>
-                    <FiPrinter /> IMPRIMER LA FICHE
-                </span>}
+                        <div className="flex text-text-50 items-center">
+                        <FiPrinter /> <span onClick={() => printContent("filter-data")} style={{ fontWeight: 'bold', float: 'right' }}>
+                         IMPRIMER LA FICHE
+                       </span>
+                       </div>
+                    :
+                    <div  className="flex text-text-50 items-center">
+                    <FiPrinter /> <span onClick={() => printContent("general-stats")} style={{ fontWeight: 'bold', float: 'right' }}>
+                     IMPRIMER LA FICHE
+                </span>
+                </div>}
                     </div> : null}
             </div>
 
