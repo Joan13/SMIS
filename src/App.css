@@ -312,17 +312,16 @@ h5 {
 }
 
 .footer-rights {
-  width: 75%;
   position: fixed;
   display: flex;
   left: 25%;
+  right: 0px;
   height: 30px;
   bottom: 0px;
   margin-top: 70px;
   justify-content: flex-end;
   align-items: center ;
   text-align: right;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .float-menu-topbar {

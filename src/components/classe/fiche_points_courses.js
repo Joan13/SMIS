@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { http } from '../../global_vars';
 import { useEffect, useState } from 'react';
 import { FaChevronCircleLeft } from 'react-icons/fa';
+import ButtonNormal from '../includes/button_normal';
 
 const FichesPointsCourses = () => {
 
@@ -148,8 +149,8 @@ const FichesPointsCourses = () => {
 
         let totall = findCourse(course).total_marks;
 
-        if(period === 10 || period === 11)
-            totall = parseInt(findCourse(course).total_marks*2);
+        if (period === 10 || period === 11)
+            totall = parseInt(findCourse(course).total_marks * 2);
 
         const main_marks = global_marks.filter(marks => marks.id === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period));
         if (main_marks.length !== 0) {
@@ -335,14 +336,14 @@ const FichesPointsCourses = () => {
                                     </table>
                                 </td>
                                 <td valign="top" style={{ paddingLeft: 30 }} className="td-pupils">
-                                    <strong onClick={() =>
-                                        set_page(1, "", true, false)
-                                    } style={{ color: 'rgba(0, 80, 180)' }} className="select-no-border-bold">
+                                    <div
+                                        className='font-bold flex items-center mb-10 cursor-pointer text-primary-50'
+                                        onClick={() => set_page(1, "", true, false)}>
                                         <FaChevronCircleLeft style={{ marginRight: 7 }} />
-                                        Revenir en arrière
-                                    </strong><br />
+                                        <strong> Revenir en arrière </strong>
+                                    </div>
 
-                                    <h3>Liste des Cours</h3>
+                                    {/* <h3>Liste des Cours</h3> */}
                                     {classe.data.courses.map((course, index) => (
                                         <span style={{ marginBottom: 13 }} onClick={() => {
                                             setMarks_edit([]);
@@ -359,7 +360,7 @@ const FichesPointsCourses = () => {
                     {marks_edit.lengh !== 0 ?
                         <div style={{ textAlign: 'right', paddingRight: 7 }}>
                             {errors.length === 0 ?
-                                <button className='button-enter-marks' onClick={() => edit_marks()}>Finir et envoyer</button>
+                            <ButtonNormal text="Finir et envoyer" onPress={() => edit_marks()} />
                                 :
                                 <div style={{ color: 'red', fontWeight: 'bold', marginTop: 10 }}>
                                     Il y a {errors.length} erreur{errors.length > 1 ? "s" : ""} dans vos entrées<br />

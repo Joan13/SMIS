@@ -3,6 +3,7 @@ import { home_redirect, http } from '../../global_vars';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../store/state_props';
 import { CircularProgress } from '@material-ui/core';
+import PrintDocument from '../includes/print';
 
 class PalmaresPupils extends Component {
 
@@ -247,22 +248,22 @@ class PalmaresPupils extends Component {
         return return_value;
     }
 
-    maxima=(period)=> {
+    maxima = (period) => {
         let total = 0;
         let considered = 0;
         let moins = 0;
-        
+
         for (let i in this.props.classe.data.courses) {
             total = total + parseInt(this.props.classe.data.courses[i].total_marks);
-            
-            if(parseInt(this.props.classe.data.courses[i].considered) === 5) {
+
+            if (parseInt(this.props.classe.data.courses[i].considered) === 5) {
                 considered = parseInt(this.props.classe.data.courses[i].considered);
                 moins = parseInt(this.props.classe.data.courses[i].total_marks) * 2;
             }
         }
 
         if (parseInt(period) === 40 || parseInt(period) === 50) {
-            if(considered === 5) {
+            if (considered === 5) {
                 total = (total * 4) - moins;
             } else {
                 total = (total * 4) - moins;
@@ -270,7 +271,7 @@ class PalmaresPupils extends Component {
         }
 
         if (parseInt(period) === 10 || parseInt(period) === 11) {
-            if(considered === 5) {
+            if (considered === 5) {
                 total = (total * 2) - moins;
             } else {
                 total = (total * 2) - moins;
@@ -299,15 +300,14 @@ class PalmaresPupils extends Component {
 
     render() {
         return (
-            <div style={{marginBottom:50,marginTop:10}}>
+            <div style={{ marginBottom: 50, marginTop: 10 }}>
                 {!this.props.loading_footer ?
-                    <div>
+                    <div><PrintDocument div={"print-palmares"} /> <br /><br />
                         <div className="float-menu-right">
                             <select
                                 onChange={(val) => this.assign_periode(val.target.value)}
-                                style={{ color: 'rgba(0, 80, 180)' }}
                                 value={this.state.periode}
-                                className="select-no-border-select">
+                                className="select-no-border-select border-none dark:bg-background-20 bg-background-100">
                                 <option value="1">Première période</option>
                                 <option value="2">Deuxième période</option>
                                 <option value="3">Troisième période</option>
@@ -321,12 +321,10 @@ class PalmaresPupils extends Component {
                             </select>
                         </div>
 
-                        <div onClick={() => this.printContent("print-palmares")} className="span-blockk">
-                            IMPRIMER
-                        </div>
 
 
-                        <div id="print-palmares" style={{ marginTop: -20 }}>
+
+                        <div id="print-palmares" style={{ marginTop: 0 }}>
 
                             <div>
                                 <strong>{this.props.autres.school_name}</strong><br />
@@ -334,7 +332,7 @@ class PalmaresPupils extends Component {
                                 {/* <strong>{this.props.autres.school_commune}</strong> */}
                             </div>
 
-                            <div className="float-right-div" style={{marginTop:-20}}>
+                            <div className="float-right-div" style={{ marginTop: -20 }}>
                                 <strong>{this.props.classe.class_id + " " + this.props.classe.section_id + " " + this.props.classe.order_id}</strong><br />
                                 <strong>Année scolaire : {this.props.autres.annee}</strong>
                             </div>

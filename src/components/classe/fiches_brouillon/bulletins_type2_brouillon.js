@@ -177,7 +177,7 @@ class BulletinsType2Brouillon extends React.Component {
 
         for (let i in this.props.classe.data.pupils_marks) {
             if ((this.props.classe.data.pupils_marks[i].pupil == pupil_id) && (this.props.classe.data.pupils_marks[i].course == sub_domain.course_1 || this.props.classe.data.pupils_marks[i].course == sub_domain.course_2 || this.props.classe.data.pupils_marks[i].course == sub_domain.course_3 || this.props.classe.data.pupils_marks[i].course == sub_domain.course_4 || this.props.classe.data.pupils_marks[i].course == sub_domain.course_5 || this.props.classe.data.pupils_marks[i].course == sub_domain.course_6 || this.props.classe.data.pupils_marks[i].course == sub_domain.course_7 || this.props.classe.data.pupils_marks[i].course == sub_domain.course_8 || this.props.classe.data.pupils_marks[i].course == sub_domain.course_9 || this.props.classe.data.pupils_marks[i].course == sub_domain.course_10) && (this.props.classe.data.pupils_marks[i].school_period == periode)) {
-                return_value =  return_value + parseInt(this.props.classe.data.pupils_marks[i].main_marks);
+                return_value = return_value + parseInt(this.props.classe.data.pupils_marks[i].main_marks);
             }
         }
 
@@ -613,7 +613,7 @@ class BulletinsType2Brouillon extends React.Component {
                                         </tr>
                                     </table>
 
-                                    <table className="className_table" style={{width:'100%'}}>
+                                    <table className="className_table" style={{ width: '100%' }}>
                                         <tr>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold' }}>
                                                 <span>BULLETIN DE LA {this.props.classe.class_id} ANNÉE HUMANITÉ {this.props.classe.section_id.toUpperCase()}<span
@@ -623,7 +623,7 @@ class BulletinsType2Brouillon extends React.Component {
                                         </tr>
                                     </table>
 
-                                    <table className="className_table" style={{width:'100%'}}>
+                                    <table className="className_table" style={{ width: '100%' }}>
                                         <tr>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', minWidth: 150 }} rowSpan="3" className="standard-td-top">
                                                 BRANCHES
@@ -659,10 +659,10 @@ class BulletinsType2Brouillon extends React.Component {
 									MAX.<br />
 								</td> */}
 
-                                <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 2, paddingRight: 2 }} rowSpan="2" className="standard-td-top">
+                                            <td style={{ textAlign: 'center', fontWeight: 'bold', paddingLeft: 2, paddingRight: 2 }} rowSpan="2" className="standard-td-top">
                                                 MAX.
                                             </td>
-                                            
+
                                             <td style={{ textAlign: 'center', fontWeight: 'bold' }} colSpan="2" className="standard-td-top">
                                                 TRAVAUX JOURNAL.<br />
                                             </td>
@@ -744,162 +744,163 @@ class BulletinsType2Brouillon extends React.Component {
                                             }
                                             return [
                                                 show_domain ?
-                                                                            <tr>
-                                                                                <td className='td-border' style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 11,backgroundColor:'rgba(0,0,0,0.15)' }} colSpan={20}>{domain.domain_name.toUpperCase()}</td>
-                                                                            </tr> : null,
+                                                    <tr>
+                                                        <td className='td-border' style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 11, backgroundColor: 'rgba(0,0,0,0.15)' }} colSpan={20}>{domain.domain_name.toUpperCase()}</td>
+                                                    </tr> : null,
                                                 this.props.classe.data.sub_domains.map((sub_domain, index_sub_domain) => {
 
-                                                    if(parseInt(sub_domain.domain_id) === parseInt(domain.domain_id)){
-                                                    show_sub_domain = false;
-                                                    if (sdomain !== parseInt(sub_domain.sub_domain_id)) {
-                                                        sdomain = parseInt(sub_domain.sub_domain_id);
-                                                        show_sub_domain = true;
+                                                    if (parseInt(sub_domain.domain_id) === parseInt(domain.domain_id)) {
+                                                        show_sub_domain = false;
+                                                        if (sdomain !== parseInt(sub_domain.sub_domain_id)) {
+                                                            sdomain = parseInt(sub_domain.sub_domain_id);
+                                                            show_sub_domain = true;
+                                                        }
+
+                                                        let dd = "";
+                                                        let show_sous_total = false;
+
+                                                        if (sub_domain.course_2 === "") {
+                                                            dd = sub_domain.course_1;
+                                                            show_sous_total = true;
+                                                        }
+
+                                                        else if (sub_domain.course_3 === "") {
+                                                            dd = sub_domain.course_2;
+                                                            show_sous_total = true;
+                                                        }
+
+                                                        else if (sub_domain.course_4 === "") {
+                                                            dd = sub_domain.course_3;
+                                                            show_sous_total = true;
+                                                        }
+
+                                                        else if (sub_domain.course_5 === "") {
+                                                            dd = sub_domain.course_4;
+                                                            show_sous_total = true;
+                                                        }
+
+                                                        else if (sub_domain.course_6 === "") {
+                                                            dd = sub_domain.course_5;
+                                                            show_sous_total = true;
+                                                        }
+
+                                                        else if (sub_domain.course_7 === "") {
+                                                            dd = sub_domain.course_6;
+                                                            show_sous_total = true;
+                                                        }
+
+                                                        else if (sub_domain.course_8 === "") {
+                                                            dd = sub_domain.course_7;
+                                                            show_sous_total = true;
+                                                        }
+
+                                                        else if (sub_domain.course_9 === "") {
+                                                            dd = sub_domain.course_8;
+                                                            show_sous_total = true;
+                                                        }
+
+                                                        else if (sub_domain.course_10 === "") {
+                                                            dd = sub_domain.course_9;
+                                                            show_sous_total = true;
+                                                        }
+
+                                                        else {
+                                                            dd = sub_domain.course_10;
+                                                            show_sous_total = true;
+                                                        }
+
+                                                        return [
+                                                            show_sub_domain && sub_domain.sub_domain_name != "" ?
+                                                                <tr>
+                                                                    <td className='td-border' style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 11, backgroundColor: 'rgba(0,0,0,0.15)' }} colSpan={20}>{sub_domain.sub_domain_name}</td>
+                                                                </tr> : null,
+                                                            this.props.classe.courses.map((course, index) => {
+
+                                                                if (sub_domain.course_1 == course.course_id || sub_domain.course_2 == course.course_id || sub_domain.course_3 == course.course_id || sub_domain.course_4 == course.course_id || sub_domain.course_5 == course.course_id || sub_domain.course_6 == course.course_id) {
+                                                                    return [
+                                                                        <tr key={index}>
+                                                                            <td className="td-border" style={{ fontSize: 11, paddingLeft: 10 }}>{course.course_name}</td>
+
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{course.total_marks}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span></span></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span></span></td>
+                                                                            {/* <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "10")}</span></td> */}
+
+                                                                            {
+                                                                                course.considered !== "5" ?
+                                                                                    <>
+                                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 2}</strong></td>
+                                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
+                                                                                    </>
+                                                                                    :
+                                                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                                                        <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                                    </td>
+                                                                            }
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 4}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
+
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks)}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span></span></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span></span></td>
+                                                                            {
+                                                                                course.considered !== "5" ?
+                                                                                    <>
+                                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 2}</strong></td>
+                                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
+                                                                                    </>
+
+                                                                                    : <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                                                        <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                                    </td>
+                                                                            }
+
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 4}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 8}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
+                                                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                            </td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center', width: 20 }}><span></span></td>
+                                                                            <td style={{ textAlign: 'center', fontWeight: 'bold', backgroundColor: 'transparent' }} className="td-border">
+                                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    ]
+                                                                }
+                                                            })
+                                                            ,
+                                                            show_sous_total ?
+                                                                <tr>
+                                                                    <td className='td-border' style={{ fontWeight: 'bold', fontSize: 11, backgroundColor: 'rgba(0,0,0,0.15)', paddingLeft: 10 }}>Sous-total</td>
+                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{sub_domain.total_marks}</strong></td>
+                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
+                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
+                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 2}</strong></td>
+                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
+                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 4}</strong></td>
+                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
+
+                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{sub_domain.total_marks}</strong></td>
+                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
+                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
+                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 2}</strong></td>
+                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
+                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 4}</strong></td>
+                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
+
+                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 8}</strong></td>
+                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
+                                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
+                                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
+                                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
+                                                                </tr>
+                                                                : null
+                                                        ]
                                                     }
-
-let dd = "";
-let show_sous_total = false;
-
-if(sub_domain.course_2 === "") {
-    dd = sub_domain.course_1;
-show_sous_total=true;
-}
-
-else if(sub_domain.course_3 === "") {
-    dd = sub_domain.course_2;
-    show_sous_total=true;
-}
-
-else if(sub_domain.course_4 === "") {
-    dd = sub_domain.course_3;
-    show_sous_total=true;
-}
-
-else if(sub_domain.course_5 === "") {
-    dd = sub_domain.course_4;
-    show_sous_total=true;
-}
-
-else if(sub_domain.course_6 === "") {
-    dd = sub_domain.course_5;
-    show_sous_total=true;
-}
-
-else if(sub_domain.course_7 === "") {
-    dd = sub_domain.course_6;
-    show_sous_total=true;
-}
-
-else if(sub_domain.course_8 === "") {
-    dd = sub_domain.course_7;
-    show_sous_total=true;
-}
-
-else if(sub_domain.course_9 === "") {
-    dd = sub_domain.course_8;
-    show_sous_total=true;
-}
-
-else if(sub_domain.course_10 === "") {
-    dd = sub_domain.course_9;
-    show_sous_total=true;
-}
-
-else {
-    dd = sub_domain.course_10;
-    show_sous_total=true;
-}
-
-                                                    return [
-                                                        show_sub_domain && sub_domain.sub_domain_name != "" ?
-                                                                            <tr>
-                                                                                <td className='td-border' style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 11,backgroundColor:'rgba(0,0,0,0.15)' }} colSpan={20}>{sub_domain.sub_domain_name}</td>
-                                                                            </tr> : null,
-                                                        this.props.classe.courses.map((course, index) => {
-
-                                                            if (sub_domain.course_1 == course.course_id || sub_domain.course_2 == course.course_id || sub_domain.course_3 == course.course_id || sub_domain.course_4 == course.course_id || sub_domain.course_5 == course.course_id || sub_domain.course_6 == course.course_id) {
-                                                                return [
-                                                                    <tr key={index}>
-                                                                        <td className="td-border" style={{ fontSize: 11, paddingLeft: 10 }}>{course.course_name}</td>
-
-                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{course.total_marks}</strong></td>
-                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span></span></td>
-                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span></span></td>
-                                                                        {/* <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "10")}</span></td> */}
-
-                                                                        {
-                                                                            course.considered !== "5" ?
-                                                                            <>
-                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) *2}</strong></td>
-                                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
-                                                                                </>
-                                                                                : 
-                                                                                <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                                    <span style={{ color: 'black', color: 'transparent' }}>00</span>
-                                                                                </td>
-                                                                        }
-                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) *4}</strong></td>
-                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
-
-                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks)}</strong></td>
-                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span></span></td>
-                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span></span></td>
-                                                                        {
-                                                                            course.considered !== "5" ?
-                                                                            <>
-                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) *2}</strong></td>
-                                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
-                                                                             </>
-                                                                               
-                                                                                : <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                                    <span style={{ color: 'black', color: 'transparent' }}>00</span>
-                                                                                </td>
-                                                                        }
-
-                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) *4}</strong></td>
-                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
-                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) *8}</strong></td>
-                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
-                                                                        <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                            <span style={{ color: 'black', color: 'transparent' }}>00</span>
-                                                                        </td>
-                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center',width:20 }}><span></span></td>
-                                                                        <td style={{ textAlign: 'center', fontWeight: 'bold', backgroundColor: 'transparent' }} className="td-border">
-                                                                            <span style={{ color: 'black', color: 'transparent' }}>00</span>
-                                                                        </td>
-                                                                    </tr>
-                                                                   
-                                                                ]
-                                                            }
-                                                        })
-                                                        ,
-                                                                    show_sous_total ?
-    <tr>
-    <td className='td-border' style={{ fontWeight: 'bold', fontSize: 11,backgroundColor:'rgba(0,0,0,0.15)',paddingLeft:10 }}>Sous-total</td>
-    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{sub_domain.total_marks}</strong></td>
-    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
-    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
-    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks)*2}</strong></td>
-    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
-    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks)*4}</strong></td>
-    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
-
-    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{sub_domain.total_marks}</strong></td>
-    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
-    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
-    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks)*2}</strong></td>
-    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
-    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks)*4}</strong></td>
-    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
-
-    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks)*8}</strong></td>
-    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
-    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
-    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
-    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
-    </tr>
- :null
-                                            ]
-                                        }})
+                                                })
                                             ]
                                         })}
 
@@ -1050,7 +1051,7 @@ else {
                                                 }
                                             })}
 
-<td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
+                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
 
                                             {this.props.classe.data.array_places_11.map((place, index_p) => {
                                                 if (place.pupil_id == pupil.pupil.pupil_id) {
@@ -1087,15 +1088,15 @@ else {
                                         <tr>
                                             <td className="td-border" style={{ fontSize: 11, paddingLeft: 10 }}><strong>APPLICATION</strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_application_periode(pupil.pupil.pupil_id, 1)}</strong></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_application_periode(pupil.pupil.pupil_id, 2)}</strong></td>
+                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong> </strong></td>
+                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong> </strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_application_periode(pupil.pupil.pupil_id, 3)}</strong></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_application_periode(pupil.pupil.pupil_id, 4)}</strong></td>
+                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong> </strong></td>
+                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong> </strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
@@ -1110,15 +1111,15 @@ else {
                                         <tr>
                                             <td className="td-border" style={{ fontSize: 11, paddingLeft: 10 }}><strong>CONDUITE</strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_conduite(pupil.pupil.pupil_id, 1)}</strong></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_conduite(pupil.pupil.pupil_id, 2)}</strong></td>
+                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong> </strong></td>
+                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong> </strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_conduite(pupil.pupil.pupil_id, 3)}</strong></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_conduite(pupil.pupil.pupil_id, 4)}</strong></td>
+                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong> </strong></td>
+                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong> </strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'black', color: 'transparent' }}>00</span></td>
@@ -1157,30 +1158,30 @@ else {
                                         <tr>
                                             <td colSpan="4" style={{ width: '100%' }}>
 
-{this.props.classe.class === '2' ?
-<table style={{fontSize:10,borderCollapse:'collapse',marginLeft:15}}>
-<caption>(I) RÉSULTAT DE L'EXAMEN DE FIN DE CYCLE DE SECONDAIRE GÉNÉRAL</caption>
-<tr>
-    <th className="td-border" style={{textAlign:'left'}}>RÉSULTAT FINAL</th>
-    <th className="td-border" style={{paddingHorizontal:15,}}>POINTS OBTENUS</th>
-    <th className="td-border">MAXIMA</th>
-</tr>
-<tr>
-<td className="td-border">MOYENNE ÉCOLE</td>
-<td className="td-border"></td>
-<td className="td-border" style={{textAlign:'center'}}><strong>50</strong></td>
-</tr>
-<tr>
-<td className="td-border">MOYENNE EXAMEN DE FIN DE CYCLE</td>
-<td className="td-border"></td>
-<td className="td-border" style={{textAlign:'center'}}><strong>50</strong></td>
-</tr>
-<tr>
-<td className="td-border"><strong>TOTAL</strong></td>
-<td className="td-border"></td>
-<td className="td-border" style={{textAlign:'center'}}><strong>100</strong></td>
-</tr>
-</table>:null}
+                                                {this.props.classe.class === '2' ?
+                                                    <table style={{ fontSize: 10, borderCollapse: 'collapse', marginLeft: 15 }}>
+                                                        <caption>(I) RÉSULTAT DE L'EXAMEN DE FIN DE CYCLE DE SECONDAIRE GÉNÉRAL</caption>
+                                                        <tr>
+                                                            <th className="td-border" style={{ textAlign: 'left' }}>RÉSULTAT FINAL</th>
+                                                            <th className="td-border" style={{ paddingHorizontal: 15, }}>POINTS OBTENUS</th>
+                                                            <th className="td-border">MAXIMA</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td className="td-border">MOYENNE ÉCOLE</td>
+                                                            <td className="td-border"></td>
+                                                            <td className="td-border" style={{ textAlign: 'center' }}><strong>50</strong></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td className="td-border">MOYENNE EXAMEN DE FIN DE CYCLE</td>
+                                                            <td className="td-border"></td>
+                                                            <td className="td-border" style={{ textAlign: 'center' }}><strong>50</strong></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td className="td-border"><strong>TOTAL</strong></td>
+                                                            <td className="td-border"></td>
+                                                            <td className="td-border" style={{ textAlign: 'center' }}><strong>100</strong></td>
+                                                        </tr>
+                                                    </table> : null}
 
                                                 <div style={{ fontSize: 11, textAlign: 'left', paddingRight: 10, width: '100%', paddingLeft: 10, paddingBottom: 0, paddingTop: 0 }}>
                                                     {this.findConseil(pupil.pupil.pupil_id) !== "6" ?

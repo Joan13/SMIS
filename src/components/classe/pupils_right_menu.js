@@ -1,4 +1,4 @@
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, LinearProgress } from '@material-ui/core';
 import React from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
@@ -75,16 +75,16 @@ const PupilsRightMenu = () => {
             <div>
                 <strong>Tous les élèves ({pupils_count})</strong>
 
-                <div style={{ marginTop: 10 }} className="div-search">
-                    <FaSearch color="gray" style={{ marginLeft: 10, marginRight: 10, alignSelf: 'center' }} />
+                <div className={`mt-5 flex w-auto mr-5 pl-3 items-center border rounded-t-lg border-gray-50 dark:border-gray-20`}>
+                    <FaSearch color="gray" />
 
                     <input
                         onChange={(val) => searchPupil(val.target.value)}
-                        style={{ backgroundColor: 'transparent' }}
+                        className='pl-5 w-full bg-background-100 dark:bg-background-20 h-12 rounded-t-lg outline-none'
                         placeholder="Recherchez un élève" />
-
-                    {searching_pupil ?
-                        <CircularProgress size={20} style={{ color: "rgb(0, 80, 180)", marginLeft: 10, marginRight: 10, alignSelf: 'center' }} /> : null}
+                </div>
+                <div className={`mb-5 mr-5 h-2  ${!searching_pupil ? "" : ""}`}>
+                    {searching_pupil ? <LinearProgress /> : null}
                 </div>
                 <div style={{ marginLeft: 10 }}>
                     <table>

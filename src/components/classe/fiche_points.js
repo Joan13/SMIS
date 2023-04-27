@@ -4,6 +4,7 @@ import { home_redirect, http } from '../../global_vars';
 import { useEffect, useState } from 'react';
 import { FaChevronCircleLeft } from 'react-icons/fa';
 import { FiPrinter } from 'react-icons/fi';
+import PrintDocument from '../includes/print';
 
 const FichesPoints = () => {
 
@@ -313,15 +314,16 @@ const FichesPoints = () => {
         <div style={{ marginBottom: 50, paddingTop: 10, width: '100%' }}>
             {!loading_footer ?
                 <div>
+                    <PrintDocument div={"fiche-points-print"} /> <br/><br/>
                     <div className="float-menu-right">
                         <select
                             onChange={(val) => {
                                 setEchecs([]);
                                 setPeriode(val.target.value);
                             }}
-                            style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white', textAlign: 'right' }}
+                            style={{ backgroundColor: 'white', textAlign: 'right' }}
                             value={periode}
-                            className="select-no-border-select">
+                            className="select-no-border-select border-none bg-background-100 dark:bg-background-20 ">
                             <option value="100">Toute l'année</option>
                             <option>- - - - - - - - - - - -</option>
                             <option value="1">Première période</option>
@@ -335,12 +337,7 @@ const FichesPoints = () => {
                             <option value="40">Premier semestre</option>
                             <option value="50">Deuxième semestre</option>
                         </select>
-
                     </div>
-
-                    <span onClick={() => printContent("fiche-points-print")} className="add-minus" style={{ fontWeight: 'bold' }}>
-                        <FiPrinter /> IMPRIMER LES BULLETINS
-                    </span><br /><br />
 
                     <div id="fiche-points-print">
                         <table className="fiche-pointsdede" style={{ width: '100%' }}>

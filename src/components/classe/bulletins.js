@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import BulletinsType2 from './bulletins_type2';
 import { CircularProgress } from '@material-ui/core';
 import { PreviewA4 } from '@diagoriente/react-preview-a4';
+import PrintDocument from '../includes/print';
 
 let max = 0;
 let can_show = false;
@@ -545,9 +546,8 @@ class Bulletins extends React.Component {
                             </select><br /><br />
                         </div>
 
-                        <span onClick={() => this.printContent("bulletins-p")} className="add-minus" style={{ fontWeight: 'bold' }}>
-                            IMPRIMER LES BULLETINS
-                        </span><br /><br />
+                        <PrintDocument div={"bulletins-p"} /> 
+                        <br /><br />
 
                         {this.props.classe.data.domains.length !== 0 ?
                             <BulletinsType2 />

@@ -156,15 +156,14 @@ const StatistiquesCaisse = () => {
                         <FiChevronRight /> <span className={`${stats_tab === 1 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3`}> État général de caisse</span>
                     </div> :
 
-                <div
-                    onClick={() => setStats_tab(0)}
-                    style={{ fontWeight: 'bold' }} className="flex text-text-50 ">
-                    {stats_tab === 0 ? <FiChevronRight /> : <FiChevronLeft />} <span className={`${stats_tab === 0 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3`}> État Journalier de paiement</span>
-                </div>}
+                    <div
+                        onClick={() => setStats_tab(0)}
+                        style={{ fontWeight: 'bold' }} className="flex text-text-50 ">
+                        {stats_tab === 0 ? <FiChevronRight /> : <FiChevronLeft />} <span className={`${stats_tab === 0 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3`}> État Journalier de paiement</span>
+                    </div>}
             </div>
 
-            {stats_tab === 0 ? <PaiementsDay /> :
-                <GeneralStatsCaisse tab={tab} />}
+            {stats_tab === 0 ? <PaiementsDay /> : <GeneralStatsCaisse tab={tab} />}
         </div>
     )
 }

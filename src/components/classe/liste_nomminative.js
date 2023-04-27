@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { home_redirect, http } from '../../global_vars';
 import modalView from '../../includes/modal';
 import { mapStateToProps } from '../../store/state_props';
+import PrintDocument from '../includes/print';
 
 class ListeNomminative extends React.Component {
 
@@ -110,9 +111,8 @@ class ListeNomminative extends React.Component {
             <div style={{ marginBottom: 50, paddingTop: 0, marginRight: 10 }}>
 
                 {this.props.classe.pupils_count !== 0 ?
-                    <div onClick={() => this.printContent("nomminative")} style={{ display: 'block', fontWeight: 'bold', float: 'right', marginBottom: -50, paddingTop: 3 }}>
-                        <span className="add-minus" style={{ marginRight: 3 }}><FiPrinter /> IMPRIMER LA FICHE</span>
-                    </div> :
+                    <PrintDocument div={"nomminative"} /> 
+                    :
                     <>
                         <br /><br />
 
@@ -156,7 +156,7 @@ class ListeNomminative extends React.Component {
                                         </thead>
                                         {this.props.classe.pupils.map((pupil, index) => (
                                             <tbody key={index}>
-                                                <tr onClick={() => this.find_pupil(pupil)}>
+                                                <tr className='cursor-pointer' onClick={() => this.find_pupil(pupil)}>
                                                     <td className='border border-gray-50 dark:border-gray-20' style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
                                                     <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name.toUpperCase()}</td>
                                                     <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.second_name.toUpperCase()}</td>

@@ -6,6 +6,7 @@ import { home_redirect, http } from '../../../global_vars';
 import All_paiements_pupil from '../../paiements/all_paiements_pupil';
 import AllClassPaiements from './all_paiements';
 import SoldeTrimesters from './soldes_trimesters';
+import PrintDocument from '../../includes/print';
 
 let paye = 0;
 
@@ -74,17 +75,15 @@ const PaiementsClasse = () => {
                 </div>
                 :
                 <div>
-                    <span onClick={() => printContent("class-paiements")} className="add-minus" style={{ fontWeight: 'bold' }}>
-                        <FiPrinter /> IMPRIMER LA FICHE
-                    </span>
+                    <div style={{ float: 'right' }}>
+                        <PrintDocument div={"classe-paiements"} /><br />
 
-                    {paiements_tab === 0 ?
-                        <div style={{ color: 'rgb(0, 80, 180)', float: 'right', marginTop: 20, cursor: 'pointer' }} onClick={() => setpaiements_tab(1)}>FILTRER LES FICHES</div>
-                        :
-                        <div style={{ color: 'rgb(0, 80, 180)', float: 'right', marginTop: 20, cursor: 'pointer' }} onClick={() => setpaiements_tab(0)}>VOIR TOUTES LES PAIEMENTS</div>}
-
+                        {paiements_tab === 0 ?
+                            <div style={{ float: 'right', marginTop: 10, cursor: 'pointer' }} className='text-primary-50' onClick={() => setpaiements_tab(1)}>FILTRER LES FICHES</div>
+                            :
+                            <div style={{ float: 'right', marginTop: 10, cursor: 'pointer' }} className='text-primary-50' onClick={() => setpaiements_tab(0)}>VOIR TOUTES LES PAIEMENTS</div>}
+                    </div>
                     {paiements_tab === 0 ? <AllClassPaiements /> : <SoldeTrimesters />}
-
                 </div>}
         </div>
     )

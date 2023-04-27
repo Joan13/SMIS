@@ -139,7 +139,9 @@ class NewPupil extends React.Component {
         return (
             <div className="center-fixeddd" style={{ paddingRight: 20 }}>
 
-                <ButtonNormal text="Enregistrer l'élève" style={{ float: 'right', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20, borderTopRightRadius: 0, borderTopLeftRadius: 0 }} onPress={() => this.register_new_pupil()} />
+                <div className='float-right'>
+                    <ButtonNormal text="Enregistrer l'élève" onPress={() => this.register_new_pupil()} />
+                </div>
 
                 <span className="title-background-1">I. DE L'IDENTITÉ DE BASE DE L'ÉLÈVE</span>
                 <table className="tables-new-pupil">

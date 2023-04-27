@@ -22,7 +22,7 @@ const PaiementsDay = () => {
     const cycles = useSelector(state => state.cycles);
     const orders = useSelector(state => state.orders);
     const class_numbers = useSelector(state => state.class_numbers);
-    const [paiements_tab, setPaiements_tab] = useState(0);
+    const [paiements_tab, setPaiements_tab] = useState(3);
     const today = useSelector(state => state.today);
     const makuta_day = useSelector(state => state.makuta_day);
     const [date, setDate] = useState(new Date().getFullYear() + "-" + parseInt(new Date().getMonth() + 1) + "-" + new Date().getDate());
@@ -201,7 +201,7 @@ const PaiementsDay = () => {
                 </div>
             </div>
 
-            {paiements_tab === 0 ?
+            {/* {paiements_tab === 0 ?
                 <div>
                     <div style={{ marginBottom: 10, float: 'right', marginTop: -15 }}>
                         Sélectionner une date<br />
@@ -221,10 +221,6 @@ const PaiementsDay = () => {
 
                     <PrintDocument div={"total-day"} />
                     <div id="total-day" style={{ marginTop: 30 }}>
-                        {/* <table style={{ width: '100%' }}>
-                    <tbody>
-                        <tr>
-                            <td valign="top"> */}
                         <div>
                             <strong>{(autres.school_name).toUpperCase()}</strong><br />
                             <strong>{autres.school_bp}</strong><br />
@@ -261,18 +257,11 @@ const PaiementsDay = () => {
                                 </tr>
                             </tbody>
                         </table>
-                        {/* </td>
-                        </tr>
-                    </tbody>
-                </table> */}
                     </div><br />
-                </div> : null}
+                </div> : null} */}
 
             {paiements_tab === 1 ?
                 <div>
-                    {/* <div onClick={() => printContent("paiements-day")} style={{ fontWeight: 'bold', float: 'right', paddingTop: 30 }}>
-                       <FiPrinter /> <span> IMPRIMER LA FICHE</span>
-                    </div> */}
                     <PrintDocument div={"paiements-day"} />
                     <div id="paiements-day">
                         <table style={{ width: '100%' }} className='w-full'>
@@ -332,12 +321,7 @@ const PaiementsDay = () => {
 
             {paiements_tab === 2 ?
                 <div>
-                    {/* <div onClick={() => printContent("frais-divers-day")} style={{ fontWeight: 'bold', float: 'right', paddingTop: 7, marginTop: 30 }}>
-                        <FiPrinter /> <span className="add-minus"> IMPRIMER LA FICHE</span>
-                    </div> */}
-
                     <PrintDocument div={"frais-divers-day"} />
-
                     <div id="frais-divers-day">
                         <table className='w-full'>
                             <tbody>

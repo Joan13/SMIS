@@ -53,25 +53,17 @@ const SoldeTrimesters = () => {
 
     // console.log(classe.data.solde1);
     return (
-        <div style={{
-            marginTop: '30px',
-        }}>
+        <div>
+            <div className='float-right'>
             <select
                 onChange={(val) => setTrimester(parseInt(val.target.value))}
-                style={{
-                    color: 'rgba(0, 80, 180)',
-                    backgroundColor: 'white',
-                    float: 'right',
-                    textAlign: 'right',
-                    marginBottom: -20
-                }}
                 value={trimester}
-                className="select-no-border-select">
+                className="select-normall min-w-full text-primary-50 font-bold underline">
                 <option value="1">Insolvables T1</option>
                 <option value="2">Insolvables T2</option>
                 <option value="3">Insolvables T3</option>
             </select>
-            {/* </div> */}
+            </div>
 
             <div id="class-paiements">
                 <table style={{ width: '100%' }}>

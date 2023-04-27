@@ -373,7 +373,7 @@ class Courses extends Component {
             <div style={{ marginBottom: 50, marginRight: 10 }} className="div-courses">
                 {!this.props.loading_footer ?
                     <div>
-                        <div className='flex items-center mt-5' style={{marginBottom: -40}}>
+                        <div className='flex items-center mt-5' style={{ marginBottom: -40 }}>
                             <div style={{
                                 fontSize: 15,
                                 fontWeight: 'bold',

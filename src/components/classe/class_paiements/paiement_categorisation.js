@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FiPrinter } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { home_redirect, http } from '../../../global_vars';
+import PrintDocument from '../../includes/print';
 
 const ClassePaiementCategorisation = () => {
 
@@ -80,9 +81,8 @@ const ClassePaiementCategorisation = () => {
     return (
         <div style={{ marginRight: 10, marginBottom: 50 }}>
             <div style={{ float: 'right', marginBottom: -60, paddingTop: 10 }}>
-                <span onClick={() => printContent("paiement_categories")} className="add-minus" style={{ fontWeight: 'bold', marginBottom: 10 }}>
-                    <FiPrinter /> IMPRIMER LA FICHE
-                </span><br /><br />
+            <PrintDocument div={"paiement-categories"} />
+                <br /><br />
             </div>
 
                 <div id="paiement_categories" style={{ marginTop: 0 }}>

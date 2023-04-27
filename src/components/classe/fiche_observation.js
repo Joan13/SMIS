@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { home_redirect, http } from "../../global_vars";
+import PrintDocument from '../includes/print';
 
 export default class FicheObservationPoints extends Component {
 
@@ -293,9 +294,8 @@ export default class FicheObservationPoints extends Component {
         return (
             <div style={{ marginBottom: 50, paddingTop: 10 }}>
 
-                <span onClick={() => this.printContent("observation")} className="add-minus" style={{ fontWeight: 'bold' }}>
-                    IMPRIMER LA FICHE
-                </span><br /><br />
+                <PrintDocument div={"observation"} />
+                <br /><br />
 
                 <div id="observation">
                     <table style={{ width: '100%' }}>

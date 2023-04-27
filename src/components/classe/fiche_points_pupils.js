@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { http } from '../../global_vars';
 import { useEffect, useState } from 'react';
 import { FaChevronCircleLeft } from 'react-icons/fa';
+import ButtonNormal from '../includes/button_normal';
 
 const FichesPointsPupils = () => {
 
@@ -408,14 +409,14 @@ const FichesPointsPupils = () => {
                                     </table>
                                 </td>
                                 <td valign="top" style={{ paddingLeft: 30 }} className="td-pupils">
-                                    <strong onClick={() =>
-                                        set_page(1, "", true, false)
-                                    } style={{ color: 'rgba(0, 80, 180)' }} className="select-no-border-bold">
+                                    <div
+                                        className='font-bold flex items-center mb-10 text-primary-50 cursor-pointer'
+                                        onClick={() => set_page(1, "", true, false)}>
                                         <FaChevronCircleLeft style={{ marginRight: 7 }} />
-                                        Revenir en arrière
-                                    </strong><br />
+                                        <strong> Revenir en arrière </strong>
+                                    </div>
 
-                                    <h3>Liste des élèves</h3>
+                                    {/* <h3>Liste des élèves</h3> */}
                                     {classe.data.pupils.map((pupill, index) => (
                                         <span onClick={() => {
                                             setPupil(pupill);
@@ -431,15 +432,14 @@ const FichesPointsPupils = () => {
 
                     {periode_classique() ?
                         <div style={{ float: 'left' }}>
-                            <button
-                                onClick={() => delete_marks(pupil.pupil.pupil_id, per())}
-                            >Supprimer les points<br />de la période courante<br /> pour l'élève</button>
+                            <button onClick={() => delete_marks(pupil.pupil.pupil_id, per())}>
+                                Supprimer les points<br />de la période courante<br /> pour l'élève</button>
                         </div> : null}
 
                     {marks_edit.lengh !== 0 ?
                         <div style={{ textAlign: 'right', paddingRight: 7 }}>
                             {errors.length === 0 ?
-                                <button className='button-enter-marks' onClick={() => edit_marks()}>Finir et envoyer</button>
+                                <ButtonNormal text="Finir et envoyer" onPress={() => edit_marks()} />
                                 :
                                 <div style={{ color: 'red', fontWeight: 'bold', marginTop: 10 }}>
                                     Il y a {errors.length} erreur{errors.length > 1 ? "s" : ""} dans vos entrées<br />
@@ -453,31 +453,8 @@ const FichesPointsPupils = () => {
                     <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} /><br />
                     Chargement de la fiche des points...
                 </div>}
-            {/* <button className='button-enter-marks' onClick={() => edit_marks()}>Finir et envoyer</button> */}
         </div>
     )
 }
 
 export default FichesPointsPupils;
-
-{/* <h3>Liste des élèves</h3>
-                                {this.props.classe.data.pupils.map((pupil, index) => (
-                                    <span onClick={() => this.setState({ pupil_id: pupil.pupil.pupil_id })} className={`list-pupils ${this.state.pupil_id === pupil.pupil.pupil_id ? "list-pupils-selected" : ""}`} key={pupil.pupil.pupil_id}>{index + 1} {pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</span>
-                                ))} */}
-
-// <h3>Conseil de délibération fin d'année</h3><br/>
-//                 <select
-//                 value={this.findConseil(this.state.pupil_id)}
-//                 onChange={(text) => this.conseil_deliberation(this.state.pupil_id, text.target.value)}
-//                 >
-//                     <option value="">Sélectionner la décision</option>
-//                     <option value="0">L'élève passe dans la classe supérieure</option>
-//                     <option value="1">L'élève double la classe</option>
-//                     <option value="2">L'élève est orienté ailleurs (a échoué)</option>
-//                     <option value="">. . . . . . . . . . . . . . . . . . . .</option>
-//                     <option value="3">L'élève passe dans la classe supérieure</option>
-//                     <option value="4">L'élève double la classe</option>
-//                     <option value="5">L'élève est orienté ailleurs (a échoué)</option>
-//                     <option value="">. . . . . . . . . . . . . . . . . . . .</option>
-//                     <option value="6">Abandon</option>
-//                 </select>

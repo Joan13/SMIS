@@ -1,6 +1,7 @@
 import { connect, useSelector } from 'react-redux';
 import { home_redirect, http } from '../../global_vars'
 import { mapStateToProps } from '../../store/state_props';
+import PrintDocument from '../includes/print';
 function FicheIdentites() {
 
     const autres = useSelector(state => state.autres);
@@ -21,9 +22,8 @@ function FicheIdentites() {
 
     return (
         <div className="center-fixedd" style={{ marginBottom: 50, paddingTop: 0 }}>
-            <span onClick={() => printContent("identities")} className="add-minus" style={{ fontWeight: 'bold' }}>
-                IMPRIMER LA FICHE
-            </span><br /><br />
+            <PrintDocument div={"identities"} /> 
+            <br /><br />
 
             <div id="identities">
                 <table style={{ width: '100%' }}>
