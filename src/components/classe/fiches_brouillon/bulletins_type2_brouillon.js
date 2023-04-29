@@ -487,7 +487,7 @@ class BulletinsType2Brouillon extends React.Component {
                     <span style={{ marginLeft: 20 }} onClick={() => this.setState({ bulletins_show: this.state.increment_val })} className="add-minus">Valider</span>
                     <span onClick={() => this.setState({ bulletins_show: 1 })} className="add-minus">Retourner à la valeur initiale</span><br />
 
-                    <br /><br /><br />
+                    <br />
                 </div>
 
                 {/* <div className="float-right-div">

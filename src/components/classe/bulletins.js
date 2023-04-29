@@ -267,7 +267,7 @@ class Bulletins extends React.Component {
             return "AB";
         } else if (parseInt(main_conduite) === 5) {
             return "M";
-        } else if(parseInt(main_conduite) === 6){
+        } else if (parseInt(main_conduite) === 6) {
             return "MA";
         } else {
             return "-";
@@ -312,18 +312,18 @@ class Bulletins extends React.Component {
         let total = 0;
         let considered = 0;
         let moins = 0;
-        
+
         for (let i in this.props.classe.data.courses) {
             total = total + parseInt(this.props.classe.data.courses[i].total_marks);
-            
-            if(parseInt(this.props.classe.data.courses[i].considered) === 5) {
+
+            if (parseInt(this.props.classe.data.courses[i].considered) === 5) {
                 considered = parseInt(this.props.classe.data.courses[i].considered);
                 moins = parseInt(this.props.classe.data.courses[i].total_marks) * 2;
             }
         }
 
         if (period === 40 || period === 50) {
-            if(considered === 5) {
+            if (considered === 5) {
                 total = (total * 4) - moins;
             } else {
                 total = (total * 4) - moins;
@@ -331,7 +331,7 @@ class Bulletins extends React.Component {
         }
 
         if (parseInt(period) === 10 || parseInt(period) === 11) {
-            if(considered === 5) {
+            if (considered === 5) {
                 total = (total * 2) - moins;
             } else {
                 total = (total * 2) - moins;
@@ -345,18 +345,18 @@ class Bulletins extends React.Component {
         let total = 0;
         let considered = 0;
         let moins = 0;
-        
+
         for (let i in this.props.classe.data.courses) {
             total = total + parseInt(this.props.classe.data.courses[i].total_marks);
-            
-            if(parseInt(this.props.classe.data.courses[i].considered) === 5) {
+
+            if (parseInt(this.props.classe.data.courses[i].considered) === 5) {
                 considered = parseInt(this.props.classe.data.courses[i].considered);
                 moins = parseInt(this.props.classe.data.courses[i].total_marks) * 2;
             }
         }
 
         if (parseInt(periode) === 40 || parseInt(periode) === 50) {
-            if(considered === 5) {
+            if (considered === 5) {
                 total = (total * 4) - moins;
             } else {
                 total = (total * 4) - moins;
@@ -364,7 +364,7 @@ class Bulletins extends React.Component {
         }
 
         if (parseInt(periode) === 10 || parseInt(periode) === 11) {
-            if(considered === 5) {
+            if (considered === 5) {
                 total = (total * 2) - moins;
             } else {
                 total = (total * 2) - moins;
@@ -516,7 +516,7 @@ class Bulletins extends React.Component {
                                         value={this.state.code_centre}
                                         onChange={(text) => this.setState({ code_centre: text.target.value })}
                                     />
-                                </div><br /><br />
+                                </div>
                             </>
 
                             : null}
@@ -533,7 +533,7 @@ class Bulletins extends React.Component {
                                 <span style={{ marginLeft: 20 }} onClick={() => this.setState({ bulletins_show: this.state.increment_val })} className="add-minus">Valider</span>
                                 <span onClick={() => this.setState({ bulletins_show: 1 })} className="add-minus">Retourner à la valeur initiale</span><br />
 
-                                <br /><br /><br />
+                                <br />
                             </div> : null}
 
                         <div className="float-right-div">
@@ -546,8 +546,9 @@ class Bulletins extends React.Component {
                             </select><br /><br />
                         </div>
 
-                        <PrintDocument div={"bulletins-p"} /> 
-                        <br /><br />
+                        <div className='float-left'>
+                            <PrintDocument div={"bulletins-p"} />
+                        </div>
 
                         {this.props.classe.data.domains.length !== 0 ?
                             <BulletinsType2 />
@@ -1137,7 +1138,7 @@ class Bulletins extends React.Component {
                                 :
                                 <div id="bulletins-p">
                                     {/* <PreviewA4> */}
-                                       
+
                                     {this.props.classe.pupils.map((pupil, index) => {
 
                                         if (index <= this.state.bulletins_show) {
@@ -1708,7 +1709,7 @@ class Bulletins extends React.Component {
                                         }
                                     })}
 
-                    {/* </PreviewA4> */}
+                                    {/* </PreviewA4> */}
                                 </div>
                         }
                     </div>

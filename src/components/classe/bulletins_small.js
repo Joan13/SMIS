@@ -6,9 +6,9 @@ import { FaChevronCircleLeft } from 'react-icons/fa';
 import { FiPrinter } from 'react-icons/fi';
 import PrintDocument from '../includes/print';
 
-const FichesPoints = () => {
+const BulletinsSmall = () => {
 
-    const [periode, setPeriode] = useState(1);
+    const [periode, setPeriode] = useState("1");
     const classe = useSelector(state => state.classe);
     const loading_footer = useSelector(state => state.loading_footer);
     const url_server = useSelector(state => state.url_server);
@@ -125,22 +125,22 @@ const FichesPoints = () => {
         return total;
     }
 
-    const maxima=(period)=> {
+    const maxima = (period) => {
         let total = 0;
         let considered = 0;
         let moins = 0;
-        
+
         for (let i in classe.data.courses) {
             total = total + parseInt(classe.data.courses[i].total_marks);
-            
-            if(parseInt(classe.data.courses[i].considered) === 5) {
+
+            if (parseInt(classe.data.courses[i].considered) === 5) {
                 considered = parseInt(classe.data.courses[i].considered);
                 moins = parseInt(classe.data.courses[i].total_marks) * 2;
             }
         }
 
         if (parseInt(period) === 40 || parseInt(period) === 50) {
-            if(considered === 5) {
+            if (considered === 5) {
                 total = (total * 4) - moins;
             } else {
                 total = (total * 4) - moins;
@@ -148,7 +148,7 @@ const FichesPoints = () => {
         }
 
         if (parseInt(period) === 10 || parseInt(period) === 11) {
-            if(considered === 5) {
+            if (considered === 5) {
                 total = (total * 2) - moins;
             } else {
                 total = (total * 2) - moins;
@@ -210,6 +210,8 @@ const FichesPoints = () => {
         }
     }
 
+
+
     const printContent = (divName) => {
 
         let printContents = document.getElementById(divName).innerHTML;
@@ -223,25 +225,10 @@ const FichesPoints = () => {
         window.location.replace(http + url_server + home_redirect);
     }
 
-    const echecs_pupil = (marks)=> {
-
-        let markss = [];
-       
-        for (let i in marks) {
-            if (parseInt(marks[i].main_marks) < parseInt(marks[i].total_marks) /2) {
-                markss.push(marks[i].main_marks + "/" + marks[i].total_marks);
-            }
-        }
-
-        console.log(markss)
-
-        // return;  
-    }
-
     const find_echecss = () => {
         let return_value = 0;
 
-        for(let i in classe.data.pupils) {
+        for (let i in classe.data.pupils) {
 
             let marks = classe.data.pupils[i].marks;
 
@@ -256,12 +243,12 @@ const FichesPoints = () => {
                     }
                 }
             }
-    
+
             else if (parseInt(periode) === 50) {
                 for (let i in marks) {
                     let course_id = marks[i].course;
                     if (parseInt(marks[i].course) === parseInt(course_id) && (parseInt(marks[i].school_period) === 3 || parseInt(marks[i].school_period) === 4 || parseInt(marks[i].school_period) === 11)) {
-    
+
                         if (parseInt(marks[i].main_marks) < (parseInt(marks[i].total_marks) * 4) / 2) {
                             // dispatch({type:"SET_ECHECS", payload:[...echecs, marks[i].course]});
                             echecs.push(marks[i].course);
@@ -274,7 +261,7 @@ const FichesPoints = () => {
                 for (let i in marks) {
                     let course_id = marks[i].course;
                     if (parseInt(marks[i].course) === parseInt(course_id) && parseInt(marks[i].school_period) === parseInt(periode)) {
-    
+
                         if (parseInt(periode) === 10 || parseInt(periode) === 11) {
                             if (parseInt(marks[i].main_marks) < (parseInt(marks[i].total_marks) * 2) / 2) {
                                 echecs.push(marks[i].course);
@@ -290,46 +277,21 @@ const FichesPoints = () => {
                                 // dispatch({type:"SET_ECHECS", payload:[...echecs, marks[i].course]});
                             }
                         }
-    
+
                         // return_value = marks[i].main_marks;
                     }
                 }
             }
         }
-        
+
         // return return_value;
     }
-
-    const find_echecs = (course) => {
-
-        let ecc = [];
-        for (let i in echecs) {
-            if (echecs[i] === course) {
-                // ecc = ecc + 1;
-                ecc.push(echecs[i]);
-            }
-        }
-
-        return ecc.length;
-    }
-
-    useEffect(() => {
-        // console.log(echecs());
-        // setEchecs([]);
-        // find_echecss();
-
-        // console.log(echecs)
-
-        // return ()=>{
-        //     // setEchecs([]);
-        // }
-    }, []);
 
     return (
         <div style={{ marginBottom: 50, paddingTop: 10, width: '100%' }}>
             {!loading_footer ?
                 <div>
-                    <PrintDocument div={"fiche-points-print"} /> <br/><br/>
+                    <PrintDocument div={"fiche-points-print"} /> <br /><br />
                     <div className="float-menu-right">
                         <select
                             onChange={(val) => {
@@ -339,8 +301,8 @@ const FichesPoints = () => {
                             style={{ backgroundColor: 'white', textAlign: 'right' }}
                             value={periode}
                             className="select-no-border-select border-none bg-background-100 dark:bg-background-20 ">
-                            {/* <option value="100">Toute l'année</option>
-                            <option>- - - - - - - - - - - -</option> */}
+                            {/* <option value="100">Toute l'année</option> */}
+                            {/* <option>- - - - - - - - - - - -</option> */}
                             <option value="1">Première période</option>
                             <option value="2">Deuxième période</option>
                             <option value="3">Troisième période</option>
@@ -352,83 +314,136 @@ const FichesPoints = () => {
                             <option value="40">Premier semestre</option>
                             <option value="50">Deuxième semestre</option>
                         </select>
-                    </div>
+                    </div><br /><br />
 
                     <div id="fiche-points-print">
-                        <table className="fiche-pointsdede" style={{ width: '100%' }}>
-                            <caption>
-                                <div style={{ textAlign: 'left', marginBottom: -30 }}>
-                                    <strong>{autres.school_name.toUpperCase()}</strong><br />
-                                    <strong>{autres.school_bp}</strong><br />
-                                    <strong>Année scolaire : {autres.annee}</strong>
-                                </div>
-                                <strong>
-                                    FICHE DES POINTS {render_periode().toUpperCase()}<br />
-                                    {classe.class_id.toUpperCase() + " " + classe.section_id.toUpperCase() + " " + classe.order_id.toUpperCase()}
-                                </strong>
-                            </caption>
-                            <thead>
-                                <tr>
-                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 30, textAlign: 'center' }}>No</th>
-                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }}>Noms des élèves</th>
+                        {classe.data.pupils.map((pupil, index) => {
+                            return (
+                                <div key={index} className='border-4 border-double rounded-lg border-gray-50 dark:border-gray-20 p-5 mb-5'>
+                                    <table className="w-full">
+                                        <caption>
+                                            <div style={{ textAlign: 'left', marginBottom: -40 }}>
+                                                <strong>{autres.school_name.toUpperCase()}</strong><br />
+                                                <strong>{autres.school_bp}</strong><br />
+                                                <strong><span className='text-gray-100'>Année scolaire :</span> {autres.annee}</strong><br />
+                                                <strong><span className='text-gray-100'>Classe : </span>{classe.class_id.toUpperCase() + " " + classe.section_id.toUpperCase() + " " + classe.order_id.toUpperCase()}</strong>
+                                            </div>
+                                            <div className='font-bold'>
+                                                <div className='text-xl'>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</div>
+                                                FICHE DES POINTS {render_periode().toUpperCase()}
+                                            </div>
+                                        </caption>
+                                        <thead>
+                                            <tr>
+                                                {classe.data.courses.map((course, index) => (<th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} key={index}>{total_marks(course.total_marks)} / {course.course_name.toUpperCase().substr(0, 25)}</th>))}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                {classe.data.courses.map((course, index2) => (
+                                                    <td className='border border-gray-50 h-14 dark:border-gray-20' key={index2} style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        {render_period_marks(pupil.marks, course.course_id)}
+                                                    </td>
+                                                ))}
+                                            </tr>
+                                            <tr>
+                                                <td colSpan={classe.data.courses.length} className='text-right border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20'>
+                                                    <div className="text-right flex items-center">
+                                                        <div className='w-full'></div>
+                                                        <table className=' w-full font-bold text-md'>
+                                                            <tr>
+                                                                <td><span className='text-gray-100 mr-3'>TOTAL OBTENU </span></td>
+                                                                <td className='pr-3 border border-gray-50 dark:border-gray-20'>{render_period_main_marks(pupil.marks)}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span className='text-gray-100 mr-3'>MAXIMA </span></td>
+                                                                <td className='pr-3 border border-gray-50 dark:border-gray-20'>{maxima(periode)}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span className='text-gray-100 mr-3'>POURCENTAGE </span></td>
+                                                                <td className='pr-3 border border-gray-50 dark:border-gray-20'>{render_period_pourcentage(pupil.marks)}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span className='text-gray-100 mr-3'>PLACE </span></td>
+                                                                <td className='pr-3 border border-gray-50 dark:border-gray-20'>
+                                                                    {periode === "1" ?
+                                                                        classe.data.array_places_1.map((place, index_p) => {
+                                                                            if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                                return (
+                                                                                    <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
+                                                                                )
+                                                                            }
+                                                                        }
+                                                                        )
+                                                                        : null}
 
-                                    {classe.data.courses.map((course, index) => (<th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} key={index}>{total_marks(course.total_marks)} / {course.course_name.toUpperCase().substr(0, 25)}</th>))}
-                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 15, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }}>TOTAL</th>
-                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 15, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }}>MAXIMA</th>
-                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 15, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }}>POURCENTAGE</th>
-                                    
-                                </tr>
-                            </thead>
+                                                                    {periode === "2" ?
+                                                                        classe.data.array_places_2.map((place, index_p) => {
+                                                                            if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                                return (
+                                                                                    <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
+                                                                                )
+                                                                            }
+                                                                        }
+                                                                        )
+                                                                        : null}
 
-                            {classe.data.pupils.map((pupil, index) => {
-                                return (
-                                    <tbody key={index}>
-                                        <tr style={{ backgroundColor: index % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
-                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 30, textAlign: 'center' }}>{index + 1}</td>
-                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                                    {periode === "10" ?
+                                                                        classe.data.array_places_10.map((place, index_p) => {
+                                                                            if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                                return (
+                                                                                    <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
+                                                                                )
+                                                                            }
+                                                                        }
+                                                                        )
+                                                                        : null}
 
-                                            {classe.data.courses.map((course, index) => (
-                                                <td className='border border-gray-50 dark:border-gray-20' key={index} style={{ textAlign: 'center', minWidth: 32 }}>
-                                                    {render_period_marks(pupil.marks, course.course_id)}
+                                                                    {periode === "3" ?
+                                                                        classe.data.array_places_3.map((place, index_p) => {
+                                                                            if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                                return (
+                                                                                    <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
+                                                                                )
+                                                                            }
+                                                                        }
+                                                                        )
+                                                                        : null}
+
+                                                                    {periode === "4" ?
+                                                                        classe.data.array_places_4.map((place, index_p) => {
+                                                                            if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                                return (
+                                                                                    <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
+                                                                                )
+                                                                            }
+                                                                        }
+                                                                        )
+                                                                        : null}
+
+                                                                    {periode === "11" ?
+                                                                        classe.data.array_places_11.map((place, index_p) => {
+                                                                            if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                                return (
+                                                                                    <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
+                                                                                )
+                                                                            }
+                                                                        }
+                                                                        )
+                                                                        : null}
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+
+
                                                 </td>
-                                            ))}
-
-                                            <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 40, textAlign: 'center', fontWeight: 'bold' }}>
-                                                {render_period_main_marks(pupil.marks)}
-                                            </td>
-                                            <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 40, textAlign: 'center', fontWeight: 'bold' }}>
-                                                {maxima(periode)}
-                                            </td>
-                                            <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }}>
-                                                {render_period_pourcentage(pupil.marks)}
-                                            </td>
-
-                                            <td>
-                                                {echecs_pupil(pupil.marks)}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                )
-                            })}
-                        </table>
-
-                        {/* <table>
-                            <tbody>
-                            {classe.data.courses.map((course, index) => (
-                            <tr>
-                                <td style={{ }} key={index}>{total_marks(course.total_marks)} / {course.course_name.toUpperCase().substr(0, 25)}</td>
-                                <td>{find_echecs(course.course_id)}</td>
-                            </tr>
-                         ))}
-                            </tbody>
-                        </table> */}
-
-                        {/* <div>
-                            <h4>Nombre d'echecs</h4><br />
-                            {classe.data.courses.map((course, index) => (
-                                <span style={{}} key={index}>{course.course_name.toUpperCase().substr(0, 25)} <strong>({find_echecs(course.course_id)}), </strong></span>
-                            ))}
-                        </div> */}
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
                 :
@@ -440,4 +455,4 @@ const FichesPoints = () => {
     )
 }
 
-export default FichesPoints;
+export default BulletinsSmall;

@@ -321,15 +321,10 @@ class PalmaresPupils extends Component {
                             </select>
                         </div>
 
-
-
-
                         <div id="print-palmares" style={{ marginTop: 0 }}>
-
                             <div>
                                 <strong>{this.props.autres.school_name}</strong><br />
                                 <strong>{this.props.autres.school_bp}</strong><br />
-                                {/* <strong>{this.props.autres.school_commune}</strong> */}
                             </div>
 
                             <div className="float-right-div" style={{ marginTop: -20 }}>

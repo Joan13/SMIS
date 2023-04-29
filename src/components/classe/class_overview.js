@@ -45,7 +45,7 @@ class ClassOverView extends React.Component {
                                                 <span className='text-gray-100'>Filles :</span> <strong>{this.props.classe.pupils_count_female}</strong>
                                             </div>
                                             <div>
-                                                <span className='text-gray-100'>Nombre des cours :</span> <strong>{this.props.classe.courses_count}</strong>
+                                                <span className='text-gray-100'>Nombre de cours :</span> <strong>{this.props.classe.courses_count}</strong>
                                             </div>
                                         </div>
                                     </td>

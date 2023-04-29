@@ -50,6 +50,7 @@ import Classes from "../../includes/classes";
 import FichesPoints from "../../components/classe/fiche_points";
 import JSONPackageFile from './../../../package.json';
 import HeaderMenuLeft from "../../includes/header_menu_left";
+import BulletinsSmall from "../../components/classe/bulletins_small";
 
 class Home extends Component {
     constructor(props) {
@@ -1090,111 +1091,45 @@ class Home extends Component {
                                             </div>
                                         ) : null}
 
-                                        {this.props.allow_right_menu && this.props.class_open ? (
-                                            <RightClasseMenu />
-                                        ) : null}
+                                        {this.props.allow_right_menu && this.props.class_open ? (<RightClasseMenu />) : null}
 
-                                        {this.props.allow_right_menu_pupils ? (
-                                            <PupilsRightMenu />
-                                        ) : null}
+                                        {this.props.allow_right_menu_pupils ? (<PupilsRightMenu />) : null}
 
                                         <div className="center-fixed border-r border-gray-50 dark:border-gray-20">
                                             <div style={{ paddingLeft: 20, paddingRight: 10 }}>
-                                                {this.props.middle_func === 1 ? (
-                                                    <div id="liste-nomminative">
-                                                        <ListeNomminative />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 1 ? (<ListeNomminative />) : null}
 
-                                                {this.props.middle_func === 11 ? (
-                                                    <div id="view_pupil">
-                                                        <ViewPupil />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 11 ? (<ViewPupil />) : null}
 
-                                                {this.props.middle_func === 12 ? (
-                                                    <div id="stats_caisse">
-                                                        <StatistiquesCaisse />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 12 ? (<StatistiquesCaisse />) : null}
 
-                                                {this.props.middle_func === 13 ? (
-                                                    <div id="class-import">
-                                                        <NewClasseImport />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 13 ? (<NewClasseImport />) : null}
 
-                                                {this.props.middle_func === 15 ? (
-                                                    <div id="gestion-personnel">
-                                                        <GestionPersonnel />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 15 ? (<GestionPersonnel />) : null}
 
-                                                {this.props.middle_func === 16 ? (
-                                                    <div id="add-worker">
-                                                        <AddWorker />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 16 ? (<AddWorker />) : null}
 
-                                                {this.props.middle_func === 22 ? (
-                                                    <div id="timetable-settings">
-                                                        <TimetableSettings />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 22 ? (<TimetableSettings />) : null}
 
-                                                {this.props.middle_func === 24 ? (
-                                                    <div id="paiement-categorisation">
-                                                        <ClassePaiementCategorisation />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 24 ? (<ClassePaiementCategorisation />) : null}
 
-                                                {this.props.middle_func === 14 ? (
-                                                    <div id="settings-bulletins">
-                                                        <SettingsBulletins />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 14 ? (<SettingsBulletins />) : null}
 
-                                                {this.props.middle_func === 26 ? (
-                                                    <div id="fiche-points-b">
-                                                        <FichePointsBrouillon />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 26 ? (<FichePointsBrouillon />) : null}
 
-                                                {this.props.middle_func === 27 ? (
-                                                    <div id="fiche-synthese-points-b">
-                                                        <FicheSynthesePointsBrouillon />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 27 ? (<FicheSynthesePointsBrouillon />) : null}
 
-                                                {this.props.middle_func === 28 ? (
-                                                    <div id="fiche-synthese-points-b">
-                                                        <BulletinsBrouillon />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 28 ? (<BulletinsBrouillon />) : null}
 
-                                                {this.props.middle_func === 29 ? (
-                                                    <div id="fiche-synthese-points-b">
-                                                        <BulletinsType2Brouillon />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 29 ? (<BulletinsType2Brouillon />) : null}
 
-                                                {this.props.middle_func === 30 ? (
-                                                    <div id="view_worker">
-                                                        <ViewWorker />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 30 ? (<ViewWorker />) : null}
 
-                                                {this.props.middle_func === 31 ? (
-                                                    <div id="view_worker">
-                                                        <Conduites />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 31 ? (<Conduites />) : null}
 
-                                                {this.props.middle_func === 32 ? (
-                                                    <div id="view_worker">
-                                                        <FichesPoints />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 32 ? (<FichesPoints />) : null}
+
+                                                {this.props.middle_func === 33 ? (<BulletinsSmall />) : null}
 
                                                 {this.props.middle_func === 5 ? (
                                                     <div id="fiches">
@@ -1254,17 +1189,11 @@ class Home extends Component {
 
                                                 {this.props.middle_func === 10 ? <PalmaresFinal /> : null}
 
-                                                {this.props.middle_func === 4
-                                                    ? this.render_synthese()
-                                                    : null}
+                                                {this.props.middle_func === 4? this.render_synthese(): null}
 
                                                 {this.props.middle_func === 6 ? <NewPupil /> : null}
 
-                                                {this.props.middle_func === 7 ? (
-                                                    <div id="liste-bulletins">
-                                                        <Bulletins />
-                                                    </div>
-                                                ) : null}
+                                                {this.props.middle_func === 7 ? (<Bulletins />) : null}
                                             </div>
                                         </div>
                                     </div>
@@ -1278,14 +1207,6 @@ class Home extends Component {
                         {this.props.modal_libelles ? <Libelles /> : null}
 
                         {this.props.modal_selections ? <ModalFrame type={1} /> : null}
-
-                        {/* {this.state.modal_view ?
-                        <div className="main-div-modal">
-                            {ModalView(this.state.modal_title, this.state.modal_main_text)}
-                            <div className="sub-div-modal">
-                                <Button onClick={() => this.setState({ modal_view: false })} variant="outlined" style={{ color: 'black', borderWidth: 1, borderColor: 'rgba(0, 0, 0, 0.3)' }}>Fermer</Button>
-                            </div>
-                        </div> : null} */}
                     </div>
                 </div>
             </div>
