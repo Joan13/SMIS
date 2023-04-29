@@ -108,6 +108,35 @@ const BulletinsSmall = () => {
         return return_value;
     }
 
+    const echecs_pupil = (marks) => {
+
+        let markss = [];
+
+        for (let i in marks) {
+            if ((parseInt(marks[i].main_marks) < parseInt(marks[i].total_marks / 2)) && (parseInt(marks[i].school_period) === parseInt(periode))) {
+                markss.push(marks[i].course);
+            }
+        }
+
+        return (
+            <div className='text-left ml-2'>
+                <div className='border-b pb-2 border-gray-50 dark:border-gray-20 font-bold'>Échecs ({markss.length})</div>
+                {markss.map((echec, index) => (
+                    <div key={index} className='pl-1 ml-1 border-l mb-1 text-sm border-gray-50 dark:border-gray-20' style={{ display: 'inline-block' }}>{find_course(echec)}</div>
+                ))}
+            </div>
+        )
+    }
+
+    const find_course = (course) => {
+        let coursee = "";
+        for (let i in classe.data.courses) {
+            if (classe.data.courses[i].course_id === course) {
+                return classe.data.courses[i].course_name.toUpperCase();
+            }
+        }
+    }
+
     const period_max = () => {
         let total = 0;
         for (let i in classe.data.courses) {
@@ -210,81 +239,40 @@ const BulletinsSmall = () => {
         }
     }
 
+    const render_period_conduite = (pupil_id, periode) => {
+        let main_conduite = "";
 
-
-    const printContent = (divName) => {
-
-        let printContents = document.getElementById(divName).innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-
-        document.body.innerHTML = originalContents;
-        // window.location.reload();
-        window.location.href = http + url_server + home_redirect;
-        window.location.replace(http + url_server + home_redirect);
-    }
-
-    const find_echecss = () => {
-        let return_value = 0;
-
-        for (let i in classe.data.pupils) {
-
-            let marks = classe.data.pupils[i].marks;
-
-            if (parseInt(periode) === 40) {
-                for (let i in marks) {
-                    let course_id = marks[i].course;
-                    if (parseInt(marks[i].course) === parseInt(course_id) && (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10)) {
-                        if (parseInt(marks[i].main_marks) < (parseInt(marks[i].total_marks) * 4) / 2) {
-                            echecs.push(marks[i].course);
-                        }
-                        // return_value = return_value + marks[i].main_marks;
-                    }
-                }
-            }
-
-            else if (parseInt(periode) === 50) {
-                for (let i in marks) {
-                    let course_id = marks[i].course;
-                    if (parseInt(marks[i].course) === parseInt(course_id) && (parseInt(marks[i].school_period) === 3 || parseInt(marks[i].school_period) === 4 || parseInt(marks[i].school_period) === 11)) {
-
-                        if (parseInt(marks[i].main_marks) < (parseInt(marks[i].total_marks) * 4) / 2) {
-                            // dispatch({type:"SET_ECHECS", payload:[...echecs, marks[i].course]});
-                            echecs.push(marks[i].course);
-                        }
-                        // return_value = return_value + marks[i].main_marks;
-                    }
-                }
-            }
-            else {
-                for (let i in marks) {
-                    let course_id = marks[i].course;
-                    if (parseInt(marks[i].course) === parseInt(course_id) && parseInt(marks[i].school_period) === parseInt(periode)) {
-
-                        if (parseInt(periode) === 10 || parseInt(periode) === 11) {
-                            if (parseInt(marks[i].main_marks) < (parseInt(marks[i].total_marks) * 2) / 2) {
-                                echecs.push(marks[i].course);
-                                // dispatch({type:"SET_ECHECS", payload:[...echecs, marks[i].course]});
-                            }
-                        } else {
-                            if (parseInt(marks[i].main_marks) < parseInt(marks[i].total_marks) / 2) {
-                                // let echec = [];
-                                // echec.id = marks[i].course + main_marks[i].pupil;
-                                // echec.course = marks[i].course;
-                                echecs.push(marks[i].course);
-                                // echecs.push([...echecs, echec]);
-                                // dispatch({type:"SET_ECHECS", payload:[...echecs, marks[i].course]});
-                            }
-                        }
-
-                        // return_value = marks[i].main_marks;
-                    }
-                }
+        for (let i in classe.data.conduites) {
+            if (classe.data.conduites[i].pupil_id == pupil_id && classe.data.conduites[i].periode == periode) {
+                main_conduite = classe.data.conduites[i].main_conduite;
             }
         }
 
-        // return return_value;
+        if (main_conduite === "") {
+            return "-";
+        } else if (parseInt(main_conduite) === 1) {
+            return "E";
+        } else if (parseInt(main_conduite) === 2) {
+            return "TB";
+        } else if (parseInt(main_conduite) === 3) {
+            return "B";
+        } else if (parseInt(main_conduite) === 4) {
+            return "AB";
+        } else if (parseInt(main_conduite) === 5) {
+            return "M";
+        } else if (parseInt(main_conduite) === 6) {
+            return "MA";
+        } else {
+            return "-";
+        }
+    }
+
+    const display_conduite = () => {
+        if (parseInt(periode) === 4 || parseInt(periode) === 1 || parseInt(periode) === 3 || parseInt(periode) === 2) {
+            return true;
+        }
+
+        return false;
     }
 
     return (
@@ -335,7 +323,7 @@ const BulletinsSmall = () => {
                                         </caption>
                                         <thead>
                                             <tr>
-                                                {classe.data.courses.map((course, index) => (<th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} key={index}>{total_marks(course.total_marks)} / {course.course_name.toUpperCase().substr(0, 25)}</th>))}
+                                                {classe.data.courses.map((course, index) => (<th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} key={index}>{total_marks(course.total_marks)} / {course.course_name.toUpperCase().substr(0, 25)}</th>))}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -349,7 +337,9 @@ const BulletinsSmall = () => {
                                             <tr>
                                                 <td colSpan={classe.data.courses.length} className='text-right border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20'>
                                                     <div className="text-right flex items-center">
-                                                        <div className='w-full'></div>
+                                                        <div className='w-full'>
+                                                            {echecs_pupil(pupil.marks)}
+                                                        </div>
                                                         <table className=' w-full font-bold text-md'>
                                                             <tr>
                                                                 <td><span className='text-gray-100 mr-3'>TOTAL OBTENU </span></td>
@@ -433,6 +423,11 @@ const BulletinsSmall = () => {
                                                                         : null}
                                                                 </td>
                                                             </tr>
+                                                            {display_conduite ?
+                                                                <tr>
+                                                                    <td><span className='text-gray-100 mr-3'>CONDUITE </span></td>
+                                                                    <td className='pr-3 border border-gray-50 dark:border-gray-20'>{render_period_conduite(pupil.pupil.pupil_id, periode)}</td>
+                                                                </tr> : null}
                                                         </table>
                                                     </div>
 

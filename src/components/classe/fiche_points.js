@@ -125,22 +125,22 @@ const FichesPoints = () => {
         return total;
     }
 
-    const maxima=(period)=> {
+    const maxima = (period) => {
         let total = 0;
         let considered = 0;
         let moins = 0;
-        
+
         for (let i in classe.data.courses) {
             total = total + parseInt(classe.data.courses[i].total_marks);
-            
-            if(parseInt(classe.data.courses[i].considered) === 5) {
+
+            if (parseInt(classe.data.courses[i].considered) === 5) {
                 considered = parseInt(classe.data.courses[i].considered);
                 moins = parseInt(classe.data.courses[i].total_marks) * 2;
             }
         }
 
         if (parseInt(period) === 40 || parseInt(period) === 50) {
-            if(considered === 5) {
+            if (considered === 5) {
                 total = (total * 4) - moins;
             } else {
                 total = (total * 4) - moins;
@@ -148,7 +148,7 @@ const FichesPoints = () => {
         }
 
         if (parseInt(period) === 10 || parseInt(period) === 11) {
-            if(considered === 5) {
+            if (considered === 5) {
                 total = (total * 2) - moins;
             } else {
                 total = (total * 2) - moins;
@@ -223,94 +223,44 @@ const FichesPoints = () => {
         window.location.replace(http + url_server + home_redirect);
     }
 
-    const echecs_pupil = (marks)=> {
+    // const echecs_pupil = (course) => {
 
-        let markss = [];
-       
-        for (let i in marks) {
-            if (parseInt(marks[i].main_marks) < parseInt(marks[i].total_marks) /2) {
-                markss.push(marks[i].main_marks + "/" + marks[i].total_marks);
-            }
-        }
+    //     let markss = [];
 
-        console.log(markss)
+    //     for (let i in marks) {
+    //         if ((parseInt(marks[i].main_marks) < parseInt(marks[i].total_marks / 2)) && (parseInt(marks[i].school_period) === parseInt(periode))) {
+    //             markss.push(marks[i].course);
+    //         }
+    //     }
 
-        // return;  
-    }
-
-    const find_echecss = () => {
-        let return_value = 0;
-
-        for(let i in classe.data.pupils) {
-
-            let marks = classe.data.pupils[i].marks;
-
-            if (parseInt(periode) === 40) {
-                for (let i in marks) {
-                    let course_id = marks[i].course;
-                    if (parseInt(marks[i].course) === parseInt(course_id) && (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10)) {
-                        if (parseInt(marks[i].main_marks) < (parseInt(marks[i].total_marks) * 4) / 2) {
-                            echecs.push(marks[i].course);
-                        }
-                        // return_value = return_value + marks[i].main_marks;
-                    }
-                }
-            }
-    
-            else if (parseInt(periode) === 50) {
-                for (let i in marks) {
-                    let course_id = marks[i].course;
-                    if (parseInt(marks[i].course) === parseInt(course_id) && (parseInt(marks[i].school_period) === 3 || parseInt(marks[i].school_period) === 4 || parseInt(marks[i].school_period) === 11)) {
-    
-                        if (parseInt(marks[i].main_marks) < (parseInt(marks[i].total_marks) * 4) / 2) {
-                            // dispatch({type:"SET_ECHECS", payload:[...echecs, marks[i].course]});
-                            echecs.push(marks[i].course);
-                        }
-                        // return_value = return_value + marks[i].main_marks;
-                    }
-                }
-            }
-            else {
-                for (let i in marks) {
-                    let course_id = marks[i].course;
-                    if (parseInt(marks[i].course) === parseInt(course_id) && parseInt(marks[i].school_period) === parseInt(periode)) {
-    
-                        if (parseInt(periode) === 10 || parseInt(periode) === 11) {
-                            if (parseInt(marks[i].main_marks) < (parseInt(marks[i].total_marks) * 2) / 2) {
-                                echecs.push(marks[i].course);
-                                // dispatch({type:"SET_ECHECS", payload:[...echecs, marks[i].course]});
-                            }
-                        } else {
-                            if (parseInt(marks[i].main_marks) < parseInt(marks[i].total_marks) / 2) {
-                                // let echec = [];
-                                // echec.id = marks[i].course + main_marks[i].pupil;
-                                // echec.course = marks[i].course;
-                                echecs.push(marks[i].course);
-                                // echecs.push([...echecs, echec]);
-                                // dispatch({type:"SET_ECHECS", payload:[...echecs, marks[i].course]});
-                            }
-                        }
-    
-                        // return_value = marks[i].main_marks;
-                    }
-                }
-            }
-        }
-        
-        // return return_value;
-    }
+    //     return(
+    //     <div className='flex items-center'> 
+    //     {markss.map((echec, index)=>(
+    //            <div className='pl-1 ml-1 border-l text-sm'>{find_course(echec)}</div> 
+    //         ))}
+    //         </div>
+    //     ) 
+    // }
 
     const find_echecs = (course) => {
+        let echecs = 0;
+        for (let i in classe.data.pupils_marks) {
+            if ((parseInt(course) === parseInt(classe.data.pupils_marks[i].course)) && (parseInt(classe.data.pupils_marks[i].main_marks) < parseInt(classe.data.pupils_marks[i].total_marks / 2)) && (parseInt(classe.data.pupils_marks[i].school_period) === parseInt(periode))) {
+                echecs = echecs + 1;
+            }
 
-        let ecc = [];
-        for (let i in echecs) {
-            if (echecs[i] === course) {
-                // ecc = ecc + 1;
-                ecc.push(echecs[i]);
+
+        }
+        return echecs;
+    }
+
+    const find_course = (course) => {
+        let coursee = "";
+        for (let i in classe.data.courses) {
+            if (classe.data.courses[i].course_id === course) {
+                return classe.data.courses[i].course_name.toUpperCase();
             }
         }
-
-        return ecc.length;
     }
 
     useEffect(() => {
@@ -329,7 +279,7 @@ const FichesPoints = () => {
         <div style={{ marginBottom: 50, paddingTop: 10, width: '100%' }}>
             {!loading_footer ?
                 <div>
-                    <PrintDocument div={"fiche-points-print"} /> <br/><br/>
+                    <PrintDocument div={"fiche-points-print"} /> <br /><br />
                     <div className="float-menu-right">
                         <select
                             onChange={(val) => {
@@ -355,7 +305,7 @@ const FichesPoints = () => {
                     </div>
 
                     <div id="fiche-points-print">
-                        <table className="fiche-pointsdede" style={{ width: '100%' }}>
+                        <table className="fiche-pointsdede" style={{ width: '100%', marginTop: -40 }}>
                             <caption>
                                 <div style={{ textAlign: 'left', marginBottom: -30 }}>
                                     <strong>{autres.school_name.toUpperCase()}</strong><br />
@@ -376,7 +326,7 @@ const FichesPoints = () => {
                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 15, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }}>TOTAL</th>
                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 15, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }}>MAXIMA</th>
                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 15, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }}>POURCENTAGE</th>
-                                    
+
                                 </tr>
                             </thead>
 
@@ -402,33 +352,26 @@ const FichesPoints = () => {
                                             <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }}>
                                                 {render_period_pourcentage(pupil.marks)}
                                             </td>
-
-                                            <td>
-                                                {echecs_pupil(pupil.marks)}
-                                            </td>
                                         </tr>
                                     </tbody>
                                 )
                             })}
                         </table>
 
-                        {/* <table>
-                            <tbody>
-                            {classe.data.courses.map((course, index) => (
-                            <tr>
-                                <td style={{ }} key={index}>{total_marks(course.total_marks)} / {course.course_name.toUpperCase().substr(0, 25)}</td>
-                                <td>{find_echecs(course.course_id)}</td>
-                            </tr>
-                         ))}
-                            </tbody>
-                        </table> */}
+                        <div className="border-b mt-5 pb-3 border-gray-50 dark:border-gray-20 font-bold">
+                            Nombre d'échecs par cours
+                        </div>
 
-                        {/* <div>
-                            <h4>Nombre d'echecs</h4><br />
-                            {classe.data.courses.map((course, index) => (
-                                <span style={{}} key={index}>{course.course_name.toUpperCase().substr(0, 25)} <strong>({find_echecs(course.course_id)}), </strong></span>
-                            ))}
-                        </div> */}
+                        <div style={{ marginLeft: -5 }}>
+                            {classe.data.courses.map((cours, index) => {
+                                if (find_echecs(cours.course_id) !== 0) {
+
+                                    return (
+                                        <div key={index} className='border-l border-gray-50 dark:border-gray-20 pl-2 ml-2 text-sm mt-2' style={{ display: 'inline-block' }}>{cours.course_name.toUpperCase()}  {find_echecs(cours.course_id)}</div>
+                                    )
+                                }
+                            })}
+                        </div>
                     </div>
                 </div>
                 :

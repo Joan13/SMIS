@@ -4,7 +4,6 @@ import { Button, CircularProgress } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../store/state_props';
 import { http } from '../../global_vars';
-import { FaAddressCard } from 'react-icons/fa';
 import { FiPlus, FiX } from 'react-icons/fi';
 
 class Courses extends Component {
