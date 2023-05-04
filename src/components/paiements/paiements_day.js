@@ -407,7 +407,7 @@ const PaiementsDay = () => {
                         </div><br /><br /><br /><br />
 
                         <div style={{ marginTop: 70, marginBottom: 70, textAlign: 'center', fontWeight: 'bold', fontSize: 17 }}>
-                            Montant total perçu dans la journée du {find_date2(today)}<br />
+                            Montant total perçu dans la journée du {find_date2(day)}<br />
                             <strong className='text-3xl text-text-50'>{makuta_day} dollars Américains</strong><br />
 
                             {loading_stats_day ?
