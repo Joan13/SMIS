@@ -5,6 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { mapStateToProps } from '../../store/state_props';
 import { FcBarChart, FcBriefcase, FcCalendar, FcCollaboration, FcComboChart, FcConferenceCall, FcCurrencyExchange, FcLibrary } from 'react-icons/fc';
 import { http } from '../../global_vars';
+import caisse from './../../assets/caisse.jpg';
+import personnel from './../../assets/teachers.jpg';
+import timetablee from './../../assets/timetable.jpg';
+import library from './../../assets/library.jpg';
+import meeting from './../../assets/meeting.jpg';
+import logistics from './../../assets/logistics.jpg';
 
 const MenuHome = () => {
 
@@ -76,43 +82,72 @@ const MenuHome = () => {
     }
 
     return (
-        <div>
-            <div style={{ marginBottom: 40 }} className='menu-home-block'>
-                <div onClick={() => stats_caisse()} className="div-menu-home-circle" style={{ marginRight: 70 }}>
-                    <div style={{ width: '100%', height: 120 }}><br /><br /><br /><FcCurrencyExchange size={70} /><br /><br /></div>
-                    <span style={{ fontSize: 15, fontWeight: '500' }}>Détails de<br />la caisse<br /></span>
+        <div className=' w-full mt-5 mb-5 flex justify-center items-center container mx-auto'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+                <div className="ml-5 mr-5 mb-10">
+                    <div className="p-3 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
+                        <img src={caisse} className='object-cover rounded-lg' />
+                        <div className='text-xl font-bold mt-5'>Caisse</div>
+                        <div className="text-gray-100 mt-3 mb-3">Rapports journaliers et finaux avec tous les détails possibles.</div>
+                        <button onClick={() => stats_caisse()} className='nodrag bg-primary-100 rounded-lg text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>
+                            Consulter
+                        </button>
+                    </div>
                 </div>
 
-                <div className="div-menu-home-circle" style={{ marginRight: 70, textAlign: 'center' }}>
-                    <div style={{ width: '100%', height: 120 }}><br /><br /><br /><FcLibrary size={70} /><br /><br /></div>
-                    <span style={{ fontSize: 15, fontWeight: '500' }}>Bibliothèque<br /><span style={{ color: 'transparent' }}>.</span></span>
+                <div className="ml-5 mr-5 mb-10">
+                    <div className="p-3 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
+                        <img src={library} className='object-cover rounded-lg' />
+                        <div className='text-xl font-bold mt-5'>Bibliothèque</div>
+                        <div className="text-gray-100 mt-3 mb-3">Retrouvez et identifiez facilement les livres classés.</div>
+                        <button onClick={() => { }} className='nodrag bg-primary-100 rounded-lg text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>
+                            Consulter
+                        </button>
+                    </div>
                 </div>
 
-                <div
-                    onClick={() => open_gestion_personnel()}
-                    className="div-menu-home-circle">
-                    <div style={{ width: '100%', height: 120 }}><br /><br /><br /><FcConferenceCall size={70} /><br /><br /></div>
-                    <span style={{ fontSize: 15, fontWeight: '500' }}>Gestion du<br />personnel<br /></span>
-                </div>
-            </div>
-
-            <div style={{ marginBottom: 40 }} className='menu-home-block'>
-
-                <div
-                    // onClick={() => timetable()}
-                    className="div-menu-home-circle" style={{ marginRight: 70 }}>
-                    <div style={{ width: '100%', height: 120 }}><br /><br /><br /><FcCalendar size={70} /><br /><br /></div>
-                    <span style={{ fontSize: 15, fontWeight: '500' }}>Table des<br /> horaires<br /></span>
+                <div className="ml-5 mr-5 mb-10">
+                    <div className="p-3 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
+                        <img src={personnel} className='object-cover rounded-lg' />
+                        <div className='text-xl font-bold mt-5'>Personnel</div>
+                        <div className="text-gray-100 mt-3 mb-3">Vue d'ensemble du personnel et horaires de prestation.</div>
+                        <button onClick={() => open_gestion_personnel()} className='nodrag bg-primary-100 rounded-lg text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>
+                            Consulter
+                        </button>
+                    </div>
                 </div>
 
-                <div className="div-menu-home-circle" style={{ marginRight: 70, textAlign: 'center' }}>
-                    <div style={{ width: '100%', height: 120 }}><br /><br /><br /><FcCollaboration size={70} /><br /><br /></div>
-                    <span style={{ fontSize: 15, fontWeight: '500' }}>Communications,<br />chat et réunions<br /></span>
+                <div className="ml-5 mr-5 mb-10">
+                    <div className="p-3 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
+                        <img src={timetablee} className='object-cover rounded-lg' />
+                        <div className='text-xl font-bold mt-5'>Horaires</div>
+                        <div className="text-gray-100 mt-3 mb-3">Tout un pannel de possibilités et d'outils à votre disposition.</div>
+                        <button onClick={() => { }} className='nodrag bg-primary-100 rounded-lg text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>
+                            Consulter
+                        </button>
+                    </div>
                 </div>
 
-                <div className="div-menu-home-circle">
-                    <div style={{ width: '100%', height: 120 }}><br /><br /><br /><FcBriefcase size={70} /><br /><br /></div>
-                    <span style={{ fontSize: 15, fontWeight: '500' }}>Logistique</span>
+                <div className="ml-5 mr-5 mb-10">
+                    <div className="p-3 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
+                        <img src={meeting} className='object-cover rounded-lg' />
+                        <div className='text-xl font-bold mt-5'>Réunions et chat</div>
+                        <div className="text-gray-100 mt-3 mb-3">Passez en live et communiquez avec des collègues et les parents en temps réel.</div>
+                        <button onClick={() => { }} className='nodrag bg-primary-100 rounded-lg text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>
+                            Consulter
+                        </button>
+                    </div>
+                </div>
+
+                <div className="ml-5 mr-5 mb-10">
+                    <div className="p-3 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
+                        <img src={logistics} className='object-cover rounded-lg' />
+                        <div className='text-xl font-bold mt-5'>Logistique</div>
+                        <div className="text-gray-100 mt-3 mb-3">Gérez, classez et suivez l'amortissement du mobilier dans votre établissement.</div>
+                        <button onClick={() => { }} className='nodrag bg-primary-100 rounded-lg text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>
+                            Consulter
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
