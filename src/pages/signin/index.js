@@ -133,7 +133,7 @@ const Signin = () => {
                                 <div className='block mt-10 2xl:hidden xl:hidden lg:hidden md:hidden w-full place-items-center bg-background-100 py-8 rounded-xl'>
                                     <img className='rounded-2xl w-40 mx-auto' src={logo} alt='vector' />
                                 </div>
-                                <h2 className="font-bold text-2xl text-text-100 mt-10">Connectez-vous</h2>
+                                <h2 className="font-bold text-2xl text-text-100 mt-10 mb-10">Connectez-vous</h2>
 
                                 {/* <div style={{ marginBottom: 40 }}>
                         <span onClick={() => setConnection_type(0)} className="header-signin" style={{ fontWeight: connection_type === 0 ? 'bold' : '450' }}>Principal</span>
@@ -141,9 +141,8 @@ const Signin = () => {
                     </div> */}
 
                                 <div className='flex flex-col gap-4 border-b border-gray-50 mb-5 pb-5'>
-
                                     {!online ?
-                                        <div className='nodrag flex items-center bg-background-100 w-full align-center p-3 mt-10 pl-5 rounded-xl border border-gray-50'>
+                                        <div className='nodrag flex items-center bg-background-100 w-full align-center p-3 pl-5 rounded-xl border border-gray-50'>
                                             <FaServer className='text-gray-100' />
                                             <input
                                                 placeholder="URL de connexion au serveur"

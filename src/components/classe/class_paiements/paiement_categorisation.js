@@ -81,7 +81,7 @@ const ClassePaiementCategorisation = () => {
     return (
         <div style={{ marginRight: 10, marginBottom: 50 }}>
             <div style={{ float: 'right', marginBottom: -60, paddingTop: 10 }}>
-            <PrintDocument div={"paiement-categories"} />
+            <PrintDocument div={"paiement_categories"} />
                 <br /><br />
             </div>
 

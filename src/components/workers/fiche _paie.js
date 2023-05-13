@@ -23,7 +23,7 @@ const FichePaie = () => {
                         <strong>Année scolaire : {annees.filter(annee => annee.year_id == employee.worker_year)[0].year_name}</strong>
                     </div>
                     <div style={{ float: 'right', marginTop: -47 }}>
-                        <div style={{ fontWeight: 'bold', fontSize: 15 }}>FICHE DE PAIYE</div>
+                        <div style={{ fontWeight: 'bold', fontSize: 15 }}>FICHE DE PAYE</div>
                         <div style={{ fontWeight: 'bold', textAlign: 'right', marginTop: 2 }}>{employee.first_name.toUpperCase()} {employee.second_name.toUpperCase()} {employee.last_name}</div>
                     </div>
                 </div>

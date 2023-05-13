@@ -91,6 +91,7 @@ export const mapStateToProps = (state) => {
         theme:state.theme,
         today:state.today,
         makuta_day:state.makuta_day,
+        user_open:state.user_open,
     }
 }
 

@@ -1,22 +1,10 @@
-export const home_redirect = "/wima";
+export const home_redirect = "/";
 export const year = "2018 - 2023";
 export const http = "http://";
 // export const url_online = "gestion.collegeafajiri.net";
 // export const url_online = "192.168.10.2";
 export const url_online = "";
 export const online = false;
-
-// export function printContent(divName) {
-//     let printContents = document.getElementById(divName).innerHTML;
-//     let originalContents = document.body.innerHTML;
-//     document.body.innerHTML = printContents;
-//     window.print();
-
-//     document.body.innerHTML = originalContents;
-//     // window.location.reload();
-//     window.location.href = http + this.state.url_server + home_redirect;
-//     window.location.replace(http + this.state.url_server + home_redirect);
-// }
 
 export const find_date = (date) => {
     let year = date.substr(6, 4);
@@ -128,7 +116,7 @@ export const generateMonth = (month) => {
     } else if (month === 10) {
         return "Octobre";
     } else if (month === 11) {
-        return "November";
+        return "Novembre";
     } else {
         return "Décembre"
     }

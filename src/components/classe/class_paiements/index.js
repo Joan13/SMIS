@@ -76,7 +76,7 @@ const PaiementsClasse = () => {
                 :
                 <div>
                     <div style={{ float: 'right' }}>
-                        <PrintDocument div={"classe-paiements"} /><br />
+                        <PrintDocument div={"class-paiements"} /><br />
 
                         {paiements_tab === 0 ?
                             <div style={{ float: 'right', marginTop: 10, cursor: 'pointer' }} className='text-primary-50' onClick={() => setpaiements_tab(1)}>FILTRER LES FICHES</div>

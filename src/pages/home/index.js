@@ -51,6 +51,7 @@ import FichesPoints from "../../components/classe/fiche_points";
 import JSONPackageFile from './../../../package.json';
 import HeaderMenuLeft from "../../includes/header_menu_left";
 import BulletinsSmall from "../../components/classe/bulletins_small";
+import UserOpen from "../../components/includes/user_open";
 
 class Home extends Component {
     constructor(props) {
@@ -886,71 +887,16 @@ class Home extends Component {
                                     </div>
                                 </div>
 
-                                <div className="float-menu-topbarrrr flex items-center">
+                                <div className="float-menu-topbarrrr flex items-center cursor-pointer">
                                     {this.props.loading_footer ? (
                                         <span className="user-home-tools">
                                             <CircularProgress style={{ color: "rgb(51 143 255)" }} size={20} />
                                         </span>
                                     ) : null}
-
-                                    {/* <span
-                                        title="Revenir au menu principal"
-                                        className="user-home-tools"
-                                        onClick={() => this.back_home()}>
-                                        <FaHome size={20} />
-                                    </span> */}
-
-                                    {/* {!online ? (
-                                        <span
-                                            title="Synchroniser les données"
-                                            onClick={() => this.collect_data()}
-                                            className="user-home-tools">
-                                            <FaCloudUploadAlt size={22} />
-                                        </span>
-                                    ) : null} */}
-
-                                    {/* <span title="Notifications" className="user-home-tools">
-                                        <FaBell size={20} />
-                                    </span> */}
-
-                                    {/* <span title="Notifications"
-                                onClick={() => this.props.dispatch({ type: "SET_MODAL_SELECTIONS", payload: true })}
-                                className="user-home-tools">
-                                <FaBell color="black" size={20} />
-                            </span> */}
-
-                                    {/* <span
-                                        title="Rafraîchir les données"
-                                        onClick={() => this.refresh_window()}
-                                        className="user-home-tools">
-                                        <FiRefreshCcw size={20} />
-                                    </span> */}
-
-                                    {/* <Link
-                                        title="Configurations"
-                                        className="user-home-tools"
-                                        to={"/settings"}>
-                                        <RiSettings4Fill size={22} />
-                                    </Link> */}
-
-                                    {/* {this.state.logout_open ? (
-                                <span
-                                    title="Déconnexion"
-                                    onClick={() => this.logout_session()}
-                                    className="user-home-tools"
-                                    style={{ fontSize: 15 }}>
-                                    <div className="deconnexion">
-                                        <FiLogOut
-                                            color="white"
-                                            size={12}
-                                            style={{ marginRight: 10 }}
-                                        />
-                                        Quitter wfhgirhiuewhgiuhreuighweiughiurehgiuerhiu
-                                    </div>
-                                </span>
-                            ) : null} */}
-                                    <div className="flex items-center h-full text-right pr-5">
-                                        <span onClick={{}}>
+                                    <div
+                                     onClick={()=>this.props.dispatch({type:"SET_USER_OPEN", payload:!this.props.user_action})}
+                                     className="flex items-center h-full text-right pr-5">
+                                        <span>
                                             <strong style={{ fontSize: 13 }}>
                                                 {this.props.user_poste.toUpperCase()}
                                             </strong>
@@ -1203,6 +1149,8 @@ class Home extends Component {
 
                         <Footer />
                         {this.props.modal_paiement_categories ? <PaiementCategories /> : null}
+
+                        {this.props.user_open ? <UserOpen /> : null}
 
                         {this.props.modal_libelles ? <Libelles /> : null}
 
