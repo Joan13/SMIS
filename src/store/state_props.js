@@ -87,11 +87,12 @@ export const mapStateToProps = (state) => {
         modal_selections: state.modal_selections,
         classes_selected: state.classes_selected,
         selections: state.selections,
-        echecs:state.echecs,
-        theme:state.theme,
-        today:state.today,
-        makuta_day:state.makuta_day,
-        user_open:state.user_open,
+        echecs: state.echecs,
+        theme: state.theme,
+        today: state.today,
+        makuta_day: state.makuta_day,
+        user_open: state.user_open,
+        redirectToReferrer: state.redirectToReferrer
     }
 }
 

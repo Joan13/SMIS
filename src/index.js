@@ -16,7 +16,8 @@ const persistConfig = {
   whitelist: [
     'user_data',
     'url_server',
-    'theme'
+    'theme',
+    'redirectToReferrer',
   ],
 };
 

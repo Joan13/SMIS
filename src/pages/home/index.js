@@ -52,6 +52,9 @@ import JSONPackageFile from './../../../package.json';
 import HeaderMenuLeft from "../../includes/header_menu_left";
 import BulletinsSmall from "../../components/classe/bulletins_small";
 import UserOpen from "../../components/includes/user_open";
+import fetchProgress from "fetch-progress";
+import axios from "axios";
+import vector from "./../../../src/assets/logo.PNG"
 
 class Home extends Component {
     constructor(props) {
@@ -126,9 +129,12 @@ class Home extends Component {
     }
 
     get_general_info(annee) {
-        let user = sessionStorage.getItem("assemble_user_data");
-        let url_server = sessionStorage.getItem("yambi_smis_url_server");
-        user = JSON.parse(user);
+        this.props.dispatch({ type: "SET_LOADING_MIDDLE", payload: true });
+        this.props.dispatch({ type: "SET_LOADING_HOME", payload: true });
+
+        let user = this.props.user_data;//sessionStorage.getItem("assemble_user_data");
+        let url_server = this.props.url_server;//sessionStorage.getItem("yambi_smis_url_server");
+        // user = JSON.parse(user);
         this.setState({ can_load_data: false });
 
         this.props.dispatch({ type: "SET_USER_CONNECTED", payload: user });
@@ -144,6 +150,7 @@ class Home extends Component {
         this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Chargement des données générales...", });
 
         if (user === null) {
+            this.logout_session();
         } else {
             if (parseInt(user.poste) === 0) {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Admin" });
@@ -160,28 +167,19 @@ class Home extends Component {
             } else if (parseInt(user.poste) === 6) {
                 this.props.dispatch({ type: "SET_POSTE", payload: "Caisse" });
             } else if (parseInt(user.poste) === 7) {
-                this.props.dispatch({
-                    type: "SET_POSTE",
-                    payload: "Directeur des études",
-                });
+                this.props.dispatch({ type: "SET_POSTE", payload: "Directeur des études", });
             } else {
-                alert(
-                    "Cet utilisateur est invalide. Vous devez vous reconnecter pour accéder aux services."
-                );
+                alert("Cet utilisateur est invalide. Vous devez vous reconnecter pour accéder aux services.");
                 this.logout_session();
             }
         }
 
-        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_info_home.php";
+        let data = new FormData();
+        data.append('annee', annee);
 
-        fetch(BaseURL, {
-            method: "POST",
-            body: JSON.stringify({
-                annee: annee,
-            }),
-        })
-            .then((response) => response.json())
-            .then((response) => {
+        axios.post(http + this.props.url_server + "/yambi_class_SMIS/API/get_info_home.php", data)
+            .then(rsp => {
+                const response = rsp.data;
                 const promise_general_info_home = new Promise((resolve, reject) => {
                     this.props.dispatch({ type: "SET_CLASSES", payload: response.classes, });
                     this.props.dispatch({ type: "SET_PUPILS_COUNT_PAIEMENTS", payload: response.pupils_count_paiements, });
@@ -216,30 +214,15 @@ class Home extends Component {
                 }).then(() => { });
 
                 promise_general_info_home.finally(() => {
-                    this.props.dispatch({ type: "SET_LOADING_MIDDLE", payload: false });
-                    this.props.dispatch({ type: "SET_LOADING_HOME", payload: false });
+                    setTimeout(() => {
+                        this.props.dispatch({ type: "SET_LOADING_MIDDLE", payload: false });
+                        this.props.dispatch({ type: "SET_LOADING_HOME", payload: false });
+                    }, 2000);
                 });
-
-                // this.props.dispatch({ type: "SET_PPS", payload: response.pupils });
-
-                // this.setState({can_load_data:true});
-
-                // this.parse_classes(response.classes);
-
-                // this.setState({ modal_title: "Synchronisation des données", modal_main_text: "Pas de pannique ! Après un bon nombre d'enregistrements des informations dans le logiciel, souvenez-vous de les synchroniser au travers du bouton d'upload des données dans la topbar du logiciel.", modal_view: true });
             })
             .catch((error) => {
-                console.log(error.toString());
+                console.log(error);
                 this.props.dispatch({ type: "SET_LOADING_HOME", payload: false });
-                this.setState({
-                    modal_title: "Information erreur",
-                    modal_main_text:
-                        "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.",
-                    modal_view: true,
-                    is_loading_home: false,
-                    can_load_data: false,
-                    loading_middle: false,
-                });
             });
     }
 
@@ -838,14 +821,11 @@ class Home extends Component {
     }
 
     logout_session() {
-        this.setState({ middle_func: 0, loading_middle: true });
-
-        // if (this.props.middle_func === 0) {
-        this.setState({ redirectToReferrer: false, loading_middle: false });
+        this.props.dispatch({ type: "SET_REDIRECTTOREFERRER", payload: false });
+        this.props.dispatch({ type: "SET_USER_OPEN", payload: false });
         sessionStorage.removeItem("assemble_user_data");
         sessionStorage.setItem("classeYambiSMIS", []);
         sessionStorage.clear();
-        // }
     }
 
     refresh_window() {
@@ -859,304 +839,304 @@ class Home extends Component {
         this.get_general_info("");
     }
 
+    okkokook() {
+        // axios({
+        //     method: 'post',
+        //     url:  http + this.props.url_server + "/yambi_class_SMIS/API/get_info_home.php",
+        //                 data: { annee: annee },
+        //     config: { headers: { 'Content-Type': 'multipart/form-data' } }
+        // })
+        //   .then(function (response) {
+        //     console.log(response);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+    }
+
     componentDidMount() {
+        // this.props.dispatch({ type: "SET_LOADING_HOME", payload: false });
         this.get_general_info("");
+        // this.okkokook();
     }
 
     render() {
-        if (
-            this.state.redirectToReferrer ||
-            sessionStorage.getItem("assemble_user_data")
-        ) {
+        if (this.props.redirectToReferrer || sessionStorage.getItem("assemble_user_data")) {
         } else {
             return <Navigate to={"/signin"} />;
         }
 
         return (
-            <div className={`bg-background-100 text-text-100 rounded-lg dark:text-text-20 ${JSONPackageFile.platform === "Desktop" ? "rounded-lg" : null} fixed top-0 bottom-0 right-0 left-0 border border-gray-50 dark:border-gray-20`}>
-                <div className="rounded-lg">
-                    <div>
-                        <div className="top-bar-app bg-background-100 dark:bg-background-20 rounded-tr-lg shadow-md">
-                            {this.props.loadding_header ? <LinearProgress /> : null}
-                            <div className="h-5 bg-background-100 dark:bg-background-20 rounded-tr-lg"></div>
-                            <div className="flex items-center w-full">
-                                <div className="flex items-center flex-auto ml-5">
-                                    <FcOpenedFolder color="orange" size={30} />
-                                    <h2 className="text-2xl ml-5 font-bold">{this.props.school_name_abb.toUpperCase()}</h2>
-                                    <div className="ml-5 text-lg text-gray-100"> {" "} / Dossiers / {this.props.annee_scolaire.year_name}{" "}
-                                    </div>
-                                </div>
+            <div>
+                {!this.props.is_loading_home ?
+                    <div className={`bg-background-100 text-text-100 rounded-lg dark:text-text-20 ${JSONPackageFile.platform === "Desktop" ? "rounded-lg" : null} fixed top-0 bottom-0 right-0 left-0 border border-gray-50 dark:border-gray-20`}>
+                        <div className="rounded-lg">
+                            <div>
+                                <div className="top-bar-app bg-background-100 dark:bg-background-20 rounded-tr-lg shadow-md">
+                                    {this.props.loadding_header ? <LinearProgress /> : null}
+                                    <div className="h-5 bg-background-100 dark:bg-background-20 rounded-tr-lg"></div>
+                                    <div className="flex items-center w-full">
+                                        <div className="flex items-center flex-auto ml-5">
+                                            <FcOpenedFolder color="orange" size={30} />
+                                            <h2 className="text-2xl ml-5 font-bold">{this.props.school_name_abb.toUpperCase()}</h2>
+                                            <div className="ml-5 text-lg text-gray-100"> {" "} / Dossiers / {this.props.annee_scolaire.year_name}{" "}
+                                            </div>
+                                        </div>
 
-                                <div className="float-menu-topbarrrr flex items-center cursor-pointer">
-                                    {this.props.loading_footer ? (
-                                        <span className="user-home-tools">
-                                            <CircularProgress style={{ color: "rgb(51 143 255)" }} size={20} />
-                                        </span>
-                                    ) : null}
-                                    <div
-                                     onClick={()=>this.props.dispatch({type:"SET_USER_OPEN", payload:!this.props.user_action})}
-                                     className="flex items-center h-full text-right pr-5">
-                                        <span>
-                                            <strong style={{ fontSize: 13 }}>
-                                                {this.props.user_poste.toUpperCase()}
-                                            </strong>
-                                            <br />
-                                            <span className="text-gray-100">
-                                                {this.props.user_data.user_name}
-                                            </span>
-                                        </span>
-                                        <button
-                                            onClick={() => { }}
-                                            className="border border-gray-50 dark:border-gray-20 ml-4 rounded-full h-12 w-12 flex  justify-center items-center">
-                                            <FiUser className=" text-text-100 dark:text-background-100" size={15} />
-                                        </button>
-                                        <FaCircle
-                                            style={{ marginLeft: -13, marginBottom: -13, paddingTop: 20 }}
-                                            size={13}
-                                            color="rgb(0, 180, 0)"
-                                        />
+                                        <div className="float-menu-topbarrrr flex items-center cursor-pointer">
+                                            {this.props.loading_footer ? (
+                                                <span className="user-home-tools">
+                                                    <CircularProgress style={{ color: "rgb(51 143 255)" }} size={20} />
+                                                </span>
+                                            ) : null}
+                                            <div
+                                                onClick={() => this.props.dispatch({ type: "SET_USER_OPEN", payload: !this.props.user_action })}
+                                                className="flex items-center h-full text-right pr-5 ">
+                                                <span>
+                                                    <strong style={{ fontSize: 13 }}>
+                                                        {this.props.user_poste.toUpperCase()}
+                                                    </strong>
+                                                    <br />
+                                                    <span className="text-gray-100">
+                                                        {this.props.user_data.user_name}
+                                                    </span>
+                                                </span>
+                                                <button
+                                                    onClick={() => { }}
+                                                    className="border border-gray-50 dark:border-gray-20 ml-4 rounded-full h-12 w-12 flex  justify-center items-center">
+                                                    <FiUser className=" text-text-100 dark:text-background-100" size={15} />
+                                                </button>
+                                                <FaCircle
+                                                    style={{ marginLeft: -13, marginBottom: -13, paddingTop: 20 }}
+                                                    size={13}
+                                                    color="rgb(0, 180, 0)"
+                                                />
+                                            </div>
+                                        </div>
+                                        {/* 
+                                <div id="defaultModal" tabIndex="-1" aria-hidden="true" className="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+
+                                </div> */}
                                     </div>
 
-                                </div>
-                            </div>
+                                    <div className="menu-top-middlerere flex items-baseline ml-5  mt-2 mr-5 pb-1 border-b border-gray-50 dark:border-gray-20">
+                                        <div className="flex items-bottom flex-auto">
+                                            <div className="font-bold text-lg">
+                                                {this.props.title_main}{" "}
+                                                {this.props.middle_func === 4 ? " " + this.state.periode_full.toLocaleLowerCase() + " / " : null}{" "}
+                                                {this.props.annee_scolaire.year_name}
+                                            </div>
+                                            <div style={{ marginLeft: 20 }} className="select-no-border flex items-center text-text-50">
+                                                <FaEdit />
+                                                <select
+                                                    onChange={(val) => this.get_general_info(val.target.value)}
+                                                    className="nodrag select-no-border-select bg-background-100 dark:bg-background-20 ml-2">
+                                                    <option value={this.props.annee}>Modifier année</option>
+                                                    {this.props.annees.map((annee, index) => (
+                                                        <option key={index} value={annee.year_id}>
+                                                            {annee.year_name}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        </div>
 
-                            <div className="menu-top-middlerere flex items-baseline ml-5  mt-2 mr-5 pb-1 border-b border-gray-50 dark:border-gray-20">
-                                <div className="flex items-bottom flex-auto">
-                                    <div className="font-bold text-lg">
-                                        {this.props.title_main}{" "}
-                                        {this.props.middle_func === 4 ? " " + this.state.periode_full.toLocaleLowerCase() + " / " : null}{" "}
-                                        {this.props.annee_scolaire.year_name}
-                                    </div>
-                                    <div style={{ marginLeft: 20 }} className="select-no-border flex items-center text-text-50">
-                                        <FaEdit />
-                                        <select
-                                            onChange={(val) => this.get_general_info(val.target.value)}
-                                            className="nodrag select-no-border-select bg-background-100 dark:bg-background-20 ml-2">
-                                            <option value={this.props.annee}>Modifier année</option>
-                                            {this.props.annees.map((annee, index) => (
-                                                <option key={index} value={annee.year_id}>
-                                                    {annee.year_name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div className="topbar-menu-float-righttt  text-text-50  flex items-center">
-                                    {this.props.middle_func === 15 ? (
-                                        <span
-                                            onClick={() => this.new_worker()}
-                                            className={`nodrag select-no-border ${this.props.middle_func === 6 ? "select-no-border-bold" : ""} flex items-center`}>
-                                            <FaUserPlus style={{ marginRight: 5 }} />
-                                            Nouveau membre
-                                        </span>
-                                    ) : this.props.middle_func === 23 ? (
-                                        <span
-                                            onClick={() => this.timetable_settings()}
-                                            className={`nodrag select-no-border ${this.props.middle_func === 22
-                                                ? "select-no-border-bold"
-                                                : ""
-                                                }`}>
-                                            <FaUserPlus style={{ marginRight: 5 }} />
-                                            Configuration des horaires
-                                        </span>
-                                    ) : this.props.middle_func === 12 ? (
-                                        <>
-                                            {/* <span
+                                        <div className="topbar-menu-float-righttt  text-text-50  flex items-center">
+                                            {this.props.middle_func === 15 ? (
+                                                <span
+                                                    onClick={() => this.new_worker()}
+                                                    className={`nodrag select-no-border ${this.props.middle_func === 6 ? "select-no-border-bold" : ""} flex items-center`}>
+                                                    <FaUserPlus style={{ marginRight: 5 }} />
+                                                    Nouveau membre
+                                                </span>
+                                            ) : this.props.middle_func === 23 ? (
+                                                <span
+                                                    onClick={() => this.timetable_settings()}
+                                                    className={`nodrag select-no-border ${this.props.middle_func === 22
+                                                        ? "select-no-border-bold"
+                                                        : ""
+                                                        }`}>
+                                                    <FaUserPlus style={{ marginRight: 5 }} />
+                                                    Configuration des horaires
+                                                </span>
+                                            ) : this.props.middle_func === 12 ? (
+                                                <>
+                                                    {/* <span
                                     // onClick={() => this.gestion_depenses()}
                                     style={{ color: 'rgba(0, 80, 180)' }}
                                     className={`select-no-border ${this.props.middle_func === 22 ? "select-no-border-bold" : ""}`}>
                                     <FaUserPlus style={{ marginRight: 5 }} />
                                     Gestion des dépenses</span> */}
+                                                    <span
+                                                        onClick={() => this.paiement_categories()}
+                                                        className={`nodrag select-no-border ${this.props.middle_func === 22 ? "select-no-border-bold" : ""} flex items-center`}>
+                                                        <FaUserPlus style={{ marginRight: 5 }} />
+                                                        Catégories de paiement
+                                                    </span>
+                                                </>
+                                            ) : (
+                                                <div
+                                                    onClick={() => this.new_pupil()}
+                                                    className={`nodrag select-no-border ${this.props.middle_func === 6 ? "select-no-border-bold" : ""} flex items-center`}>
+                                                    <FaUserPlus style={{ marginRight: 5 }} />
+                                                    Nouveau
+                                                </div>
+                                            )}
+
+                                            {this.props.middle_func === 12 ? (
+                                                <span
+                                                    onClick={() => this.open_libelles()}
+                                                    className={`nodrag select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold" : ""} flex items-center`}>
+                                                    <span className="divider-menu-topbar"></span>
+                                                    <FiEdit style={{ size: 17, marginRight: 5 }} />
+                                                    Libéllés
+                                                </span>
+                                            ) : (
+                                                <span
+                                                    onClick={() => this.new_classe_import()}
+                                                    className={`nodrag select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold" : ""} flex items-center`}>
+                                                    <span className="divider-menu-topbar"></span>
+                                                    <FaClipboard style={{ size: 17, marginRight: 5 }} />
+                                                    Uploader une classe
+                                                </span>
+                                            )}
+
                                             <span
-                                                onClick={() => this.paiement_categories()}
-                                                className={`nodrag select-no-border ${this.props.middle_func === 22 ? "select-no-border-bold" : ""} flex items-center`}>
-                                                <FaUserPlus style={{ marginRight: 5 }} />
-                                                Catégories de paiement
+                                                onClick={() => this.fetch_synthese()}
+                                                className={`nodrag select-no-border ${this.props.middle_func === 4 ? "select-no-border-bold" : ""} flex items-center`}>
+                                                <span className="divider-menu-topbar"></span>
+                                                <FaPaperclip style={{ size: 12 }} />
+                                                Synthèse des résultats
                                             </span>
-                                        </>
-                                    ) : (
-                                        <div
-                                            onClick={() => this.new_pupil()}
-                                            className={`nodrag select-no-border ${this.props.middle_func === 6 ? "select-no-border-bold" : ""} flex items-center`}>
-                                            <FaUserPlus style={{ marginRight: 5 }} />
-                                            Nouveau
                                         </div>
-                                    )}
-
-                                    {this.props.middle_func === 12 ? (
-                                        <span
-                                            onClick={() => this.open_libelles()}
-                                            className={`nodrag select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold" : ""} flex items-center`}>
-                                            <span className="divider-menu-topbar"></span>
-                                            <FiEdit style={{ size: 17, marginRight: 5 }} />
-                                            Libéllés
-                                        </span>
-                                    ) : (
-                                        <span
-                                            onClick={() => this.new_classe_import()}
-                                            className={`nodrag select-no-border ${this.props.middle_func === 13 ? "select-no-border-bold" : ""} flex items-center`}>
-                                            <span className="divider-menu-topbar"></span>
-                                            <FaClipboard style={{ size: 17, marginRight: 5 }} />
-                                            Uploader une classe
-                                        </span>
-                                    )}
-
-                                    <span
-                                        onClick={() => this.fetch_synthese()}
-                                        className={`nodrag select-no-border ${this.props.middle_func === 4 ? "select-no-border-bold" : ""} flex items-center`}>
-                                        <span className="divider-menu-topbar"></span>
-                                        <FaPaperclip style={{ size: 12 }} />
-                                        Synthèse des résultats
-                                    </span>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div className="main-menu-left bg-background-50 dark:bg-background-20 border-r border-gray-50 dark:border-gray-20 rounded-l-xl">
-                            <Classes type={1} />
-                        </div>
+                                <div className="main-menu-left bg-background-50 dark:bg-background-20 border-r border-gray-50 dark:border-gray-20 rounded-l-xl">
+                                    <Classes type={1} />
+                                </div>
 
-                        <div className="main-middle-page bg-background-100 dark:bg-background-20">
-                            <div className="sub-div-main">
-                                {this.props.loading_middle ? (
-                                    <div
-                                        className="progress-center-main"
-                                        style={{ alignItems: "center" }}>
-                                        <CircularProgress style={{ color: "rgb(0, 80, 180)" }} />
-                                        <br />
-                                        Chargement des données...
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <EmployeesList />
-
-                                        {this.props.middle_func === 22 ? (
-                                            <div className="menu-right">
-                                                <CoursesTimetableConfigurator />
+                                <div className="main-middle-page bg-background-100 dark:bg-background-20">
+                                    <div className="sub-div-main">
+                                        {this.props.loading_middle ? (
+                                            <div
+                                                className="progress-center-main"
+                                                style={{ alignItems: "center" }}>
+                                                <CircularProgress style={{ color: "rgb(0, 80, 180)" }} />
+                                                <br />
+                                                Chargement des données...
                                             </div>
-                                        ) : null}
+                                        ) : (
+                                            <div>
+                                                <EmployeesList />
 
-                                        {this.props.allow_right_menu && this.props.class_open ? (<RightClasseMenu />) : null}
+                                                {this.props.middle_func === 22 ? (
+                                                    <div className="menu-right">
+                                                        <CoursesTimetableConfigurator />
+                                                    </div>
+                                                ) : null}
 
-                                        {this.props.allow_right_menu_pupils ? (<PupilsRightMenu />) : null}
+                                                {this.props.allow_right_menu && this.props.class_open ? (<RightClasseMenu />) : null}
 
-                                        <div className="center-fixed border-r border-gray-50 dark:border-gray-20">
-                                            <div style={{ paddingLeft: 20, paddingRight: 10 }}>
-                                                {this.props.middle_func === 1 ? (<ListeNomminative />) : null}
+                                                {this.props.allow_right_menu_pupils ? (<PupilsRightMenu />) : null}
 
-                                                {this.props.middle_func === 11 ? (<ViewPupil />) : null}
+                                                <div className="center-fixed border-r border-gray-50 dark:border-gray-20">
+                                                    <div style={{ paddingLeft: 20, paddingRight: 10 }}>
+                                                        {this.props.middle_func === 1 ? (<ListeNomminative />) : null}
 
-                                                {this.props.middle_func === 12 ? (<StatistiquesCaisse />) : null}
+                                                        {this.props.middle_func === 11 ? (<ViewPupil />) : null}
 
-                                                {this.props.middle_func === 13 ? (<NewClasseImport />) : null}
+                                                        {this.props.middle_func === 12 ? (<StatistiquesCaisse />) : null}
 
-                                                {this.props.middle_func === 15 ? (<GestionPersonnel />) : null}
+                                                        {this.props.middle_func === 13 ? (<NewClasseImport />) : null}
 
-                                                {this.props.middle_func === 16 ? (<AddWorker />) : null}
+                                                        {this.props.middle_func === 15 ? (<GestionPersonnel />) : null}
 
-                                                {this.props.middle_func === 22 ? (<TimetableSettings />) : null}
+                                                        {this.props.middle_func === 16 ? (<AddWorker />) : null}
 
-                                                {this.props.middle_func === 24 ? (<ClassePaiementCategorisation />) : null}
+                                                        {this.props.middle_func === 22 ? (<TimetableSettings />) : null}
 
-                                                {this.props.middle_func === 14 ? (<SettingsBulletins />) : null}
+                                                        {this.props.middle_func === 24 ? (<ClassePaiementCategorisation />) : null}
 
-                                                {this.props.middle_func === 26 ? (<FichePointsBrouillon />) : null}
+                                                        {this.props.middle_func === 14 ? (<SettingsBulletins />) : null}
 
-                                                {this.props.middle_func === 27 ? (<FicheSynthesePointsBrouillon />) : null}
+                                                        {this.props.middle_func === 26 ? (<FichePointsBrouillon />) : null}
 
-                                                {this.props.middle_func === 28 ? (<BulletinsBrouillon />) : null}
+                                                        {this.props.middle_func === 27 ? (<FicheSynthesePointsBrouillon />) : null}
 
-                                                {this.props.middle_func === 29 ? (<BulletinsType2Brouillon />) : null}
+                                                        {this.props.middle_func === 28 ? (<BulletinsBrouillon />) : null}
 
-                                                {this.props.middle_func === 30 ? (<ViewWorker />) : null}
+                                                        {this.props.middle_func === 29 ? (<BulletinsType2Brouillon />) : null}
 
-                                                {this.props.middle_func === 31 ? (<Conduites />) : null}
+                                                        {this.props.middle_func === 30 ? (<ViewWorker />) : null}
 
-                                                {this.props.middle_func === 32 ? (<FichesPoints />) : null}
+                                                        {this.props.middle_func === 31 ? (<Conduites />) : null}
 
-                                                {this.props.middle_func === 33 ? (<BulletinsSmall />) : null}
+                                                        {this.props.middle_func === 32 ? (<FichesPoints />) : null}
 
-                                                {this.props.middle_func === 5 ? (
-                                                    <div id="fiches">
-                                                        {this.props.fiches_tab === "FI" ? (
-                                                            <div id="fiche-identity">{<FicheIdentites />}</div>
-                                                        ) : null}
+                                                        {this.props.middle_func === 33 ? (<BulletinsSmall />) : null}
 
-                                                        {this.props.fiches_tab === "FO" ? (
-                                                            <div id="fiche-observation">
-                                                                {/* {<FicheObservationPoints />} */}
+                                                        {this.props.middle_func === 5 ? (
+                                                            <div id="fiches">
+                                                                {this.props.fiches_tab === "FI" ? (<div id="fiche-identity">{<FicheIdentites />}</div>) : null}
+
+                                                                {this.props.fiches_tab === "FO" ? (<div id="fiche-observation"> {/* {<FicheObservationPoints />} */} </div>) : null}
+
+                                                                {this.props.fiches_tab === "E13" ? (<div id="fiche-e133"> <FicheE13 /> </div>) : null}
+
+                                                                {this.props.fiches_tab === "E80" ? (<div id="fiche-e800">{/* {<FicheE80 />} */}</div>) : null}
                                                             </div>
                                                         ) : null}
 
-                                                        {this.props.fiches_tab === "E13" ? (
-                                                            <div id="fiche-e133">
-                                                                <FicheE13 />
+                                                        {this.props.middle_func === 9 ? (<div> <Courses /> </div>) : null}
+
+                                                        {this.props.middle_func === 8 ? (<div><PaiementsClasse /></div>) : null}
+
+                                                        {this.props.middle_func === 0 ? (<div><MenuHome /></div>) : null}
+
+                                                        {this.props.middle_func === 2 ? (
+                                                            <div>
+                                                                {this.props.marks_tab === "FPE" ? (<FichePointsPupils />) : null}
+
+                                                                {this.props.marks_tab === "FPC" ? (<FichesPointsCourses />) : null}
                                                             </div>
                                                         ) : null}
 
-                                                        {this.props.fiches_tab === "E80" ? (
-                                                            <div id="fiche-e800">{/* {<FicheE80 />} */}</div>
-                                                        ) : null}
+                                                        {this.props.middle_func === 3 ? <PalmaresPupils /> : null}
+
+                                                        {this.props.middle_func === 10 ? <PalmaresFinal /> : null}
+
+                                                        {this.props.middle_func === 4 ? this.render_synthese() : null}
+
+                                                        {this.props.middle_func === 6 ? <NewPupil /> : null}
+
+                                                        {this.props.middle_func === 7 ? (<Bulletins />) : null}
                                                     </div>
-                                                ) : null}
-
-                                                {this.props.middle_func === 9 ? (
-                                                    <div>
-                                                        <Courses />
-                                                    </div>
-                                                ) : null}
-
-                                                {this.props.middle_func === 8 ? (
-                                                    <div>
-                                                        <PaiementsClasse />
-                                                    </div>
-                                                ) : null}
-
-                                                {this.props.middle_func === 0 ? (
-                                                    <div>
-                                                        <MenuHome />
-                                                    </div>
-                                                ) : null}
-
-                                                {this.props.middle_func === 2 ? (
-                                                    <div>
-                                                        {this.props.marks_tab === "FPE" ? (
-                                                            <FichePointsPupils />
-                                                        ) : null}
-
-                                                        {this.props.marks_tab === "FPC" ? (
-                                                            <FichesPointsCourses />
-                                                        ) : null}
-                                                    </div>
-                                                ) : null}
-
-                                                {this.props.middle_func === 3 ? <PalmaresPupils /> : null}
-
-                                                {this.props.middle_func === 10 ? <PalmaresFinal /> : null}
-
-                                                {this.props.middle_func === 4? this.render_synthese(): null}
-
-                                                {this.props.middle_func === 6 ? <NewPupil /> : null}
-
-                                                {this.props.middle_func === 7 ? (<Bulletins />) : null}
+                                                </div>
                                             </div>
-                                        </div>
+                                        )}
                                     </div>
-                                )}
+                                </div>
+
+                                <Footer />
+                                {this.props.modal_paiement_categories ? <PaiementCategories /> : null}
+
+                                {this.props.user_open ? <UserOpen /> : null}
+
+                                {this.props.modal_libelles ? <Libelles /> : null}
+
+                                {this.props.modal_selections ? <ModalFrame type={1} /> : null}
                             </div>
                         </div>
-
-                        <Footer />
-                        {this.props.modal_paiement_categories ? <PaiementCategories /> : null}
-
-                        {this.props.user_open ? <UserOpen /> : null}
-
-                        {this.props.modal_libelles ? <Libelles /> : null}
-
-                        {this.props.modal_selections ? <ModalFrame type={1} /> : null}
                     </div>
-                </div>
+                    :
+                    <div className="fixed top-0 left-0 right-0 bottom-0 bg-background-100 dark:bg-background-20 flex items-center justify-center">
+                        <div className="text-center">
+                            <img src={vector} width="400" alt='Yambi Class SMIS' />
+                            <CircularProgress className="mt-5" style={{ color: "rgb(51 143 255)" }} size={25} />
+                        </div>
+                    </div>
+                }
             </div>
         );
     }

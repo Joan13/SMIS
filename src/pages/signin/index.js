@@ -16,13 +16,14 @@ const Signin = () => {
     const [password, setPassword] = useState("");
     const user_data = useSelector(state => state.user_data);
     const url = useSelector(state => state.url_server);
+    const redirectToReferrer = useSelector(state=>state.redirectToReferrer);
     const [url_server, setUrl_erver] = useState(url_online);
     const [connection_type, setConnection_type] = useState(0);
     const [is_loading, setIs_loading] = useState(false);
     const [empty_error, setEmpty_error] = useState(false);
     const [see_pass, setSee_pass] = useState(false);
     const [incorrect, setIncorrect] = useState(false);
-    const [redirectToReferrer, setRedirectToReferrer] = useState(false);
+    // const [redirectToReferrer, setRedirectToReferrer] = useState(false);
     const [aide, setAide] = useState(false);
     const [message_user, setMessage_user] = useState("");
     const [message1, setMessage1] = useState("");
@@ -73,7 +74,8 @@ const Signin = () => {
                         }, 3000);
 
                         setTimeout(() => {
-                            setRedirectToReferrer(true);
+                            // setRedirectToReferrer(true);
+                            dispatch({type:"SET_REDIRECTTOREFERRER", payload:true});
                         }, 4500);
 
                     } else {

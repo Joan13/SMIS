@@ -85,7 +85,7 @@ const MenuHome = () => {
         <div className=' w-full mt-5 mb-5 flex justify-center items-center container mx-auto'>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
                 <div className="ml-5 mr-5 mb-10">
-                    <div className="p-3 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
+                    <div className="p-2 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
                         <img src={caisse} className='object-cover rounded-lg' />
                         <div className='text-xl font-bold mt-5'>Caisse</div>
                         <div className="text-gray-100 mt-3 mb-3">Rapports journaliers et finaux avec tous les détails possibles.</div>
@@ -96,7 +96,7 @@ const MenuHome = () => {
                 </div>
 
                 <div className="ml-5 mr-5 mb-10">
-                    <div className="p-3 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
+                    <div className="p-2 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
                         <img src={library} className='object-cover rounded-lg' />
                         <div className='text-xl font-bold mt-5'>Bibliothèque</div>
                         <div className="text-gray-100 mt-3 mb-3">Retrouvez et identifiez facilement les livres classés.</div>
@@ -107,7 +107,7 @@ const MenuHome = () => {
                 </div>
 
                 <div className="ml-5 mr-5 mb-10">
-                    <div className="p-3 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
+                    <div className="p-2 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
                         <img src={personnel} className='object-cover rounded-lg' />
                         <div className='text-xl font-bold mt-5'>Personnel</div>
                         <div className="text-gray-100 mt-3 mb-3">Vue d'ensemble du personnel et horaires de prestation.</div>
@@ -118,7 +118,7 @@ const MenuHome = () => {
                 </div>
 
                 <div className="ml-5 mr-5 mb-10">
-                    <div className="p-3 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
+                    <div className="p-2 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
                         <img src={timetablee} className='object-cover rounded-lg' />
                         <div className='text-xl font-bold mt-5'>Horaires</div>
                         <div className="text-gray-100 mt-3 mb-3">Tout un pannel de possibilités et d'outils à votre disposition.</div>
@@ -129,7 +129,7 @@ const MenuHome = () => {
                 </div>
 
                 <div className="ml-5 mr-5 mb-10">
-                    <div className="p-3 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
+                    <div className="p-2 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
                         <img src={meeting} className='object-cover rounded-lg' />
                         <div className='text-xl font-bold mt-5'>Réunions et chat</div>
                         <div className="text-gray-100 mt-3 mb-3">Passez en live et communiquez avec des collègues et les parents en temps réel.</div>
@@ -140,7 +140,7 @@ const MenuHome = () => {
                 </div>
 
                 <div className="ml-5 mr-5 mb-10">
-                    <div className="p-3 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
+                    <div className="p-2 bg-background-50 shadow-lg hover:shadow-xl rounded-xl dark:bg-background-20 flex flex-col">
                         <img src={logistics} className='object-cover rounded-lg' />
                         <div className='text-xl font-bold mt-5'>Logistique</div>
                         <div className="text-gray-100 mt-3 mb-3">Gérez, classez et suivez l'amortissement du mobilier dans votre établissement.</div>

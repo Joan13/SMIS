@@ -94,12 +94,15 @@ const initialState = {
     today: new Date().getFullYear() + "-" + parseInt(new Date().getMonth() + 1) + "-" + new Date().getDate(),
     makuta_day: 0,
     user_open: false,
+    redirectToReferrer: false,
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_MODAL_PAIEMENT_CATEGORIES":
             return { ...state, modal_paiement_categories: action.payload }
+        case "SET_REDIRECTTOREFERRER":
+            return { ...state, redirectToReferrer: action.payload }
         case "SET_USER_OPEN":
             return { ...state, user_open: action.payload }
         case "SET_TODAY":
