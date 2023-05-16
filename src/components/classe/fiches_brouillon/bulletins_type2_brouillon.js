@@ -386,19 +386,6 @@ class BulletinsType2Brouillon extends React.Component {
         clearInterval(this.intervalID);
     }
 
-    printContent(divName) {
-
-        let printContents = document.getElementById(divName).innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-
-        document.body.innerHTML = originalContents;
-        // window.location.reload();
-        window.location.href = http + this.props.url_server + home_redirect;
-        window.location.replace(http + this.props.url_server + home_redirect);
-    }
-
     find_date(date) {
         date = date.toString();
         let year = date.substr(0, 4);

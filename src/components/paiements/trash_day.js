@@ -3,6 +3,7 @@ import { FaArrowDown, FaChevronDown, FaPrint } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { find_date, home_redirect, http } from '../../global_vars';
 import { mapStateToProps } from '../../store/state_props';
+import PrintDocument from '../includes/print';
 
 class AllPupilPaiements extends Component {
 
@@ -244,10 +245,9 @@ class AllPupilPaiements extends Component {
 
                                     <span>
                                         <span className="divider-menu-topbar"></span>
-                                        <FaPrint color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
-                                        <span onClick={() => this.printContent(`recu ${paiement.paiement_id}`)} className="add-minus">
-                                            IMPRIMER CE REÇU
-                                        </span>
+                                        {/* <FaPrint color="rgb(0, 80, 180)" style={{ marginRight: 5 }} /> */}
+                                       
+                                        <PrintDocument div={`recu ${paiement.paiement_id}`} />
                                     </span>
                                 </div>
                             </div>

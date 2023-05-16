@@ -24,18 +24,6 @@ const PaiementsClasse = () => {
     const loading_footer = useSelector(state => state.loading_footer);
     const [paiements_tab, setpaiements_tab] = useState(0);
 
-    const printContent = (divName) => {
-
-        let printContents = document.getElementById(divName).innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-
-        document.body.innerHTML = originalContents;
-        window.location.href = http + url_server + home_redirect;
-        window.location.replace(http + url_server + home_redirect);
-    }
-
     const find_pupil = (pupil) => {
         let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
 

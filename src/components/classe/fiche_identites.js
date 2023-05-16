@@ -7,19 +7,6 @@ function FicheIdentites() {
     const autres = useSelector(state => state.autres);
     const classe = useSelector(state => state.classe);
 
-    function printContent(divName) {
-
-        let printContents = document.getElementById(divName).innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-
-        document.body.innerHTML = originalContents;
-        // window.location.reload();
-        window.location.href = http + this.state.url_server + home_redirect;
-        window.location.replace(http + this.state.url_server + home_redirect);
-    }
-
     return (
         <div className="center-fixedd" style={{ marginBottom: 50, paddingTop: 0 }}>
             <PrintDocument div={"identities"} /> 

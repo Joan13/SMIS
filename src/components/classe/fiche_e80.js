@@ -296,9 +296,9 @@ export default class FicheE80 extends Component {
         window.print();
 
         document.body.innerHTML = originalContents;
-        // window.location.reload();
-        window.location.href = http + this.state.url_server + "/cirezi2/";
-        window.location.replace(http + this.state.url_server + "/cirezi2/");
+        window.location.reload();
+        // window.location.href = http + this.state.url_server + "/cirezi2/";
+        // window.location.replace(http + this.state.url_server + "/cirezi2/");
     }
 
     render() {

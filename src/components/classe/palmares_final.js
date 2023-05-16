@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { home_redirect, http } from '../../global_vars';
 import { mapStateToProps } from '../../store/state_props';
+import PrintDocument from '../includes/print';
 
 class PalmaresFinal extends Component {
 
@@ -230,19 +231,6 @@ class PalmaresFinal extends Component {
         }
     }
 
-    printContent(divName) {
-
-        let printContents = document.getElementById(divName).innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-
-        document.body.innerHTML = originalContents;
-        // window.location.reload();
-        window.location.href = http + this.props.url_server + home_redirect;
-        window.location.replace(http + this.props.url_server + home_redirect);
-    }
-
     componentDidMount() {
         // this.open_class();
 
@@ -261,20 +249,13 @@ class PalmaresFinal extends Component {
         // }
     }
 
-    // componentWillUnmount() {
-    //     clearInterval(this.intervalID);
-    // }
-
     render() {
         return (
             <div style={{ paddingTop: 10, marginLeft: 15, paddingBottom: 50 }}>
 
                 {!this.props.loading_footer ?
                     <div>
-                        <div onClick={() => this.printContent("print-palmares")} className="span-blockk">
-                            IMPRIMER
-                        </div>
-
+                        <PrintDocument div={"print-palmares"} />
 
                         <div id="print-palmares" style={{ marginTop: -20 }}>
                             <div>

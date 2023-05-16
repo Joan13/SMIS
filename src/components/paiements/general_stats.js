@@ -113,18 +113,6 @@ const GeneralStatsCaisse = () => {
             .catch((error) => { });
     };
 
-    const printContent = (divName) => {
-
-        let printContents = document.getElementById(divName).innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-
-        document.body.innerHTML = originalContents;
-        window.location.href = http + url_server + home_redirect;
-        window.location.replace(http + url_server + home_redirect);
-    }
-
     const color_body = (number) => {
         if (number <= 25) {
             return 'green';

@@ -277,19 +277,6 @@ export default class FicheObservationPoints extends Component {
         clearInterval(this.intervalID);
     }
 
-    printContent(divName) {
-
-        let printContents = document.getElementById(divName).innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-
-        document.body.innerHTML = originalContents;
-        // window.location.reload();
-        window.location.href = http + this.state.url_server + home_redirect;
-        window.location.replace(http + this.state.url_server + home_redirect);
-    }
-
     render() {
         return (
             <div style={{ marginBottom: 50, paddingTop: 10 }}>

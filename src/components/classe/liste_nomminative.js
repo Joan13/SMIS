@@ -1,6 +1,5 @@
 import { Button } from '@material-ui/core';
 import React from 'react';
-import { FiPrinter } from 'react-icons/fi';
 import { connect } from 'react-redux';
 import { home_redirect, http } from '../../global_vars';
 import modalView from '../../includes/modal';
@@ -53,18 +52,6 @@ class ListeNomminative extends React.Component {
                 this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, is_loading_home: false, loading_middle: false, searching_pupil: false });
             });
     };
-
-    printContent(divName) {
-
-        let printContents = document.getElementById(divName).innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-
-        document.body.innerHTML = originalContents;
-        window.location.href = http + this.props.url_server + home_redirect;
-        window.location.replace(http + this.props.url_server + home_redirect);
-    }
 
     view_pupil(pupil) {
         this.props.dispatch({ type: "SET_NEW_PAIEMENT", payload: false });

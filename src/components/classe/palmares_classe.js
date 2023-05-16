@@ -206,18 +206,6 @@ class PalmaresPupils extends Component {
         }
     }
 
-    printContent(divName) {
-
-        let printContents = document.getElementById(divName).innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-
-        document.body.innerHTML = originalContents;
-        window.location.href = http + this.props.url_server + home_redirect;
-        window.location.replace(http + this.props.url_server + home_redirect);
-    }
-
     render_period_main_marks(marks) {
         let return_value = 0;
 

@@ -210,38 +210,6 @@ const FichesPoints = () => {
         }
     }
 
-    const printContent = (divName) => {
-
-        let printContents = document.getElementById(divName).innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-
-        document.body.innerHTML = originalContents;
-        // window.location.reload();
-        window.location.href = http + url_server + home_redirect;
-        window.location.replace(http + url_server + home_redirect);
-    }
-
-    // const echecs_pupil = (course) => {
-
-    //     let markss = [];
-
-    //     for (let i in marks) {
-    //         if ((parseInt(marks[i].main_marks) < parseInt(marks[i].total_marks / 2)) && (parseInt(marks[i].school_period) === parseInt(periode))) {
-    //             markss.push(marks[i].course);
-    //         }
-    //     }
-
-    //     return(
-    //     <div className='flex items-center'> 
-    //     {markss.map((echec, index)=>(
-    //            <div className='pl-1 ml-1 border-l text-sm'>{find_course(echec)}</div> 
-    //         ))}
-    //         </div>
-    //     ) 
-    // }
-
     const find_echecs = (course) => {
         let echecs = 0;
         for (let i in classe.data.pupils_marks) {

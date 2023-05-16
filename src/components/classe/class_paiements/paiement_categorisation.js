@@ -65,19 +65,6 @@ const ClassePaiementCategorisation = () => {
             .catch((error) => { });
     };
 
-    const printContent = (divName) => {
-
-        let printContents = document.getElementById(divName).innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-
-        document.body.innerHTML = originalContents;
-        // window.location.reload();
-        window.location.href = "http://" + url_server + home_redirect;
-        window.location.replace("http://" + url_server + home_redirect);
-    }
-
     return (
         <div style={{ marginRight: 10, marginBottom: 50 }}>
             <div style={{ float: 'right', marginBottom: -60, paddingTop: 10 }}>

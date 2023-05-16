@@ -338,9 +338,9 @@ class FicheE13 extends Component {
         document.body.innerHTML = printContents;
         window.print();
 
-        document.body.innerHTML = originalContents;
-        window.location.href = http + this.props.url_server + home_redirect;
-        window.location.replace(http + this.props.url_server + home_redirect);
+        // document.body.innerHTML = originalContents;
+        // window.location.href = http + this.props.url_server + home_redirect;
+        window.location.reload();
     }
 
     render() {
