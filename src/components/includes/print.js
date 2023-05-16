@@ -13,9 +13,11 @@ const PrintDocument = (props) => {
         document.body.innerHTML = printContents;
         window.print();
 
-        document.body.innerHTML = originalContents;
-        window.location.href = http + url_server + home_redirect;
-        window.location.replace(http + url_server + home_redirect);
+        // document.body.innerHTML = originalContents;
+        // window.location.href = http + url_server + home_redirect;
+        // window.location.replace(http + url_server + home_redirect);
+
+        window.location.reload();
     }
 
     return (

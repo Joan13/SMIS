@@ -205,7 +205,7 @@ class Home extends Component {
                     this.props.dispatch({ type: "SET_ABANDON", payload: response.abandon, });
                     this.props.dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true, });
                     this.props.dispatch({ type: "SET_LIBELLES", payload: response.libelles, });
-                    this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Année scolaire", });
+                    this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Écriture des données...", });
                     this.props.dispatch({ type: "SET_PUPILS_SCHOOL", payload: response.pupils, });
                     this.props.dispatch({ type: "SET_PUPILS", payload: response.pupils });
                     this.props.dispatch({ type: "SET_SELECTIONS", payload: response.selections, });
@@ -215,6 +215,7 @@ class Home extends Component {
 
                 promise_general_info_home.finally(() => {
                     setTimeout(() => {
+                        this.props.dispatch({ type: "SET_TITLE_MAIN", payload: "Année scolaire", });
                         this.props.dispatch({ type: "SET_LOADING_MIDDLE", payload: false });
                         this.props.dispatch({ type: "SET_LOADING_HOME", payload: false });
                     }, 2000);
@@ -1133,7 +1134,8 @@ class Home extends Component {
                     <div className="fixed top-0 left-0 right-0 bottom-0 bg-background-100 dark:bg-background-20 flex items-center justify-center">
                         <div className="text-center">
                             <img src={vector} width="400" alt='Yambi Class SMIS' />
-                            <CircularProgress className="mt-5" style={{ color: "rgb(51 143 255)" }} size={25} />
+                            <div className="mt-5 text-gray-100">{this.props.title_main}</div>
+                            <CircularProgress className="mt-3" style={{ color: "rgb(51 143 255)" }} size={25} />
                         </div>
                     </div>
                 }

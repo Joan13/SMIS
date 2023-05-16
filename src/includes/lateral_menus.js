@@ -4,6 +4,7 @@ import { RiSettings4Fill } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { http, url_online } from '../global_vars';
+import axios from 'axios';
 
 const LateralMenus = () => {
     const theme = useSelector(state => state.theme);
@@ -14,9 +15,12 @@ const LateralMenus = () => {
     const darkQuery = window.matchMedia("(prefers-color-scheme : dark)");
     const dispatch = useDispatch();
 
-    const get_general_info = (annee) => {
-        // let user = sessionStorage.getItem("assemble_user_data");
-        // let url = sessionStorage.getItem("yambi_smis_url_server");
+    const get_general_info=()=> {
+        dispatch({ type: "SET_LOADING_MIDDLE", payload: true });
+        dispatch({ type: "SET_LOADING_HOME", payload: true });
+
+        // let user = user_data;//sessionStorage.getItem("assemble_user_data");
+        // let url_server = url_server;//sessionStorage.getItem("yambi_smis_url_server");
         // user = JSON.parse(user);
         // this.setState({ can_load_data: false });
 
@@ -33,6 +37,7 @@ const LateralMenus = () => {
         dispatch({ type: "SET_TITLE_MAIN", payload: "Chargement des données générales...", });
 
         if (user === null) {
+            this.logout_session();
         } else {
             if (parseInt(user.poste) === 0) {
                 dispatch({ type: "SET_POSTE", payload: "Admin" });
@@ -51,23 +56,17 @@ const LateralMenus = () => {
             } else if (parseInt(user.poste) === 7) {
                 dispatch({ type: "SET_POSTE", payload: "Directeur des études", });
             } else {
-                alert(
-                    "Cet utilisateur est invalide. Vous devez vous reconnecter pour accéder aux services."
-                );
+                alert("Cet utilisateur est invalide. Vous devez vous reconnecter pour accéder aux services.");
                 this.logout_session();
             }
         }
 
-        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_info_home.php";
+        let data = new FormData();
+        data.append('annee', annee_scolaire.year_id);
 
-        fetch(BaseURL, {
-            method: "POST",
-            body: JSON.stringify({
-                annee: annee,
-            }),
-        })
-            .then((response) => response.json())
-            .then((response) => {
+        axios.post(http + url_server + "/yambi_class_SMIS/API/get_info_home.php", data)
+            .then(rsp => {
+                const response = rsp.data;
                 const promise_general_info_home = new Promise((resolve, reject) => {
                     dispatch({ type: "SET_CLASSES", payload: response.classes, });
                     dispatch({ type: "SET_PUPILS_COUNT_PAIEMENTS", payload: response.pupils_count_paiements, });
@@ -93,7 +92,7 @@ const LateralMenus = () => {
                     dispatch({ type: "SET_ABANDON", payload: response.abandon, });
                     dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true, });
                     dispatch({ type: "SET_LIBELLES", payload: response.libelles, });
-                    dispatch({ type: "SET_TITLE_MAIN", payload: "Année scolaire", });
+                    dispatch({ type: "SET_TITLE_MAIN", payload: "Écriture des données...", });
                     dispatch({ type: "SET_PUPILS_SCHOOL", payload: response.pupils, });
                     dispatch({ type: "SET_PUPILS", payload: response.pupils });
                     dispatch({ type: "SET_SELECTIONS", payload: response.selections, });
@@ -102,30 +101,16 @@ const LateralMenus = () => {
                 }).then(() => { });
 
                 promise_general_info_home.finally(() => {
-                    dispatch({ type: "SET_LOADING_MIDDLE", payload: false });
-                    dispatch({ type: "SET_LOADING_HOME", payload: false });
+                    setTimeout(() => {
+                        dispatch({ type: "SET_LOADING_MIDDLE", payload: false });
+                        dispatch({ type: "SET_LOADING_HOME", payload: false });
+                        dispatch({ type: "SET_TITLE_MAIN", payload: "Année scolaire", });
+                    }, 2000);
                 });
-
-                // dispatch({ type: "SET_PPS", payload: response.pupils });
-
-                // this.setState({can_load_data:true});
-
-                // this.parse_classes(response.classes);
-
-                // this.setState({ modal_title: "Synchronisation des données", modal_main_text: "Pas de pannique ! Après un bon nombre d'enregistrements des informations dans le logiciel, souvenez-vous de les synchroniser au travers du bouton d'upload des données dans la topbar du logiciel.", modal_view: true });
             })
             .catch((error) => {
-                // console.log(error.toString());
-                // dispatch({ type: "SET_LOADING_HOME", payload: false });
-                // this.setState({
-                //     modal_title: "Information erreur",
-                //     modal_main_text:
-                //         "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.",
-                //     modal_view: true,
-                //     is_loading_home: false,
-                //     can_load_data: false,
-                //     loading_middle: false,
-                // });
+                console.log(error);
+                dispatch({ type: "SET_LOADING_HOME", payload: false });
             });
     }
 
@@ -248,7 +233,7 @@ const LateralMenus = () => {
             <div
                 title="Rafraîchir les données"
                 className="active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20 cursor-pointer rounded-full mt-7 w-11 h-11"
-                onClick={() => { get_general_info("") }}>
+                onClick={() => { get_general_info() }}>
                 <FiRefreshCcw size={20} />
             </div>
 

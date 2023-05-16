@@ -5,8 +5,6 @@ import Settings from './pages/settings';
 import Signin from './pages/signin';
 import { useSelector } from 'react-redux';
 import ModalView from './includes/modal';
-import { useState } from 'react';
-import Header from './includes/header';
 
 const App = () => {
 
