@@ -1,31 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { FiChevronRight, FiPrinter } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { home_redirect, find_date2, http, format_date } from '../../global_vars';
+import { find_date2, http, format_date, generateMonth } from '../../global_vars';
 import PrintDocument from '../includes/print';
 import { CircularProgress } from '@material-ui/core';
 
-const PaiementsDay = () => {
+const PaiementsMonth = () => {
     const dispatch = useDispatch();
     const url_server = useSelector(state => state.url_server);
     const autres = useSelector(state => state.autres);
     const pupils_school = useSelector(state => state.pupils);
     const annee_scolaire = useSelector(state => state.annee_scolaire);
-    const paiements_day = useSelector(state => state.paiements_day);
-    const frais_divers_day = useSelector(state => state.frais_divers_day);
-    const paiements_day_deleted = useSelector(state => state.paiements_day_deleted);
-    const frais_divers_day_deleted = useSelector(state => state.frais_divers_day_deleted);
-    const day = useSelector(state => state.day);
+    const paiements_day = useSelector(state => state.paiements_month);
+    const frais_divers_day = useSelector(state => state.frais_divers_month);
+    const paiements_day_deleted = useSelector(state => state.paiements_month_deleted);
+    const frais_divers_day_deleted = useSelector(state => state.frais_divers_month_deleted);
+    const selections = useSelector(state=>state.selections);
     const libelles = useSelector(state => state.libelles);
-    const classes = useSelector(state => state.classes);
+    const classes = useSelector(state => state.classes_selected);
+    const classess = useSelector(state=>state.classes);
     const [loading_stats_day, setLoading_stats_day] = useState(false);
     const cycles = useSelector(state => state.cycles);
     const orders = useSelector(state => state.orders);
     const class_numbers = useSelector(state => state.class_numbers);
     const [paiements_tab, setPaiements_tab] = useState(3);
-    const today = useSelector(state => state.today);
-    const makuta_day = useSelector(state => state.makuta_day);
-    const [date, setDate] = useState(new Date().getFullYear() + "-" + parseInt(new Date().getMonth() + 1) + "-" + new Date().getDate());
+    const month = useSelector(state=>state.month_caisse);
+    const makuta_day = useSelector(state => state.makuta_month);
     let total_paiement = 0;
     let total_frais_divers = 0;
 
@@ -122,43 +121,32 @@ const PaiementsDay = () => {
         return return_value;
     }
 
-    const generate_day_stats = (date) => {
-        // this.setState({ date: date, loading_stats_day: true });
-        setDate(date);
-        // dispatch({ type: "SET_TODAY", date });
-        setLoading_stats_day(true);
-        dispatch({ type: "SET_DAY", payload: date });
+    const generate_stats = (monthh, cl) => {
 
-        let BaseURL = http + url_server + "/yambi_class_SMIS/API/stats_caisse.php";
+        setLoading_stats_day(true);
+
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/stats_month_caisse.php";
 
         fetch(BaseURL, {
             method: 'POST',
             body: JSON.stringify({
                 school_year: annee_scolaire.year_id,
-                date: format_date(date),
+                month: monthh,
+                classes: cl
             })
         })
             .then((response) => response.json())
             .then((response) => {
 
-                // this.setState({
-                //     makuta_day: response.paiements_day,
-                //     paiements: response.paiements,
-                //     frais_divers: response.frais_divers,
-                //     loading_stats_day: false
-                // });
-
-                // setMakuta_day(response.paiements_day);
-                // setPaiements(response.paiements);
-                // setFrais_divers(response.frais_divers);
-
                 setLoading_stats_day(false);
+                dispatch({ type: "SET_MONTH_CAISSE", payload: response.month });
+                dispatch({ type: "SET_PAIEMENTS_MONTH", payload: response.paiements });
+                dispatch({ type: "SET_MAKUTA_MONTH", payload: response.paiements_day });
+                dispatch({ type: "SET_FRAIS_DIVERS_MONTH", payload: response.frais_divers });
+                dispatch({ type: "SET_PAIEMENTS_MONTH_DELETED", payload: response.paiements_deleted });
+                dispatch({ type: "SET_FRAIS_DIVERS_MONTH_DELETED", payload: response.frais_divers_deleted });
 
-                dispatch({ type: "SET_PAIEMENTS_DAY", payload: response.paiements });
-                dispatch({ type: "SET_MAKUTA_DAY", payload: response.paiements_day });
-                dispatch({ type: "SET_FRAIS_DIVERS_DAY", payload: response.frais_divers });
-                dispatch({ type: "SET_PAIEMENTS_DAY_DELETED", payload: response.paiements_deleted });
-                dispatch({ type: "SET_FRAIS_DIVERS_DAY_DELETED", payload: response.frais_divers_deleted });
+                // console.log(response);
             })
             .catch((error) => {
                 setLoading_stats_day(false);
@@ -166,21 +154,29 @@ const PaiementsDay = () => {
     }
 
     useEffect(() => {
-        let date = new Date();
-        let day = "";
-        let month = "";
-        if ((date.getDate().toString()).length === 1) {
-            day = "0" + date.getDate();
-        } else {
-            day = date.getDate();
+
+        let classesss = [];
+        for (let i in classess) {
+            classesss.push(classess[i].id_classes);
         }
 
-        if ((parseInt(date.getMonth() + 1).toString()).length === 1) {
-            month = "0" + parseInt(date.getMonth() + 1);
-        } else {
-            month = date.getMonth() + 1;
-        }
-        generate_day_stats(date.getFullYear() + "/" + month + "/" + day);
+        dispatch({ type: "SET_CLASSES_SELECTED", payload: classesss });
+
+        // let date = new Date();
+        // let day = "";
+        // let month = "";
+        // if ((date.getDate().toString()).length === 1) {
+        //     day = "0" + date.getDate();
+        // } else {
+        //     day = date.getDate();
+        // }
+
+        // if ((parseInt(date.getMonth() + 1).toString()).length === 1) {
+        //     month = "0" + parseInt(date.getMonth() + 1);
+        // } else {
+        //     month = date.getMonth() + 1;
+        // }
+        // generate_day_stats(date.getFullYear() + "/" + month + "/" + day);
     }, []);
 
     return (
@@ -188,77 +184,18 @@ const PaiementsDay = () => {
 
             <div className='flex items-center mt-3 pt-3 mb-10 border-b border-gray-50 dark:border-gray-20'>
                 <div onClick={() => setPaiements_tab(3)} style={{ fontWeight: 'bold' }} className="flex text-text-50 items-center cursor-pointer w-full mr-3">
-                    <span className={`${paiements_tab === 3 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3`}> Rapport journalier de paiement</span>
+                    <span className={`${paiements_tab === 3 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3`}> Rapport Mensuel de paiement</span>
                 </div>
                 <div onClick={() => setPaiements_tab(1)} style={{ fontWeight: 'bold' }} className="flex w-full text-text-50 items-center cursor-pointer mr-3">
-                    <span className={`${paiements_tab === 1 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3`}> Fiche journalière frais scolaires</span>
+                    <span className={`${paiements_tab === 1 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3`}> Fiche Mensuelle frais scolaires</span>
                 </div>
                 <div onClick={() => setPaiements_tab(2)} style={{ fontWeight: 'bold' }} className="flex text-text-50 items-center cursor-pointer w-full mr-3">
-                    <span className={`${paiements_tab === 2 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3`}> Fiche journalière frais divers</span>
+                    <span className={`${paiements_tab === 2 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3`}> Fiche Mensuelle frais divers</span>
                 </div>
                 <div onClick={() => setPaiements_tab(4)} style={{ fontWeight: 'bold' }} className="flex text-text-50 items-center cursor-pointer w-auto">
                     <span className={`${paiements_tab === 4 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3`}> Corbeille</span>
                 </div>
             </div>
-
-            {/* {paiements_tab === 0 ?
-                <div>
-                    <div style={{ marginBottom: 10, float: 'right', marginTop: -15 }}>
-                        Sélectionner une date<br />
-                        <input type="date" name="day_choose_caisse" className='mt-2 text-right bg-background-100 dark:bg-background-20 pl-4 pr-4 pt-2 pb-2 outline-none rounded-lg border border-gray-50 dark:border-gray-20' onChange={(text) => generate_day_stats(text.target.value)} />
-                    </div><br /><br /><br /><br />
-
-                    <div style={{ marginTop: 70, marginBottom: 70, textAlign: 'center', fontWeight: 'bold', fontSize: 17 }}>
-                        Montant total perçu dans la journée du {find_date2(today)}<br />
-                        <strong className='text-3xl text-text-50'>{makuta_day} dollars Américains</strong><br />
-
-                        {loading_stats_day ?
-                            <div>
-                                <CircularProgress size={20} style={{ color: "rgb(0, 80, 180)" }} /><br />
-                                <span style={{ fontSize: 13, fontWeight: 400 }}>Chargement des données...</span>
-                            </div> : <div><br /><br /></div>}
-                    </div>
-
-                    <PrintDocument div={"total-day"} />
-                    <div id="total-day" style={{ marginTop: 30 }}>
-                        <div>
-                            <strong>{(autres.school_name).toUpperCase()}</strong><br />
-                            <strong>{autres.school_bp}</strong><br />
-                            <strong>Année scolaire : {annee_scolaire.year_name}</strong>
-                        </div>
-                        <table className="w-full" style={{ marginTop: -50 }}>
-                            <caption>
-                                <h4 style={{ float: 'right', textAlign: 'right' }}>
-                                    <strong className='text-xl'>TOTAL FRAIS JOURNALIERS</strong><br />
-                                    Journée du {find_date2(day)}
-                                </h4>
-                            </caption>
-                            <thead>
-                                <tr>
-                                    <th style={{ width: 30, textAlign: 'center' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3'>No</th>
-                                    <th style={{ paddingLeft: 10, textAlign: 'left' }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3'>Libellé</th>
-                                    <th style={{ paddingLeft: 10, textAlign: 'center', minWidth: 130 }} className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3'>Montant (USD)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style={{ width: 30, textAlign: 'center' }}>1</td>
-                                    <td style={{ padding: 15, fontSize: 15, fontWeight: 'bold' }}>Paiement des frais scolaires</td>
-                                    <td style={{ textAlign: 'center', fontSize: 15 }}><strong>{total_paiement}</strong></td>
-                                </tr>
-                                <tr>
-                                    <td style={{ width: 30, textAlign: 'center' }}>2</td>
-                                    <td style={{ padding: 15, fontSize: 15, fontWeight: 'bold' }}>Paiement des frais divers</td>
-                                    <td style={{ textAlign: 'center', fontSize: 15 }}><strong>{total_frais_divers}</strong></td>
-                                </tr>
-                                <tr style={{ backgroundColor: 'rgba(0, 80, 180, 0.2)' }}>
-                                    <td colSpan={2} style={{ padding: 15, fontSize: 13, fontWeight: 'bold', textAlign: 'right' }}>TOTAL JOURNALIER</td>
-                                    <td style={{ textAlign: 'center', fontSize: 15 }}><strong>{total_paiement + total_frais_divers}</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div><br />
-                </div> : null} */}
 
             {paiements_tab === 1 ?
                 <div>
@@ -276,8 +213,7 @@ const PaiementsDay = () => {
                                         <table className="w-full" style={{ marginTop: -40 }}>
                                             <caption>
                                                 <h4 style={{ float: 'right', textAlign: 'right' }}>
-                                                    <strong className='text-lg'>DÉTAILLÉ DU RAPPORT JOURNALIER DE PAIEMENT DES FRAIS SCOLAIRES</strong><br />
-                                                    Journée du {find_date2(day)}
+                                                    <strong className='text-lg'>DÉTAILLÉ DU RAPPORT MENSUEL DE PAIEMENT DES FRAIS SCOLAIRES<br/>Mois : {generateMonth(month)}</strong><br />
                                                 </h4>
                                             </caption>
                                             <thead>
@@ -335,8 +271,7 @@ const PaiementsDay = () => {
                                         <table className="w-full" style={{ marginTop: -40 }}>
                                             <caption>
                                                 <h4 style={{ float: 'right', textAlign: 'right' }}>
-                                                    <strong className='text-lg'>DÉTAILLÉ DU RAPPORT JOURNALIER DE PAIEMENT DES FRAIS DIVERS</strong><br />
-                                                    Journée du {find_date2(day)}
+                                                    <strong className='text-lg'>DÉTAILLÉ DU RAPPORT MENSUEL DE PAIEMENT DES FRAIS DIVERS<br/>Mois : {generateMonth(month)}</strong><br />
                                                 </h4>
                                             </caption>
                                             <thead>
@@ -402,12 +337,45 @@ const PaiementsDay = () => {
                 <div>
                     <div>
                         <div style={{ marginBottom: 10, float: 'right', marginTop: -15 }}>
-                            Sélectionner une date<br />
-                            <input type="date" name="day_choose_caisse" className='mt-2 text-right bg-background-100 dark:bg-background-20 pl-4 pr-4 pt-2 pb-2 outline-none rounded-lg border border-gray-50 dark:border-gray-20' onChange={(text) => generate_day_stats(text.target.value)} />
-                        </div><br /><br /><br /><br />
+                            Sélectionner un mois<br />
+                            <select
+                                                    onChange={(e) => {generate_stats(e.target.value, classes)}}
+                                                    className="nodrag select-no-border-selectddwdwd border border-gray-50 cursor-pointer dark:border-gray-20 p-2 rounded-lg bg-background-100 dark:bg-background-20 ml-2">
+                                                    <option value="">Mois</option>
+                                                    <option value="01">Janvier</option>
+                                                    <option value="02">Février</option>
+                                                    <option value="03">Mars</option>
+                                                    <option value="04">Avril</option>
+                                                    <option value="05">Mai</option>
+                                                    <option value="06">Juin</option>
+                                                    <option value="07">Juillet</option>
+                                                    <option value="08">Aôut</option>
+                                                    <option value="09">Septembre</option>
+                                                    <option value="10">Octobre</option>
+                                                    <option value="11">Novembre</option>
+                                                    <option value="12">Décembre</option>
+                                                </select>
+                        </div>
+                        <select
+                                                    onChange={(val) => {
+                                                        if(val.target.value !== "") {
+                                                        let cl = JSON.parse(val.target.value);
+                                                        dispatch({ type: "SET_CLASSES_SELECTED", payload: cl.classes_selected });
+                                                        generate_stats(month, cl.classes_selected);
+                                                        }
+                                                    }}
+                                                    className="nodrag border border-gray-50 dark:border-gray-20 p-2 rounded-lg cursor-pointer bg-background-100 dark:bg-background-20 ml-2">
+                                                    <option value="">Sélections</option>
+                                                    {selections.map((selection, index) => (
+                                                        <option key={index} value={selection.selection_data}>
+                                                            {selection.selection_name}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                        <br /><br /><br /><br />
 
                         <div style={{ marginTop: 70, marginBottom: 70, textAlign: 'center', fontWeight: 'bold', fontSize: 17 }}>
-                            Montant total perçu dans la journée du {find_date2(day)}<br />
+                            Montant total perçu pendant le mois (de/d') {generateMonth(month)}<br />
                             <strong className='text-3xl text-text-50'>{makuta_day} dollars Américains</strong><br />
 
                             {loading_stats_day ?
@@ -427,8 +395,7 @@ const PaiementsDay = () => {
                             <table className="w-full" style={{ marginTop: -40 }}>
                                 <caption>
                                     <h4 style={{ float: 'right', textAlign: 'right' }}>
-                                        <strong className='text-lg'>TOTAL FRAIS JOURNALIERS</strong><br />
-                                        Journée du {find_date2(day)}
+                                        <strong className='text-lg'>TOTAL FRAIS MENSUEL<br/>Mois : {generateMonth(month)}</strong><br />
                                     </h4>
                                 </caption>
                                 <thead>
@@ -450,7 +417,7 @@ const PaiementsDay = () => {
                                         <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center', fontSize: 15 }}><strong>{total_frais_divers}</strong></td>
                                     </tr>
                                     <tr className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3'>
-                                        <td colSpan={2} style={{ padding: 15, fontSize: 13, fontWeight: 'bold', textAlign: 'right' }}>TOTAL JOURNALIER</td>
+                                        <td colSpan={2} style={{ padding: 15, fontSize: 13, fontWeight: 'bold', textAlign: 'right' }}>TOTAL MENSUEL</td>
                                         <td style={{ textAlign: 'center', fontSize: 15 }}><strong>{total_paiement + total_frais_divers}</strong></td>
                                     </tr>
                                 </tbody>
@@ -478,8 +445,7 @@ const PaiementsDay = () => {
                                             <table className="w-full" style={{ marginTop: -40 }}>
                                                 <caption>
                                                     <h4 style={{ float: 'right', textAlign: 'right' }}>
-                                                        <strong className='text-lg'>JOURNAL DE CAISSE</strong><br />
-                                                        Journée du {find_date2(day)}
+                                                        <strong className='text-lg'>JOURNAL DE CAISSE<br/>Mois : {generateMonth(month)}</strong><br />
                                                     </h4>
                                                 </caption>
                                                 <thead>
@@ -501,7 +467,7 @@ const PaiementsDay = () => {
                                                         <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center', fontSize: 15 }}><strong>{total_frais_divers}</strong></td>
                                                     </tr>
                                                     <tr className='border border-gray-50 dark:border-gray-20 bg-background-50 dark:bg-background-20 pt-3 pb-3'>
-                                                        <td colSpan={2} style={{ padding: 15, fontSize: 13, fontWeight: 'bold', textAlign: 'right' }}>TOTAL JOURNALIER</td>
+                                                        <td colSpan={2} style={{ padding: 15, fontSize: 13, fontWeight: 'bold', textAlign: 'right' }}>TOTAL</td>
                                                         <td style={{ textAlign: 'center', fontSize: 15 }}><strong>{total_paiement + total_frais_divers}</strong></td>
                                                     </tr>
                                                 </tbody>
@@ -521,7 +487,7 @@ const PaiementsDay = () => {
                                             <table className="w-full">
                                                 <caption>
                                                     <h4 style={{ float: 'right', textAlign: 'center' }} className='font-bold'>
-                                                        DÉTAILLÉ DU RAPPORT JOURNALIER DE PAIEMENT DES FRAIS SCOLAIRES<br />
+                                                        DÉTAILLÉ DU RAPPORT MENSUEL DE PAIEMENT DES FRAIS SCOLAIRES<br />
                                                     </h4>
                                                 </caption>
                                                 <thead>
@@ -571,7 +537,7 @@ const PaiementsDay = () => {
                                             <table className="w-full">
                                                 <caption>
                                                     <h4 style={{ float: 'right', textAlign: 'center' }} className='font-bold'>
-                                                        DÉTAILLÉ DU RAPPORT JOURNALIER DE PAIEMENT DES FRAIS DIVERS<br />
+                                                        DÉTAILLÉ DU RAPPORT MENSUEL DE PAIEMENT DES FRAIS DIVERS<br />
                                                     </h4>
                                                 </caption>
                                                 <thead>
@@ -650,8 +616,7 @@ const PaiementsDay = () => {
                                         <table className="w-full" style={{ marginTop: -40 }}>
                                             <caption>
                                                 <h4 style={{ float: 'right', textAlign: 'right' }} className='font-bold'>
-                                                    DÉTAILLÉ DE LA CORBEILLE (FRAIS SCOLAIRES)<br />
-                                                    Journée du {find_date2(day)}
+                                                    DÉTAILLÉ DE LA CORBEILLE (FRAIS SCOLAIRES)<br/>Mois : {generateMonth(month)}<br />
                                                 </h4>
                                             </caption>
                                             <thead>
@@ -690,8 +655,7 @@ const PaiementsDay = () => {
                                         <table className="w-full">
                                             <caption>
                                                 <h4 style={{ float: 'right', textAlign: 'center' }} className='font-bold'>
-                                                    DÉTAILLÉ DE LA CORBEILLE (FRAIS DIVERS)<br />
-                                                    Journée du {find_date2(day)}
+                                                    DÉTAILLÉ DE LA CORBEILLE (FRAIS DIVERS)<br/>Mois : {generateMonth(month)}<br />
                                                 </h4>
                                             </caption>
                                             <thead>
@@ -731,4 +695,4 @@ const PaiementsDay = () => {
     )
 }
 
-export default PaiementsDay;
+export default PaiementsMonth;

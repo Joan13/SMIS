@@ -1,5 +1,5 @@
 import { FiArrowLeft, FiPlus, FiX } from "react-icons/fi";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaCheckCircle } from "react-icons/fa";
 import { CircularProgress } from "@material-ui/core";
 import { http } from "../../global_vars";
@@ -9,6 +9,7 @@ import Classes from "../../includes/classes";
 const ModalFrame = (props) => {
     const [frame_type, setFrame_type] = useState(0);
     const [success, setSuccess] = useState("");
+    const selections = useSelector(state => state.selections);
     const [loading_middle, setLoading_middle] = useState(false);
     const url_server = useSelector(state => state.url_server);
     const user_data = useSelector(state => state.user_data);
@@ -42,14 +43,14 @@ const ModalFrame = (props) => {
                     selection_privacy: '0',
                     user_id: user_data.worker_id,
                     school_year: user_data.worker_year,
-                    selection_data: classes_selected
+                    selection_data: JSON.stringify({ classes_selected }),
                 })
             })
                 .then((response) => response.json())
                 .then((response) => {
                     if (parseInt(response.success) === 1) {
                         dispatch({ type: "SET_CLASSES_SELECTED", payload: [] });
-                        setSelection_name('')
+                        setSelection_name('');
                         setSelection_type('');
                         setSuccess("Sélection enregistrée avec succèss");
                     }
@@ -68,26 +69,22 @@ const ModalFrame = (props) => {
         return false;
     }
 
+    useEffect(()=> {
+        dispatch({ type: "SET_CLASSES_SELECTED", payload: [] });
+    }, []);
+
     return (
         <div className="main-div-modal">
-            <div style={{
-                borderRadius: 15,
-                backgroundColor: 'white',
-                width: 800,
-                paddingBottom: 12,
-            }}>
+            <div className="rounded-xl bg-background-50 dark:bg-background-20 w-auto pt-3 ml-3">
                 <div style={{
                     textAlign: 'right',
-                    backgroundColor: 'rgb(240,240,240)',
                     borderTopLeftRadius: 15,
                     borderTopRightRadius: 15,
                     display: 'flex',
                     alignItems: 'center',
-                    paddingLeft: 25,
-                    height: 35,
                     justifyContent: 'space-between',
                 }}>
-                    <span>
+                    <span className="pl-3">
                         {title}
                     </span>
                     <span
@@ -108,18 +105,11 @@ const ModalFrame = (props) => {
                         <FiX color='white' size={12} />
                     </span>
                 </div>
-                <div style={{
-                    padding: 25,
-                    backgroundColor: "white",
-                    borderRadius: 15,
-                }} className="div-in-modal">
+                <div className="div-in-modal bg-background-100 dark:bg-background-20 rounded-lg p-20 pl-5 m-2">
                     <div>
                         {frame_type === 0 ?
                             <div>
-                                <div style={{
-                                    fontSize: 15,
-                                    fontWeight: 'bold'
-                                }}>Nouvelle selection
+                                <div title="Toutes les sélections" className="text-xl font-bold flex items-center mb-5">Nouvelle sélection
                                     <div
                                         onClick={() => setFrame_type(1)}
                                         className="add-button">
@@ -132,21 +122,16 @@ const ModalFrame = (props) => {
                                 }}>
                                     <input type="text"
                                         value={selection_name}
-                                        className="input-montant"
+                                        className="w-full outline-none  h-12 pl-3 pr-3 bg-background-100 dark:bg-background-20 border rounded-lg border-gray-50 dark:border-gray-20"
                                         onChange={(e) => setSelection_name(e.target.value)}
                                         placeholder="Intilulé de la sélection" /><br /><br />
 
                                     <select
                                         value={selection_type}
-                                        style={{
-                                            color: 'rgba(0, 80, 180)',
-                                            backgroundColor: 'white',
-                                            marginBottom: 10,
-                                            width: '67%'
-                                        }} className="select-borderr"
+                                        className="w-full outline-none h-12 pl-3 pr-3 bg-background-100 rounded-lg dark:bg-background-20 border border-gray-50 dark:border-gray-20"
                                         onChange={(e) => setSelection_type(e.target.value)} >
                                         <option value="">Type de sélection</option>
-                                        <option value="1">Groupement des Classes</option>
+                                        <option value="1">Groupement de Classes</option>
                                     </select><br />
 
                                     {can_show_classes() ?
@@ -164,23 +149,29 @@ const ModalFrame = (props) => {
                                     {loading_middle ?
                                         <><CircularProgress style={{ color: 'rgb(0, 80, 180)', marginLeft: '35%' }} size={30} /><br /></>
                                         :
-                                        <><button
-                                            onClick={() => create_selection()}
-                                            className={`${!can_proceed_selection() ? 'button-primary-disabled' : 'button-primary'}`} style={{ width: '66%' }}>Enregistrer la selection</button></>
+                                        <>
+                                            <button className={`nodrag bg-primary-100 rounded-xl text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md w-full`}
+                                                onClick={() => create_selection()}>Enregistrer la selection</button>
+                                        </>
                                     }
                                 </div>
                             </div>
                             :
                             <div>
-                                <div style={{
-                                    fontSize: 15,
-                                    fontWeight: 'bold'
-                                }}>Toutes les sélections
+                                <div className="text-xl font-bold flex items-center mb-5">Toutes les sélections
                                     <div
                                         onClick={() => setFrame_type(0)}
                                         className="add-button">
                                         <FiPlus color='white' size={15} />
                                     </div>
+                                </div>
+
+                                <div>
+                                    {selections.map((selection, index) => {
+                                        return (
+                                            <div className="mb-3" key={index}>{selection.selection_name}</div>
+                                        )
+                                    })}
                                 </div>
                             </div>}
                     </div>

@@ -7,6 +7,7 @@ import { mapStateToProps } from '../../store/state_props';
 import GeneralStatsCaisse from './general_stats';
 import PaiementsDay from './paiements_day';
 import Calendar from 'react-calendar';
+import PaiementsMonth from './paiements_month';
 
 const StatistiquesCaisse = () => {
 
@@ -146,24 +147,32 @@ const StatistiquesCaisse = () => {
     return (
         <div style={{ marginRight: 10, marginBottom: 30 }}><br />
             <div className='flex items-center border-b border-gray-50 dark:border-gray-20'>
-                {stats_tab !== 1 ?
-                    <div
-                        onClick={() => {
-                            dispatch({ type: "SET_TITLE_MAIN", payload: "État général de caisse" });
-                            setStats_tab(1);
-                        }}
-                        style={{ fontWeight: 'bold' }} className="flex text-text-50 mr-10">
-                        <FiChevronRight /> <span className={`${stats_tab === 1 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3`}> État général de caisse</span>
-                    </div> :
 
-                    <div
-                        onClick={() => setStats_tab(0)}
-                        style={{ fontWeight: 'bold' }} className="flex text-text-50 ">
-                        {stats_tab === 0 ? <FiChevronRight /> : <FiChevronLeft />} <span className={`${stats_tab === 0 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3`}> État Journalier de paiement</span>
-                    </div>}
+                <div
+                    onClick={() => setStats_tab(0)}
+                    style={{ fontWeight: 'bold' }} className="flex text-text-50 mr-10">
+                    <span className={`${stats_tab === 0 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3 cursor-pointer`}> État Journalier</span>
+                </div>
+
+                <div
+                    onClick={() => setStats_tab(2)}
+                    style={{ fontWeight: 'bold' }} className="flex text-text-50 ">
+                    <span className={`${stats_tab === 2 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3 cursor-pointer`}> État mensuel</span>
+                </div>
+
+                <div
+                    onClick={() => {
+                        dispatch({ type: "SET_TITLE_MAIN", payload: "État général de caisse" });
+                        setStats_tab(1);
+                    }}
+                    style={{ fontWeight: 'bold' }} className="flex text-text-50 ml-10">
+                    <span className={`${stats_tab === 1 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3 cursor-pointer`}> État général de caisse</span>
+                </div>
             </div>
 
-            {stats_tab === 0 ? <PaiementsDay /> : <GeneralStatsCaisse tab={tab} />}
+            {stats_tab === 0 ? <PaiementsDay /> : null}
+            {stats_tab === 1 ? <GeneralStatsCaisse tab={tab} /> : null}
+            {stats_tab === 2 ? <PaiementsMonth /> : null}
         </div>
     )
 }

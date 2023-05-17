@@ -210,6 +210,8 @@ class Home extends Component {
                     this.props.dispatch({ type: "SET_PUPILS", payload: response.pupils });
                     this.props.dispatch({ type: "SET_SELECTIONS", payload: response.selections, });
                     this.props.dispatch({ type: "SET_PAIEMENT_CATEGORIES", payload: response.paiement_categories, });
+                    this.props.dispatch({ type: "SET_MODAL_SELECTIONS", payload: false });
+                    this.props.dispatch({ type: "SET_CLASSES_SELECTED", payload: [] });
                     resolve();
                 }).then(() => { });
 

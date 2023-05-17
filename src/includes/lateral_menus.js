@@ -1,5 +1,5 @@
 import { FaBell, FaCloudDownloadAlt, FaHome, FaMoon } from 'react-icons/fa';
-import { FiRefreshCcw, FiSun } from 'react-icons/fi';
+import { FiBell, FiList, FiMoon, FiRefreshCcw, FiSun } from 'react-icons/fi';
 import { RiSettings4Fill } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -11,11 +11,12 @@ const LateralMenus = () => {
     const user = useSelector(state => state.user_data);
     const url_server = useSelector(state => state.url_server);
     const annee_scolaire = useSelector(state => state.annee_scolaire);
+    const modal_selections = useSelector(state => state.modal_selections);
     const element = document.documentElement;
     const darkQuery = window.matchMedia("(prefers-color-scheme : dark)");
     const dispatch = useDispatch();
 
-    const get_general_info=()=> {
+    const get_general_info = () => {
         dispatch({ type: "SET_LOADING_MIDDLE", payload: true });
         dispatch({ type: "SET_LOADING_HOME", payload: true });
 
@@ -97,6 +98,8 @@ const LateralMenus = () => {
                     dispatch({ type: "SET_PUPILS", payload: response.pupils });
                     dispatch({ type: "SET_SELECTIONS", payload: response.selections, });
                     dispatch({ type: "SET_PAIEMENT_CATEGORIES", payload: response.paiement_categories, });
+                    dispatch({ type: "SET_MODAL_SELECTIONS", payload: false });
+                    dispatch({ type: "SET_CLASSES_SELECTED", payload: [] });
                     resolve();
                 }).then(() => { });
 
@@ -188,6 +191,8 @@ const LateralMenus = () => {
         dispatch({ type: "SET_MIDDLE_FUNC", payload: 0 });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
+        dispatch({ type: "SET_MODAL_SELECTIONS", payload: false });
+        dispatch({ type: "SET_CLASSES_SELECTED", payload: [] });
     }
 
     const setTheme = () => {
@@ -215,49 +220,59 @@ const LateralMenus = () => {
     onWindowMatch();
 
     return (
-        <div>
-            <div
-                title={theme === 'dark' ? "Thème clair" : "Thème sombre"}
-                className="active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20  w-11 h-11 cursor-pointer rounded-full mt-5"
-                onClick={() => { setTheme() }}>
-                {theme === 'dark' ? <FiSun size={20} /> : <FaMoon size={20} />}
-            </div>
+        <>
+            <div className='mb-5 pb-5 border-b border-gray-50 dark:border-gray-20'>
+                <div
+                    title={theme === 'dark' ? "Thème clair" : "Thème sombre"}
+                    className="active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20  w-11 h-11 cursor-pointer rounded-full mt-5"
+                    onClick={() => { setTheme() }}>
+                    {theme === 'dark' ? <FiSun size={20} /> : <FiMoon size={20} />}
+                </div>
 
-            <div
-                title="Revenir au menu principal"
-                className="active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20  w-11 h-11 cursor-pointer rounded-full mt-7"
-                onClick={() => { back_home() }}>
-                <FaHome size={20} />
-            </div>
+                <div
+                    title="Revenir au menu principal"
+                    className="active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20  w-11 h-11 cursor-pointer rounded-full mt-7"
+                    onClick={() => { back_home() }}>
+                    <FaHome size={20} />
+                </div>
 
-            <div
-                title="Rafraîchir les données"
-                className="active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20 cursor-pointer rounded-full mt-7 w-11 h-11"
-                onClick={() => { get_general_info() }}>
-                <FiRefreshCcw size={20} />
-            </div>
+                <div
+                    title="Rafraîchir les données"
+                    className="active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20 cursor-pointer rounded-full mt-7 w-11 h-11"
+                    onClick={() => { get_general_info() }}>
+                    <FiRefreshCcw size={20} />
+                </div>
 
-            <div
-                title="Synchroniser les données"
-                className="active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20  w-11 h-11 cursor-pointer rounded-full mt-7"
-                onClick={() => { }}>
-                <FaCloudDownloadAlt size={20} />
-            </div>
+                <div
+                    title="Synchroniser les données"
+                    className="active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20  w-11 h-11 cursor-pointer rounded-full mt-7"
+                    onClick={() => { }}>
+                    <FaCloudDownloadAlt size={20} />
+                </div>
 
+                <div
+                    title="Notifications"
+                    className=" active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20  w-11 h-11 cursor-pointer rounded-full mt-7"
+                    onClick={() => { }}>
+                    <FiBell size={18} />
+                </div>
+
+                <Link
+                    title=""
+                    to={"/settings"}
+                    className="active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20 cursor-pointer rounded-full mt-7 w-11 h-11">
+                    <RiSettings4Fill size={18} />
+                </Link>
+
+
+            </div>
             <div
-                title="Notifications"
+                title="Sélections"
                 className=" active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20  w-11 h-11 cursor-pointer rounded-full mt-7"
-                onClick={() => { }}>
-                <FaBell size={18} />
+                onClick={() => { dispatch({ type: "SET_MODAL_SELECTIONS", payload: !modal_selections }); }}>
+                <FiList size={18} />
             </div>
-
-            <Link
-                title=""
-                to={"/settings"}
-                className="active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20 cursor-pointer rounded-full mt-7 w-11 h-11">
-                <RiSettings4Fill size={18} />
-            </Link>
-        </div>
+        </>
     )
 }
 

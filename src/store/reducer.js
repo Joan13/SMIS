@@ -83,6 +83,10 @@ const initialState = {
     frais_divers_day: [],
     paiements_day_deleted: [],
     frais_divers_day_deleted: [],
+    paiements_month: [],
+    frais_divers_month: [],
+    paiements_month_deleted: [],
+    frais_divers_month_deleted: [],
     fiche_paie: [],
     modal_selections: false,
     classes_selected: [],
@@ -93,8 +97,11 @@ const initialState = {
     theme: 'light',
     today: new Date().getFullYear() + "-" + parseInt(new Date().getMonth() + 1) + "-" + new Date().getDate(),
     makuta_day: 0,
+    makuta_month: 0,
     user_open: false,
     redirectToReferrer: false,
+    selection_data: [],
+    month_caisse: 'null'
 }
 
 const reducer = (state = initialState, action) => {
@@ -103,12 +110,16 @@ const reducer = (state = initialState, action) => {
             return { ...state, modal_paiement_categories: action.payload }
         case "SET_REDIRECTTOREFERRER":
             return { ...state, redirectToReferrer: action.payload }
+        case "SET_MONTH_CAISSE":
+            return { ...state, month_caisse: action.payload }
         case "SET_USER_OPEN":
             return { ...state, user_open: action.payload }
         case "SET_TODAY":
             return { ...state, today: action.payload }
         case "SET_MAKUTA_DAY":
             return { ...state, makuta_day: action.payload }
+        case "SET_MAKUTA_MONTH":
+            return { ...state, makuta_month: action.payload }
         case "SET_THEME":
             return { ...state, theme: action.payload }
         case "SET_ECHECS":
@@ -119,6 +130,8 @@ const reducer = (state = initialState, action) => {
             return { ...state, modal_selections: action.payload }
         case "SET_SELECTIONS":
             return { ...state, selections: action.payload }
+        case "SET_SELECTION_DATA":
+            return { ...state, selection_data: action.payload }
         case "SET_MODAL_VIEW":
             return { ...state, modal_view: action.payload }
         case "SET_CONDUITES":
@@ -161,6 +174,14 @@ const reducer = (state = initialState, action) => {
             return { ...state, frais_divers_day_deleted: action.payload }
         case "SET_PAIEMENTS_DAY_DELETED":
             return { ...state, paiements_day_deleted: action.payload }
+        case "SET_FRAIS_DIVERS_MONTH":
+            return { ...state, frais_divers_month: action.payload }
+        case "SET_PAIEMENTS_MONTH":
+            return { ...state, paiements_month: action.payload }
+        case "SET_FRAIS_DIVERS_MONTH_DELETED":
+            return { ...state, frais_divers_month_deleted: action.payload }
+        case "SET_PAIEMENTS_MONTH_DELETED":
+            return { ...state, paiements_month_deleted: action.payload }
         case "SET_LIBELLES":
             return { ...state, libelles: action.payload }
         case "SET_LOADING_FOOTER":

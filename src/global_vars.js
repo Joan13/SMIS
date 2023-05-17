@@ -95,27 +95,27 @@ export const format_date = (date) => {
 }
 
 export const generateMonth = (month) => {
-    if (month === 1) {
+    if (parseInt(month === 1) || month === '01') {
         return "Janvier";
-    } else if (month === 2) {
+    } else if (parseInt(month === 2) || month === '02') {
         return "Février";
-    } else if (month === 3) {
+    } else if (parseInt(month === 3) || month === '03') {
         return "Mars";
-    } else if (month === 4) {
+    } else if (parseInt(month === 4) || month === '04') {
         return "Avril";
-    } else if (month === 5) {
+    } else if (parseInt(month === 5) || month === '05') {
         return "Mai";
-    } else if (month === 6) {
+    } else if (parseInt(month === 6) || month === '06') {
         return "Juin";
-    } else if (month === 7) {
+    } else if (parseInt(month === 7) || month === '07') {
         return "Juillet";
-    } else if (month === 8) {
+    } else if (parseInt(month === 8) || month === '08') {
         return "Août";
-    } else if (month === 9) {
+    } else if (parseInt(month === 9) || month === '09') {
         return "Septembre";
-    } else if (month === 10) {
+    } else if (parseInt(month === 10) || month === '10') {
         return "Octobre";
-    } else if (month === 11) {
+    } else if (parseInt(month === 11) || month === '11') {
         return "Novembre";
     } else {
         return "Décembre"

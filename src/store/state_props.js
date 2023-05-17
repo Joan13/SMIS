@@ -80,6 +80,10 @@ export const mapStateToProps = (state) => {
         frais_divers_day: state.frais_divers_day,
         paiements_day_deleted: state.paiements_day_deleted,
         frais_divers_day_deleted: state.frais_divers_day_deleted,
+        paiements_month: state.paiements_month,
+        frais_divers_month: state.frais_divers_month,
+        paiements_month_deleted: state.paiements_month_deleted,
+        frais_divers_month_deleted: state.frais_divers_month_deleted,
         day: state.day,
         edit_pupil: state.edit_pupil,
         marks_modified: state.marks_modified,
@@ -91,8 +95,11 @@ export const mapStateToProps = (state) => {
         theme: state.theme,
         today: state.today,
         makuta_day: state.makuta_day,
+        makuta_month: state.makuta_month,
         user_open: state.user_open,
-        redirectToReferrer: state.redirectToReferrer
+        redirectToReferrer: state.redirectToReferrer,
+        selection_data: state.selection_data,
+        month_caisse: state.month_caisse,
     }
 }
 

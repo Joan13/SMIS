@@ -105,6 +105,12 @@ const Classes = (props) => {
             } else {
                 dispatch({ type: 'SET_CLASSES_SELECTED', payload: classes_selected.filter(element => element !== (classe.id_classes)) });
             }
+        } else if (props.type === 1) {
+            if (classes_selected.find(element => element === classe.id_classes) === undefined) {
+                dispatch({ type: "SET_CLASSES_SELECTED", payload: [...classes_selected, classe.id_classes] });
+            } else {
+                dispatch({ type: 'SET_CLASSES_SELECTED', payload: classes_selected.filter(element => element !== (classe.id_classes)) });
+            }
         }
         else {
 
@@ -123,7 +129,7 @@ const Classes = (props) => {
                     Chargement des données...
                 </div>
                 :
-                <div className="flex-auto ml-16">
+                <div className={`flex-auto ${props.type === 1 ? "ml-16" : ""}`}>
 
                     {/* <Selections /> */}
 
@@ -131,7 +137,7 @@ const Classes = (props) => {
                         return (
                             <div key={index}
                                 onClick={() => { if (props.type === 1) { open_classe(classee) } }}
-                                className={`classes-div ${classe.id_classes === classee.id_classes ? class_open ? "classes-div-selected" : "" : ""} flex items-center pl-3 pr-5 w-full`}>
+                                className={`classes-div ${classe.id_classes === classee.id_classes ? class_open ? props.type === 1 ? "classes-div-selected" : "" : "" : ""} flex items-center pl-3 pr-5 w-full`}>
                                 <div className="w-18">
                                     <div className="border-gray-50 dark:border-gray-20 border mr-3 w-14  h-14 rounded-full flex justify-center items-center">
                                         {props.type === 2 ?
