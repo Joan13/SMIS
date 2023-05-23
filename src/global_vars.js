@@ -1,10 +1,10 @@
 export const home_redirect = "/";
 export const year = "2018 - 2023";
 export const http = "http://";
-export const url_online = "gestion.collegeafajiri.net";
+// export const url_online = "gestion.collegeafajiri.net";
 // export const url_online = "192.168.10.2";
-// export const url_online = "";
-export const online = true;
+export const url_online = "";
+export const online = false;
 
 export const find_date = (date) => {
     let year = date.substr(6, 4);
