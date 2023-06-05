@@ -15,7 +15,7 @@ const App = () => {
         <Routes>
           <Route path="/signin" element={<Signin />} exact />
           <Route path="/settings" element={<Settings />} exact />
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home />} exact />
         </Routes>
       </HashRouter>
 

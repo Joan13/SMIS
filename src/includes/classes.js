@@ -95,7 +95,7 @@ const Classes = (props) => {
 
                     setClass_loading(parseInt(null));
                 }).catch((error) => {
-                    console.log(error.toString());
+                    console.log(error);
                     setClass_loading(parseInt(null));
                     dispatch({ type: "SET_LOADING_FOOTER", payload: false });
                 });
