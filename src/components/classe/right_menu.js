@@ -93,8 +93,15 @@ export default function RightClasseMenu() {
 
                                     <div className="flex items-center ml-5 text-primary-50 mb-3">
                                         <BiEdit style={{ marginRight: 7 }} />
-                                        <span onClick={() => set_page(31, "", true, false)} className={`select-no-border ${middle_func === 17 ? "select-no-border-bold" : ""}`}>
+                                        <span onClick={() => set_page(31, "", true, false)} className={`select-no-border ${middle_func === 31 ? "select-no-border-bold" : ""}`}>
                                             Conduites
+                                        </span>
+                                    </div>
+
+                                    <div className="flex items-center ml-5 text-primary-50 mb-3">
+                                        <BiEdit style={{ marginRight: 7 }} />
+                                        <span onClick={() => set_page(34, "", true, false)} className={`select-no-border ${middle_func === 34 ? "select-no-border-bold" : ""}`}>
+                                            Migrations
                                         </span>
                                     </div>
 

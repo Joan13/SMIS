@@ -71,7 +71,6 @@ const EditPupil = () => {
             // this.setState({ modal_title: "Information erreur", modal_main_text: "Vous devez renseigner tous les champs obligatoires avant la validation. Ce sont l'identité de base de l'élève et son orientation scolaire.", modal_view: true, loading_middle: false });
             console.log(first_name_pupil + " " + second_name_pupil + " " + cycle_school_pupil + " " + class_school_pupil);
         } else {
-            let url_server = sessionStorage.getItem('yambi_smis_url_server');
             let BaseURL = http + url_server + "/yambi_class_SMIS/API/edit_pupil.php";
 
             fetch(BaseURL, {

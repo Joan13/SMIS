@@ -175,11 +175,16 @@ const FichesPointsPupils = () => {
             sp = 4;
         if (period === 'EX2')
             sp = 11;
+        if (period === 'REP')
+            sp = 15;
 
         let totall = findCourse(course).total_marks;
 
         if (sp === 10 || sp === 11)
             totall = parseInt(findCourse(course).total_marks * 2);
+
+        if (sp === 15)
+            totall = 100;
 
         let markks = {};
         let global_marks = [];
@@ -202,13 +207,15 @@ const FichesPointsPupils = () => {
             setMarks_edit(global_marks);
         }
 
-        if (parseInt(marks) > totall || parseInt(marks) < 0) {
-            if (errors.find(error => error === pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (parseInt(pupill.pupil.pupil_id) + course + period)) === undefined) {
-                setErrors([...errors, pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period)]);
-            }
+        if (period !== 'REP') {
+            if (parseInt(marks) > totall || parseInt(marks) < 0) {
+                if (errors.find(error => error === pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (parseInt(pupill.pupil.pupil_id) + course + period)) === undefined) {
+                    setErrors([...errors, pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period)]);
+                }
 
-        } else {
-            setErrors(errors.filter((element) => !(pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period)).includes(element)));
+            } else {
+                setErrors(errors.filter((element) => !(pupill.pupil.first_name + pupill.pupil.second_name + pupill.pupil.last_name + (pupill.pupil.pupil_id + course + period)).includes(element)));
+            }
         }
     }
 
@@ -291,6 +298,8 @@ const FichesPointsPupils = () => {
                                             <option>- - - - - - - - - - - -</option>
                                             <option value="S1">Premier semestre</option>
                                             <option value="S2">Deuxième semestre</option>
+                                            <option>- - - - - - - - - - - -</option>
+                                            <option value="REP">Examen de repechage</option>
                                         </select>
                                     </div>
 
@@ -322,6 +331,9 @@ const FichesPointsPupils = () => {
 
                                                 {show_periode("S2", "S2") ?
                                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>S2</th> : null}
+
+                                                {show_periode("REP") ?
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>REPECHAGE</th> : null}
 
                                                 {show_periode("*", "*") ?
                                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>TOTAL</th> : null}
@@ -390,6 +402,15 @@ const FichesPointsPupils = () => {
                                                                     type="number"
                                                                     placeholder={render_period_marks(pupil.marks, course.course_id, 11)}
                                                                     onChange={(text) => handle_change(pupil, course.course_id, 'EX2', text.target.value, true)}
+                                                                />
+                                                            </td> : null}
+
+                                                        {show_periode("REP") ?
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
+                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + (parseInt(pupil.pupil.pupil_id) + course.course_id + 'EX2')) === undefined ? "input-red" : "red-input"}`}
+                                                                    type="number"
+                                                                    placeholder={render_period_marks(pupil.marks, course.course_id, 15)}
+                                                                    onChange={(text) => handle_change(pupil, course.course_id, 'REP', text.target.value, true)}
                                                                 />
                                                             </td> : null}
 

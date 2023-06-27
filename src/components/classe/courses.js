@@ -239,10 +239,7 @@ class Courses extends Component {
     }
 
     delete_course(course_id) {
-        let user = sessionStorage.getItem('assemble_user_data');
-        user = JSON.parse(user);
-
-        if (user.poste === "4") {
+        if (this.props.user_data.poste === "4") {
             this.setState({ modal_view: false, can_delete_course: true });
             let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/delete_course.php";
 
@@ -272,12 +269,7 @@ class Courses extends Component {
 
         let course_name = this.state.text_course_name;
 
-        let user = sessionStorage.getItem('assemble_user_data');
-        user = JSON.parse(user);
-
-        // window.open('', 'blank', ''); window.close()
-
-        if (user.poste === "4") {
+        if (this.props.user_data.poste === "4") {
 
             let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/modify_course.php";
 
@@ -307,10 +299,7 @@ class Courses extends Component {
 
     modify_course(course_id, course_name, total_marks) {
 
-        let user = sessionStorage.getItem('assemble_user_data');
-        user = JSON.parse(user);
-
-        if (user.poste === "4") {
+        if (this.props.user_data.poste === "4") {
 
             let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/modify_course.php";
 
@@ -337,11 +326,7 @@ class Courses extends Component {
     }
 
     course_ex_bulletin(course_id, tag) {
-
-        let user = sessionStorage.getItem('assemble_user_data');
-        user = JSON.parse(user);
-
-        if (user.poste === "4") {
+        if (this.props.user_data.poste === "4") {
             let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/modify_course_bulletin.php";
 
             fetch(BaseURL, {
@@ -358,8 +343,7 @@ class Courses extends Component {
 
                 })
                 .catch((error) => {
-                    // Alert.alert(strings.error, strings.connection_failed);
-                    // alert(error.toString())
+                    alert(error.toString())
                     this.setState({ loading_class: false, pupils_see: false });
                 });
         } else {
@@ -389,11 +373,10 @@ class Courses extends Component {
                         <table className="full-table-liste-marksssss w-full">
                             <thead>
                                 <tr>
-
                                     <th className='border pt-2 pb-2 border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 30, paddingLeft: 10, paddingRight: 10 }}>No</th>
                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'left', paddingLeft: 10 }}>Intitulé du cours</th>
                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 100 }}>Maxima</th>
-                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 100 }}>Ex. ?</th>
+                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 150 }}>Ex. ?</th>
                                     {this.state.toggle_action ?
                                         <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20'>Option</th> : null}
                                 </tr>
@@ -413,8 +396,7 @@ class Courses extends Component {
                                             {this.state.being_modified === course.course_id ?
                                                 <button
                                                     className="button-primary-small"
-                                                    onClick={(text) => this.modify_course_name(course.course_id, course.total_marks)}
-                                                >Enregistrer</button> : null}
+                                                    onClick={(text) => this.modify_course_name(course.course_id, course.total_marks)}>Enregistrer</button> : null}
                                         </td>
                                         <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50 }}>
                                             <input
@@ -422,16 +404,14 @@ class Courses extends Component {
                                                 value={course.total_marks}
                                                 className="input-no-borderr" />
                                         </td>
-                                        <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>
+                                        <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10, textAlign: 'center' }}>
                                             <button
-                                                className={`button-primary-small-normal ${course.considered == "5" ? "" : "button-primary-small"}`}
-                                                onClick={(text) => this.course_ex_bulletin(course.course_id, "")}
-                                            >Oui</button>
+                                                className='pl-3 pr-3 bg-gray-50 dark:bg-background-20 border border-gray-50 dark:border-gray-100 pt-0.2 pb-0.2 mt-1 mb-1 rounded-lg cursor-pointer shadow-lg'
+                                                onClick={() => this.course_ex_bulletin(course.course_id, "")}>Oui</button>
                                             <button
                                                 style={{ marginLeft: 5 }}
-                                                className={`button-primary-small-normal ${course.considered == '5' ? "button-primary-small" : ""}`}
-                                                onClick={(text) => this.course_ex_bulletin(course.course_id, "5")}
-                                            >Non</button>
+                                                className={`pl-3 pr-3 border pt-0.2 pb-0.2 mt-1 mb-1 rounded-lg cursor-pointer shadow-lg ${parseInt(course.considered) === 5 ? "bg-primary-50 text-text-20 border-primary-50" : "bg-gray-50 dark:bg-background-20 border-gray-50 dark:border-gray-100"}`}
+                                                onClick={() => this.course_ex_bulletin(course.course_id, "5")}>Non</button>
                                         </td>
                                         {this.state.toggle_action ?
                                             <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
@@ -499,8 +479,7 @@ class Courses extends Component {
                                     <button
                                         className="button-primary"
                                         style={{ marginLeft: 2, paddingLeft: 35, paddingRight: 35, marginTop: 10 }}
-                                        onClick={(text) => this.new_course()}
-                                    >Enregistrer le cours</button>
+                                        onClick={(text) => this.new_course()}>Enregistrer le cours</button>
                                 </div>
                             </div> : null}
 

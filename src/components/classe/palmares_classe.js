@@ -202,7 +202,7 @@ class PalmaresPupils extends Component {
         } else if (periode == "50") {
             this.setState({ periode_full: "DU SECOND SEMESTRE" });
         } else {
-
+            this.setState({ periode_full: "DE FIN D'ANNÉE" });
         }
     }
 
@@ -220,6 +220,14 @@ class PalmaresPupils extends Component {
         if (parseInt(this.state.periode) === 50) {
             for (let i in marks) {
                 if (parseInt(marks[i].school_period) === 3 || parseInt(marks[i].school_period) === 4 || parseInt(marks[i].school_period) === 11) {
+                    return_value = return_value + parseInt(marks[i].main_marks);
+                }
+            }
+        }
+
+        if (parseInt(this.state.periode) === 100) {
+            for (let i in marks) {
+                if (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10 || parseInt(marks[i].school_period) === 3 || parseInt(marks[i].school_period) === 4 || parseInt(marks[i].school_period) === 11) {
                     return_value = return_value + parseInt(marks[i].main_marks);
                 }
             }
@@ -306,12 +314,14 @@ class PalmaresPupils extends Component {
                                 <option>- - - - - - - - - - - -</option>
                                 <option value="40">Premier semestre</option>
                                 <option value="50">Deuxième semestre</option>
+                                <option>- - - - - - - - - - - -</option>
+                                <option value="100">Palmarès annuel</option>
                             </select>
                         </div>
 
                         <div id="print-palmares" style={{ marginTop: 0 }}>
                             <div>
-                                <strong>{this.props.autres.school_name}</strong><br />
+                                <strong>{this.props.autres.school_name.toUpperCase()}</strong><br />
                                 <strong>{this.props.autres.school_bp}</strong><br />
                             </div>
 
@@ -391,6 +401,11 @@ class PalmaresPupils extends Component {
                                         {this.state.periode === "50" ?
                                             <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>%</th> : null}
                                         {this.state.periode === "50" ?
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>Place</th> : null}
+
+                                        {this.state.periode === "100" ?
+                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>%</th> : null}
+                                        {this.state.periode === "100" ?
                                             <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ textAlign: 'center' }}>Place</th> : null}
                                     </tr>
                                 </thead>
@@ -572,7 +587,28 @@ class PalmaresPupils extends Component {
                                                             <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
                                                             <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
                                                             <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
-                                                                {((parseInt(this.render_pupil_marks_trim(pupil.pupil.pupil_id, '3', '4', '11')) * 100) / this.maxima(50)).toString().substr(0, 4)}
+                                                                {((parseInt(this.render_period_main_marks(pupil.marks) * 100) / this.maxima(50)).toString().substr(0, 4))}
+                                                            </td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                )
+                                            }
+                                        })
+                                    ))
+                                    : null}
+
+                                {this.state.periode === "100" ?
+                                    this.props.classe.data.array_places_tott.map((place, index_p) => (
+                                        this.props.classe.data.pupils.map((pupil, index) => {
+                                            if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                return (
+                                                    <tbody key={index}>
+                                                        <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
+                                                                {((parseInt(this.render_period_main_marks(pupil.marks) * 100) / (this.maxima(40) + this.maxima(50))).toString().substr(0, 4))}
                                                             </td>
                                                             <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                         </tr>

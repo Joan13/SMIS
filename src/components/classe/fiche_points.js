@@ -20,6 +20,8 @@ const FichesPoints = () => {
     const render_period_marks = (marks, course_id) => {
         let return_value = 0;
 
+        // console.log(marks)
+
         if (parseInt(periode) === 40) {
             for (let i in marks) {
                 if (parseInt(marks[i].course) === parseInt(course_id) && (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10)) {
@@ -27,7 +29,7 @@ const FichesPoints = () => {
                         // dispatch({type:"SET_ECHECS", payload:[...echecs, marks[i].course]});
                         // echecs.push(marks[i].course);
                     }
-                    return_value = return_value + marks[i].main_marks;
+                    return_value = return_value + parseInt(marks[i].main_marks);
                 }
             }
         }
@@ -40,7 +42,19 @@ const FichesPoints = () => {
                         // dispatch({type:"SET_ECHECS", payload:[...echecs, marks[i].course]});
                         // echecs.push(marks[i].course);
                     }
-                    return_value = return_value + marks[i].main_marks;
+                    return_value = return_value + parseInt(marks[i].main_marks);
+                }
+            }
+        }
+        else if (parseInt(periode) === 100) {
+            for (let i in marks) {
+                if (parseInt(marks[i].course) === parseInt(course_id) && (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10 || parseInt(marks[i].school_period) === 3 || parseInt(marks[i].school_period) === 4 || parseInt(marks[i].school_period) === 11)) {
+
+                    if (parseInt(marks[i].main_marks) < (parseInt(marks[i].total_marks) * 8) / 2) {
+                        // dispatch({type:"SET_ECHECS", payload:[...echecs, marks[i].course]});
+                        // echecs.push(marks[i].course);
+                    }
+                    return_value = return_value + parseInt(marks[i].main_marks);
                 }
             }
         }
@@ -69,12 +83,35 @@ const FichesPoints = () => {
             }
         }
 
-        // if(return_value < total_marks()/2) {
-        //     let echec = {};
-        //     echec.id = 
-        // }
-
         return return_value;
+    }
+
+    const total_cours = (total, considered) => {
+        let moins = 0;
+
+        if (parseInt(periode) === 40 || parseInt(periode) === 50) {
+            if (parseInt(considered) === 5) {
+                // console.log("ok")
+                // considered = parseInt(classe.data.courses[i].considered);
+                moins = parseInt(total) * 2;
+            }
+        }
+
+        if (parseInt(periode) === 100) {
+            if (parseInt(considered) === 5) {
+                // considered = parseInt(classe.data.courses[i].considered);
+                moins = parseInt(total) * 4;
+            }
+        }
+
+        if (parseInt(periode) === 100) {
+            return (parseInt(total) * 8) - moins;
+        } else if (parseInt(periode) === 40 || parseInt(periode) === 50) {
+            return (parseInt(total) * 4) - moins;
+            // return total + " " +moins;
+        } else {
+            return total - moins;
+        }
     }
 
 
@@ -92,6 +129,14 @@ const FichesPoints = () => {
         if (parseInt(periode) === 50) {
             for (let i in marks) {
                 if (parseInt(marks[i].school_period) === 3 || parseInt(marks[i].school_period) === 4 || parseInt(marks[i].school_period) === 11) {
+                    return_value = return_value + parseInt(marks[i].main_marks);
+                }
+            }
+        }
+
+        if (parseInt(periode) === 100) {
+            for (let i in marks) {
+                if (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10 || parseInt(marks[i].school_period) === 3 || parseInt(marks[i].school_period) === 4 || parseInt(marks[i].school_period) === 11) {
                     return_value = return_value + parseInt(marks[i].main_marks);
                 }
             }
@@ -133,9 +178,18 @@ const FichesPoints = () => {
         for (let i in classe.data.courses) {
             total = total + parseInt(classe.data.courses[i].total_marks);
 
+            // if(parseInt(period) === 40 || parseInt(period) === 50) {
             if (parseInt(classe.data.courses[i].considered) === 5) {
                 considered = parseInt(classe.data.courses[i].considered);
                 moins = parseInt(classe.data.courses[i].total_marks) * 2;
+            }
+            // }
+
+            if (parseInt(period) === 100) {
+                if (parseInt(classe.data.courses[i].considered) === 5) {
+                    considered = parseInt(classe.data.courses[i].considered);
+                    moins = parseInt(classe.data.courses[i].total_marks) * 4;
+                }
             }
         }
 
@@ -144,6 +198,14 @@ const FichesPoints = () => {
                 total = (total * 4) - moins;
             } else {
                 total = (total * 4) - moins;
+            }
+        }
+
+        if (parseInt(period) === 100) {
+            if (considered === 5) {
+                total = (total * 8) - moins;
+            } else {
+                total = (total * 8) - moins;
             }
         }
 
@@ -184,6 +246,8 @@ const FichesPoints = () => {
             return marks * 2;
         } else if (parseInt(periode) === 40 || parseInt(periode) === 50) {
             return marks * 4;
+        } else if (parseInt(periode) === 100) {
+            return marks * 8;
         } else {
             return marks;
         }
@@ -205,21 +269,79 @@ const FichesPoints = () => {
         else if (parseInt(periode) === 50) {
             return "du deuxième semestre";
         }
+        else if (parseInt(periode) === 100) {
+            return "de fin d'année";
+        }
         else {
             return "de la " + periode + "e période";
         }
     }
 
+    const find_m = (course, marks) => {
+        let mmarks = 0;
+        for (let i in marks) {
+            if ((parseInt(course) === parseInt(marks[i].course)) && (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10)) {
+                mmarks = mmarks + parseInt(marks[i].main_marks);
+            }
+        }
+
+        let total = find_coursee(course) * 2;
+        if (mmarks < (total / 2)) {
+            return true;
+        }
+
+        return false;
+    }
+
     const find_echecs = (course) => {
         let echecs = 0;
-        for (let i in classe.data.pupils_marks) {
-            if ((parseInt(course) === parseInt(classe.data.pupils_marks[i].course)) && (parseInt(classe.data.pupils_marks[i].main_marks) < parseInt(classe.data.pupils_marks[i].total_marks / 2)) && (parseInt(classe.data.pupils_marks[i].school_period) === parseInt(periode))) {
-                echecs = echecs + 1;
+        let moins = 0;
+
+        if (parseInt(periode) === 50 || parseInt(periode) === 40) {
+            if (parseInt(find_coursee(course).considered) === 5) {
+                // considered = parseInt(classe.data.courses[i].considered);
+                moins = parseInt(find_coursee(course).total_marks) * 2;
             }
+        }
 
+        if (parseInt(periode) === 100) {
+            if (parseInt(find_coursee(course).considered) === 5) {
+                // considered = parseInt(classe.data.courses[i].considered);
+                moins = parseInt(find_coursee(course).total_marks) * 4;
+            }
+        }
 
+        let total = (parseInt(find_coursee(course).total_marks) * 8) - moins;
+
+        if (parseInt(periode) === 50 || parseInt(periode) === 40) {
+            let total = parseInt(find_coursee(course).total_marks) * 4;
+            for (let i in classe.data.pupils) {
+                if (parseInt(render_period_marks(classe.data.pupils[i].marks, course)) < (total / 2)) {
+                    echecs = echecs + 1;
+                }
+            }
+        } else if (parseInt(periode) === 100) {
+            for (let i in classe.data.pupils) {
+                if (parseInt(render_period_marks(classe.data.pupils[i].marks, course)) < (total / 2)) {
+                    echecs = echecs + 1;
+                }
+            }
+        } else {
+            for (let i in classe.data.pupils_marks) {
+                if ((parseInt(course) === parseInt(classe.data.pupils_marks[i].course)) && (parseInt(classe.data.pupils_marks[i].main_marks) < parseInt(classe.data.pupils_marks[i].total_marks / 2)) && (parseInt(classe.data.pupils_marks[i].school_period) === parseInt(periode))) {
+                    echecs = echecs + 1;
+                }
+            }
         }
         return echecs;
+    }
+
+    const find_coursee = (course) => {
+        for (let i in classe.data.courses) {
+            if (classe.data.courses[i].course_id === course) {
+                return classe.data.courses[i];
+            }
+        }
     }
 
     const find_course = (course) => {
@@ -243,8 +365,68 @@ const FichesPoints = () => {
         // }
     }, []);
 
+    const can_render=(considered)=> {
+        if((parseInt(periode) === 10 || parseInt(periode) === 11) && parseInt(considered) === 5) {
+return false;
+        }
+            return true;
+    }
+
+    const echecs_pupil = (marks) => {
+
+        let markss = [];
+        
+
+        // if (parseInt(periode) === 50 || parseInt(periode) === 40) {
+        //     if (parseInt(find_coursee(course).considered) === 5) {
+        //         // considered = parseInt(classe.data.courses[i].considered);
+        //         moins = parseInt(find_coursee(course).total_marks) * 2;
+        //     }
+        // }
+
+        // if (parseInt(periode) === 100) {
+        //     if (parseInt(find_coursee(course).considered) === 5) {
+        //         // considered = parseInt(classe.data.courses[i].considered);
+        //         moins = parseInt(find_coursee(course).total_marks) * 4;
+        //     }
+        // }
+
+        // let total = (parseInt(find_coursee(course).total_marks) * 8) - moins;
+
+        if(parseInt(periode) === 40 || parseInt(periode) === 50) {
+            for (let i in marks) {
+                let minus = 0;
+                if (parseInt(find_coursee(marks[i].course).considered) === 5) {
+                    minus = parseInt(find_coursee(marks[i].course).total_marks) * 2;
+                }
+                let tot = parseInt(find_coursee(marks[i].course).total_marks) - minus;
+
+                if ((parseInt(marks[i].main_marks) < parseInt(tot/2)) && (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10)) {
+                    markss.push(marks[i].course);
+                }
+            }
+        }
+        else {
+            for (let i in marks) {
+                if ((parseInt(marks[i].main_marks) < parseInt(marks[i].total_marks / 2)) && (parseInt(marks[i].school_period) === parseInt(periode))) {
+                    markss.push(marks[i].course);
+                }
+            }
+        }
+
+        return (
+            <div className='text-left ml-2'>
+                <div className='border-b pb-2 border-gray-50 dark:border-gray-20 font-bold'>Échecs ({markss.length})</div>
+                {markss.map((echec, index) => (
+                    <div key={index} className='pl-1 ml-1 border-l mb-1 text-sm border-gray-50 dark:border-gray-20' style={{ display: 'inline-block' }}>{find_course(echec)}</div>
+                ))}
+            </div>
+        )
+        // return markss.length;
+    }
+
     return (
-        <div style={{ marginBottom: 50, paddingTop: 10, width: '100%' }}>
+        <div style={{ marginBottom: 20, paddingTop: 0, width: '100%' }}>
             {!loading_footer ?
                 <div>
                     <PrintDocument div={"fiche-points-print"} /> <br /><br />
@@ -269,11 +451,13 @@ const FichesPoints = () => {
                             <option>- - - - - - - - - - - -</option>
                             <option value="40">Premier semestre</option>
                             <option value="50">Deuxième semestre</option>
+                            <option>- - - - - - - - - - - -</option>
+                            <option value="100">Fin d'année</option>
                         </select>
                     </div>
 
                     <div id="fiche-points-print">
-                        <table className="fiche-pointsdede" style={{ width: '100%', marginTop: -40 }}>
+                        <table className="fiche-pointsdede" style={{ width: '100%', marginTop: 0 }}>
                             <caption>
                                 <div style={{ textAlign: 'left', marginBottom: -30 }}>
                                     <strong>{autres.school_name.toUpperCase()}</strong><br />
@@ -290,11 +474,11 @@ const FichesPoints = () => {
                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 30, textAlign: 'center' }}>No</th>
                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ paddingLeft: 10, textAlign: 'left' }}>Noms des élèves</th>
 
-                                    {classe.data.courses.map((course, index) => (<th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} key={index}>{total_marks(course.total_marks)} / {course.course_name.toUpperCase().substr(0, 25)}</th>))}
+                                    {classe.data.courses.map((course, index) => (<th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} key={index}>{total_cours(course.total_marks, course.considered)} / {course.course_name.toUpperCase().substr(0, 25)}</th>))}
                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 15, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }}>TOTAL</th>
                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 15, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }}>MAXIMA</th>
                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 15, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }}>POURCENTAGE</th>
-
+                                    {/* <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' contentEditable style={{ paddingLeft: 15, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }}>ECHECS</th> */}
                                 </tr>
                             </thead>
 
@@ -306,8 +490,8 @@ const FichesPoints = () => {
                                             <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
 
                                             {classe.data.courses.map((course, index) => (
-                                                <td className='border border-gray-50 dark:border-gray-20' key={index} style={{ textAlign: 'center', minWidth: 32 }}>
-                                                    {render_period_marks(pupil.marks, course.course_id)}
+                                                <td className={`border border-gray-50 dark:border-gray-20 ${can_render(course.considered) ? render_period_marks(pupil.marks, course.course_id) < (total_cours(course.total_marks, course.considered) / 2) ? "font-bold underline text-errror" : "":""}`} key={index} style={{ textAlign: 'center', minWidth: 32 }}>
+                                                    {can_render(course.considered) ? render_period_marks(pupil.marks, course.course_id) : "-"}
                                                 </td>
                                             ))}
 
@@ -320,6 +504,9 @@ const FichesPoints = () => {
                                             <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }}>
                                                 {render_period_pourcentage(pupil.marks)}
                                             </td>
+                                            {/* <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }}>
+                                                {echecs_pupil(pupil.marks)}
+                                            </td> */}
                                         </tr>
                                     </tbody>
                                 )
@@ -335,7 +522,7 @@ const FichesPoints = () => {
                                 if (find_echecs(cours.course_id) !== 0) {
 
                                     return (
-                                        <div key={index} className='border-l border-gray-50 dark:border-gray-20 pl-2 ml-2 text-sm mt-2' style={{ display: 'inline-block' }}>{cours.course_name.toUpperCase()}  {find_echecs(cours.course_id)}</div>
+                                        <div key={index} className='border-l border-gray-50 dark:border-gray-20 pl-2 ml-2 text-sm mt-2' style={{ display: 'inline-block' }}>{cours.course_name.toUpperCase()} <strong>{find_echecs(cours.course_id)}</strong></div>
                                     )
                                 }
                             })}

@@ -21,7 +21,7 @@ const PrintDocument = (props) => {
     }
 
     return (
-        <div onClick={() => printContent(props.div)} style={{ float: 'right', paddingTop: 7 }} className='font-bold flex text-text-50 items-center cursor-pointer'>
+        <div onClick={() => printContent(props.div)} style={{ float: 'right', paddingTop: 7 }} className='font-bold text-text-sm flex text-text-50 items-center cursor-pointer'>
             <FiPrinter className='mr-2' /> <span> IMPRIMER</span>
         </div>
     )

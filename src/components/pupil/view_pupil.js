@@ -9,6 +9,7 @@ import AllPaiementPupils from '../paiements/all_paiements_pupil';
 import FraisDiversPupil from '../paiements/frais_divers_pupil';
 import { CircularProgress } from '@material-ui/core';
 import EditPupil from './edit_pupil';
+import PrintDocument from '../includes/print';
 
 
 class ViewPupil extends React.Component {
@@ -151,17 +152,17 @@ class ViewPupil extends React.Component {
         return fullDate;
     }
 
-    printContent(divName) {
+    // printContent(divName) {
 
-        let printContents = document.getElementById(divName).innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
+    //     let printContents = document.getElementById(divName).innerHTML;
+    //     let originalContents = document.body.innerHTML;
+    //     document.body.innerHTML = printContents;
+    //     window.print();
 
-        document.body.innerHTML = originalContents;
-        window.location.href = http + this.props.url_server + home_redirect;
-        window.location.replace(http + this.props.url_server + home_redirect);
-    }
+    //     document.body.innerHTML = originalContents;
+    //     window.location.href = http + this.props.url_server + home_redirect;
+    //     window.location.replace(http + this.props.url_server + home_redirect);
+    // }
 
     render() {
         return (
@@ -293,10 +294,11 @@ class ViewPupil extends React.Component {
                                 </div>
 
                                 <div className='flex items-center border-l border-gray-50 dark:border-gray-20 pl-4 cursor-pointer'>
-                                    <FaPrint className='' style={{ marginRight: 5 }} />
-                                    <span onClick={() => this.printContent("nomminative")}>
+                                    {/* <FaPrint className='' style={{ marginRight: 5 }} /> */}
+                                    {/* <span onClick={() => this.printContent("nomminative")}>
                                         IMPRIMER LA FICHE DE L'ÉLÈVE
-                                    </span>
+                                    </span> */}
+                                    <PrintDocument div="nomminative" />
                                 </div>
                             </div>
                         </div>

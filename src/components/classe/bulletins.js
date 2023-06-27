@@ -229,18 +229,19 @@ class Bulletins extends React.Component {
     render_total_pourcentage(pupil_id) {
         let pourcentage = 0;
         let main_marks = 0;
-        let total_marks = 0;
+        let total_marks = parseInt(this.maxima_generaux(pupil_id, 1)) + parseInt(this.maxima_generaux(pupil_id, 2)) + parseInt(this.maxima_generaux(pupil_id, 10)) + parseInt(this.maxima_generaux(pupil_id, 3)) + parseInt(this.maxima_generaux(pupil_id, 4)) + parseInt(this.maxima_generaux(pupil_id, 11));
 
         for (let i in this.props.classe.data.pupils_marks) {
-            if (this.props.classe.data.pupils_marks[i].pupil === pupil_id && this.props.classe.data.pupils_marks[i].school_period !== "15") {
-                main_marks = main_marks + parseInt(this.props.classe.data.pupils_marks[i].main_marks);
-                total_marks = total_marks + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
+            if (parseInt(this.props.classe.data.pupils_marks[i].pupil) === parseInt(pupil_id) && parseInt(this.props.classe.data.pupils_marks[i].school_period) !== 15) {
+                main_marks = parseInt(main_marks) + parseInt(this.props.classe.data.pupils_marks[i].main_marks);
+                // total_marks = parseInt(total_marks) + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
             }
         }
 
         if (main_marks !== 0) {
             pourcentage = (main_marks * 100) / total_marks;
-            return (pourcentage).toString().substr(0, 4);
+            return pourcentage.toString().substr(0, 4);
+            // return main_marks + " " + total_marks
         } else {
             return "";
         }
@@ -478,12 +479,21 @@ class Bulletins extends React.Component {
         }
     }
 
+    class_nam(){
+        if(parseInt(this.props.classe.class) === 1 || parseInt(this.props.classe.class) ===2){
+            return 'BULLETIN DE LA ' +this.props.classe.class_id+ " CYCLE TERMINAL DE L'ÉDUCATION DE BASE (CTEB) " + this.props.classe.section_id.toUpperCase();
+        }
+
+        return 'BULLETIN DE LA ' +this.props.classe.class_id+ ' ANNÉE HUMANITÉ ' + this.props.classe.section_id.toUpperCase();
+    }
+
     render() {
         return (
             <div>
+                {/* {this.props.classe.class} */}
                 {!this.props.loading_footer ?
                     <div style={{ marginBottom: 50, paddingTop: 10, marginRight: 3 }}>
-                        {this.props.classe.class === "6" ?
+                        {parseInt(this.props.classe.class) === 6 ?
                             <>
 
                                 {/* <div>
@@ -496,7 +506,7 @@ class Bulletins extends React.Component {
                                 <div>
                                     Renseignez le code du centre avant l'impression des bulletins. Ceci peut varier d'une année à une autre.<br />
                                     <input
-                                        placeholder="Nombre des bulletins"
+                                        placeholder="Code centre"
                                         type="number"
                                         style={{ width: 150 }}
                                         maxLength="5"
@@ -540,7 +550,7 @@ class Bulletins extends React.Component {
                         {this.props.classe.data.domains.length !== 0 ?
                             <BulletinsType2 />
                             :
-                            this.props.classe.class === "6" ?
+                            parseInt(this.props.classe.class) === 6 ?
                                 <div id="bulletins-p">
 
                                     {this.props.classe.pupils.map((pupil, index) => {
@@ -1121,6 +1131,7 @@ class Bulletins extends React.Component {
                                             )
                                         }
                                     })}
+                                    ihrfoiuwho wiurh goiuerwh giuerwh  u
                                 </div>
                                 :
                                 <div id="bulletins-p">
@@ -1238,7 +1249,7 @@ class Bulletins extends React.Component {
                                                     <table className="className_table">
                                                         <tr>
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold' }}>
-                                                                <span>BULLETIN DE LA {this.props.classe.class_id} ANNÉE HUMANITÉ {this.props.classe.section_id.toUpperCase()}<span
+                                                                <span>{this.class_nam()}<span
                                                                     style={{ color: 'transparent' }}>......</span>
                                                                     ANNÉE SCOLAIRE {this.props.annee_scolaire.year_name}</span>
                                                             </td>
@@ -1400,7 +1411,7 @@ class Bulletins extends React.Component {
                                                                         : null}
                                                                 </tr>
                                                                 ,
-                                                                <tr key={index}>
+                                                                <tr key={index + 1}>
                                                                     <td className="td-border" style={{ fontSize: 11, paddingLeft: 10 }}>{course.course_name}</td>
                                                                     <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "1")}</span></td>
                                                                     <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "2")}</span></td>

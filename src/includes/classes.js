@@ -73,6 +73,8 @@ const Classes = (props) => {
                 .then((response) => response.json())
                 .then((response) => {
                     classe.data = response;
+
+                    console.log(response);
                     dispatch({ type: "SET_CLASSE", payload: classe });
                     dispatch({ type: "SET_LOADING_FOOTER", payload: false });
 

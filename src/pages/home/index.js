@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { LinearProgress } from "@material-ui/core";
 import Footer from "../../includes/footer";
-import { FaCircle,FaCheck, FaUserPlus, FaClipboard, FaPaperclip, FaEdit} from "react-icons/fa";
-import { FiEdit,  FiUser } from "react-icons/fi";
+import { FaCircle, FaCheck, FaUserPlus, FaClipboard, FaPaperclip, FaEdit } from "react-icons/fa";
+import { FiEdit, FiUser } from "react-icons/fi";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Navigate } from "react-router-dom";
 import FicheIdentites from "../../components/classe/fiche_identites";
@@ -15,7 +15,7 @@ import Bulletins from "../../components/classe/bulletins";
 import StatistiquesCaisse from "../../components/paiements/stats_caisse";
 import FicheE13 from "../../components/classe/fiche_e13";
 import Courses from "../../components/classe/courses";
-import { http} from "../../global_vars";
+import { http } from "../../global_vars";
 import { useDispatch, useSelector } from "react-redux";
 import PalmaresFinal from "../../components/classe/palmares_final";
 import ViewPupil from "../../components/pupil/view_pupil";
@@ -49,69 +49,67 @@ import UserOpen from "../../components/includes/user_open";
 import axios from "axios";
 import vector from "./../../../src/assets/logo.PNG"
 import PrintDocument from "../../components/includes/print";
+import Migrations from "../../components/classe/migrations";
 
-const Home=()=> {
+const Home = () => {
 
     const dispatch = useDispatch();
-    const url_server = useSelector(state=>state.url_server);
-    const middle_func = useSelector(state=>state.middle_func);
-    const user_data = useSelector(state=>state.user_data);
-    const loading_middle = useSelector(state=>state.loading_middle);
-    const loading_footer = useSelector(state=>state.loading_footer);
-    const loading_class = useSelector(state=>state.loading_class);
-    const loadding_header = useSelector(state=>state.loadding_header);
-    const annee_scolaire = useSelector(state=>state.annee_scolaire);
-    const user_poste = useSelector(state=>state.user_poste);
-    const marks_tab = useSelector(state=>state.marks_tab);
-    const allow_right_menu = useSelector(state=>state.allow_right_menu);
-    const allow_right_menu_pupils = useSelector(state=>state.allow_right_menu_pupils);
-    const classe = useSelector(state=>state.classe);
-    const class_open = useSelector(state=>state.class_open);
-    const title_main = useSelector(state=>state.title_main);
-    const cycles = useSelector(state=>state.cycles);
-    const classes = useSelector(state=>state.classes);
-    const orders = useSelector(state=>state.orders);
-    const sections = useSelector(state=>state.sections);
-    const options = useSelector(state=>state.options);
-    const annees = useSelector(state=>state.annees);
-    const class_numbers = useSelector(state=>state.class_numbers);
-    const pupils = useSelector(state=>state.pupils);
-    const periode_full = useSelector(state=>state.periode_full);
-    const annee = useSelector(state=>state.annee);
-    const modal_paiement_categories = useSelector(state=>state.modal_paiement_categories);
-    const modal_libelles = useSelector(state=>state.modal_libelles);
-    const load_class_data = useSelector(state=>state.load_class_data);
-    const periode_synthese = useSelector(state=>state.periode_synthese);
-    const redirectToReferrer = useSelector(state=>state.redirectToReferrer);
-    const is_loading_home = useSelector(state=>state.is_loading_home);
-    const school_name_abb = useSelector(state=>state.school_name_abb);
-    const user_action = useSelector(state=>state.user_action);
-    const fiches_tab = useSelector(state=>state.fiches_tab);
-    const user_open = useSelector(state=>state.user_open);
-    const modal_selections = useSelector(state=>state.modal_selections);
-    const nbr_ee = useSelector(state=>state.nbr_ee);
-    const nbr_classes = useSelector(state=>state.nbr_classes);
-    const nbr_tb = useSelector(state=>state.nbr_tb);
-    const all_pupils = useSelector(state=>state.all_pupils);
-    const nbr_bb1 = useSelector(state=>state.nbr_bb1);
-    const nbr_bb2 = useSelector(state=>state.nbr_bb2);
-    const nbr_me = useSelector(state=>state.nbr_me);
-    const nbr_ma = useSelector(state=>state.nbr_ma);
-    const autres = useSelector(state=>state.autres);
-    const reussites = useSelector(state=>state.reussites);
-    const doubles = useSelector(state=>state.doubles);
-    const abandon = useSelector(state=>state.abandon);
-    const echecs = useSelector(state=>state.echecs);
-    const classes_synthese = useSelector(state=>state.classes_synthese);
+    const url_server = useSelector(state => state.url_server);
+    const middle_func = useSelector(state => state.middle_func);
+    const user_data = useSelector(state => state.user_data);
+    const loading_middle = useSelector(state => state.loading_middle);
+    const loading_footer = useSelector(state => state.loading_footer);
+    const loading_class = useSelector(state => state.loading_class);
+    const loadding_header = useSelector(state => state.loadding_header);
+    const annee_scolaire = useSelector(state => state.annee_scolaire);
+    const user_poste = useSelector(state => state.user_poste);
+    const marks_tab = useSelector(state => state.marks_tab);
+    const allow_right_menu = useSelector(state => state.allow_right_menu);
+    const allow_right_menu_pupils = useSelector(state => state.allow_right_menu_pupils);
+    const classe = useSelector(state => state.classe);
+    const class_open = useSelector(state => state.class_open);
+    const title_main = useSelector(state => state.title_main);
+    const cycles = useSelector(state => state.cycles);
+    const classes = useSelector(state => state.classes);
+    const orders = useSelector(state => state.orders);
+    const sections = useSelector(state => state.sections);
+    const options = useSelector(state => state.options);
+    const annees = useSelector(state => state.annees);
+    const class_numbers = useSelector(state => state.class_numbers);
+    const pupils = useSelector(state => state.pupils);
+    const periode_full = useSelector(state => state.periode_full);
+    const annee = useSelector(state => state.annee);
+    const modal_paiement_categories = useSelector(state => state.modal_paiement_categories);
+    const modal_libelles = useSelector(state => state.modal_libelles);
+    const load_class_data = useSelector(state => state.load_class_data);
+    const periode_synthese = useSelector(state => state.periode_synthese);
+    const redirectToReferrer = useSelector(state => state.redirectToReferrer);
+    const is_loading_home = useSelector(state => state.is_loading_home);
+    const school_name_abb = useSelector(state => state.school_name_abb);
+    const user_action = useSelector(state => state.user_action);
+    const fiches_tab = useSelector(state => state.fiches_tab);
+    const user_open = useSelector(state => state.user_open);
+    const modal_selections = useSelector(state => state.modal_selections);
+    const nbr_ee = useSelector(state => state.nbr_ee);
+    const nbr_classes = useSelector(state => state.nbr_classes);
+    const nbr_tb = useSelector(state => state.nbr_tb);
+    const all_pupils = useSelector(state => state.all_pupils);
+    const nbr_bb1 = useSelector(state => state.nbr_bb1);
+    const nbr_bb2 = useSelector(state => state.nbr_bb2);
+    const nbr_me = useSelector(state => state.nbr_me);
+    const nbr_ma = useSelector(state => state.nbr_ma);
+    const autres = useSelector(state => state.autres);
+    const reussites = useSelector(state => state.reussites);
+    const doubles = useSelector(state => state.doubles);
+    const abandon = useSelector(state => state.abandon);
+    const echecs = useSelector(state => state.echecs);
+    const classes_synthese = useSelector(state => state.classes_synthese);
 
-    const get_general_info=(annee)=> {
+    const get_general_info = (annee) => {
         dispatch({ type: "SET_LOADING_MIDDLE", payload: true });
         dispatch({ type: "SET_LOADING_HOME", payload: true });
 
-        let user = user_data;//sessionStorage.getItem("assemble_user_data");
-        // let url_server = url_server;//sessionStorage.getItem("yambi_smis_url_server");
-        // user = JSON.parse(user);
-        // this.setState({ can_load_data: false });
+        let user = user_data;
 
         dispatch({ type: "SET_USER_CONNECTED", payload: user });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
@@ -170,7 +168,7 @@ const Home=()=> {
                     dispatch({ type: "SET_SECTIONS", payload: response.sections });
                     dispatch({ type: "SET_OPTIONS", payload: response.options });
                     dispatch({ type: "SET_ANNEE_SCOLAIRE", payload: response.annee_scolaire });
-                    dispatch({ type: "SET_ANNEE", payload: response.annee });
+                    dispatch({ type: "SET_ANNEE", payload: parseInt(response.annee) });
                     dispatch({ type: "SET_SCHOOL_NAME", payload: response.school_name });
                     dispatch({ type: "SET_ATTRIBUTIONS", payload: response.attributions });
                     dispatch({ type: "SET_PUPILS_COUNT", payload: response.pupils_count });
@@ -198,11 +196,11 @@ const Home=()=> {
                         dispatch({ type: "SET_TITLE_MAIN", payload: "Année scolaire" });
                         dispatch({ type: "SET_LOADING_MIDDLE", payload: false });
                         dispatch({ type: "SET_LOADING_HOME", payload: false });
-                    }, 2000);
+                    }, 1000);
                 });
             })
             .catch((error) => {
-                console.log(error);
+                // console.log(error);
                 dispatch({ type: "SET_LOADING_HOME", payload: false });
             });
     }
@@ -275,11 +273,11 @@ const Home=()=> {
     //         });
     // }
 
-    const get_synthese_marks=(periode)=> {
+    const get_synthese_marks = (periode) => {
         dispatch({ type: "SET_CLASSE_OPEN", payload: false });
         dispatch({ type: "SET_LOADING_MIDDLE", payload: true });
 
-        let BaseURL =http + url_server + "/yambi_class_SMIS/API/get_synthese.php";
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_synthese.php";
 
         fetch(BaseURL, {
             method: "POST",
@@ -290,18 +288,18 @@ const Home=()=> {
         })
             .then((response) => response.json())
             .then((response) => {
-                dispatch({ type: "SET_CLASSES_SYNTHESE",payload: response.classes});
+                dispatch({ type: "SET_CLASSES_SYNTHESE", payload: response.classes });
                 dispatch({ type: "SET_LOADING_MIDDLE", payload: false });
-                dispatch({ type: "SET_ALL_PUPILS", payload: response.all_pupils});
+                dispatch({ type: "SET_ALL_PUPILS", payload: response.all_pupils });
                 dispatch({ type: "SET_NBR_EE", payload: response.nbr_ee });
                 dispatch({ type: "SET_NBR_TB", payload: response.nbr_tb });
                 dispatch({ type: "SET_NBR_BB1", payload: response.nbr_bb1 });
                 dispatch({ type: "SET_NBR_BB2", payload: response.nbr_bb2 });
                 dispatch({ type: "SET_NBR_ME", payload: response.nbr_me });
                 dispatch({ type: "SET_NBR_MA", payload: response.nbr_ma });
-                dispatch({  type: "SET_NBR_CLASSES", payload: response.nbr_classes});
+                dispatch({ type: "SET_NBR_CLASSES", payload: response.nbr_classes });
                 dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
-                dispatch({   type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true});
+                dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
             })
             .catch((error) => {
                 // alert(error.toString());
@@ -316,7 +314,7 @@ const Home=()=> {
             });
     }
 
-    const request_synthese_change=(periode)=> {
+    const request_synthese_change = (periode) => {
         dispatch({ type: "SET_PERIODE_FULL", payload: periode });
         dispatch({ type: "SET_TITLE", payload: "Fiche synthèse des résultats / " });
 
@@ -343,15 +341,16 @@ const Home=()=> {
         get_synthese_marks(periode);
     }
 
-    const render_synthese=()=> {
+    const render_synthese = () => {
         return (
             <div style={{ marginBottom: 50, paddingTop: 10 }}>
-                <div className="float-menu-right">
+                <div className="float-menu-right text-text-md" style={{
+                    fontSize: 13
+                }}>
                     <select
-                        onChange={(val) => this.request_synthese_change(val.target.value)}
-                        style={{ color: "rgba(0, 80, 180)" }}
-                        value={periode_synthese}
-                        className="select-no-border">
+                        onChange={(val) => request_synthese_change(val.target.value)}
+                        // value={periode_synthese}
+                        className="bg-background-100 dark:bg-background-20">
                         <option value="12">Synthèse des résultats de fin d'année</option>
                         <option>- - - - - - - - - - - -</option>
                         <option value="1">Première période</option>
@@ -364,14 +363,11 @@ const Home=()=> {
                         <option>- - - - - - - - - - - -</option>
                         <option value="40">Premier semestre</option>
                         <option value="50">Deuxième semestre</option>
-                    </select>
-                </div>
+                    </select><br />
+                    <PrintDocument div="print-synthese" />
+                </div><br />
 
-                <div
-                    onClick={() => PrintDocument("print-synthese")}
-                    className="span-blockk">
-                    IMPRIMER
-                </div>
+
 
                 <div id="print-synthese">
                     <div>
@@ -380,8 +376,8 @@ const Home=()=> {
                         </strong>
                         <br />
                         <strong>{autres.school_bp}</strong>
-                        <br />
-                        <strong>Commune: {autres.school_commune}</strong>
+                        {/* <br /> */}
+                        {/* <strong>Commune: {autres.school_commune}</strong> */}
                     </div>
 
                     <div className="float-right-div">
@@ -389,47 +385,29 @@ const Home=()=> {
                             Année scolaire : {annee_scolaire.year_name}
                         </strong>
                     </div>
-                    <h3>SYNTHÈSE DES RÉSULTATS {periode_full}</h3>
-                    <table className="full-table-liste-markss" style={{ marginTop: 10 }}>
+                    <h3 className="font-bold">SYNTHÈSE DES RÉSULTATS {periode_full}</h3>
+                    <table className="w-full" style={{ marginTop: 10 }}>
                         <thead>
-                            <tr>
-                                <th rowSpan="2" style={{ textAlign: "center", width: 20 }}>
-                                    No
-                                </th>
-                                <th rowSpan="2" style={{ textAlign: "center" }}>
-                                    CLASSES
-                                </th>
-                                <th rowSpan="2" style={{ textAlign: "center" }}>
-                                    Nbr ÉlÈVES
-                                </th>
-                                <th style={{ textAlign: "center" }}>80% + </th>
-                                <th style={{ textAlign: "center" }}>70 - 79%</th>
-                                <th style={{ textAlign: "center" }}>60 - 69%</th>
-                                <th style={{ textAlign: "center" }}>50 - 59%</th>
-                                <th style={{ textAlign: "center" }}>40 - 49%</th>
-                                <th style={{ textAlign: "center" }}>30% -</th>
-                                <th rowSpan="2" style={{ textAlign: "center", fontSize: 12 }}>
-                                    MEILLEURE
-                                    <br />
-                                    NOTE
-                                </th>
-                                <th rowSpan="2" style={{ textAlign: "center", fontSize: 12 }}>
-                                    PLUS BASSE
-                                    <br />
-                                    NOTE
-                                </th>
-                                <th rowSpan="2" style={{ textAlign: "center", fontSize: 12 }}>
-                                    MOYENNE
-                                </th>
+                            <tr className="bg-background-50 dark:bg-background-20">
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" rowSpan="2" style={{ textAlign: "center", width: 35 }}>No</th>
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" rowSpan="2" style={{ textAlign: "center" }}>CLASSES</th>
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" rowSpan="2" style={{ textAlign: "center" }}>Nbr ÉlÈVES</th>
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>80% + </th>
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>70 - 79%</th>
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>60 - 69%</th>
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>50 - 59%</th>
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>40 - 49%</th>
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>30% -</th>
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" rowSpan="2" style={{ textAlign: "center", fontSize: 12 }}>MEILLEURE<br />NOTE</th>
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" rowSpan="2" style={{ textAlign: "center", fontSize: 12 }}>PLUS BASSE <br />NOTE </th>
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" rowSpan="2" style={{ textAlign: "center", fontSize: 12 }}>MOYENNE</th>
                             </tr>
-                            <tr>
-                                <th style={{ textAlign: "center" }}>E</th>
-                                <th style={{ textAlign: "center" }}>TB</th>
-                                <th colSpan="2" style={{ textAlign: "center" }}>
-                                    B
-                                </th>
-                                <th style={{ textAlign: "center" }}>Me</th>
-                                <th style={{ textAlign: "center" }}>MA</th>
+                            <tr className="bg-background-50 dark:bg-background-20">
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>E</th>
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>TB</th>
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" colSpan="2" style={{ textAlign: "center" }}> B</th>
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>Me</th>
+                                <th className="pt-2 pb-2 border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>MA</th>
                             </tr>
                         </thead>
                         {classes_synthese.map((classe, index) => {
@@ -442,38 +420,38 @@ const Home=()=> {
                                                     ? "rgba(0,0,0,0.015)"
                                                     : "rgba(0,0,0,0.050)",
                                         }}>
-                                        <td style={{ textAlign: "center" }}>{index + 1}</td>
-                                        <td style={{ paddingLeft: 10 }}>
+                                        <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>{index + 1}</td>
+                                        <td className="border border-gray-50 dark:border-gray-20" style={{ paddingLeft: 10 }}>
                                             {classe.class_id + " " + classe.section_id + " " + classe.order_id}
                                         </td>
-                                        <td style={{ textAlign: "center" }}>
+                                        <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>
                                             {classe.pupils_count}
                                         </td>
-                                        <td style={{ textAlign: "center" }}>
+                                        <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>
                                             {classe.ee === "0" ? "" : classe.ee}
                                         </td>
-                                        <td style={{ textAlign: "center" }}>
+                                        <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>
                                             {classe.tb === "0" ? "" : classe.tb}
                                         </td>
-                                        <td style={{ textAlign: "center" }}>
+                                        <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>
                                             {classe.bb1 === "0" ? "" : classe.bb1}
                                         </td>
-                                        <td style={{ textAlign: "center" }}>
+                                        <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>
                                             {classe.bb2 === "0" ? "" : classe.bb2}
                                         </td>
-                                        <td style={{ textAlign: "center" }}>
+                                        <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>
                                             {classe.me === "0" ? "" : classe.me}
                                         </td>
-                                        <td style={{ textAlign: "center" }}>
+                                        <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>
                                             {classe.ma === "0" ? "" : classe.ma}
                                         </td>
-                                        <td style={{ textAlign: "center" }}>
+                                        <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>
                                             {classe.pourcentage_plus}
                                         </td>
-                                        <td style={{ textAlign: "center" }}>
+                                        <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>
                                             {classe.pourcentage_min}
                                         </td>
-                                        <td style={{ textAlign: "center" }}>
+                                        <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>
                                             {(
                                                 parseInt(classe.pre_moyennes) /
                                                 parseInt(classe.pupils_count)
@@ -487,86 +465,71 @@ const Home=()=> {
                         })}
                         <tfoot>
                             <tr style={{ backgroundColor: "rgba(0,0,0,0.1)" }}>
-                                <td
+                                <td className="border border-gray-50 dark:border-gray-20"
                                     rowSpan="2"
                                     style={{ textAlign: "center", fontWeight: "bold" }}>
                                     +
                                 </td>
-                                <td rowSpan="2" style={{ paddingLeft: 10, fontWeight: "bold" }}>
+                                <td className="border border-gray-50 dark:border-gray-20" rowSpan="2" style={{ paddingLeft: 10, fontWeight: "bold" }}>
                                     {nbr_classes}
                                 </td>
-                                <td
+                                <td className="border border-gray-50 dark:border-gray-20"
                                     rowSpan="2"
                                     style={{ textAlign: "center", fontWeight: "bold" }}>
                                     {all_pupils}
                                 </td>
-                                <td style={{ textAlign: "center", fontWeight: "bold" }}>
+                                <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center", fontWeight: "bold" }}>
                                     {nbr_ee}
                                 </td>
-                                <td style={{ textAlign: "center", fontWeight: "bold" }}>
+                                <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center", fontWeight: "bold" }}>
                                     {nbr_tb}
                                 </td>
-                                <td style={{ textAlign: "center", fontWeight: "bold" }}>
+                                <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center", fontWeight: "bold" }}>
                                     {nbr_bb1}
                                 </td>
-                                <td style={{ textAlign: "center", fontWeight: "bold" }}>
+                                <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center", fontWeight: "bold" }}>
                                     {nbr_bb2}
                                 </td>
-                                <td style={{ textAlign: "center", fontWeight: "bold" }}>
+                                <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center", fontWeight: "bold" }}>
                                     {nbr_me}
                                 </td>
-                                <td style={{ textAlign: "center", fontWeight: "bold" }}>
+                                <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center", fontWeight: "bold" }}>
                                     {nbr_ma}
                                 </td>
-                                <td
+                                <td className="border border-gray-50 dark:border-gray-20"
                                     rowSpan="2"
-                                    style={{ textAlign: "center", fontWeight: "bold" }}
-                                ></td>
-                                <td
+                                    style={{ textAlign: "center", fontWeight: "bold" }}></td>
+                                <td className="border border-gray-50 dark:border-gray-20"
                                     rowSpan="2"
-                                    style={{ textAlign: "center", fontWeight: "bold" }}
-                                ></td>
-                                <td
+                                    style={{ textAlign: "center", fontWeight: "bold" }}></td>
+                                <td className="border border-gray-50 dark:border-gray-20"
                                     rowSpan="2"
-                                    style={{ textAlign: "center", fontWeight: "bold" }}
-                                ></td>
+                                    style={{ textAlign: "center", fontWeight: "bold" }}></td>
                             </tr>
                             <tr style={{ backgroundColor: "rgba(0,0,0,0.1)" }}>
-                                <td style={{ textAlign: "center", fontWeight: "bold" }}>
-                                    {((parseInt(nbr_ee) * 100) / all_pupils)
-                                        .toString()
-                                        .substr(0, 4)}
+                                <td className="border border-gray-50 dark:border-gray-20"
+                                    style={{ textAlign: "center", fontWeight: "bold" }}>
+                                    {((parseInt(nbr_ee) * 100) / all_pupils).toString().substr(0, 4)}
                                 </td>
-                                <td style={{ textAlign: "center", fontWeight: "bold" }}>
-                                    {((parseInt(nbr_tb) * 100) / all_pupils)
-                                        .toString()
-                                        .substr(0, 4)}
+                                <td className="border border-gray-50 dark:border-gray-20"
+                                    style={{ textAlign: "center", fontWeight: "bold" }}>
+                                    {((parseInt(nbr_tb) * 100) / all_pupils).toString().substr(0, 4)}
                                 </td>
-                                <td style={{ textAlign: "center", fontWeight: "bold" }}>
-                                    {(
-                                        (parseInt(nbr_bb1) * 100) /
-                                        all_pupils
-                                    )
-                                        .toString()
-                                        .substr(0, 4)}
+                                <td className="border border-gray-50 dark:border-gray-20"
+                                    style={{ textAlign: "center", fontWeight: "bold" }}>
+                                    {((parseInt(nbr_bb1) * 100) / all_pupils).toString().substr(0, 4)}
                                 </td>
-                                <td style={{ textAlign: "center", fontWeight: "bold" }}>
-                                    {(
-                                        (parseInt(nbr_bb2) * 100) /
-                                        all_pupils
-                                    )
-                                        .toString()
-                                        .substr(0, 4)}
+                                <td className="border border-gray-50 dark:border-gray-20"
+                                    style={{ textAlign: "center", fontWeight: "bold" }}>
+                                    {((parseInt(nbr_bb2) * 100) / all_pupils).toString().substr(0, 4)}
                                 </td>
-                                <td style={{ textAlign: "center", fontWeight: "bold" }}>
-                                    {((parseInt(nbr_me) * 100) / all_pupils)
-                                        .toString()
-                                        .substr(0, 4)}
+                                <td className="border border-gray-50 dark:border-gray-20"
+                                    style={{ textAlign: "center", fontWeight: "bold" }}>
+                                    {((parseInt(nbr_me) * 100) / all_pupils).toString().substr(0, 4)}
                                 </td>
-                                <td style={{ textAlign: "center", fontWeight: "bold" }}>
-                                    {((parseInt(nbr_ma) * 100) / all_pupils)
-                                        .toString()
-                                        .substr(0, 4)}
+                                <td className="border border-gray-50 dark:border-gray-20"
+                                    style={{ textAlign: "center", fontWeight: "bold" }}>
+                                    {((parseInt(nbr_ma) * 100) / all_pupils).toString().substr(0, 4)}
                                 </td>
                             </tr>
                         </tfoot>
@@ -579,27 +542,19 @@ const Home=()=> {
                         <div style={{ paddingLeft: 25 }}>
                             <FaCheck /> Le taux de réussite est de {reussites}/
                             {all_pupils}, soit{" "}
-                            {((parseInt(reussites) * 100) / all_pupils)
-                                .toString()
-                                .substr(0, 4)}
+                            {((parseInt(reussites) * 100) / all_pupils).toString().substr(0, 4)}
                             <br />
                             <FaCheck /> Le taux de redoublement est de {doubles}/
                             {all_pupils}, soit{" "}
-                            {((parseInt(doubles) * 100) / all_pupils)
-                                .toString()
-                                .substr(0, 4)}
+                            {((parseInt(doubles) * 100) / all_pupils).toString().substr(0, 4)}
                             <br />
                             <FaCheck /> Le taux d'échec est de {echecs}/
                             {all_pupils}, soit{" "}
-                            {((parseInt(echecs) * 100) / all_pupils)
-                                .toString()
-                                .substr(0, 4)}
+                            {((parseInt(echecs) * 100) / all_pupils).toString().substr(0, 4)}
                             <br />
                             <FaCheck /> La déperdition est de {abandon}/
                             {all_pupils}, soit{" "}
-                            {((parseInt(abandon) * 100) / all_pupils)
-                                .toString()
-                                .substr(0, 4)}
+                            {((parseInt(abandon) * 100) / all_pupils).toString().substr(0, 4)}
                         </div>
                     </>
                 ) : null}
@@ -607,62 +562,44 @@ const Home=()=> {
         );
     }
 
-    const back_home=()=> {
-        const classe = { pupils: [] };
-        dispatch({ type: "SET_CLASSE", payload: classe });
-        dispatch({ type: "SET_TITLE_MAIN", payload: "Année scolaire" });
-        dispatch({ type: "SET_CLASSE_OPEN", payload: false });
-        dispatch({ type: "SET_MIDDLE_FUNC", payload: 0 });
-        dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
-        dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
-    }
-
-    const parse_classes=(data)=> {
-        setTimeout(() => {
-            for (let i in data) {
-                load_class_data(data[i]);
-            }
-        }, 3000);
-    }
-
-    const new_pupil=()=> {
+    const new_pupil = () => {
         dispatch({ type: "SET_CLASSE", payload: [] });
-        dispatch({type: "SET_TITLE_MAIN",payload: "Nouvel(le) élève | "});
+        dispatch({ type: "SET_TITLE_MAIN", payload: "Nouvel(le) élève | " });
         dispatch({ type: "SET_CLASSE_OPEN", payload: false });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
         dispatch({ type: "SET_MIDDLE_FUNC", payload: 6 });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
     }
 
-    const new_worker=()=> {
+    const new_worker = () => {
         dispatch({ type: "SET_CLASSE", payload: [] });
-        dispatch({ type: "SET_TITLE_MAIN",payload: "Ajouter membre du personnel"});
+        dispatch({ type: "SET_TITLE_MAIN", payload: "Ajouter membre du personnel" });
         dispatch({ type: "SET_CLASSE_OPEN", payload: false });
-        dispatch({type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false,});
+        dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false, });
         dispatch({ type: "SET_MIDDLE_FUNC", payload: 16 });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
     }
 
-    const timetable_settings=()=> {
+    const timetable_settings = () => {
         dispatch({ type: "SET_CLASSE", payload: classes[0] });
-        dispatch({ type: "SET_COURSE", payload: classes[0].courses[0]});
+        dispatch({ type: "SET_COURSE", payload: classes[0].courses[0] });
         dispatch({ type: "SET_TITLE_MAIN", payload: "Horaires" });
         dispatch({ type: "SET_CLASSE_OPEN", payload: true });
-        dispatch({type: "SET_ALLOW_RIGHT_MENU_PUPILS",payload: false});
+        dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
         dispatch({ type: "SET_MIDDLE_FUNC", payload: 22 });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
     }
 
-    const paiement_categories=()=> {
+    const paiement_categories = () => {
         if (modal_paiement_categories === true) {
-            dispatch({  type: "SET_MODAL_PAIEMENT_CATEGORIES",payload: false});
+            dispatch({ type: "SET_MODAL_PAIEMENT_CATEGORIES", payload: false });
         } else {
-            dispatch({type: "SET_MODAL_PAIEMENT_CATEGORIES",payload: true});
+            dispatch({ type: "SET_MODAL_PAIEMENT_CATEGORIES", payload: true });
             fetch_paiement_categories();
         }
     }
 
-    const open_libelles=()=> {
+    const open_libelles = () => {
         if (modal_libelles === true) {
             dispatch({ type: "SET_MODAL_LIBELLES", payload: false });
         } else {
@@ -671,8 +608,8 @@ const Home=()=> {
         }
     }
 
-    const fetch_libelles=()=> {
-        let BaseURL =http + url_server + "/yambi_class_SMIS/API/libelles.php";
+    const fetch_libelles = () => {
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/libelles.php";
 
         fetch(BaseURL, {
             method: "POST",
@@ -682,13 +619,13 @@ const Home=()=> {
         })
             .then((response) => response.json())
             .then((response) => {
-                dispatch({ type: "SET_LIBELLES", payload: response.libelles});
+                dispatch({ type: "SET_LIBELLES", payload: response.libelles });
             })
             .catch((error) => { });
     }
 
-    const fetch_paiement_categories=()=> {
-        let BaseURL = http +url_server +"/yambi_class_SMIS/API/paiement_categories.php";
+    const fetch_paiement_categories = () => {
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/paiement_categories.php";
 
         fetch(BaseURL, {
             method: "POST",
@@ -698,12 +635,12 @@ const Home=()=> {
         })
             .then((response) => response.json())
             .then((response) => {
-                dispatch({ type: "SET_PAIEMENT_CATEGORIES", payload: response.paiement_categories});
+                dispatch({ type: "SET_PAIEMENT_CATEGORIES", payload: response.paiement_categories });
             })
             .catch((error) => { });
     }
 
-    const new_classe_import=()=> {
+    const new_classe_import = () => {
         // this.setState({
         //     middle_func: 6,
         //     marks_tab: "",
@@ -715,39 +652,23 @@ const Home=()=> {
         // });
 
         dispatch({ type: "SET_CLASSE", payload: [] });
-        dispatch({type: "SET_TITLE_MAIN", payload: "Création de classe par upload de fichier Excel "});
+        dispatch({ type: "SET_TITLE_MAIN", payload: "Création de classe par upload de fichier Excel " });
         dispatch({ type: "SET_CLASSE_OPEN", payload: false });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
         dispatch({ type: "SET_MIDDLE_FUNC", payload: 13 });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
     }
 
-    const paiements_classe=()=> {
-        // dispatch({ type: "SET_TITLE_MAIN", payload: "Nouvel(le) élève | " });
-        // dispatch({ type: "SET_CLASSE_OPEN", payload: false });
-        // dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: true });
-        dispatch({ type: "SET_MIDDLE_FUNC", payload: 8 });
-        dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
-    }
-
-    const fetch_synthese=()=> {
-        // this.setState({
-        //     middle_func: 4,
-        //     marks_tab: "",
-        //     title_main: "Fiche synthèse des résultats",
-        //     allow_right_menu: false,
-        //     classe: [],
-        //     allow_right_menu_pupils: false
-        // });
-        dispatch({    type: "SET_TITLE_MAIN", payload: "Fiche synthèse des résultats"});
+    const fetch_synthese = () => {
+        dispatch({ type: "SET_TITLE_MAIN", payload: "Fiche synthèse des résultats" });
         dispatch({ type: "SET_MIDDLE_FUNC", payload: 4 });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
-        dispatch({   type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
+        dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
         dispatch({ type: "SET_CLASSE", payload: [] });
         get_synthese_marks(periode_synthese);
     }
 
-    const logout_session=()=> {
+    const logout_session = () => {
         dispatch({ type: "SET_REDIRECTTOREFERRER", payload: false });
         dispatch({ type: "SET_USER_OPEN", payload: false });
         sessionStorage.removeItem("assemble_user_data");
@@ -755,38 +676,11 @@ const Home=()=> {
         sessionStorage.clear();
     }
 
-    const refresh_window=()=> {
-        // let url_server = sessionStorage.getItem('yambi_smis_url_server');
-        //     window.location.href = "http://" + url_server + home_redirect;
-        // window.location.replace( "http://" + url_server + home_redirect);
-
-        // window.location.href = "http://" + url_server + ":3000" + home_redirect;
-        // window.location.replace( "http://" + url_server + ":3000" + home_redirect);
-
-        this.get_general_info("");
-    }
-
-    const okkokook=()=> {
-        // axios({
-        //     method: 'post',
-        //     url:  http + url_server + "/yambi_class_SMIS/API/get_info_home.php",
-        //                 data: { annee: annee },
-        //     config: { headers: { 'Content-Type': 'multipart/form-data' } }
-        // })
-        //   .then(function (response) {
-        //     console.log(response);
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   });
-    }
-
-    useEffect(()=>{
+    useEffect(() => {
         get_general_info("");
     }, [])
 
-    // render() {
-        if (redirectToReferrer || sessionStorage.getItem("assemble_user_data")) {
+    if (redirectToReferrer || sessionStorage.getItem("assemble_user_data")) {
         return (
             <div>
                 {!is_loading_home ?
@@ -965,6 +859,40 @@ const Home=()=> {
                                                     <div style={{ paddingLeft: 20, paddingRight: 10 }}>
                                                         {middle_func === 1 ? (<ListeNomminative />) : null}
 
+                                                        {middle_func === 0 ? (<div><MenuHome /></div>) : null}
+
+                                                        {middle_func === 2 ? (<div>
+                                                            {marks_tab === "FPE" ? (<FichePointsPupils />) : null}
+
+                                                            {marks_tab === "FPC" ? (<FichesPointsCourses />) : null}
+                                                        </div>) : null}
+
+                                                        {middle_func === 3 ? <PalmaresPupils /> : null}
+
+                                                        {middle_func === 10 ? <PalmaresFinal /> : null}
+
+                                                        {middle_func === 4 ? render_synthese() : null}
+
+                                                        {middle_func === 5 ? (
+                                                            <div id="fiches">
+                                                                {fiches_tab === "FI" ? (<div id="fiche-identity">{<FicheIdentites />}</div>) : null}
+
+                                                                {fiches_tab === "FO" ? (<div id="fiche-observation"> {/* {<FicheObservationPoints />} */} </div>) : null}
+
+                                                                {fiches_tab === "E13" ? (<div id="fiche-e133"> <FicheE13 /> </div>) : null}
+
+                                                                {fiches_tab === "E80" ? (<div id="fiche-e800">{/* {<FicheE80 />} */}</div>) : null}
+                                                            </div>
+                                                        ) : null}
+
+                                                        {middle_func === 6 ? <NewPupil /> : null}
+
+                                                        {middle_func === 7 ? (<Bulletins />) : null}
+
+                                                        {middle_func === 8 ? (<div><PaiementsClasse /></div>) : null}
+
+                                                        {middle_func === 9 ? (<div> <Courses /> </div>) : null}
+
                                                         {middle_func === 11 ? (<ViewPupil />) : null}
 
                                                         {middle_func === 12 ? (<StatistiquesCaisse />) : null}
@@ -997,41 +925,7 @@ const Home=()=> {
 
                                                         {middle_func === 33 ? (<BulletinsSmall />) : null}
 
-                                                        {middle_func === 5 ? (
-                                                            <div id="fiches">
-                                                                {fiches_tab === "FI" ? (<div id="fiche-identity">{<FicheIdentites />}</div>) : null}
-
-                                                                {fiches_tab === "FO" ? (<div id="fiche-observation"> {/* {<FicheObservationPoints />} */} </div>) : null}
-
-                                                                {fiches_tab === "E13" ? (<div id="fiche-e133"> <FicheE13 /> </div>) : null}
-
-                                                                {fiches_tab === "E80" ? (<div id="fiche-e800">{/* {<FicheE80 />} */}</div>) : null}
-                                                            </div>
-                                                        ) : null}
-
-                                                        {middle_func === 9 ? (<div> <Courses /> </div>) : null}
-
-                                                        {middle_func === 8 ? (<div><PaiementsClasse /></div>) : null}
-
-                                                        {middle_func === 0 ? (<div><MenuHome /></div>) : null}
-
-                                                        {middle_func === 2 ? (
-                                                            <div>
-                                                                {marks_tab === "FPE" ? (<FichePointsPupils />) : null}
-
-                                                                {marks_tab === "FPC" ? (<FichesPointsCourses />) : null}
-                                                            </div>
-                                                        ) : null}
-
-                                                        {middle_func === 3 ? <PalmaresPupils /> : null}
-
-                                                        {middle_func === 10 ? <PalmaresFinal /> : null}
-
-                                                        {middle_func === 4 ? render_synthese() : null}
-
-                                                        {middle_func === 6 ? <NewPupil /> : null}
-
-                                                        {middle_func === 7 ? (<Bulletins />) : null}
+                                                        {middle_func === 34 ? (<Migrations />) : null}
                                                     </div>
                                                 </div>
                                             </div>
@@ -1062,8 +956,8 @@ const Home=()=> {
             </div>
         );
     } else {
-    return <Navigate to={"/signin"} />;
-}
+        return <Navigate to={"/signin"} />;
+    }
 }
 
 export default Home;
