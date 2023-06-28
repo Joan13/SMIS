@@ -1466,15 +1466,15 @@ class Bulletins extends React.Component {
                                                             <td rowSpan="7" colSpan="2">
                                                                 <div style={{ textAlign: 'center', fontSize: 11, marginTop: -5 }}>
                                                                     <div style={{ textAlign: 'left', marginLeft: 20 }}>
-                                                                        {this.findConseil(pupil.pupil.pupil_id) == "3" ?
+                                                                        {this.findConseil(parseInt(pupil.pupil.pupil_id)) === 3?
                                                                             <><strong style={{ color: 'rgba(0, 80, 180)' }} className="okokkk"><FaCheck size={8} /> PASSE (I)<br /></strong></> :
                                                                             <><span>- PASSE (I)</span><br /></>}
 
-                                                                        {this.findConseil(pupil.pupil.pupil_id) == "4" ?
+                                                                        {this.findConseil(parseInt(pupil.pupil.pupil_id)) === 4 ?
                                                                             <><strong style={{ color: 'rgba(0, 80, 180)' }} className="okokkk"><FaCheck size={8} /> DOUBLE (I)<br /></strong></> :
                                                                             <><span>- DOUBLE (I)</span><br /></>}
 
-                                                                        {this.findConseil(pupil.pupil.pupil_id) == "5" ?
+                                                                        {this.findConseil(parseInt(pupil.pupil.pupil_id)) === 5 ?
                                                                             <><strong style={{ color: 'rgba(0, 80, 180)' }} className="okokkk"><FaCheck size={8} /> ORIENTÉ VERS (I)<br /></strong></> :
                                                                             <><span>- ORIENTÉ VERS (I)</span><br /></>}
                                                                     </div>
@@ -1654,15 +1654,15 @@ class Bulletins extends React.Component {
                                                                             <><span>- L'élève ne pourra passer dans la classe supérieure s'il n'a subi avec succès un examen de repêchage en . . <strong>{this.render_courses_repechage(pupil.pupil.pupil_id)}</strong> (1)</span><br /></>
                                                                         : <><span>- L'élève ne pourra passer dans la classe supérieure s'il n'a subi avec succès un examen de repêchage en . . <strong>{this.render_courses_repechage(pupil.pupil.pupil_id)}</strong> (1)</span><br /></>}
 
-                                                                    {this.findConseil(pupil.pupil.pupil_id) == "0" ?
+                                                                    {this.findConseil(parseInt(pupil.pupil.pupil_id)) === 0 ?
                                                                         <><strong style={{ color: 'rgba(0, 80, 180)' }} className="okokkk"><FaCheck size={8} /> L'élève passe dans la classe supérieure (1)</strong><br /></> :
                                                                         <><span>- L'élève passe dans la classe supérieure (1)</span><br /></>}
 
-                                                                    {this.findConseil(pupil.pupil.pupil_id) == "1" ?
+                                                                    {this.findConseil(parseInt(pupil.pupil.pupil_id)) === 1 ?
                                                                         <><strong style={{ color: 'rgba(0, 80, 180)' }} className="okokkk"><FaCheck size={8} /> L'élève double la classe (1)</strong><br /></> :
                                                                         <><span>- L'élève double la classe (1)</span><br /></>}
 
-                                                                    {this.findConseil(pupil.pupil.pupil_id) == "2" ?
+                                                                    {this.findConseil(parseInt(pupil.pupil.pupil_id)) === 2 ?
                                                                         <><strong style={{ color: 'rgba(0, 80, 180)' }} className="okokkk"><FaCheck size={8} /> L'élève est orienté (e) vers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . (1)</strong><br /></> :
                                                                         <><span>- L'élève est orienté (e) vers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . (1)</span><br /></>}
 

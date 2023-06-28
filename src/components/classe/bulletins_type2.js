@@ -944,16 +944,16 @@ class BulletinsType2 extends React.Component {
                                             <td rowSpan="7" colSpan="2">
                                                 <div style={{ textAlign: 'center', fontSize: 11, marginTop: 0 }} className="minw">
                                                     <div style={{ textAlign: 'left', marginLeft: 10 }}>
-                                                        {this.findConseil(pupil.pupil.pupil_id) === "3" ?
-                                                            <><strong style={{ color: 'rgba(0, 80, 180)' }} className="okokkk"><FaCheck size={8} /> PASSE (I)<br /></strong></> :
+                                                        {parseInt(this.findConseil(pupil.pupil.pupil_id)) === 3 ?
+                                                            <><strong style={{ color: 'rgba(0, 80, 180)' }} className="flex items-center underline"><FaCheck className='mr-2' size={8} /> PASSE (I)<br /></strong></> :
                                                             <><span>- PASSE (I)</span><br /></>}
 
-                                                        {this.findConseil(pupil.pupil.pupil_id) === "4" ?
-                                                            <><strong style={{ color: 'rgba(0, 80, 180)' }} className="okokkk"><FaCheck size={8} /> DOUBLE (I)<br /></strong></> :
+                                                        {parseInt(this.findConseil(pupil.pupil.pupil_id)) === 4 ?
+                                                            <><strong style={{ color: 'rgba(0, 80, 180)' }} className="flex items-center underline"><FaCheck className='mr-2' size={8} /> DOUBLE (I)<br /></strong></> :
                                                             <><span>- DOUBLE (I)</span><br /></>}
 
-                                                        {this.findConseil(pupil.pupil.pupil_id) === "5" ?
-                                                            <><strong style={{ color: 'rgba(0, 80, 180)' }} className="okokkk"><FaCheck size={8} /> ORIENTÉ VERS (I)<br /></strong></> :
+                                                        {parseInt(this.findConseil(pupil.pupil.pupil_id)) === 5 ?
+                                                            <><strong style={{ color: 'rgba(0, 80, 180)' }} className="flex items-center underline"><FaCheck className='mr-2' size={8} /> ORIENTÉ VERS (I)<br /></strong></> :
                                                             <><span>- ORIENTÉ VERS (I)</span><br /></>}
                                                     </div>
                                                     Le {this.find_date(this.props.autres.date_end + "")}<br />
@@ -1196,22 +1196,22 @@ class BulletinsType2 extends React.Component {
                                                     </table> : null}
 
                                                 <div style={{ fontSize: 11, textAlign: 'left', paddingRight: 10, width: '100%', paddingLeft: 10, paddingBottom: 0, paddingTop: 0 }}>
-                                                    {this.findConseil(pupil.pupil.pupil_id) !== "6" ?
-                                                        this.findConseil(pupil.pupil.pupil_id) > "2" ?
-                                                            <><strong style={{ color: 'black' }} className="okokkk"><FaCheck size={8} /> L'élève ne pourra passer dans la classe supérieure s'il n'a subi avec succès un examen de repêchage en . . {this.render_courses_repechage(pupil.pupil.pupil_id)} (1) </strong><br /></> :
+                                                    {parseInt(this.findConseil(pupil.pupil.pupil_id)) !== 6 ?
+                                                        parseInt(this.findConseil(pupil.pupil.pupil_id)) > 2 ?
+                                                            <><strong style={{ color: 'black' }} className="flex items-center"><FaCheck className='mr-2' size={8} /> L'élève ne pourra passer dans la classe supérieure s'il n'a subi avec succès un examen de repêchage en . . {this.render_courses_repechage(pupil.pupil.pupil_id)} (1) </strong></> :
                                                             <><span>- L'élève ne pourra passer dans la classe supérieure s'il n'a subi avec succès un examen de repêchage en . . <strong>{this.render_courses_repechage(pupil.pupil.pupil_id)}</strong> (1)</span><br /></>
                                                         : <><span>- L'élève ne pourra passer dans la classe supérieure s'il n'a subi avec succès un examen de repêchage en . . <strong>{this.render_courses_repechage(pupil.pupil.pupil_id)}</strong> (1)</span><br /></>}
 
-                                                    {this.findConseil(pupil.pupil.pupil_id) === "0" ?
-                                                        <><strong style={{ color: 'rgba(0, 80, 180)' }} className="okokkk"><FaCheck size={8} /> L'élève passe dans la classe supérieure (1)</strong><br /></> :
+                                                    {parseInt(this.findConseil(pupil.pupil.pupil_id)) === 0 ?
+                                                        <><strong style={{ color: 'rgba(0, 80, 180)' }} className="flex items-center underline"><FaCheck className='mr-2' size={8} /> L'élève passe dans la classe supérieure (1)</strong></> :
                                                         <><span>- L'élève passe dans la classe supérieure (1)</span><br /></>}
 
-                                                    {this.findConseil(pupil.pupil.pupil_id) === "1" ?
-                                                        <><strong style={{ color: 'rgba(0, 80, 180)' }} className="okokkk"><FaCheck size={8} /> L'élève double la classe (1)</strong><br /></> :
+                                                    {parseInt(this.findConseil(pupil.pupil.pupil_id)) === 1 ?
+                                                        <><strong style={{ color: 'rgba(0, 80, 180)' }} className="flex items-center underline"><FaCheck className='mr-2' size={8} /> L'élève double la classe (1)</strong></> :
                                                         <><span>- L'élève double la classe (1)</span><br /></>}
 
-                                                    {this.findConseil(pupil.pupil.pupil_id) === "2" ?
-                                                        <><strong style={{ color: 'rgba(0, 80, 180)' }} className="okokkk"><FaCheck size={8} /> L'élève est orienté (e) vers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . (1)</strong><br /></> :
+                                                    {parseInt(this.findConseil(pupil.pupil.pupil_id)) === 2 ?
+                                                        <><strong style={{ color: 'rgba(0, 80, 180)' }} className="flex items-center underline"><FaCheck className='mr-2' size={8} /> L'élève est orienté (e) vers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . (1)</strong></> :
                                                         <><span>- L'élève est orienté (e) vers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . (1)</span><br /></>}
 
                                                 </div>

@@ -112,7 +112,7 @@ const ListeNomminative = () => {
                                 <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name.toUpperCase()}</td>
                                 <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.second_name.toUpperCase()}</td>
                                 <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.last_name.toUpperCase()}</td>
-                                <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>{pupil.pupil.gender === "0" ? "F" : "M"} </td>
+                                <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>{parseInt(pupil.pupil.gender) === 0 ? "F" : "M"} </td>
                             </tr>
                         </tbody>
                     )
