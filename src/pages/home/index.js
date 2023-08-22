@@ -706,7 +706,7 @@ const Home = () => {
                                             ) : null}
                                             <div
                                                 onClick={() => dispatch({ type: "SET_USER_OPEN", payload: !user_action })}
-                                                className="flex items-center h-full text-right pr-5 ">
+                                                className="flex items-center h-full text-right pr-5 nodrag">
                                                 <span>
                                                     <strong style={{ fontSize: 13 }}>
                                                         {user_poste.toUpperCase()}
@@ -767,10 +767,7 @@ const Home = () => {
                                             ) : middle_func === 23 ? (
                                                 <span
                                                     onClick={timetable_settings}
-                                                    className={`nodrag select-no-border ${middle_func === 22
-                                                        ? "select-no-border-bold"
-                                                        : ""
-                                                        }`}>
+                                                    className={`nodrag select-no-border ${middle_func === 22  ? "select-no-border-bold": ""  }`}>
                                                     <FaUserPlus style={{ marginRight: 5 }} />
                                                     Configuration des horaires
                                                 </span>

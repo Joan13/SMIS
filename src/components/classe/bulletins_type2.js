@@ -244,6 +244,39 @@ class BulletinsType2 extends React.Component {
 
     }
 
+    maxima(period) {
+        let total = 0;
+        let considered = 0;
+        let moins = 0;
+
+        for (let i in this.props.classe.data.courses) {
+            total = total + parseInt(this.props.classe.data.courses[i].total_marks);
+
+            if (parseInt(this.props.classe.data.courses[i].considered) === 5) {
+                considered = parseInt(this.props.classe.data.courses[i].considered);
+                moins = parseInt(this.props.classe.data.courses[i].total_marks) * 2;
+            }
+        }
+
+        if (period === 40 || period === 50) {
+            if (considered === 5) {
+                total = (total * 4) - moins;
+            } else {
+                total = (total * 4) - moins;
+            }
+        }
+
+        if (parseInt(period) === 10 || parseInt(period) === 11) {
+            if (considered === 5) {
+                total = (total * 2) - moins;
+            } else {
+                total = (total * 2) - moins;
+            }
+        }
+
+        return total;
+    }
+
     render_total_pourcentage(pupil_id) {
         let pourcentage = 0;
         let main_marks = 0;
@@ -298,29 +331,26 @@ class BulletinsType2 extends React.Component {
         let total_marks = 0;
 
         for (let i in this.props.classe.data.pupils_marks) {
-            if (this.props.classe.data.pupils_marks[i].pupil == pupil_id && this.props.classe.data.pupils_marks[i].school_period == periode) {
+            if (parseInt(this.props.classe.data.pupils_marks[i].pupil) === parseInt(pupil_id) && parseInt(this.props.classe.data.pupils_marks[i].school_period) === parseInt(periode)) {
                 main_marks = main_marks + parseInt(this.props.classe.data.pupils_marks[i].main_marks);
                 total_marks = total_marks + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
             }
         }
 
         if (main_marks != 0) {
-            pourcentage = (main_marks * 100) / total_marks;
-            // return (pourcentage).toString().substr(0, 4);
-            if (pourcentage == "") {
-                return "-";
-            } else if (pourcentage >= 80) {
+            pourcentage = (main_marks * 100) / this.maxima(periode);
+
+            if (parseInt(pourcentage) >= 80) {
                 return "E";
-            } else if (pourcentage >= 70) {
+            } else if (parseInt(pourcentage) >= 70 && parseInt(pourcentage) <= 79) {
                 return "TB";
-            } else if (pourcentage >= 50) {
+            } else if (parseInt(pourcentage) >= 55 && parseInt(pourcentage) <= 69) {
                 return "B";
-            } else if (pourcentage >= 40) {
+            } else if (parseInt(pourcentage) >= 45 && parseInt(pourcentage) <= 55) {
                 return "AB";
             } else {
                 return "M";
             }
-
         } else {
             return "";
         }
@@ -750,7 +780,7 @@ class BulletinsType2 extends React.Component {
                                             }
                                             return [
                                                 show_domain ?
-                                                    <tr>
+                                                    <tr key={index_domain + 1}>
                                                         <td className='td-border' style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 11, backgroundColor: 'rgba(0,0,0,0.15)' }} colSpan={20}>{domain.domain_name.toUpperCase()}</td>
                                                     </tr> : null,
                                                 this.props.classe.data.sub_domains.map((sub_domain, index_sub_domain) => {
@@ -817,7 +847,7 @@ class BulletinsType2 extends React.Component {
 
                                                         return [
                                                             show_sub_domain && sub_domain.sub_domain_name != "" ?
-                                                                <tr>
+                                                                <tr key={index_sub_domain + 1}>
                                                                     <td className='td-border' style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 11, backgroundColor: 'rgba(0,0,0,0.15)' }} colSpan={20}>{sub_domain.sub_domain_name}</td>
                                                                 </tr> : null,
                                                             this.props.classe.courses.map((course, index) => {
@@ -879,7 +909,7 @@ class BulletinsType2 extends React.Component {
                                                             })
                                                             ,
                                                             show_sous_total ?
-                                                                <tr>
+                                                                <tr key={index}>
                                                                     <td className='td-border' style={{ fontWeight: 'bold', fontSize: 11, backgroundColor: 'rgba(0,0,0,0.15)', paddingLeft: 10 }}>Sous-total</td>
                                                                     <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{sub_domain.total_marks}</strong></td>
                                                                     <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "1")}</strong></td>

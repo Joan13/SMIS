@@ -276,34 +276,32 @@ class Bulletins extends React.Component {
     }
 
     render_application_periode(pupil_id, periode) {
+
         let pourcentage = 0;
         let main_marks = 0;
         let total_marks = 0;
 
         for (let i in this.props.classe.data.pupils_marks) {
-            if (this.props.classe.data.pupils_marks[i].pupil == pupil_id && this.props.classe.data.pupils_marks[i].school_period == periode) {
+            if (parseInt(this.props.classe.data.pupils_marks[i].pupil) === parseInt(pupil_id) && parseInt(this.props.classe.data.pupils_marks[i].school_period) === parseInt(periode)) {
                 main_marks = main_marks + parseInt(this.props.classe.data.pupils_marks[i].main_marks);
                 total_marks = total_marks + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
             }
         }
 
         if (main_marks != 0) {
-            pourcentage = (main_marks * 100) / total_marks;
-            // return (pourcentage).toString().substr(0, 4);
-            if (pourcentage == "") {
-                return "-";
-            } else if (pourcentage >= 80) {
+            pourcentage = (main_marks * 100) / this.maxima(periode);
+
+            if (parseInt(pourcentage) >= 80) {
                 return "E";
-            } else if (pourcentage >= 70) {
+            } else if (parseInt(pourcentage) >= 70 && parseInt(pourcentage) <= 79) {
                 return "TB";
-            } else if (pourcentage >= 50) {
+            } else if (parseInt(pourcentage) >= 55 && parseInt(pourcentage) <= 69) {
                 return "B";
-            } else if (pourcentage >= 40) {
+            } else if (parseInt(pourcentage) >= 45 && parseInt(pourcentage) <= 55) {
                 return "AB";
             } else {
                 return "M";
             }
-
         } else {
             return "";
         }
@@ -479,12 +477,12 @@ class Bulletins extends React.Component {
         }
     }
 
-    class_nam(){
-        if(parseInt(this.props.classe.class) === 1 || parseInt(this.props.classe.class) ===2){
-            return 'BULLETIN DE LA ' +this.props.classe.class_id+ " CYCLE TERMINAL DE L'ÉDUCATION DE BASE (CTEB) " + this.props.classe.section_id.toUpperCase();
+    class_nam() {
+        if (parseInt(this.props.classe.class) === 1 || parseInt(this.props.classe.class) === 2) {
+            return 'BULLETIN DE LA ' + this.props.classe.class_id + " CYCLE TERMINAL DE L'ÉDUCATION DE BASE (CTEB) " + this.props.classe.section_id.toUpperCase();
         }
 
-        return 'BULLETIN DE LA ' +this.props.classe.class_id+ ' ANNÉE HUMANITÉ ' + this.props.classe.section_id.toUpperCase();
+        return 'BULLETIN DE LA ' + this.props.classe.class_id + ' ANNÉE HUMANITÉ ' + this.props.classe.section_id.toUpperCase();
     }
 
     render() {
@@ -1466,7 +1464,7 @@ class Bulletins extends React.Component {
                                                             <td rowSpan="7" colSpan="2">
                                                                 <div style={{ textAlign: 'center', fontSize: 11, marginTop: -5 }}>
                                                                     <div style={{ textAlign: 'left', marginLeft: 20 }}>
-                                                                        {this.findConseil(parseInt(pupil.pupil.pupil_id)) === 3?
+                                                                        {this.findConseil(parseInt(pupil.pupil.pupil_id)) === 3 ?
                                                                             <><strong style={{ color: 'rgba(0, 80, 180)' }} className="okokkk"><FaCheck size={8} /> PASSE (I)<br /></strong></> :
                                                                             <><span>- PASSE (I)</span><br /></>}
 

@@ -16,7 +16,7 @@ const Signin = () => {
     const [password, setPassword] = useState("");
     const user_data = useSelector(state => state.user_data);
     const url = useSelector(state => state.url_server);
-    const redirectToReferrer = useSelector(state=>state.redirectToReferrer);
+    const redirectToReferrer = useSelector(state => state.redirectToReferrer);
     const [url_server, setUrl_erver] = useState(url_online);
     const [connection_type, setConnection_type] = useState(0);
     const [is_loading, setIs_loading] = useState(false);
@@ -75,7 +75,7 @@ const Signin = () => {
 
                         setTimeout(() => {
                             // setRedirectToReferrer(true);
-                            dispatch({type:"SET_REDIRECTTOREFERRER", payload:true});
+                            dispatch({ type: "SET_REDIRECTTOREFERRER", payload: true });
                         }, 4500);
 
                     } else {
@@ -233,20 +233,17 @@ const Signin = () => {
 
                                     {!is_loading ?
                                         <>
-                                            {/* <ButtonNormal text="Connexion" style={{ width: '100%' }} onPress={() => signin()} /> */}
-
                                             <button onClick={() => signin()} className='nodrag bg-primary-100 rounded-xl text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>
-                                                    Connexion
-                                                </button>
+                                                Connexion
+                                            </button>
                                             <div style={{ marginTop: 10, textAlign: 'right', fontSize: 15 }}>Besoin d'aide ?
-                                                <span
-                                                    style={{ color: 'rgba(0, 80, 180)' }} className="pointer"> Cliquez ici.
+                                                <span style={{ color: 'rgba(0, 80, 180)' }} className="pointer"> Cliquez ici.
                                                 </span>
                                             </div>
                                         </>
                                         : null}
                                 </div>
-                                <div><span style={{ color: 'rgba(0, 80, 180)' }}> </span> Tous droits réservés © <br /> Agisha Migani Joan - Yambi, Inc. {year}</div>
+                                <div><span style={{ color: 'rgba(0, 80, 180)' }}> </span> Tous droits réservés © <br /> Yambi {year}</div>
                             </div>
 
                             <div className='md:block hidden w-1/2'>
@@ -260,7 +257,8 @@ const Signin = () => {
                         <button onClick={() => {
                             const { ipcRenderer } = window.require("electron");
                             const ipc = ipcRenderer;
-                            ipc.send('closeApp');}}
+                            ipc.send('closeApp');
+                        }}
                             className='nodrag p-3 pl-5 pr-5 flex items-center justify-center bg-background-100 active:scale-100 duration-300 rounded-xl text-text-100 hover:text-text-20 hover:bg-error'>
                             <div className='mr-2 bg-errror text-background-100 rounded-full p-1'>
                                 <FiX />
