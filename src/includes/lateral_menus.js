@@ -1,4 +1,4 @@
-import { FaBell, FaCloudDownloadAlt, FaHome, FaMoon } from 'react-icons/fa';
+import { FaCloudDownloadAlt, FaHome, FaMoon } from 'react-icons/fa';
 import { FiBell, FiList, FiMoon, FiRefreshCcw, FiSun } from 'react-icons/fi';
 import { RiSettings4Fill } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,12 +19,8 @@ const LateralMenus = () => {
     const get_general_info = () => {
         dispatch({ type: "SET_LOADING_MIDDLE", payload: true });
         dispatch({ type: "SET_LOADING_HOME", payload: true });
-
-        // let user = user_data;//sessionStorage.getItem("assemble_user_data");
-        // let url_server = url_server;//sessionStorage.getItem("yambi_smis_url_server");
-        // user = JSON.parse(user);
-        // this.setState({ can_load_data: false });
-
+        dispatch({ type: "SET_COURSE_TIMETABLE_CONFIG", payload: null });
+        dispatch({ type: "SET_EMPLOYEE_TIMETABLE_CONFIG", payload: null })
         dispatch({ type: "SET_USER_CONNECTED", payload: user });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
@@ -221,25 +217,25 @@ const LateralMenus = () => {
 
     return (
         <>
-            <div className='mb-5 pb-5 border-b border-gray-50 dark:border-gray-20'>
+            <div className='mb-5 pb-7 border-b border-gray-50 dark:border-gray-20'>
                 <div
                     title={theme === 'dark' ? "Thème clair" : "Thème sombre"}
                     className="active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20  w-11 h-11 cursor-pointer rounded-full mt-5"
-                    onClick={() => { setTheme() }}>
+                    onClick={setTheme}>
                     {theme === 'dark' ? <FiSun size={20} /> : <FiMoon size={20} />}
                 </div>
 
                 <div
                     title="Revenir au menu principal"
                     className="active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20  w-11 h-11 cursor-pointer rounded-full mt-7"
-                    onClick={() => { back_home() }}>
+                    onClick={back_home}>
                     <FaHome size={20} />
                 </div>
 
                 <div
                     title="Rafraîchir les données"
                     className="active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20 cursor-pointer rounded-full mt-7 w-11 h-11"
-                    onClick={() => { get_general_info() }}>
+                    onClick={get_general_info}>
                     <FiRefreshCcw size={20} />
                 </div>
 
@@ -258,18 +254,16 @@ const LateralMenus = () => {
                 </div>
 
                 <Link
-                    title=""
+                    title="Paramètres"
                     to={"/settings"}
                     className="active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20 cursor-pointer rounded-full mt-7 w-11 h-11">
                     <RiSettings4Fill size={18} />
                 </Link>
-
-
             </div>
             <div
                 title="Sélections"
                 className=" active:scale-90 duration-300 flex items-center justify-center bg-background-30 dark:bg-gray-20 border border-gray-20  w-11 h-11 cursor-pointer rounded-full mt-7"
-                onClick={() => { dispatch({ type: "SET_MODAL_SELECTIONS", payload: !modal_selections }); }}>
+                onClick={() => dispatch({ type: "SET_MODAL_SELECTIONS", payload: !modal_selections })}>
                 <FiList size={18} />
             </div>
         </>

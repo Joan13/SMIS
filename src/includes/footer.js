@@ -9,7 +9,7 @@ export default function Footer() {
     return (
         <div className='pl-5 w-full'>
             <div className="footer-rights overflow-x border-t truncate border-gray-50 dark:border-gray-20 bg-background-100 rounded-br-lg dark:bg-background-20 pr-5">
-                <span><span className='text-gray-100'>{JSONPackageFile.app_full_name} / {JSONPackageFile.branch} / version {JSONPackageFile.version} - {JSONPackageFile.platform} / </span>Tous droits réservés © Yambi {year}</span>
+                <span><span className='text-gray-100'>{JSONPackageFile.app_full_name} / {JSONPackageFile.branch} / version {JSONPackageFile.version} - {JSONPackageFile.platform} / </span>© Yambi {year}</span>
             </div>
         </div>
     )

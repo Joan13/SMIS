@@ -50,8 +50,8 @@ export default function AddWorker() {
             })
                 .then((response) => response.json())
                 .then((response) => {
-                    setModal_title("Information succès");
-                    setModal_main_text("Vous venez d'enregistrer un nouvau membre du personnel");
+                    // setModal_title("Information succès");
+                    alert("Vous venez d'enregistrer un nouvau membre du personnel");
                     setModal_view(true);
                     setLoading_middle(false);
                     setFirst_name("");
@@ -115,7 +115,7 @@ export default function AddWorker() {
                             <input
                                 onChange={(val) => setFirst_name(val.target.value)}
                                 placeholder="Nom"
-                                className="input-normall"
+                                className="input-normall border border-gray-50 dark:border-gray-20"
                                 value={first_name}
                                 style={{ width: '96%' }}
                             />
@@ -124,7 +124,7 @@ export default function AddWorker() {
                             <input
                                 onChange={(val) => setSecond_name(val.target.value)}
                                 placeholder="Post-nom"
-                                className="input-normall"
+                                className="input-normall border border-gray-50 dark:border-gray-20"
                                 value={second_name}
                                 style={{ width: '96%' }}
                             />
@@ -136,19 +136,19 @@ export default function AddWorker() {
                             <input
                                 onChange={(val) => setLast_name(val.target.value)}
                                 placeholder="Prénom"
-                                className="input-normall"
+                                className="input-normall border border-gray-50 dark:border-gray-20"
                                 value={last_name}
                                 style={{ width: '96%' }}
                             />
                         </td>
                         <td style={{ paddingLeft: 0, textAlign: 'right' }}>
                             <select
-                                className="select-normall"
+                                className="select-normall border border-gray-50 dark:border-gray-20"
                                 onChange={(val) => setGender(val.target.value)}
                                 placeholder="Sexe"
                                 variant="outlined"
                                 value={gender}
-                                style={{ width: '100%', textAlign: 'left' }}>
+                                style={{ width: '96%', textAlign: 'left' }}>
                                 <option value="">Sélectionner le sexe</option>
                                 <option value="0">Féminin</option>
                                 <option value="1">Masculin</option>
@@ -208,7 +208,7 @@ export default function AddWorker() {
             {first_name !== "" || second_name !== "" ?
                 <div>
                     <span>{first_name !== "" || second_name !== "" ? "Nom d'utilisateur" : ""}</span><br />
-                    <strong style={{color:'rgb(0, 80, 180)'}}>{first_name.toLowerCase().trim()}{first_name !== "" || second_name !== "" ? "." : ""}{second_name.toLowerCase().trim()}</strong>
+                    <strong style={{ color: 'rgb(0, 80, 180)' }}>{first_name.toLowerCase().trim()}{first_name !== "" || second_name !== "" ? "." : ""}{second_name.toLowerCase().trim()}</strong>
                     <strong>{first_name !== "" || second_name !== "" ? "@yambi.class" : ""}</strong>
                     <br /><br /><br />
                 </div> : null}
@@ -355,10 +355,10 @@ export default function AddWorker() {
                     <tr>
                         <td style={{ paddingRight: 0, textAlign: 'left', width: "50%" }}>
                             <select
-                                className="select-normall"
+                                className="select-normall border border-gray-50 dark:border-gray-20"
                                 onChange={(val) => setPoste(val.target.value)}
                                 value={poste}
-                                style={{ width: '100%' }}>
+                                style={{ width: '96%' }}>
                                 <option value="">Sélectionner la fonction</option>
                                 <option value="1">Promoteur / Préfet / Recteur</option>
                                 <option value="7">Directeur des Études</option>
@@ -394,10 +394,10 @@ export default function AddWorker() {
                     <tr>
                         <td style={{ paddingRight: 0, textAlign: 'left' }}>
                             <select
-                                className="select-normall"
+                                className="select-normall border border-gray-50 dark:border-gray-20"
                                 onChange={(val) => setFree_day_1(val.target.value)}
                                 value={free_day_1}
-                                style={{ width: '100%' }}>
+                                style={{ width: '96%' }}>
                                 <option value="">Journée pédagogique 1</option>
                                 <option value="1">Lundi</option>
                                 <option value="2">Mardi</option>
@@ -409,10 +409,10 @@ export default function AddWorker() {
                         </td>
                         <td style={{ paddingLeft: 0, textAlign: 'right' }}>
                             <select
-                                className="select-normall"
+                                className="select-normall border border-gray-50 dark:border-gray-20"
                                 onChange={(val) => setFree_day_2(val.target.value)}
                                 value={free_day_2}
-                                style={{ width: '100%', textAlign: 'left' }}>
+                                style={{ width: '96%', textAlign: 'left' }}>
                                 <option value="">Journée pédagogique 2</option>
                                 <option value="1">Lundi</option>
                                 <option value="2">Mardi</option>

@@ -69,7 +69,7 @@ const ModalFrame = (props) => {
         return false;
     }
 
-    useEffect(()=> {
+    useEffect(() => {
         dispatch({ type: "SET_CLASSES_SELECTED", payload: [] });
     }, []);
 

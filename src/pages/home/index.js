@@ -583,11 +583,11 @@ const Home = () => {
     const timetable_settings = () => {
         dispatch({ type: "SET_CLASSE", payload: classes[0] });
         dispatch({ type: "SET_COURSE", payload: classes[0].courses[0] });
-        dispatch({ type: "SET_TITLE_MAIN", payload: "Horaires" });
         dispatch({ type: "SET_CLASSE_OPEN", payload: true });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
         dispatch({ type: "SET_MIDDLE_FUNC", payload: 22 });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: true });
+        dispatch({ type: "SET_TITLE_MAIN", payload: "Configration des horaires" });
     }
 
     const paiement_categories = () => {
@@ -765,12 +765,12 @@ const Home = () => {
                                                     Nouveau membre
                                                 </span>
                                             ) : middle_func === 23 ? (
-                                                <span
+                                                <div
                                                     onClick={timetable_settings}
-                                                    className={`nodrag select-no-border ${middle_func === 22  ? "select-no-border-bold": ""  }`}>
+                                                    className={`nodrag select-no-border ${middle_func === 22 ? "select-no-border-bold" : ""}flex items-center`}>
                                                     <FaUserPlus style={{ marginRight: 5 }} />
                                                     Configuration des horaires
-                                                </span>
+                                                </div>
                                             ) : middle_func === 12 ? (
                                                 <>
                                                     {/* <span
@@ -781,7 +781,7 @@ const Home = () => {
                                     Gestion des dépenses</span> */}
                                                     <span
                                                         onClick={paiement_categories}
-                                                        className={`nodrag select-no-border ${middle_func === 22 ? "select-no-border-bold" : ""} flex items-center`}>
+                                                        className={`nodrag select-no-border ${middle_func === 22 ? "" : ""} flex items-center`}>
                                                         <FaUserPlus style={{ marginRight: 5 }} />
                                                         Catégories de paiement
                                                     </span>
@@ -842,11 +842,11 @@ const Home = () => {
                                             <div>
                                                 <EmployeesList />
 
-                                                {middle_func === 22 ? (
+                                                {/* {middle_func === 22 ? (
                                                     <div className="menu-right">
                                                         <CoursesTimetableConfigurator />
                                                     </div>
-                                                ) : null}
+                                                ) : null} */}
 
                                                 {allow_right_menu && class_open ? (<RightClasseMenu />) : null}
 
@@ -929,6 +929,10 @@ const Home = () => {
                                         )}
                                     </div>
                                 </div>
+
+                                {middle_func === 22 ? (
+                                    <CoursesTimetableConfigurator />
+                                ) : null}
 
                                 <Footer />
                                 {modal_paiement_categories ? <PaiementCategories /> : null}

@@ -89,7 +89,7 @@ const MenuHome = () => {
                         <img src={caisse} className='object-cover rounded-lg' />
                         <div className='text-xl font-bold mt-5'>Caisse</div>
                         <div className="text-gray-100 mt-3 mb-3">Rapports journaliers et finaux avec tous les détails possibles.</div>
-                        <button onClick={() => stats_caisse()} className='nodrag bg-primary-100 rounded-lg text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>
+                        <button onClick={stats_caisse} className='nodrag bg-primary-100 rounded-lg text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>
                             Consulter
                         </button>
                     </div>
@@ -111,7 +111,7 @@ const MenuHome = () => {
                         <img src={personnel} className='object-cover rounded-lg' />
                         <div className='text-xl font-bold mt-5'>Personnel</div>
                         <div className="text-gray-100 mt-3 mb-3">Vue d'ensemble du personnel et horaires de prestation.</div>
-                        <button onClick={() => open_gestion_personnel()} className='nodrag bg-primary-100 rounded-lg text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>
+                        <button onClick={open_gestion_personnel} className='nodrag bg-primary-100 rounded-lg text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>
                             Consulter
                         </button>
                     </div>
@@ -122,7 +122,7 @@ const MenuHome = () => {
                         <img src={timetablee} className='object-cover rounded-lg' />
                         <div className='text-xl font-bold mt-5'>Horaires</div>
                         <div className="text-gray-100 mt-3 mb-3">Tout un pannel de possibilités et d'outils à votre disposition.</div>
-                        <button onClick={() => { }} className='nodrag bg-primary-100 rounded-lg text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>
+                        <button onClick={timetable} className='nodrag bg-primary-100 rounded-lg text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md '>
                             Consulter
                         </button>
                     </div>

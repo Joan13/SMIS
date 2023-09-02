@@ -243,7 +243,7 @@ const Signin = () => {
                                         </>
                                         : null}
                                 </div>
-                                <div><span style={{ color: 'rgba(0, 80, 180)' }}> </span> Tous droits réservés © <br /> Yambi {year}</div>
+                                <div><span style={{ color: 'rgba(0, 80, 180)' }}> </span> Tous droits réservés <br />© Yambi {year}</div>
                             </div>
 
                             <div className='md:block hidden w-1/2'>

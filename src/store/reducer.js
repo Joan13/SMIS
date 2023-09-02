@@ -92,6 +92,8 @@ const initialState = {
     classes_selected: [],
     selections: [],
     day: "",
+    employee_timetable_config: null,
+    course_timetable_config: null,
     marks_modified: false,
     echecs: [],
     theme: 'light',
@@ -108,6 +110,10 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_MODAL_PAIEMENT_CATEGORIES":
             return { ...state, modal_paiement_categories: action.payload }
+        case "SET_EMPLOYEE_TIMETABLE_CONFIG":
+            return { ...state, employee_timetable_config: action.payload }
+        case "SET_COURSE_TIMETABLE_CONFIG":
+            return { ...state, course_timetable_config: action.payload }
         case "SET_REDIRECTTOREFERRER":
             return { ...state, redirectToReferrer: action.payload }
         case "SET_MONTH_CAISSE":

@@ -39,12 +39,15 @@ const Classes = (props) => {
             dispatch({ type: "SET_LOADING_FOOTER", payload: true });
             dispatch({ type: "SET_CLASSE", payload: classe });
             dispatch({ type: "SET_CLASSE_OPEN", payload: true });
+            dispatch({ type: "SET_COURSE_TIMETABLE_CONFIG", payload: null });
             dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });
             dispatch({ type: "SET_ECHECS", payload: [] });
 
-            if (middle_func === 23 || middle_func === 22) {
+            if (middle_func === 23) {
                 dispatch({ type: "SET_TITLE_MAIN", payload: "Horaires" });
                 dispatch({ type: "SET_COURSE", payload: classe.courses[0] });
+            } else if (middle_func === 22) {
+                dispatch({ type: "SET_TITLE_MAIN", payload: "Configuration des horaires " + classe.class_id + " " + classe.section_id + " " + classe.cycle_id + " " + classe.order_id });
             } else {
                 dispatch({ type: "SET_TITLE_MAIN", payload: classe.class_id + " " + classe.section_id + " " + classe.cycle_id + " " + classe.order_id });
             }
