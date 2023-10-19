@@ -19,10 +19,10 @@ const MenuHome = () => {
     const annee = useSelector(state => state.annee);
     const user_data = useSelector(state => state.user_data);
 
-    const fetch_workers = () => {
+    const fetch_workers = async() => {
         let BaseURL = http + url_server + "/yambi_class_SMIS/API/fetch_workers.php";
 
-        fetch(BaseURL, {
+        await fetch(BaseURL, {
             method: 'POST',
             body: JSON.stringify({
                 school_year: annee,
@@ -35,10 +35,10 @@ const MenuHome = () => {
             .catch((error) => { });
     };
 
-    const fetch_tricks_timetable = () => {
+    const fetch_tricks_timetable = async() => {
         let BaseURL = http + url_server + "/yambi_class_SMIS/API/fetch_tricks_timetable.php";
 
-        fetch(BaseURL, {
+        await fetch(BaseURL, {
             method: 'POST',
             body: JSON.stringify({
                 school_year: annee,
@@ -47,6 +47,41 @@ const MenuHome = () => {
             .then((response) => response.json())
             .then((response) => {
                 dispatch({ type: "SET_TRICKS_TIMETABLE", payload: response.tricks_timetable });
+            })
+            .catch((error) => { });
+    };
+
+    const fetch_timetable_config_data = async() => {
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/timetable_config_data.php";
+
+        await fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                annee: annee,
+            })
+        })
+            .then((response) => response.json())
+            .then((response) => {
+
+                dispatch({ type: "SET_TIMETABLE_CONFIG_DATA", payload: response.workers });
+            })
+            .catch((error) => { });
+    };
+
+    const fetch_timetable = async() => {
+        let BaseURL = http + url_server + "/yambi_class_SMIS/API/timetable.php";
+
+        await fetch(BaseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                annee: annee
+            })
+        })
+            .then((response) => response.json())
+            .then((response) => {
+
+                dispatch({ type: "SET_TIMETABLE", payload: response.timetable });
+                dispatch({ type: "SET_TIMETABLE1", payload: response.timetable1 });
             })
             .catch((error) => { });
     };
@@ -73,6 +108,8 @@ const MenuHome = () => {
 
         fetch_workers();
         fetch_tricks_timetable();
+        fetch_timetable_config_data();
+        fetch_timetable();
     }
 
     const open_gestion_personnel = () => {

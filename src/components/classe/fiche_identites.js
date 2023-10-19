@@ -1,9 +1,8 @@
 import { connect, useSelector } from 'react-redux';
-import { home_redirect, http } from '../../global_vars'
 import { mapStateToProps } from '../../store/state_props';
 import PrintDocument from '../includes/print';
-function FicheIdentites() {
 
+function FicheIdentites() {
     const autres = useSelector(state => state.autres);
     const classe = useSelector(state => state.classe);
 

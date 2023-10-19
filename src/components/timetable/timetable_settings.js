@@ -50,18 +50,18 @@ export default function TimetableSettings() {
         setSuccess_assign(true);
         setTimeout(() => {
             setSuccess_assign(false);
-        }, 5000);
+        }, 2000);
     }
 
     return (
         <div className='pt-2'>
-            {/* <h3>Configuration des horaires ({classe.class_id + " " + classe.section_id + " " + classe.cycle_id + " " + classe.order_id})</h3><br /> */}
-
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <tbody>
                 <tr>
                     <td valign='top'>
                         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                            <caption style={{ textAlign: 'left' }} className='mb-2'><strong style={{ fontSize: 16 }}>Séléctionner l'enseignant</strong></caption>
+                        <caption style={{ textAlign: 'left' }} className='mb-2'><strong style={{ fontSize: 16 }}>Sélectionner l'enseignant</strong></caption>
+                            <tbody>
                             <tr>
                                 <th style={{ width: 25, textAlign: 'left', paddingLeft: 5, paddingRight: 5 }} className="border border-gray-50 dark:border-gray-20">No</th>
                                 <th style={{ textAlign: 'left', paddingLeft: 10 }} className="border border-gray-50 dark:border-gray-20">Noms de l'enseignant</th>
@@ -94,13 +94,14 @@ export default function TimetableSettings() {
                                     </td>
                                 </tr>
                             ))}
+                            </tbody>
                         </table>
                     </td>
-                    <td valign='top' style={{ width: '50%' }}>
-                        <div style={{ marginLeft: 20 }}>
-
+                    <td valign='top' style={{ width: '50%' }} className='pl-12'>
+                        {/* <div style={{ marginLeft: 20 }}> */}
                             <table style={{ borderCollapse: 'collapse', width: '100%' }}>
-                                <caption style={{ textAlign: 'left' }} className='mb-2'><strong style={{ fontSize: 16 }}><span className='text-gray-100'>Cours:</span> {course_timetable_config}</strong></caption>
+                            <caption style={{ textAlign: 'left' }} className='mb-2'><strong style={{ fontSize: 16 }}><span className='text-gray-100'>Cours:</span> {course_timetable_config}</strong></caption>
+                                <tbody>
                                 <tr>
                                     <td className="border border-gray-50 dark:border-gray-20" style={{ padding: 10 }}>De préférence avant la 4e heure</td>
                                     <td style={{ width: 50, textAlign: 'center' }} className="border border-gray-50 dark:border-gray-20">
@@ -183,8 +184,10 @@ export default function TimetableSettings() {
                                             onChange={(value => setHours_per_week(value.target.value))} />
                                     </td>
                                 </tr>
-                            </table><br />
-                            <div className='flex items-center'>
+                                </tbody>
+                            </table>
+                            <br />
+                                <div className='flex items-center'>
                                 {loading_footer ?
                                     <div>
                                         <CircularProgress style={{ color: 'rgb(0, 80, 180)' }} />
@@ -195,9 +198,9 @@ export default function TimetableSettings() {
                                         :
                                         <FaCheckCircle color='green' size={25} />}
                             </div>
-                        </div>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </div>
     )

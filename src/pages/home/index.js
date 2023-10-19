@@ -50,6 +50,9 @@ import axios from "axios";
 import vector from "./../../../src/assets/logo.PNG"
 import PrintDocument from "../../components/includes/print";
 import Migrations from "../../components/classe/migrations";
+import TimetableProfs from "../../components/timetable/timetable_profs";
+import Timetable from "../../components/timetable/main_timetable";
+import ProfsTimetable from "../../components/timetable/main_timetable_profs";
 
 const Home = () => {
 
@@ -153,8 +156,6 @@ const Home = () => {
 
         axios.post(http + url_server + "/yambi_class_SMIS/API/get_info_home.php", data)
             .then(rsp => {
-
-                console.log(rsp.data);
                 const response = rsp.data;
                 const promise_general_info_home = new Promise((resolve, reject) => {
                     dispatch({ type: "SET_CLASSES", payload: response.classes });
@@ -641,16 +642,6 @@ const Home = () => {
     }
 
     const new_classe_import = () => {
-        // this.setState({
-        //     middle_func: 6,
-        //     marks_tab: "",
-        //     allow_right_menu: false,
-        //     allow_right_menu_pupils: true,
-        //     class_open: false,
-        //     classe: [],
-        //     title_main: "Nouvel(le) élève | ",
-        // });
-
         dispatch({ type: "SET_CLASSE", payload: [] });
         dispatch({ type: "SET_TITLE_MAIN", payload: "Création de classe par upload de fichier Excel " });
         dispatch({ type: "SET_CLASSE_OPEN", payload: false });
@@ -902,6 +893,8 @@ const Home = () => {
 
                                                         {middle_func === 22 ? (<TimetableSettings />) : null}
 
+                                                        {middle_func === 23 ? (<ProfsTimetable />) : null}
+
                                                         {middle_func === 24 ? (<ClassePaiementCategorisation />) : null}
 
                                                         {middle_func === 14 ? (<SettingsBulletins />) : null}
@@ -946,7 +939,7 @@ const Home = () => {
                         </div>
                     </div>
                     :
-                    <div className="fixed top-0 left-0 right-0 bottom-0 bg-background-100 dark:bg-background-20 flex items-center justify-center">
+                    <div className="fixed top-0 left-0 right-0 bottom-0 bg-background-100 dark:bg-background-20 flex items-center justify-center rounded-lg">
                         <div className="text-center">
                             <img src={vector} width="400" alt='Yambi Class SMIS' />
                             <div className="mt-5 text-gray-100">{title_main}</div>

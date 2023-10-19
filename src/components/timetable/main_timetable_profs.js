@@ -2,26 +2,24 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PrintDocument from '../includes/print';
 
-export default function Timetable() {
+export default function ProfsTimetable() {
 
-    const timetable = useSelector(state => state.timetable);
+    const timetable = useSelector(state => state.timetable1);
 
     const find_timetable = (data, day, hour) => {
         for (let i in data) {
             if (parseInt(data[i].day_course) === day && parseInt(data[i].hour_course) === hour) {
                 console.log(data[i]);
-                return data[i].worker_id + " | " + data[i].course_name;
+                return data[i].class_name;
             }
         }
-
-
 
         return "";
     }
 
-    // useEffect(()=> {
-    //     console.log(timetable);
-    // }, []);
+    useEffect(()=>{
+        console.log(timetable);
+    }, []);
 
     return (
         <div className='mr-4'>
@@ -43,7 +41,7 @@ export default function Timetable() {
 
                 {timetable.map((classe, index) => (
                     <table className='w-full mb-10'>
-                        <caption><strong style={{ fontSize: 16 }}>{classe.class_name}</strong></caption>
+                        <caption><strong style={{ fontSize: 16 }}>{classe.worker_id} | {classe.worker_name}</strong></caption>
                         <tbody>
                             <tr>
                                 <th></th>

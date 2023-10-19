@@ -122,6 +122,15 @@ const Classes = (props) => {
         }
     }
 
+    const show_timetable_hours=()=>{
+
+        if(middle_func === 22 || middle_func === 23) {
+            return true;
+        }
+
+        return false;
+    }
+
     return (
         <div className="flex bg-transparent-20 rounded-xl">
             <div className="fixed top-0 left-0 bottom-0 bg-background-100 border border-gray-50 dark:border-gray-20 dark:bg-background-20 textcenter w-16 content-centershadow-xl items-center rounded-l-lg hover:scale-100 hover:w-17 duration-300">
@@ -139,6 +148,7 @@ const Classes = (props) => {
                     {/* <Selections /> */}
 
                     {classes.map((classee, index) => {
+                        // console.log('Rendered classes')
                         return (
                             <div key={index}
                                 onClick={() => { if (props.type === 1) { open_classe(classee) } }}
@@ -170,7 +180,9 @@ const Classes = (props) => {
                                 </div>
                                 <div className="border-b border-gray-50 dark:border-gray-20 w-full pt-4 pb-4">
                                     <strong>{classee.class_id} {classee.section_id} {classee.order_id}</strong>
-                                    <span style={{ backgroundColor: color_body(classee.pupils_count), color: 'white', paddingLeft: 5, paddingRight: 5, paddingTop: 2, paddingBottom: 2, marginTop: -5 }} className="float-class-pupils">{classee.pupils_count}</span>
+                                    {!show_timetable_hours() ? <span style={{ backgroundColor: color_body(classee.pupils_count), color: 'white', paddingLeft: 5, paddingRight: 5, paddingTop: 2, paddingBottom: 2, marginTop: -5 }} className="float-class-pupils">{classee.pupils_count}</span>
+                                    :
+                                    <span style={{ backgroundColor: color_body(classee.pupils_count), color: 'white', paddingLeft: 5, paddingRight: 5, paddingTop: 2, paddingBottom: 2, marginTop: -5 }} className="float-class-pupils">{classee.timetable_hours}</span>}
                                     <br />
                                     <span style={{ fontSize: 12 }} className="text-gray-100">{(classee.cycle_id + "").toUpperCase()}</span>
                                     <span className="float-class-pupils text-gray-100">

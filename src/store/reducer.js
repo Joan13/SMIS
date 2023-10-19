@@ -74,6 +74,7 @@ const initialState = {
     workers: [],
     trics_timetable: [],
     timetable: [],
+    timetable1: [],
     course: [],
     conduites: [],
     paiement_categories: [],
@@ -96,6 +97,7 @@ const initialState = {
     course_timetable_config: null,
     marks_modified: false,
     echecs: [],
+    timetable_config_data: [],
     theme: 'light',
     today: new Date().getFullYear() + "-" + parseInt(new Date().getMonth() + 1) + "-" + new Date().getDate(),
     makuta_day: 0,
@@ -110,8 +112,14 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_MODAL_PAIEMENT_CATEGORIES":
             return { ...state, modal_paiement_categories: action.payload }
+        case "SET_TIMETABLE":
+            return { ...state, timetable: action.payload }
+        case "SET_TIMETABLE1":
+            return { ...state, timetable1: action.payload }
         case "SET_EMPLOYEE_TIMETABLE_CONFIG":
             return { ...state, employee_timetable_config: action.payload }
+        case "SET_TIMETABLE_CONFIG_DATA":
+            return { ...state, timetable_config_data: action.payload }
         case "SET_COURSE_TIMETABLE_CONFIG":
             return { ...state, course_timetable_config: action.payload }
         case "SET_REDIRECTTOREFERRER":

@@ -25,9 +25,9 @@ export default function AddWorker() {
     const add_worker = () => {
 
         if (first_name === "" || second_name === "" || poste === "" || gender === "") {
-            setModal_title("Information erreur");
+            // setModal_title("Information erreur");
             setModal_main_text("Vous devez renseigner tous les champs obligatoires avant la validation. Ce sont l'identité de base de l'employé(e) et son orientation professionnelle (le poste qu'il occupe).");
-            setModal_view(true);
+            // setModal_view(true);
             setLoading_middle(false);
         }
         else {
@@ -52,7 +52,7 @@ export default function AddWorker() {
                 .then((response) => {
                     // setModal_title("Information succès");
                     alert("Vous venez d'enregistrer un nouvau membre du personnel");
-                    setModal_view(true);
+                    // setModal_view(true);
                     setLoading_middle(false);
                     setFirst_name("");
                     setSecond_name("");

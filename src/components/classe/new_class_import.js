@@ -1,12 +1,11 @@
 import React from 'react';
-import { Button, MenuItem, TextField } from '@material-ui/core';
-import { FaChevronDown, FaCircle, FaSearch, FaExpandAlt, FaCheck, FaToolbox, FaHome, FaTools, FaUserPlus, FaClipboard, FaCreativeCommonsSamplingPlus, FaUsers, FaFolder, FaUser, FaPaperclip, FaDatabase, FaStarHalfAlt, FaEdit, FaParagraph, FaChartBar, FaRegChartBar, FaChartLine, FaChartArea, FaChartPie, FaCalendar, FaNapster, FaComment, FaBell, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { FiBarChart, FiCalendar, FiClipboard, FiLogOut, FiMinimize2, FiPaperclip, FiRefreshCcw } from 'react-icons/fi';
-import modalView from '../../includes/modal';
+import { MenuItem, TextField } from '@material-ui/core';
 import * as XLSX from 'xlsx';
 import { http } from '../../global_vars';
+import { connect } from 'react-redux';
+import { mapStateToProps } from '../../store/state_props';
 
-export default class NewClasseImport extends React.Component {
+class NewClasseImport extends React.Component {
 
     constructor(props) {
         super(props);
@@ -55,12 +54,12 @@ export default class NewClasseImport extends React.Component {
 
     get_general_info(annee) {
 
-        let url_server = sessionStorage.getItem('yambi_smis_url_server');
+        // let url_server = sessionStorage.getItem('yambi_smis_url_server');
         this.setState({
             loading_middle: true,
         });
 
-        let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_info_home.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_info_home.php";
 
         fetch(BaseURL, {
             method: 'POST',
@@ -88,8 +87,7 @@ export default class NewClasseImport extends React.Component {
     };
 
     register_classe() {
-        let url_server = sessionStorage.getItem('yambi_smis_url_server');
-        let BaseURL = http + url_server + "/yambi_class_SMIS/API/new_classe.php";
+        let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/new_classe.php";
 
         if (this.state.cycle_school_pupil === "" || this.state.school_year_pupil === "" || this.state.class_school_pupil === "") {
             // this.setState({ modal_title: "Information erreur", modal_main_text: "Vous devez renseigner tous les champs obligatoires avant la validation. Ce sont l'identité de base de l'élève et son orientation scolaire.", modal_view: true, loading_middle: false });
@@ -121,7 +119,7 @@ export default class NewClasseImport extends React.Component {
                     loading_middle: true,
                 });
 
-                let BaseURL = http + url_server + "/yambi_class_SMIS/API/new_pupil_classe.php";
+                let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/new_pupil_classe.php";
 
                 let nom = this.state.classe[i].Nom.trim();
                 let postnom = this.state.classe[i].Postnom;
@@ -160,11 +158,9 @@ export default class NewClasseImport extends React.Component {
                 if (pnumero11 === undefined) { pnumero11 = '' }
                 if (pnumero12 === undefined) { pnumero12 = '' }
 
-                if (gender === undefined) 
-                { gender = '1' } 
-                else if(gender === 'F') 
-                { gender = '0'} 
-                else {gender = '0'}
+                if (gender === undefined) { gender = '1' }
+                else if (gender === 'F') { gender = '0' }
+                else { gender = '0' }
 
                 // if (nom !== undefined) { nom = nom.trim() }
 
@@ -191,7 +187,7 @@ export default class NewClasseImport extends React.Component {
 
                 if (prenom === undefined || prenom === "") {
                     let name1 = postnom.substring(postnom.indexOf(" ") + 1);
-                    postnom = postnom.replace(name1,"");
+                    postnom = postnom.replace(name1, "");
                     if (postnom === "") {
                         postnom = name1;
                         prenom = "";
@@ -240,7 +236,8 @@ export default class NewClasseImport extends React.Component {
                 })
                     .then((response) => response.json())
                     .then((response) => {
-                        this.setState({ modal_title: "Information Succès", modal_main_text: "Vous venez d'enregistrer une nouvelle classe. Vous pourrez editer ses informations au moment voulu.", modal_view: true, loading_middle: false });
+                        alert("Vous venez d'enregistrer une nouvelle classe. Vous pouvez visualiser et editer ses informations au moment voulu.");
+                        // this.setState({ modal_title: "Information Succès", modal_main_text: "Vous venez d'enregistrer une nouvelle classe. Vous pourrez editer ses informations au moment voulu.", modal_view: true, loading_middle: false });
                         this.setState({
                             first_name_pupil: "",
                             second_name_pupil: "",
@@ -269,7 +266,8 @@ export default class NewClasseImport extends React.Component {
                     })
                     .catch((error) => {
                         console.log(error.toString());
-                        this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
+                        alert("Erreur de connexion sur le serveur");
+                        // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
                     });
             }
         }
@@ -314,133 +312,135 @@ export default class NewClasseImport extends React.Component {
                     Enregistrer la classe
                 </div>
 
-                <div style={{marginLeft:20, width:'97%'}}>
-                <span className="title-background">I. IDENTITÉ DE LA CLASSE</span>
-                <table className="tables-new-pupil">
-                    <tbody>
-                        <tr>
-                            <td style={{ paddingRight: 0, textAlign: 'left' }}>
-                                <TextField
-                                    select
-                                    onChange={(val) => this.setState({ school_year_pupil: val.target.value })}
-                                    label="Année scolaire"
-                                    variant="outlined"
-                                    value={this.state.school_year_pupil}
-                                    style={{ width: '95%', textAlign: 'left' }}>
-                                    {/* <MenuItem value="">Sélectionner le cycle</MenuItem> */}
-                                    {this.state.annees.map((annee, index) => (
-                                        <MenuItem value={annee.year_id} key={index}>{annee.year_name}</MenuItem>
-                                    ))}
-                                </TextField>
-                            </td>
-                            <td style={{ paddingLeft: 0, textAlign: 'right' }}>
-                                <TextField
-                                    select
-                                    onChange={(val) => this.setState({ cycle_school_pupil: val.target.value })}
-                                    label="Cycle d'étude"
-                                    variant="outlined"
-                                    value={this.state.cycle_school_pupil}
-                                    style={{ width: '95%', textAlign: 'left' }}>
-                                    {/* <MenuItem value="">Sélectionner le cycle</MenuItem> */}
-                                    {this.state.cycles.map((cycle, index) => (
-                                        <MenuItem value={cycle.cycle_id} key={index}>{cycle.cycle_name}</MenuItem>
-                                    ))}
-                                </TextField>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style={{ paddingRight: 0, textAlign: 'left' }}>
-                                <TextField
-                                    select
-                                    onChange={(val) => this.setState({ class_school_pupil: val.target.value })}
-                                    label="Classe"
-                                    variant="outlined"
-                                    value={this.state.class_school_pupil}
-                                    style={{ width: '95%', textAlign: 'left' }}>
-                                    {this.state.class_numbers.map((classe, index) => (
-                                        <MenuItem value={classe.class_id} key={index}>{classe.class_number}</MenuItem>
-                                    ))}
-                                </TextField>
-                            </td>
-                            <td style={{ paddingLeft: 0, textAlign: 'right' }}>
-                                <TextField
-                                    select
-                                    onChange={(val) => this.setState({ class_order_pupil: val.target.value })}
-                                    label="Ordre de classe"
-                                    variant="outlined"
-                                    value={this.state.class_order_pupil}
-                                    style={{ width: '95%', textAlign: 'left' }}>
-                                    {this.state.orders.map((order, index) => (
-                                        <MenuItem value={order.order_id} key={index}>{order.order_name}</MenuItem>
-                                    ))}
-                                </TextField>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style={{ paddingRight: 0, textAlign: 'left', width: '50%' }}>
-                                <TextField
-                                    select
-                                    onChange={(val) => this.setState({ class_section_pupil: val.target.value })}
-                                    label="Section"
-                                    value={this.state.class_section_pupil}
-                                    variant="outlined"
-                                    style={{ width: '95%', textAlign: 'left' }}>
-                                    {this.state.sections.map((section, index) => (
-                                        <MenuItem value={section.section_id} key={index}>{section.section_name}</MenuItem>
-                                    ))}
-                                </TextField>
-                            </td>
-                            <td style={{ paddingLeft: 0, textAlign: 'right' }}>
-                                <TextField
-                                    select
-                                    onChange={(val) => this.setState({ class_option_pupil: val.target.value })}
-                                    label="Option"
-                                    variant="outlined"
-                                    value={this.state.class_option_pupil}
-                                    style={{ width: '95%', textAlign: 'left' }}>
-                                    {this.state.options.map((option, index) => (
-                                        <MenuItem value={option.option_id} key={index}>{option.option_name}</MenuItem>
-                                    ))}
-                                </TextField>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div style={{ marginLeft: 20, width: '97%' }}>
+                    <span className="title-background">I. IDENTITÉ DE LA CLASSE</span>
+                    <table className="tables-new-pupil">
+                        <tbody>
+                            <tr>
+                                <td style={{ paddingRight: 0, textAlign: 'left' }}>
+                                    <TextField
+                                        select
+                                        onChange={(val) => this.setState({ school_year_pupil: val.target.value })}
+                                        label="Année scolaire"
+                                        variant="outlined"
+                                        value={this.state.school_year_pupil}
+                                        style={{ width: '95%', textAlign: 'left' }}>
+                                        {/* <MenuItem value="">Sélectionner le cycle</MenuItem> */}
+                                        {this.props.annees.map((annee, index) => (
+                                            <MenuItem value={annee.year_id} key={index}>{annee.year_name}</MenuItem>
+                                        ))}
+                                    </TextField>
+                                </td>
+                                <td style={{ paddingLeft: 0, textAlign: 'right' }}>
+                                    <TextField
+                                        select
+                                        onChange={(val) => this.setState({ cycle_school_pupil: val.target.value })}
+                                        label="Cycle d'étude"
+                                        variant="outlined"
+                                        value={this.state.cycle_school_pupil}
+                                        style={{ width: '95%', textAlign: 'left' }}>
+                                        {/* <MenuItem value="">Sélectionner le cycle</MenuItem> */}
+                                        {this.props.cycles.map((cycle, index) => (
+                                            <MenuItem value={cycle.cycle_id} key={index}>{cycle.cycle_name}</MenuItem>
+                                        ))}
+                                    </TextField>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style={{ paddingRight: 0, textAlign: 'left' }}>
+                                    <TextField
+                                        select
+                                        onChange={(val) => this.setState({ class_school_pupil: val.target.value })}
+                                        label="Classe"
+                                        variant="outlined"
+                                        value={this.state.class_school_pupil}
+                                        style={{ width: '95%', textAlign: 'left' }}>
+                                        {this.props.class_numbers.map((classe, index) => (
+                                            <MenuItem value={classe.class_id} key={index}>{classe.class_number}</MenuItem>
+                                        ))}
+                                    </TextField>
+                                </td>
+                                <td style={{ paddingLeft: 0, textAlign: 'right' }}>
+                                    <TextField
+                                        select
+                                        onChange={(val) => this.setState({ class_order_pupil: val.target.value })}
+                                        label="Ordre de classe"
+                                        variant="outlined"
+                                        value={this.state.class_order_pupil}
+                                        style={{ width: '95%', textAlign: 'left' }}>
+                                        {this.props.orders.map((order, index) => (
+                                            <MenuItem value={order.order_id} key={index}>{order.order_name}</MenuItem>
+                                        ))}
+                                    </TextField>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style={{ paddingRight: 0, textAlign: 'left', width: '50%' }}>
+                                    <TextField
+                                        select
+                                        onChange={(val) => this.setState({ class_section_pupil: val.target.value })}
+                                        label="Section"
+                                        value={this.state.class_section_pupil}
+                                        variant="outlined"
+                                        style={{ width: '95%', textAlign: 'left' }}>
+                                        {this.props.sections.map((section, index) => (
+                                            <MenuItem value={section.section_id} key={index}>{section.section_name}</MenuItem>
+                                        ))}
+                                    </TextField>
+                                </td>
+                                <td style={{ paddingLeft: 0, textAlign: 'right' }}>
+                                    <TextField
+                                        select
+                                        onChange={(val) => this.setState({ class_option_pupil: val.target.value })}
+                                        label="Option"
+                                        variant="outlined"
+                                        value={this.state.class_option_pupil}
+                                        style={{ width: '95%', textAlign: 'left' }}>
+                                        {this.props.options.map((option, index) => (
+                                            <MenuItem value={option.option_id} key={index}>{option.option_name}</MenuItem>
+                                        ))}
+                                    </TextField>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
 
-                {this.state.classe.map((eleve, index) => {
-                    return (
-                        <table style={{ width: '100%', backgroundColor: 'white' }} key={index}>
-                            <tbody>
-                                <tr>
-                                    <td style={{ width: 50 }}>{index + 1}</td>
-                                    <td style={{ width: '27%' }}>{eleve.Nom}</td>
-                                    <td style={{ width: '27%' }}>{eleve.Postnom}</td>
-                                    <td style={{ width: '27%' }}>{eleve.Prenom}</td>
-                                    <td style={{ width: 100 }}>{eleve.Sexe}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    )
-                })}
+                    {this.state.classe.map((eleve, index) => {
+                        return (
+                            <table style={{ width: '100%', backgroundColor: 'white' }} key={index}>
+                                <tbody>
+                                    <tr>
+                                        <td style={{ width: 50 }}>{index + 1}</td>
+                                        <td style={{ width: '27%' }}>{eleve.Nom}</td>
+                                        <td style={{ width: '27%' }}>{eleve.Postnom}</td>
+                                        <td style={{ width: '27%' }}>{eleve.Prenom}</td>
+                                        <td style={{ width: 100 }}>{eleve.Sexe}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        )
+                    })}
 
-                <div style={{ textAlign: 'center', paddingTop: 50, paddingBottom: 50 }}>
-                    <div style={{ textAlign: 'center', paddingTop: 0, paddingBottom: 25, color: 'black', marginLeft: 50, marginRight: 50 }}>
-                        Uploader un fichier Excel contenant les noms des élèves de la classe. Renseignez aussi les identités de la classe afin de procéder à l'enregistrement des élèves un à un. Les noms entrés devront s'afficher dans un tableau ci-haut. Sinon, assurez-vous de bien uploader le fichier avant la validation.
+                    <div style={{ textAlign: 'center', paddingTop: 50, paddingBottom: 50 }}>
+                        <div style={{ textAlign: 'center', paddingTop: 0, paddingBottom: 25, color: 'black', marginLeft: 50, marginRight: 50 }}>
+                            Uploader un fichier Excel contenant les noms des élèves de la classe. Renseignez aussi les identités de la classe afin de procéder à l'enregistrement des élèves un à un. Les noms entrés devront s'afficher dans un tableau ci-haut. Sinon, assurez-vous de bien uploader le fichier avant la validation.
+                        </div>
+                        <input style={{ display: 'none' }} type="file" id="classe" onChange={(data) => this.uploadClasse(data.target.files[0])} />
+                        <label className='button-primary' style={{ paddingLeft: 25, paddingRight: 25 }} for="classe">Uploader le fichier Excel (au format .xlsx)</label>
                     </div>
-                    <input style={{ display: 'none' }} type="file" id="classe" onChange={(data) => this.uploadClasse(data.target.files[0])} />
-                    <label className='button-primary' style={{ paddingLeft: 25, paddingRight: 25 }} for="classe">Uploader le fichier Excel (au format .xlsx)</label>
-                </div>
                 </div>
 
-                {this.state.modal_view ?
+                {/* {this.state.modal_view ?
                     <div className="main-div-modal">
                         {modalView(this.state.modal_title, this.state.modal_main_text)}
                         <div className="sub-div-modal">
                             <Button onClick={() => this.setState({ modal_view: false })} variant="outlined" style={{ color: 'black', borderWidth: 1, borderColor: 'rgba(0, 0, 0, 0.3)' }}>Fermer</Button>
                         </div>
-                    </div> : null}
+                    </div> : null} */}
             </div>
         )
     }
 }
+
+export default connect(mapStateToProps)(NewClasseImport);
