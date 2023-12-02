@@ -323,7 +323,7 @@ const BulletinsSmall = () => {
                                         </caption>
                                         <thead>
                                             <tr>
-                                                {classe.data.courses.map((course, index) => (<th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20 vertical-course' style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} key={index}>{total_marks(course.total_marks)} / {course.course_name.toUpperCase().substr(0, 25)}</th>))}
+                                                {classe.data.courses.map((course, index) => (<th className='border border-gray-50 dark:border-gray-20  bg-background-100 dark:bg-background-100 vertical-course' style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} key={index}>{total_marks(course.total_marks)} / {course.course_name.toUpperCase().substr(0, 25)}</th>))}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -335,7 +335,7 @@ const BulletinsSmall = () => {
                                                 ))}
                                             </tr>
                                             <tr>
-                                                <td colSpan={classe.data.courses.length} className='text-right border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20'>
+                                                <td colSpan={classe.data.courses.length} className='text-right border border-gray-50 dark:border-gray-20  bg-background-100 dark:bg-background-100'>
                                                     <div className="text-right flex items-center">
                                                         <div className='w-full'>
                                                             {echecs_pupil(pupil.marks)}

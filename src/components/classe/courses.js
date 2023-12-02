@@ -485,9 +485,11 @@ class Courses extends Component {
 
                         {this.state.modal_view ?
                             <div className="main-div-modal">
-                                {modalView(this.state.modal_title, this.state.modal_main_text)}
-                                <div className="sub-div-modal">
-                                    <Button onClick={() => this.setState({ modal_view: false })} variant="outlined" style={{ color: 'black', borderWidth: 1, borderColor: 'rgba(0, 0, 0, 0.3)' }}>Annuler</Button>
+                                <div className="sub-div-modall bg-background-100 dark:bg-background-20">
+                                    <div>
+                                    Voulez-vous vraiment supprimer ce cours ? Si vous le supprimez, toutes les données y attachées seront perdues. Les notes des élèves attachées à ce cours seront aussi perdues. NB.: Cette action est irreversible, vous ne pourrez plus revenir en arrière.
+                                    </div><br/>
+                                    <Button onClick={() => this.setState({ modal_view: false })} variant="outlined" className='text-text-100 dark:text-text-20' style={{ borderWidth: 1, borderColor: 'rgb(100, 100, 100)' }}>Annuler</Button>
                                     <Button onClick={() => this.delete_course(this.state.course_to_delete_id)} variant="outlined" style={{ color: 'white', borderWidth: 1, borderColor: 'red', backgroundColor: 'red', marginLeft: 30 }}>Oui, Procéder</Button>
                                 </div>
                             </div> : null}

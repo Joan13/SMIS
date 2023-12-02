@@ -507,6 +507,20 @@ h5 {
   border-bottom-left-radius: 5px;
 }
 
+.sub-div-modall {
+  /* background-color: white; */
+  width: 40%;
+  position: fixed;
+  /* height: 60px; */
+  left: 30%;
+  top: 45%;
+  padding: 15px;
+  text-align: center;
+  /* border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px; */
+  border-radius: 5px;
+}
+
 .title-big {
   font-weight: bold;
   font-size: 30px;

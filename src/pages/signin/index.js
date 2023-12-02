@@ -94,7 +94,7 @@ const Signin = () => {
                         payload: {
                             modal_title: "Erreur de connexion",
                             modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.",
-                            modal_view: true,
+                            modal_view: true
                         }
                     });
                 });
@@ -102,7 +102,7 @@ const Signin = () => {
     };
 
     useEffect(() => {
-        console.log(user_data)
+        // console.log(user_data)
     }, []);
 
 
