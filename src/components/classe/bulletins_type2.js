@@ -281,7 +281,7 @@ class BulletinsType2 extends React.Component {
                 total = (total * 4) - moins;
             } else {
                 total = (total * 4) - moins;
-            }
+            } 
         }
 
         if (parseInt(period) === 10 || parseInt(period) === 11) {

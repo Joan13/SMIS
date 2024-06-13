@@ -447,7 +447,7 @@ const BulletinsSmall = () => {
                                                             {render_period_marks(pupil.marks, course.course_id, '2')}
                                                         </td>
                                                     ))}
-
+ 
                                                     <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
                                                         {maxima(2)}
                                                     </td>
