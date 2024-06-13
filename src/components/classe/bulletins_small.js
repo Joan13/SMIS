@@ -17,22 +17,31 @@ const BulletinsSmall = () => {
     const [echecs, setEchecs] = useState([]);
     const dispatch = useDispatch();
 
-    const render_period_marks = (marks, course_id) => {
+    const render_period_marks = (marks, course_id, periodd) => {
         let return_value = 0;
 
-        if (parseInt(periode) === 40) {
+        // if (parseInt(periode) === 41) {
+        //     periodd = 40;
+        // } 
+        //else if (parseInt(periode) === 51) {
+        //     periodd = 50;
+        // } else {
+        //     periodd = periode;
+        // }
+
+        if (parseInt(periodd) === 40 || parseInt(periodd) === 41) {
             for (let i in marks) {
                 if (parseInt(marks[i].course) === parseInt(course_id) && (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10)) {
                     if (parseInt(marks[i].main_marks) < (parseInt(marks[i].total_marks) * 4) / 2) {
                         // dispatch({type:"SET_ECHECS", payload:[...echecs, marks[i].course]});
                         // echecs.push(marks[i].course);
                     }
-                    return_value = return_value + marks[i].main_marks;
+                    return_value = parseInt(return_value) + parseInt(marks[i].main_marks);
                 }
             }
         }
 
-        else if (parseInt(periode) === 50) {
+        else if (parseInt(periodd) === 50 || parseInt(periodd) === 51) {
             for (let i in marks) {
                 if (parseInt(marks[i].course) === parseInt(course_id) && (parseInt(marks[i].school_period) === 3 || parseInt(marks[i].school_period) === 4 || parseInt(marks[i].school_period) === 11)) {
 
@@ -40,15 +49,15 @@ const BulletinsSmall = () => {
                         // dispatch({type:"SET_ECHECS", payload:[...echecs, marks[i].course]});
                         // echecs.push(marks[i].course);
                     }
-                    return_value = return_value + marks[i].main_marks;
+                    return_value = parseInt(return_value) + parseInt(marks[i].main_marks);
                 }
             }
         }
         else {
             for (let i in marks) {
-                if (parseInt(marks[i].course) === parseInt(course_id) && parseInt(marks[i].school_period) === parseInt(periode)) {
+                if (parseInt(marks[i].course) === parseInt(course_id) && parseInt(marks[i].school_period) === parseInt(periodd)) {
 
-                    if (parseInt(periode) === 10 || parseInt(periode) === 11) {
+                    if (parseInt(periodd) === 10 || parseInt(periodd) === 11) {
                         if (parseInt(marks[i].main_marks) < (parseInt(marks[i].total_marks) * 2) / 2) {
                             // echecs.push(marks[i].course);
                             // dispatch({type:"SET_ECHECS", payload:[...echecs, marks[i].course]});
@@ -77,11 +86,10 @@ const BulletinsSmall = () => {
         return return_value;
     }
 
-
     const render_period_main_marks = (marks) => {
         let return_value = 0;
 
-        if (parseInt(periode) === 40) {
+        if (parseInt(periode) === 40 || parseInt(periode) === 41) {
             for (let i in marks) {
                 if (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10) {
                     return_value = return_value + parseInt(marks[i].main_marks);
@@ -89,7 +97,7 @@ const BulletinsSmall = () => {
             }
         }
 
-        if (parseInt(periode) === 50) {
+        if (parseInt(periode) === 50 || parseInt(periode) === 51) {
             for (let i in marks) {
                 if (parseInt(marks[i].school_period) === 3 || parseInt(marks[i].school_period) === 4 || parseInt(marks[i].school_period) === 11) {
                     return_value = return_value + parseInt(marks[i].main_marks);
@@ -108,12 +116,46 @@ const BulletinsSmall = () => {
         return return_value;
     }
 
-    const echecs_pupil = (marks) => {
+    const render_period_main_marks_combined = (marks, periodd) => {
+        let return_value = 0;
+
+        if (parseInt(periodd) === 40 || parseInt(periodd) === 41) {
+            for (let i in marks) {
+                if (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10) {
+                    return_value = return_value + parseInt(marks[i].main_marks);
+                }
+            }
+        }
+
+        if (parseInt(periodd) === 50 || parseInt(periodd) === 51) {
+            for (let i in marks) {
+                if (parseInt(marks[i].school_period) === 3 || parseInt(marks[i].school_period) === 4 || parseInt(marks[i].school_period) === 11) {
+                    return_value = return_value + parseInt(marks[i].main_marks);
+                }
+            }
+        }
+
+        else {
+            for (let i in marks) {
+                if (parseInt(marks[i].school_period) === parseInt(periodd)) {
+                    return_value = return_value + parseInt(marks[i].main_marks);
+                }
+            }
+        }
+
+        return return_value;
+    }
+
+    const echecs_pupil = (marks, periodd) => {
+
+        if (periodd === "") {
+            periodd = periode;
+        }
 
         let markss = [];
 
         for (let i in marks) {
-            if ((parseInt(marks[i].main_marks) < parseInt(marks[i].total_marks / 2)) && (parseInt(marks[i].school_period) === parseInt(periode))) {
+            if ((parseInt(marks[i].main_marks) < parseInt(marks[i].total_marks / 2)) && (parseInt(marks[i].school_period) === parseInt(periodd))) {
                 markss.push(marks[i].course);
             }
         }
@@ -143,7 +185,7 @@ const BulletinsSmall = () => {
             total = total + parseInt(classe.data.courses[i].total_marks);
         }
 
-        if (parseInt(periode) === 40 || parseInt(periode) === 50) {
+        if (parseInt(periode) === 40 || parseInt(periode) === 50 || parseInt(periode) === 41 || parseInt(periode) === 51) {
             total = total * 4;
         }
 
@@ -168,7 +210,7 @@ const BulletinsSmall = () => {
             }
         }
 
-        if (parseInt(period) === 40 || parseInt(period) === 50) {
+        if (parseInt(period) === 40 || parseInt(period) === 50 || parseInt(period) === 41 || parseInt(period) === 51) {
             if (considered === 5) {
                 total = (total * 4) - moins;
             } else {
@@ -200,6 +242,19 @@ const BulletinsSmall = () => {
         }
     }
 
+    const render_period_pourcentage_combined = (marks, period) => {
+        let pourcentage = 0;
+        let main_marks = render_period_main_marks_combined(marks, period);
+        let total_marks = period_max();
+
+        if (main_marks != 0) {
+            pourcentage = (main_marks * 100) / maxima(period);
+            return (pourcentage).toString().substr(0, 4);
+        } else {
+            return "";
+        }
+    }
+
     const show_periode = () => {
         if (parseInt(periode) === 40) {
             return true;
@@ -211,7 +266,7 @@ const BulletinsSmall = () => {
     const total_marks = (marks) => {
         if (parseInt(periode) === 10 || parseInt(periode) === 11) {
             return marks * 2;
-        } else if (parseInt(periode) === 40 || parseInt(periode) === 50) {
+        } else if (parseInt(periode) === 40 || parseInt(periode) === 50 || parseInt(periode) === 41 || parseInt(periode) === 51) {
             return marks * 4;
         } else {
             return marks;
@@ -275,6 +330,14 @@ const BulletinsSmall = () => {
         return false;
     }
 
+    const display_combined = () => {
+        if (parseInt(periode) === 41 || parseInt(periode) === 51) {
+            return true;
+        }
+
+        return false;
+    }
+
     return (
         <div style={{ marginBottom: 50, paddingTop: 10, width: '100%' }}>
             {!loading_footer ?
@@ -301,6 +364,9 @@ const BulletinsSmall = () => {
                             <option>- - - - - - - - - - - -</option>
                             <option value="40">Premier semestre</option>
                             <option value="50">Deuxième semestre</option>
+                            <option>- - - - - - - - - - - -</option>
+                            <option value="41">S1 combiné</option>
+                            {/* <option value="51">S2 combiné</option> */}
                         </select>
                     </div><br /><br />
 
@@ -323,117 +389,271 @@ const BulletinsSmall = () => {
                                         </caption>
                                         <thead>
                                             <tr>
+                                                {display_combined() ?<td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>PERIODE</td>:null}
                                                 {classe.data.courses.map((course, index) => (<th className='border border-gray-50 dark:border-gray-20  bg-background-100 dark:bg-background-100 vertical-course' style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} key={index}>{total_marks(course.total_marks)} / {course.course_name.toUpperCase().substr(0, 25)}</th>))}
+
+                                                {display_combined() ?
+                                                    <>
+                                                        <th className='border border-gray-50 dark:border-gray-20  bg-background-100 dark:bg-background-100 vertical-course' style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} key={index}>MAXIMA</th>
+                                                        <th className='border border-gray-50 dark:border-gray-20  bg-background-100 dark:bg-background-100 vertical-course' style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} key={index}>TOTAL</th>
+                                                        <th className='border border-gray-50 dark:border-gray-20  bg-background-100 dark:bg-background-100 vertical-course' style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} key={index}>POURCENTAGE</th>
+                                                        <th className='border border-gray-50 dark:border-gray-20  bg-background-100 dark:bg-background-100 vertical-course' style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} key={index}>{classe.data.pupils.length}  /  PLACE</th>
+                                                        <th className='border border-gray-50 dark:border-gray-20  bg-background-100 dark:bg-background-100 vertical-course' style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} key={index}>CONDUITE</th>
+                                                    </> : null}
                                             </tr>
                                         </thead>
                                         <tbody>
+
+                                            {display_combined() ? <>
+                                                <tr>
+                                                {display_combined() ?<td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>P1</td>:null}
+                                                    {classe.data.courses.map((course, index2) => (
+                                                        <td className='border border-gray-50 h-14 dark:border-gray-20' key={index2} style={{ textAlign: 'center', minWidth: 32 }}>
+                                                            {render_period_marks(pupil.marks, course.course_id, '1')}
+                                                        </td>
+                                                    ))}
+                                                    <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        {maxima(1)}
+                                                    </td>
+
+                                                    <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        {render_period_main_marks_combined(pupil.marks, 1)}
+                                                    </td>
+
+                                                    <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        {render_period_pourcentage_combined(pupil.marks, 1)}
+                                                    </td>
+
+                                                    <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        {classe.data.array_places_1.map((place, index_p) => {
+                                                            if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                return (
+                                                                    <div key={index_p}>{index_p + 1}</div>
+                                                                )
+                                                            }
+                                                        }
+                                                        )}
+                                                    </td>
+
+                                                    <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        {render_period_conduite(pupil.pupil.pupil_id, '1')}
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                {display_combined() ?<td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>P2</td>:null}
+                                                    {classe.data.courses.map((course, index2) => (
+                                                        <td className='border border-gray-50 h-14 dark:border-gray-20' key={index2} style={{ textAlign: 'center', minWidth: 32 }}>
+                                                            {render_period_marks(pupil.marks, course.course_id, '2')}
+                                                        </td>
+                                                    ))}
+
+                                                    <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        {maxima(2)}
+                                                    </td>
+
+                                                    <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        {render_period_main_marks_combined(pupil.marks, 2)}
+                                                    </td>
+
+                                                    <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        {render_period_pourcentage_combined(pupil.marks, 2)}
+                                                    </td>
+
+                                                    <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        {classe.data.array_places_2.map((place, index_p) => {
+                                                            if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                return (
+                                                                    <div key={index_p}>{index_p + 1}</div>
+                                                                )
+                                                            }
+                                                        }
+                                                        )}
+                                                    </td>
+
+                                                    <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        {render_period_conduite(pupil.pupil.pupil_id, '2')}
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    {display_combined() ?<td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>EX1</td>:null}
+                                                    {classe.data.courses.map((course, index2) => (
+                                                        <td className='border border-gray-50 h-14 dark:border-gray-20' key={index2} style={{ textAlign: 'center', minWidth: 32 }}>
+                                                            {render_period_marks(pupil.marks, course.course_id, '10')}
+                                                        </td>
+                                                    ))}
+
+                                                    <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        {maxima(10)}
+                                                    </td>
+
+                                                    <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        {render_period_main_marks_combined(pupil.marks, 10)}
+                                                    </td>
+
+                                                    <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        {render_period_pourcentage_combined(pupil.marks, 10)}
+                                                    </td>
+
+                                                    <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        {classe.data.array_places_10.map((place, index_p) => {
+                                                            if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                return (
+                                                                    <div key={index_p}>{index_p + 1}</div>
+                                                                )
+                                                            }
+                                                        }
+                                                        )}
+                                                    </td>
+
+                                                    <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        {render_period_conduite(pupil.pupil.pupil_id, '10')}
+                                                    </td>
+                                                </tr>
+                                            </> : null}
+
                                             <tr>
+                                            {display_combined() ?<td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>S1</td>:null}
                                                 {classe.data.courses.map((course, index2) => (
                                                     <td className='border border-gray-50 h-14 dark:border-gray-20' key={index2} style={{ textAlign: 'center', minWidth: 32 }}>
-                                                        {render_period_marks(pupil.marks, course.course_id)}
+                                                        {render_period_marks(pupil.marks, course.course_id, periode)}
                                                     </td>
                                                 ))}
+
+                                                {display_combined() ?
+                                                    <>
+                                                        <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                            {maxima(40)}
+                                                        </td>
+
+                                                        <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                            {render_period_main_marks_combined(pupil.marks, 40)}
+                                                        </td>
+
+                                                        <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                            {render_period_pourcentage_combined(pupil.marks, 40)}
+                                                        </td>
+
+                                                        <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                            {classe.data.array_places_tot1.map((place, index_p) => {
+                                                                if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                    return (
+                                                                        <div key={index_p}>{index_p + 1}</div>
+                                                                    )
+                                                                }
+                                                            }
+                                                            )}
+                                                        </td>
+
+                                                        <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
+                                                            -
+                                                        </td>
+                                                    </> : null}
                                             </tr>
-                                            <tr>
-                                                <td colSpan={classe.data.courses.length} className='text-right border border-gray-50 dark:border-gray-20  bg-background-100 dark:bg-background-100'>
-                                                    <div className="text-right flex items-center">
-                                                        <div className='w-full'>
-                                                            {echecs_pupil(pupil.marks)}
-                                                        </div>
-                                                        <table className=' w-full font-bold text-md'>
-                                                            <tr>
-                                                                <td><span className='text-gray-100 mr-3'>TOTAL OBTENU </span></td>
-                                                                <td className='pr-3 border border-gray-50 dark:border-gray-20'>{render_period_main_marks(pupil.marks)}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><span className='text-gray-100 mr-3'>MAXIMA </span></td>
-                                                                <td className='pr-3 border border-gray-50 dark:border-gray-20'>{maxima(periode)}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><span className='text-gray-100 mr-3'>POURCENTAGE </span></td>
-                                                                <td className='pr-3 border border-gray-50 dark:border-gray-20'>{render_period_pourcentage(pupil.marks)}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><span className='text-gray-100 mr-3'>PLACE </span></td>
-                                                                <td className='pr-3 border border-gray-50 dark:border-gray-20'>
-                                                                    {periode === "1" ?
-                                                                        classe.data.array_places_1.map((place, index_p) => {
-                                                                            if (place.pupil_id === pupil.pupil.pupil_id) {
-                                                                                return (
-                                                                                    <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
-                                                                                )
-                                                                            }
-                                                                        }
-                                                                        )
-                                                                        : null}
 
-                                                                    {periode === "2" ?
-                                                                        classe.data.array_places_2.map((place, index_p) => {
-                                                                            if (place.pupil_id === pupil.pupil.pupil_id) {
-                                                                                return (
-                                                                                    <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
-                                                                                )
-                                                                            }
-                                                                        }
-                                                                        )
-                                                                        : null}
-
-                                                                    {periode === "10" ?
-                                                                        classe.data.array_places_10.map((place, index_p) => {
-                                                                            if (place.pupil_id === pupil.pupil.pupil_id) {
-                                                                                return (
-                                                                                    <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
-                                                                                )
-                                                                            }
-                                                                        }
-                                                                        )
-                                                                        : null}
-
-                                                                    {periode === "3" ?
-                                                                        classe.data.array_places_3.map((place, index_p) => {
-                                                                            if (place.pupil_id === pupil.pupil.pupil_id) {
-                                                                                return (
-                                                                                    <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
-                                                                                )
-                                                                            }
-                                                                        }
-                                                                        )
-                                                                        : null}
-
-                                                                    {periode === "4" ?
-                                                                        classe.data.array_places_4.map((place, index_p) => {
-                                                                            if (place.pupil_id === pupil.pupil.pupil_id) {
-                                                                                return (
-                                                                                    <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
-                                                                                )
-                                                                            }
-                                                                        }
-                                                                        )
-                                                                        : null}
-
-                                                                    {periode === "11" ?
-                                                                        classe.data.array_places_11.map((place, index_p) => {
-                                                                            if (place.pupil_id === pupil.pupil.pupil_id) {
-                                                                                return (
-                                                                                    <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
-                                                                                )
-                                                                            }
-                                                                        }
-                                                                        )
-                                                                        : null}
-                                                                </td>
-                                                            </tr>
-                                                            {display_conduite ?
+                                            {!display_combined() ?
+                                                <tr>
+                                                    <td colSpan={classe.data.courses.length} className='text-right border border-gray-50 dark:border-gray-20  bg-background-100 dark:bg-background-100'>
+                                                        <div className="text-right flex items-center">
+                                                            <div className='w-full'>
+                                                                {echecs_pupil(pupil.marks, "")}
+                                                            </div>
+                                                            <table className=' w-full font-bold text-md'>
                                                                 <tr>
-                                                                    <td><span className='text-gray-100 mr-3'>CONDUITE </span></td>
-                                                                    <td className='pr-3 border border-gray-50 dark:border-gray-20'>{render_period_conduite(pupil.pupil.pupil_id, periode)}</td>
-                                                                </tr> : null}
-                                                        </table>
-                                                    </div>
+                                                                    <td><span className='text-gray-100 mr-3'>TOTAL OBTENU </span></td>
+                                                                    <td className='pr-3 border border-gray-50 dark:border-gray-20'>{render_period_main_marks(pupil.marks)}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><span className='text-gray-100 mr-3'>MAXIMA </span></td>
+                                                                    <td className='pr-3 border border-gray-50 dark:border-gray-20'>{maxima(periode)}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><span className='text-gray-100 mr-3'>POURCENTAGE </span></td>
+                                                                    <td className='pr-3 border border-gray-50 dark:border-gray-20'>{render_period_pourcentage(pupil.marks)}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><span className='text-gray-100 mr-3'>PLACE </span></td>
+                                                                    <td className='pr-3 border border-gray-50 dark:border-gray-20'>
+                                                                        {periode === "1" ?
+                                                                            classe.data.array_places_1.map((place, index_p) => {
+                                                                                if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                                    return (
+                                                                                        <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
+                                                                                    )
+                                                                                }
+                                                                            }
+                                                                            )
+                                                                            : null}
+
+                                                                        {periode === "2" ?
+                                                                            classe.data.array_places_2.map((place, index_p) => {
+                                                                                if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                                    return (
+                                                                                        <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
+                                                                                    )
+                                                                                }
+                                                                            }
+                                                                            )
+                                                                            : null}
+
+                                                                        {periode === "10" ?
+                                                                            classe.data.array_places_10.map((place, index_p) => {
+                                                                                if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                                    return (
+                                                                                        <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
+                                                                                    )
+                                                                                }
+                                                                            }
+                                                                            )
+                                                                            : null}
+
+                                                                        {periode === "3" ?
+                                                                            classe.data.array_places_3.map((place, index_p) => {
+                                                                                if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                                    return (
+                                                                                        <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
+                                                                                    )
+                                                                                }
+                                                                            }
+                                                                            )
+                                                                            : null}
+
+                                                                        {periode === "4" ?
+                                                                            classe.data.array_places_4.map((place, index_p) => {
+                                                                                if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                                    return (
+                                                                                        <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
+                                                                                    )
+                                                                                }
+                                                                            }
+                                                                            )
+                                                                            : null}
+
+                                                                        {periode === "11" ?
+                                                                            classe.data.array_places_11.map((place, index_p) => {
+                                                                                if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                                    return (
+                                                                                        <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
+                                                                                    )
+                                                                                }
+                                                                            }
+                                                                            )
+                                                                            : null}
+                                                                    </td>
+                                                                </tr>
+                                                                {display_conduite ?
+                                                                    <tr>
+                                                                        <td><span className='text-gray-100 mr-3'>CONDUITE </span></td>
+                                                                        <td className='pr-3 border border-gray-50 dark:border-gray-20'>{render_period_conduite(pupil.pupil.pupil_id, periode)}</td>
+                                                                    </tr> : null}
+                                                            </table>
+                                                        </div>
 
 
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr> : null}
+
                                         </tbody>
                                     </table>
                                 </div>

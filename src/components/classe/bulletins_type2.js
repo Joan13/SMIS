@@ -204,6 +204,24 @@ class BulletinsType2 extends React.Component {
     }
 
     render_period_pourcentage(pupil_id, periode) {
+        // let pourcentage = 0;
+        // let main_marks = 0;
+        // let total_marks = 0;
+
+        // for (let i in this.props.classe.data.pupils_marks) {
+        //     if (this.props.classe.data.pupils_marks[i].pupil == pupil_id && this.props.classe.data.pupils_marks[i].school_period == periode) {
+        //         main_marks = main_marks + parseInt(this.props.classe.data.pupils_marks[i].main_marks);
+        //         total_marks = total_marks + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
+        //     }
+        // }
+
+        // if (main_marks != 0) {
+        //     pourcentage = (main_marks * 100) / total_marks;
+        //     return (pourcentage).toString().substr(0, 4);
+        // } else {
+        //     return "";
+        // }
+
         let pourcentage = 0;
         let main_marks = 0;
         let total_marks = 0;
@@ -216,7 +234,7 @@ class BulletinsType2 extends React.Component {
         }
 
         if (main_marks != 0) {
-            pourcentage = (main_marks * 100) / total_marks;
+            pourcentage = (main_marks * 100) / this.maxima(periode);
             return (pourcentage).toString().substr(0, 4);
         } else {
             return "";
@@ -236,7 +254,7 @@ class BulletinsType2 extends React.Component {
         }
 
         if (main_marks != 0) {
-            pourcentage = (main_marks * 100) / total_marks;
+            pourcentage = (main_marks * 100) / this.maxima(50);
             return (pourcentage).toString().substr(0, 4);
         } else {
             return "";
@@ -357,15 +375,45 @@ class BulletinsType2 extends React.Component {
     }
 
     maxima_generaux(pupil_id, periode) {
-        let return_value = 0;
+        // let return_value = 0;
 
-        for (let i in this.props.classe.data.pupils_marks) {
-            if (this.props.classe.data.pupils_marks[i].pupil == pupil_id && this.props.classe.data.pupils_marks[i].school_period == periode) {
-                return_value = parseInt(return_value) + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
+        // for (let i in this.props.classe.data.pupils_marks) {
+        //     if (this.props.classe.data.pupils_marks[i].pupil == pupil_id && this.props.classe.data.pupils_marks[i].school_period == periode) {
+        //         return_value = parseInt(return_value) + parseInt(this.props.classe.data.pupils_marks[i].total_marks);
+        //     }
+        // }
+
+        // return return_value;
+        let total = 0;
+        let considered = 0;
+        let moins = 0;
+
+        for (let i in this.props.classe.data.courses) {
+            total = total + parseInt(this.props.classe.data.courses[i].total_marks);
+
+            if (parseInt(this.props.classe.data.courses[i].considered) === 5) {
+                considered = parseInt(this.props.classe.data.courses[i].considered);
+                moins = parseInt(this.props.classe.data.courses[i].total_marks) * 2;
             }
         }
 
-        return return_value;
+        if (parseInt(periode) === 40 || parseInt(periode) === 50) {
+            if (considered === 5) {
+                total = (total * 4) - moins;
+            } else {
+                total = (total * 4) - moins;
+            }
+        }
+
+        if (parseInt(periode) === 10 || parseInt(periode) === 11) {
+            if (considered === 5) {
+                total = (total * 2) - moins;
+            } else {
+                total = (total * 2) - moins;
+            }
+        }
+
+        return total;
     }
 
     totaux_generaux(pupil_id, periode) {
