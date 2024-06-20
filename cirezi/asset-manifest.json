@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "./static/css/main.7e22ae1b.css",
+    "main.js": "./static/js/main.e0677fec.js",
+    "static/media/teachers.jpg": "./static/media/teachers.4f27e612cfae62311ccd.jpg",
+    "static/media/logistics.jpg": "./static/media/logistics.b16077763444f4aa6cbb.jpg",
+    "static/media/caisse.jpg": "./static/media/caisse.b8a406e1c7a53da1fe47.jpg",
+    "static/media/timetable.jpg": "./static/media/timetable.da73901b3fb797bb481f.jpg",
+    "static/media/logo.PNG": "./static/media/logo.4d8eceaa5d146433581f.PNG",
+    "static/media/library.jpg": "./static/media/library.84c8b4b418a6939bcb28.jpg",
+    "static/media/meeting.jpg": "./static/media/meeting.e4e6fb30122e6513f0f2.jpg",
+    "static/media/armoirie_rdc.png": "./static/media/armoirie_rdc.076a1eee761b3c3caa0b.png",
+    "static/media/8401.jpg": "./static/media/8401.e19f1f732be4e3a2e1aa.jpg",
+    "static/media/flag_drc.jpg": "./static/media/flag_drc.201bde9ef7a490de53e4.jpg",
+    "static/media/SansSerif.ttf": "./static/media/SansSerif.48210d2a8a4e4b66d9b7.ttf",
+    "index.html": "./index.html",
+    "main.7e22ae1b.css.map": "./static/css/main.7e22ae1b.css.map",
+    "main.e0677fec.js.map": "./static/js/main.e0677fec.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7e22ae1b.css",
+    "static/js/main.e0677fec.js"
+  ]
+}
