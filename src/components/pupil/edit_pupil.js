@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { http } from "../../global_vars";
-import ButtonNormal from "../includes/button_normal";
 
 const EditPupil = () => {
     const dispatch = useDispatch();
@@ -133,7 +132,7 @@ const EditPupil = () => {
     return (
         <div className="pr-5 w-full">
             <div className="float-right">
-                <button onClick={() => Edit_pupil()}
+                <button onClick={Edit_pupil}
                     className='nodrag bg-primary-100 rounded-xl text-text-20 py-3 hover:scale-105 active:scale-100  duration-300 hover:bg-primary-50 shadow-md pl-6 pr-6'>
                     Enregistrer les modifications
                 </button>

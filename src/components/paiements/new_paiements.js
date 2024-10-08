@@ -3,7 +3,7 @@ import { NumberToLetter } from 'convertir-nombre-lettre';
 import React, { Component } from 'react'
 import { FaCheckCircle } from 'react-icons/fa'
 import { connect } from 'react-redux'
-import { http } from '../../global_vars';
+import { http, url_online } from '../../global_vars';
 import modalView from '../../includes/modal';
 import { mapStateToProps } from '../../store/state_props'
 
@@ -66,10 +66,9 @@ class NewPaiements extends Component {
         date = day + "/" + month + "/" + date.getFullYear();
 
         if (montant !== "" && libelle !== "") {
-            let url_server = sessionStorage.getItem('yambi_smis_url_server');
             this.setState({ loading_middle2: true });
 
-            let BaseURL = http + url_server + "/yambi_class_SMIS/API/new_frais_divers.php";
+            let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/new_frais_divers.php";
 
             fetch(BaseURL, {
                 method: 'POST',
@@ -92,7 +91,7 @@ class NewPaiements extends Component {
                     this.props.dispatch({ type: "SET_PUPIL", payload: response.pupil });
                 })
                 .catch((error) => {
-                    console.log(error)
+                    console.log(error);
                     alert("Erreur");
                     // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
                 });
@@ -130,10 +129,9 @@ class NewPaiements extends Component {
         date = day + "/" + month + "/" + date.getFullYear();
 
         if (montant !== "" && montant_text !== "" && libelle !== "") {
-            let url_server = sessionStorage.getItem('yambi_smis_url_server');
             this.setState({ loading_middle: true });
 
-            let BaseURL = http + url_server + "/yambi_class_SMIS/API/new_paiement.php";
+            let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/new_paiement.php";
 
             fetch(BaseURL, {
                 method: 'POST',
@@ -161,7 +159,7 @@ class NewPaiements extends Component {
                     this.props.dispatch({ type: "SET_PUPIL", payload: response.pupil });
                 })
                 .catch((error) => {
-                    // console.log(error)
+                    console.log(error)
                     alert("Erreur");
                     // this.setState({ modal_title: "Information erreur", modal_main_text: "Impossible de procéder à la requête. Vérifiez que vous êtes bien connecté(e) au serveur ensuite réessayez.", modal_view: true, loading_middle: false });
                 });

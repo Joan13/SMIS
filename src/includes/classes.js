@@ -77,7 +77,7 @@ const Classes = (props) => {
                 .then((response) => {
                     classe.data = response;
 
-                    console.log(response);
+                    // console.log(response);
                     dispatch({ type: "SET_CLASSE", payload: classe });
                     dispatch({ type: "SET_LOADING_FOOTER", payload: false });
 
@@ -100,7 +100,7 @@ const Classes = (props) => {
 
                     setClass_loading(parseInt(null));
                 }).catch((error) => {
-                    console.log(error);
+                    // console.log(error);
                     setClass_loading(parseInt(null));
                     dispatch({ type: "SET_LOADING_FOOTER", payload: false });
                 });

@@ -3,6 +3,7 @@ import { FaArrowDown, FaChevronDown, FaPrint } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { find_date, home_redirect, http } from '../../global_vars';
 import { mapStateToProps } from '../../store/state_props';
+import PrintDocument from '../includes/print';
 class AllPupilPaiements extends Component {
 
     constructor(props) {
@@ -86,17 +87,17 @@ class AllPupilPaiements extends Component {
             .catch((error) => { });
     };
 
-    printContent(divName) {
+    // printContent(divName) {
 
-        let printContents = document.getElementById(divName).innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
+    //     let printContents = document.getElementById(divName).innerHTML;
+    //     let originalContents = document.body.innerHTML;
+    //     document.body.innerHTML = printContents;
+    //     window.print();
 
-        document.body.innerHTML = originalContents;
-        window.location.href = http + this.props.url_server + home_redirect;
-        window.location.replace(http + this.props.url_server + home_redirect);
-    }
+    //     document.body.innerHTML = originalContents;
+    //     window.location.href = http + this.props.url_server + home_redirect;
+    //     window.location.replace(http + this.props.url_server + home_redirect);
+    // }
 
     delete_recu(recu_id) {
 
@@ -256,10 +257,11 @@ class AllPupilPaiements extends Component {
                                 </span> */}
 
                     <div className='flex items-center'>
-                        <FaPrint color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
+                        {/* <FaPrint color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
                         <span onClick={() => this.printContent("recu-frais-divers")} className="add-minus">
                             IMPRIMER CE REÇU
-                        </span>
+                        </span> */}
+                        <PrintDocument div="recu-frais-divers" />
                     </div>
                 </div>
             </div>

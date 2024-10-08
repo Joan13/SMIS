@@ -236,7 +236,7 @@ class NewClasseImport extends React.Component {
                 })
                     .then((response) => response.json())
                     .then((response) => {
-                        alert("Vous venez d'enregistrer une nouvelle classe. Vous pouvez visualiser et editer ses informations au moment voulu.");
+                        // alert("Vous venez d'enregistrer une nouvelle classe. Vous pouvez visualiser et editer ses informations au moment voulu.");
                         // this.setState({ modal_title: "Information Succès", modal_main_text: "Vous venez d'enregistrer une nouvelle classe. Vous pourrez editer ses informations au moment voulu.", modal_view: true, loading_middle: false });
                         this.setState({
                             first_name_pupil: "",

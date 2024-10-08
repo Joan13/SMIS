@@ -70,18 +70,18 @@ class AllPupilPaiements extends Component {
         return return_value;
     }
 
-    printContent(divName) {
+    // printContent(divName) {
 
-        this.props.dispatch({ type: "SET_MOUNT_HOME", payload: false });
-        let printContents = document.getElementById(divName).innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
+    //     this.props.dispatch({ type: "SET_MOUNT_HOME", payload: false });
+    //     let printContents = document.getElementById(divName).innerHTML;
+    //     let originalContents = document.body.innerHTML;
+    //     document.body.innerHTML = printContents;
+    //     window.print();
 
-        document.body.innerHTML = originalContents;
-        window.location.href = http + this.props.url_server + home_redirect;
-        window.location.replace(http + this.props.url_server + home_redirect);
-    }
+    //     document.body.innerHTML = originalContents;
+    //     window.location.href = http + this.props.url_server + home_redirect;
+    //     window.location.replace(http + this.props.url_server + home_redirect);
+    // }
 
     find_pupil() {
         let BaseURL = http + this.props.url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";

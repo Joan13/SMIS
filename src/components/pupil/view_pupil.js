@@ -293,13 +293,12 @@ class ViewPupil extends React.Component {
                                     </span>
                                 </div>
 
-                                <div className='flex items-center border-l border-gray-50 dark:border-gray-20 pl-4 cursor-pointer'>
+                                {/* <div className='flex border-l border-gray-50 dark:border-gray-20 pl-4 cursor-pointer'> */}
                                     {/* <FaPrint className='' style={{ marginRight: 5 }} /> */}
                                     {/* <span onClick={() => this.printContent("nomminative")}>
                                         IMPRIMER LA FICHE DE L'ÉLÈVE
                                     </span> */}
                                     <PrintDocument div="nomminative" />
-                                </div>
                             </div>
                         </div>
 
@@ -309,7 +308,7 @@ class ViewPupil extends React.Component {
                                 <div onClick={() => this.newPaiement()} className={`${this.props.new_paiement ? "underline" : ""} cursor-pointer text-primary-50 border-l text-lg border-gray-50 dark:border-gray-20 pl-4 flex items-center`}>
                                     <span className=""></span>
                                     <FaEdit style={{ size: 17, marginRight: 5 }} />
-                                    Nouveaux paiements
+                                    Nouveau paiement
                                 </div>
 
                                 <div onClick={() => this.allPaiements()} className={`${this.props.all_paiements ? "underline" : ""} cursor-pointer text-primary-50 border-l text-lg ml-5 border-gray-50 dark:border-gray-20 pl-4 flex items-center`}>

@@ -1,6 +1,7 @@
 import { FaArrowDown, FaChevronDown, FaPrint } from 'react-icons/fa';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { find_date, home_redirect, http } from '../../global_vars';
+import PrintDocument from '../includes/print';
 
 const AllPupilPaiements = () => {
 
@@ -69,18 +70,18 @@ const AllPupilPaiements = () => {
         return return_value;
     }
 
-    const printContent = (divName) => {
+    // const printContent = (divName) => {
 
-        dispatch({ type: "SET_MOUNT_HOME", payload: false });
-        let printContents = document.getElementById(divName).innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
+    //     dispatch({ type: "SET_MOUNT_HOME", payload: false });
+    //     let printContents = document.getElementById(divName).innerHTML;
+    //     let originalContents = document.body.innerHTML;
+    //     document.body.innerHTML = printContents;
+    //     window.print();
 
-        document.body.innerHTML = originalContents;
-        window.location.href = http + url_server + home_redirect;
-        window.location.replace(http + url_server + home_redirect);
-    }
+    //     document.body.innerHTML = originalContents;
+    //     window.location.href = http + url_server + home_redirect;
+    //     window.location.replace(http + url_server + home_redirect);
+    // }
 
     const find_pupil = () => {
         let BaseURL = http + url_server + "/yambi_class_SMIS/API/get_pupil_infos.php";
@@ -241,10 +242,11 @@ const AllPupilPaiements = () => {
                                 </div>
 
                                 <div className='flex items-center border-l pl-5 border-gray-50 dark:border-gray-20'>
-                                    <FaPrint color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
+                                    {/* <FaPrint color="rgb(0, 80, 180)" style={{ marginRight: 5 }} />
                                     <span onClick={() => printContent(`recu ${paiement.paiement_id}`)} className="add-minus">
                                         IMPRIMER CE REÇU
-                                    </span>
+                                    </span> */}
+                                    <PrintDocument div={(`recu ${paiement.paiement_id}`)} />
                                 </div>
                             </div>
                         </div>

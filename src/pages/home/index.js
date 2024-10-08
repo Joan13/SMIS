@@ -53,6 +53,7 @@ import Migrations from "../../components/classe/migrations";
 import TimetableProfs from "../../components/timetable/timetable_profs";
 import Timetable from "../../components/timetable/main_timetable";
 import ProfsTimetable from "../../components/timetable/main_timetable_profs";
+import TravauxJournaliers from "../../components/classe/travaux_journaliers";
 
 const Home = () => {
 
@@ -700,7 +701,8 @@ const Home = () => {
                                                 className="flex items-center h-full text-right pr-5 nodrag">
                                                 <span>
                                                     <strong style={{ fontSize: 13 }}>
-                                                        {user_poste.toUpperCase()}
+                                                        {/* {user_poste.toUpperCase()} */}
+                                                        {user_data.first_name.toUpperCase() + " " + user_data.second_name.toUpperCase() + " " + user_data.last_name.toUpperCase()}
                                                     </strong>
                                                     <br />
                                                     <span className="text-gray-100">
@@ -916,6 +918,8 @@ const Home = () => {
                                                         {middle_func === 33 ? (<BulletinsSmall />) : null}
 
                                                         {middle_func === 34 ? (<Migrations />) : null}
+
+                                                        {middle_func === 35 ? (<TravauxJournaliers />) : null}
                                                     </div>
                                                 </div>
                                             </div>

@@ -30,8 +30,8 @@ const FichePointsBrouillon = () => {
 
                                 <table className="full-table-liste" style={{ marginTop: 0 }}>
                                     <caption>
-                                        <h4>
-                                            FICHE DES POINTS BROUILLON<br />
+                                        <h4 style={{ fontWeight: 'bold' }}>
+                                            FICHE DES POINTS<br />
                                             {classe.class_id + " " + classe.section_id + " " + classe.cycle_id + " " + classe.order_id}
                                         </h4>
                                     </caption>
@@ -40,15 +40,15 @@ const FichePointsBrouillon = () => {
                                             <th rowSpan={2} style={{ width: 30, textAlign: 'center' }}>No</th>
                                             <th rowSpan={2} style={{ paddingLeft: 10, textAlign: 'left' }}>Noms de l'élève</th>
                                             <th rowSpan={2} valign="bottom" style={{ paddingLeft: 10, textAlign: 'left', width: 40, paddingBottom: 5 }}>MAX</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}>P1</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}>P2</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}>Ex1</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}>S1</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}>P3</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}>P4</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}>EX2</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}>S2</th>
-                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}>TOT</th>
+                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}></th>
+                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}></th>
+                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}></th>
+                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}></th>
+                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}></th>
+                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}></th>
+                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}></th>
+                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}></th>
+                                            <th style={{ paddingLeft: 10, textAlign: 'left', width: 40 }}></th>
                                         </tr>
                                         <tr>
                                             <td style={{ textAlign: 'center' }}></td>
