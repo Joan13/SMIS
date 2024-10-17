@@ -4,7 +4,7 @@ export const http = "http://";
 // export const url_online = "gestion.collegeafajiri.net";
 export const url_online = "";
 // export const url_online = "yambi.pro";
-export const online = false;    
+export const online = false;
 
 export const find_date = (date) => {
     let year = date.substr(6, 4);

@@ -4,6 +4,7 @@ import { home_redirect, http } from '../../global_vars';
 import { useEffect, useState } from 'react';
 import { FaChevronCircleLeft } from 'react-icons/fa';
 import { FiPrinter } from 'react-icons/fi';
+import logo_miracle from './../../../src/assets/logo_miracle.png';
 import PrintDocument from '../includes/print';
 
 const BulletinsSmall = () => {
@@ -154,17 +155,37 @@ const BulletinsSmall = () => {
 
         let markss = [];
 
-        for (let i in marks) {
-            if ((parseInt(marks[i].main_marks) < parseInt(marks[i].total_marks / 2)) && (parseInt(marks[i].school_period) === parseInt(periodd))) {
-                markss.push(marks[i].course);
+        // for (let i in marks) {
+        //     if ((parseInt(marks[i].main_marks) < parseInt(marks[i].total_marks / 2)) && (parseInt(marks[i].school_period) === parseInt(periodd))) {
+        //         markss.push(marks[i].course);
+        //     }
+        // }
+
+        for (let i in classe.data.courses) {
+            // console.log(classe.data.courses[i].course_name);
+            // for (let i in marks) {
+            if ((parseInt(render_period_marks(marks, classe.data.courses[i].course_id, periodd)) < parseInt(total_marks(classe.data.courses[i].total_marks) / 2))
+                // && (parseInt(marks[i].school_period) === parseInt(periodd))
+            ) {
+                markss.push(classe.data.courses[i].course_name);
+                // console.log(classe.data.courses[i].course_name)
+                // console.log(markss)
             }
+            // }
         }
 
         return (
             <div className='text-left ml-2'>
                 <div className='border-b pb-2 border-gray-50 dark:border-gray-20 font-bold'>Échecs ({markss.length})</div>
+                {/* {markss.map((echec, index) => (
+                    <div key={index} className='pl-3 ml-3 border-l mb-1 text-sm border-gray-50 dark:border-gray-20' style={{ display: 'inline-block' }}>{find_course(echec)}</div>
+                ))} */}
+
                 {markss.map((echec, index) => (
-                    <div key={index} className='pl-1 ml-1 border-l mb-1 text-sm border-gray-50 dark:border-gray-20' style={{ display: 'inline-block' }}>{find_course(echec)}</div>
+                    <div key={index} className='pl-3 ml-3 border-l mb-1 text-sm border-gray-50 dark:border-gray-20' style={{ display: 'inline-block' }}>
+                        {/* {find_course(echec)}  */}
+                        {echec.toUpperCase()}
+                    </div>
                 ))}
             </div>
         )
@@ -358,6 +379,8 @@ const BulletinsSmall = () => {
                             <option value="2">Deuxième période</option>
                             <option value="3">Troisième période</option>
                             <option value="4">Quatrième période</option>
+                            <option value="4">Cinquième période</option>
+                            <option value="4">Sixième période</option>
                             <option>- - - - - - - - - - - -</option>
                             <option value="10">Examen premier semestre</option>
                             <option value="11">Examen deuxième semestre</option>
@@ -384,12 +407,15 @@ const BulletinsSmall = () => {
                                             </div>
                                             <div className='font-bold'>
                                                 <div className='text-xl'>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</div>
-                                                FICHE DES POINTS {render_periode().toUpperCase()}
+                                                FICHE DE POINTS {render_periode().toUpperCase()}
+                                            </div>
+                                            <div style={{display: 'inline', float: 'right', marginTop: -80}}>
+                                                <img src={logo_miracle} height="100" width="100" />
                                             </div>
                                         </caption>
                                         <thead>
                                             <tr>
-                                                {display_combined() ?<td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>PERIODE</td>:null}
+                                                {display_combined() ? <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>PERIODE</td> : null}
                                                 {classe.data.courses.map((course, index) => (<th className='border border-gray-50 dark:border-gray-20  bg-background-100 dark:bg-background-100 vertical-course' style={{ paddingLeft: 5, paddingRight: 5, fontWeight: 'bold', fontSize: 11 }} key={index}>{total_marks(course.total_marks)} / {course.course_name.toUpperCase().substr(0, 25)}</th>))}
 
                                                 {display_combined() ?
@@ -406,7 +432,7 @@ const BulletinsSmall = () => {
 
                                             {display_combined() ? <>
                                                 <tr>
-                                                {display_combined() ?<td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>P1</td>:null}
+                                                    {display_combined() ? <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>P1</td> : null}
                                                     {classe.data.courses.map((course, index2) => (
                                                         <td className='border border-gray-50 h-14 dark:border-gray-20' key={index2} style={{ textAlign: 'center', minWidth: 32 }}>
                                                             {render_period_marks(pupil.marks, course.course_id, '1')}
@@ -441,13 +467,13 @@ const BulletinsSmall = () => {
                                                 </tr>
 
                                                 <tr>
-                                                {display_combined() ?<td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>P2</td>:null}
+                                                    {display_combined() ? <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>P2</td> : null}
                                                     {classe.data.courses.map((course, index2) => (
                                                         <td className='border border-gray-50 h-14 dark:border-gray-20' key={index2} style={{ textAlign: 'center', minWidth: 32 }}>
                                                             {render_period_marks(pupil.marks, course.course_id, '2')}
                                                         </td>
                                                     ))}
- 
+
                                                     <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>
                                                         {maxima(2)}
                                                     </td>
@@ -477,7 +503,7 @@ const BulletinsSmall = () => {
                                                 </tr>
 
                                                 <tr>
-                                                    {display_combined() ?<td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>EX1</td>:null}
+                                                    {display_combined() ? <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>EX1</td> : null}
                                                     {classe.data.courses.map((course, index2) => (
                                                         <td className='border border-gray-50 h-14 dark:border-gray-20' key={index2} style={{ textAlign: 'center', minWidth: 32 }}>
                                                             {render_period_marks(pupil.marks, course.course_id, '10')}
@@ -514,10 +540,10 @@ const BulletinsSmall = () => {
                                             </> : null}
 
                                             <tr>
-                                            {display_combined() ?<td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>S1</td>:null}
+                                                {display_combined() ? <td className='border border-gray-50 h-14 dark:border-gray-20 font-bold' style={{ textAlign: 'center', minWidth: 32 }}>S1</td> : null}
                                                 {classe.data.courses.map((course, index2) => (
-                                                    <td className='border border-gray-50 h-14 dark:border-gray-20' key={index2} style={{ textAlign: 'center', minWidth: 32 }}>
-                                                        {render_period_marks(pupil.marks, course.course_id, periode)}
+                                                    <td className={`border border-gray-50 h-14 dark:border-gray-20 ${parseFloat(render_period_marks(pupil.marks, course.course_id, periode)) < parseInt(total_marks(course.total_marks) / 2) ? "red" : ""}`} key={index2} style={{ textAlign: 'center', minWidth: 32 }}>
+                                                        <strong>{render_period_marks(pupil.marks, course.course_id, periode)}</strong>
                                                     </td>
                                                 ))}
 
@@ -561,7 +587,7 @@ const BulletinsSmall = () => {
                                                             </div>
                                                             <table className=' w-full font-bold text-md'>
                                                                 <tr>
-                                                                    <td><span className='text-gray-100 mr-3'>TOTAL OBTENU </span></td>
+                                                                    <td><span className='text-gray-100 mr-3'>TOTAL OBTENU</span></td>
                                                                     <td className='pr-3 border border-gray-50 dark:border-gray-20'>{render_period_main_marks(pupil.marks)}</td>
                                                                 </tr>
                                                                 <tr>

@@ -118,7 +118,7 @@ export default function RightClasseMenu() {
                                         <div className="flex items-center ml-5 text-primary-50 mb-3">
                                             <FcDataSheet style={{ marginRight: 7 }} />
                                             <span onClick={() => set_page(32, "", true, false)} className={`select-no-border ${middle_func === 32 ? "select-no-border-bold" : ""}`}>
-                                                Fiche des points
+                                                Fiche de points
                                             </span>
                                         </div>
 
@@ -173,7 +173,7 @@ export default function RightClasseMenu() {
                                         <div className="flex items-center ml-5 text-primary-50 mb-3">
                                             <FcFile style={{ marginRight: 7 }} />
                                             <span onClick={() => set_page(26, "", true, true)} className={`select-no-border ${middle_func === 26 ? "select-no-border-bold" : ""}`}>
-                                                Fiche des points brouillon
+                                                Fiche de points brouillon
                                             </span>
                                         </div>
 

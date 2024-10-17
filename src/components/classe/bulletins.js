@@ -478,11 +478,61 @@ class Bulletins extends React.Component {
     }
 
     class_nam() {
-        if (parseInt(this.props.classe.class) === 1 || parseInt(this.props.classe.class) === 2) {
-            return 'BULLETIN DE LA ' + this.props.classe.class_id + " CYCLE TERMINAL DE L'ÉDUCATION DE BASE (CTEB) " + this.props.classe.section_id.toUpperCase();
+        // if (parseInt(this.props.classe.class) === 1 || parseInt(this.props.classe.class) === 2) {
+        //     return 'BULLETIN DE LA ' + this.props.classe.class_id + " CYCLE TERMINAL DE L'ÉDUCATION DE BASE (CTEB) " + this.props.classe.section_id.toUpperCase();
+        // }
+
+        // return 'BULLETIN DE LA ' + this.props.classe.class_id + ' ANNÉE HUMANITÉ ' + this.props.classe.section_id.toUpperCase();
+
+        if(this.props.classe.cycle_id.toUpperCase() === "PRIMAIRE") {
+            if (this.props.classe.class_id === '3 ème' || this.props.classe.class_id === '4 ème') {
+                return "BULLETIN DE L'ÉLÈVE : DÉGRÉ MOYEN (" + this.props.classe.class_id + " ANNÉE PRIMAIRE)";
+            } else if (this.props.classe.class_id === '5 ème' || this.props.classe.class_id === '6 ème') {
+                return "BULLETIN DE L'ÉLÈVE : DÉGRÉ TERMINAL (" + this.props.classe.class_id + " ANNÉE PRIMAIRE)";
+            } else {
+                return "BULLETIN DE L'ÉLÈVE : DÉGRÉ ÉLÉMENTAIRE (" + this.props.classe.class_id + " ANNÉE PRIMAIRE)";
+            }
         }
 
-        return 'BULLETIN DE LA ' + this.props.classe.class_id + ' ANNÉE HUMANITÉ ' + this.props.classe.section_id.toUpperCase();
+        else {
+            if (this.props.classe.class_id === '7 ème' || this.props.classe.class_id === '8 ème') {
+                return 'BULLETIN DE LA ' + this.props.classe.class_id + " ANNÉE CYCLE TERMINAL DE L'ÉDUCATION DE BASE (CTEB) " + this.props.classe.section_id.toUpperCase();
+            }
+    
+            return 'BULLETIN DE LA ' + this.props.classe.class_id + ' ANNÉE HUMANITÉ ' + this.props.classe.section_id.toUpperCase();
+        }
+    }
+
+        is_2e_secondaire(){
+        if(this.props.classe.cycle_id.toUpperCase() === "SECONDAIRE" && this.props.classe.class_id === '8 ème') {
+            return true;
+        }
+
+        return false;
+    }
+
+    is_6e_primaire(){
+        if(this.props.classe.cycle_id.toUpperCase() === "PRIMAIRE" && this.props.classe.class_id === '6 ème') {
+            return true;
+        }
+
+        return false;
+    }
+
+    is_primaire(){
+        if(this.props.classe.cycle_id.toUpperCase() === "PRIMAIRE") {
+            return true;
+        }
+
+        return false;
+    }
+
+    is_secondaire(){
+        if(this.props.classe.cycle_id.toUpperCase() === "SECONDAIRE") {
+            return true;
+        }
+
+        return false;
     }
 
     render() {
@@ -675,7 +725,7 @@ class Bulletins extends React.Component {
                                                                 TOTAL<br />GENERAL
                                                             </td>
                                                             <td rowSpan="2" style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                             {this.state.classe.class == 6 ?
                                                                 <td style={{ textAlign: 'center', fontWeight: 'bold' }} colSpan="3" className="standard-td-top">
@@ -714,7 +764,7 @@ class Bulletins extends React.Component {
                                                                 TAL
                                                             </td>
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                             <td className="standard-td-top">Points<br />obtenus</td>
                                                             <td className="standard-td-top">Max.</td>
@@ -738,7 +788,7 @@ class Bulletins extends React.Component {
                                                             </td>
 
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
 
 
@@ -814,7 +864,7 @@ class Bulletins extends React.Component {
                                                                                     ]
                                                                                     :
                                                                                     [<td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                                        <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                                        <span style={{ color: 'transparent' }}>00</span>
                                                                                     </td>,
                                                                                     <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 2}</strong></td>]
                                                                             }
@@ -829,7 +879,7 @@ class Bulletins extends React.Component {
                                                                                     ]
                                                                                     :
                                                                                     [<td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                                        <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                                        <span style={{ color: 'transparent' }}>00</span>
                                                                                     </td>,
                                                                                     <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 2}</strong></td>]
                                                                             }
@@ -844,7 +894,7 @@ class Bulletins extends React.Component {
                                                                                         <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 4}</strong></td>]
                                                                             }
                                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                                <span style={{ color: 'transparent' }}>00</span>
                                                                             </td>
                                                                         </>
                                                                         : null}
@@ -862,7 +912,7 @@ class Bulletins extends React.Component {
                                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong
                                                                                 style={{ color: this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "10") < (course.total_marks * 2) / 2 ? "red" : "" }}>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "10")}</strong></td>
                                                                             : <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                                <span style={{ color: 'transparent' }}>00</span>
                                                                             </td>
                                                                     }
 
@@ -884,7 +934,7 @@ class Bulletins extends React.Component {
                                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong
                                                                                 style={{ color: this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "11") < (course.total_marks * 2) / 2 ? "red" : "" }}>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "11")}</strong></td>
                                                                             : <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                                <span style={{ color: 'transparent' }}>00</span>
                                                                             </td>
                                                                     }
 
@@ -904,7 +954,7 @@ class Bulletins extends React.Component {
 
                                                                     </td>
                                                                     <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                        <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                        <span style={{ color: 'transparent' }}>00</span>
                                                                     </td>
                                                                 </tr>
                                                             ]
@@ -931,7 +981,7 @@ class Bulletins extends React.Component {
                                                 <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(4)}</strong></td>
                                                 <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(8)}</strong></td> */}
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                         </tr>
 
@@ -947,7 +997,7 @@ class Bulletins extends React.Component {
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 1)) + parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 2)) + parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 10)) + parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                         </tr>
 
@@ -963,7 +1013,7 @@ class Bulletins extends React.Component {
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_semester_pourcentage(pupil.pupil.pupil_id, 3, 4, 11)}</strong></td>
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -1041,7 +1091,7 @@ class Bulletins extends React.Component {
                                                             })}
 
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                         </tr>
 
@@ -1057,7 +1107,7 @@ class Bulletins extends React.Component {
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                         </tr>
 
@@ -1073,7 +1123,7 @@ class Bulletins extends React.Component {
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                         </tr>
 
@@ -1087,7 +1137,7 @@ class Bulletins extends React.Component {
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
                                                             <td colSpan="2" className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                         </tr>
 
@@ -1271,7 +1321,7 @@ class Bulletins extends React.Component {
                                                                 TOTAL<br />GENERAL
                                                             </td>
                                                             <td rowSpan="2" style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                             {this.state.classe.class == 6 ?
                                                                 <td style={{ textAlign: 'center', fontWeight: 'bold' }} colSpan="3" className="standard-td-top">
@@ -1331,7 +1381,7 @@ class Bulletins extends React.Component {
                                                             </td>
 
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                             <td className="standard-td-top" style={{ textAlign: 'center', fontWeight: 'bold', width: 20 }}>
                                                                 <span style={{ color: 'black' }}> % </span>
@@ -1363,7 +1413,7 @@ class Bulletins extends React.Component {
                                                                                     ]
                                                                                     :
                                                                                     [<td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                                        <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                                        <span style={{ color: 'transparent' }}>00</span>
                                                                                     </td>,
                                                                                     <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 2}</strong></td>]
                                                                             }
@@ -1378,7 +1428,7 @@ class Bulletins extends React.Component {
                                                                                     ]
                                                                                     :
                                                                                     [<td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                                        <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                                        <span style={{ color: 'transparent' }}>00</span>
                                                                                     </td>,
                                                                                     <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 2}</strong></td>]
                                                                             }
@@ -1397,13 +1447,13 @@ class Bulletins extends React.Component {
 
                                                                             {/* <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 8}</strong></td> */}
                                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                                <span style={{ color: 'transparent' }}>00</span>
                                                                             </td>
                                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                                <span style={{ color: 'transparent' }}>00</span>
                                                                             </td>
                                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', backgroundColor: 'black' }}>
-                                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                                <span style={{ color: 'transparent' }}>00</span>
                                                                             </td>
                                                                         </>
                                                                         : null}
@@ -1419,7 +1469,7 @@ class Bulletins extends React.Component {
                                                                         course.considered !== "5" ?
                                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "10")}</strong></td>
                                                                             : <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                                <span style={{ color: 'transparent' }}>00</span>
                                                                             </td>
                                                                     }
 
@@ -1430,18 +1480,18 @@ class Bulletins extends React.Component {
                                                                         course.considered !== "5" ?
                                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "11")}</strong></td>
                                                                             : <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                                <span style={{ color: 'transparent' }}>00</span>
                                                                             </td>
                                                                     }
 
                                                                     <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "3", "4", 11)}</strong></td>
                                                                     <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "3", "4", 11)) + parseInt(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "1", "2", 10))}</strong></td>
                                                                     <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                        <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                        <span style={{ color: 'transparent' }}>00</span>
                                                                     </td>
                                                                     <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span>{this.render_period_marks_rep(pupil.pupil.pupil_id, course.course_id, "15")}</span></td>
                                                                     <td style={{ textAlign: 'center', fontWeight: 'bold', backgroundColor: 'transparent' }} className="td-border">
-                                                                        <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                        <span style={{ color: 'transparent' }}>00</span>
                                                                     </td>
                                                                 </tr>
                                                             ]
@@ -1459,7 +1509,7 @@ class Bulletins extends React.Component {
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 1)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 2)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 10)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
 
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                             <td rowSpan="7" colSpan="2">
                                                                 <div style={{ textAlign: 'center', fontSize: 11, marginTop: -5 }}>
@@ -1496,7 +1546,7 @@ class Bulletins extends React.Component {
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 1)) + parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 2)) + parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 10)) + parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.totaux_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                         </tr>
 
@@ -1512,7 +1562,7 @@ class Bulletins extends React.Component {
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_semester_pourcentage(pupil.pupil.pupil_id, 3, 4, 11)}</strong></td>
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -1590,7 +1640,7 @@ class Bulletins extends React.Component {
                                                             })}
 
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                         </tr>
 
@@ -1606,7 +1656,7 @@ class Bulletins extends React.Component {
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                         </tr>
 
@@ -1622,7 +1672,7 @@ class Bulletins extends React.Component {
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                         </tr>
 
@@ -1636,7 +1686,7 @@ class Bulletins extends React.Component {
                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
                                                             <td colSpan="2" className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
                                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                <span style={{ color: 'black', color: 'transparent' }}>00</span>
+                                                                <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
                                                         </tr>
 

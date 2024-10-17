@@ -14,6 +14,7 @@ const TravauxJournaliers = () => {
     const loading_footer = useSelector(state => state.loading_footer);
     const url_server = useSelector(state => state.url_server);
     const [marks_edit, setMarks_edit] = useState([]);
+    const [colonne, setColonne] = useState("1");
     const [errors, setErrors] = useState([]);
     const user_data = useSelector(state=>state.user_data);
     const [loading, setLoading] = useState(false);
@@ -86,9 +87,6 @@ const TravauxJournaliers = () => {
     }
 
     const edit_marks = () => {
-
-        
-
         if (course_id !== null || marks_edit.length !== 0) {
             setLoading(true);
             let BaseURL = http + url_server + "/yambi_class_SMIS/API/edit_travaux_journaliers.php";
@@ -235,6 +233,18 @@ const TravauxJournaliers = () => {
                                             <option value="P6">Sixième période</option> */}
                                         </select>
 
+                                        <select
+                                            onChange={(val) => setColonne(val.target.value)}
+                                            style={{ color: 'rgba(0, 80, 180)', backgroundColor: 'white', textAlign: 'right', marginLeft: 30 }}
+                                            value={colonne}
+                                            className="select-no-border-select">
+                                            {/* <option value="*">Toutes les périodes</option>
+                                            <option>- - - - - - - - - - - -</option> */}
+                                            <option value="1">Travail 1</option>
+                                            <option value="2">Travail 2</option>
+                                            <option value="3">Travail 3</option>
+                                        </select>
+
                                     </div>
 
                                     <table className="full-table-liste-marksssss" style={{ marginTop: 10, width: '100%' }}>
@@ -255,32 +265,35 @@ const TravauxJournaliers = () => {
 
                                                         {show_periode("P1") ?
                                                             <>
+                                                                {colonne === "1"?
                                                                 <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
-                                                                    <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 1)) === undefined ? "input-red" : "red-input"}`}
-                                                                        type="number"
-                                                                        // value={render_period_marks(pupil.marks, course_id, 1)}
-                                                                        placeholder={render_period_marks(pupil.pupil.pupil_id, course_id, 1, 1)}
-                                                                        onChange={(text) => handle_change(pupil, course_id, 1, text.target.value, true, 1)}
-                                                                    />
-                                                                </td>
+                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 1)) === undefined ? "input-red" : "red-input"}`}
+                                                                    type="number"
+                                                                    // value={render_period_marks(pupil.marks, course_id, 1)}
+                                                                    placeholder={render_period_marks(pupil.pupil.pupil_id, course_id, 1, 1)}
+                                                                    onChange={(text) => handle_change(pupil, course_id, 1, text.target.value, true, 1)}
+                                                                />
+                                                            </td>:null}
 
+                                                                {colonne ==="2"?
                                                                 <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
-                                                                    <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 1)) === undefined ? "input-red" : "red-input"}`}
-                                                                        type="number"
-                                                                        // value={render_period_marks(pupil.marks, course_id, 1)}
-                                                                        placeholder={render_period_marks(pupil.pupil.pupil_id, course_id, 1, 2)}
-                                                                        onChange={(text) => handle_change(pupil, course_id, 1, text.target.value, true, 2)}
-                                                                    />
-                                                                </td>
+                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 1)) === undefined ? "input-red" : "red-input"}`}
+                                                                    type="number"
+                                                                    // value={render_period_marks(pupil.marks, course_id, 1)}
+                                                                    placeholder={render_period_marks(pupil.pupil.pupil_id, course_id, 1, 2)}
+                                                                    onChange={(text) => handle_change(pupil, course_id, 1, text.target.value, true, 2)}
+                                                                />
+                                                            </td>:null}
 
+                                                                {colonne === "3"?
                                                                 <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
-                                                                    <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 1)) === undefined ? "input-red" : "red-input"}`}
-                                                                        type="number"
-                                                                        // value={render_period_marks(pupil.marks, course_id, 1)}
-                                                                        placeholder={render_period_marks(pupil.pupil.pupil_id, course_id, 1, 3)}
-                                                                        onChange={(text) => handle_change(pupil, course_id, 1, text.target.value, true, 3)}
-                                                                    />
-                                                                </td>
+                                                                <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 1)) === undefined ? "input-red" : "red-input"}`}
+                                                                    type="number"
+                                                                    // value={render_period_marks(pupil.marks, course_id, 1)}
+                                                                    placeholder={render_period_marks(pupil.pupil.pupil_id, course_id, 1, 3)}
+                                                                    onChange={(text) => handle_change(pupil, course_id, 1, text.target.value, true, 3)}
+                                                                />
+                                                            </td>:null}
                                                             </> : null}
                                                     </tr>
                                                 </tbody>

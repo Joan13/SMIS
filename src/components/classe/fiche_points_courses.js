@@ -1,9 +1,10 @@
 import { CircularProgress } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { http } from '../../global_vars';
+import { http, year } from '../../global_vars';
 import { useEffect, useState } from 'react';
 import { FaChevronCircleLeft } from 'react-icons/fa';
 import ButtonNormal from '../includes/button_normal';
+import axios from 'axios';
 
 const FichesPointsCourses = () => {
 
@@ -15,6 +16,7 @@ const FichesPointsCourses = () => {
     const url_server = useSelector(state => state.url_server);
     const [marks_edit, setMarks_edit] = useState([]);
     const [errors, setErrors] = useState([]);
+    const [loadingTravauxJournaliers, setLoadingTravauxJournaliers] = useState(false);
     const dispatch = useDispatch();
 
     const open_classe = () => {
@@ -80,7 +82,7 @@ const FichesPointsCourses = () => {
 
     const edit_marks = () => {
 
-        if (course_id !== null || marks_edit.length !== 0) {
+        if (course_id !== null || marks_edit.length > 0) {
             let BaseURL = http + url_server + "/yambi_class_SMIS/API/edit_marks.php";
 
             fetch(BaseURL, {
@@ -186,6 +188,62 @@ const FichesPointsCourses = () => {
         setMarks_edit([]);
 
     }, [classe.courses]);
+
+    const show_use_travaux_journaliers_button = () => {
+        if (periode === "P1" || periode === "P2" || periode === "P23" || periode === "P4" || periode === "P5" || periode === "P6") {
+            return true;
+        }
+
+        return false;
+    }
+
+    const use_travaux_journaliers = () => {
+        if (course_id !== null) {
+
+            setLoadingTravauxJournaliers(true);
+
+            let data = new FormData();
+            data.append('course', course_id);
+
+            // classe.data.pupils.forEach((value, index) => {
+            //     data.append(`array[]`, value);  // Use array[] to send as an array in PHP
+            // });
+
+            data.append('pupils', JSON.stringify(classe.data.pupils));
+            data.append('periode', periode);
+
+            let BaseURL = http + url_server + "/yambi_class_SMIS/API/use_travaux_journaliers.php";
+
+            // fetch(BaseURL, {
+            //     method: 'POST',
+            //     body: JSON.stringify({
+            //         course: course_id,
+            //         pupils: classe.data.pupils,
+            //         periode: periode
+            //     })
+            // })
+            //     .then((response) => response.json())
+
+            axios.post(BaseURL, data)
+                .then((response) => {
+
+                    console.log(response.data)
+
+                    if (response.data.success === '1' || response.data.success === '2') {
+
+                        dispatch({ type: "SET_MARKS_MODIFIED", payload: true });
+
+                        open_classe();
+                    }
+
+                    setLoadingTravauxJournaliers(false);
+                })
+                .catch((error) => {
+                    setLoadingTravauxJournaliers(false);
+                    // console.log(error);
+                });
+        }
+    }
 
     return (
         <div style={{ marginBottom: 50, paddingTop: 10, width: '100%' }}>
@@ -357,17 +415,30 @@ const FichesPointsCourses = () => {
                         </tbody>
                     </table>
 
-                    {marks_edit.lengh !== 0 ?
-                        <div style={{ textAlign: 'right', paddingRight: 7 }}>
-                            {errors.length === 0 ?
-                            <ButtonNormal text="Finir et envoyer" onPress={() => edit_marks()} />
-                                :
-                                <div style={{ color: 'red', fontWeight: 'bold', marginTop: 10 }}>
-                                    Il y a {errors.length} erreur{errors.length > 1 ? "s" : ""} dans vos entrées<br />
-                                    Corrigez toute erreur avant de valider
-                                </div>
-                            }
-                        </div> : null}
+                    {/* {marks_edit.length > 0 ? */}
+                    <div style={{ textAlign: 'right', paddingRight: 7, marginTop: 20 }}>
+                        {errors.length === 0 ?
+                            <div>
+
+                                {show_use_travaux_journaliers_button() ?
+                                    <span style={{ marginRight: 25 }}>
+                                        {!loadingTravauxJournaliers ?
+                                            <ButtonNormal nobg text="Utiliser les travaux journaliers" onPress={use_travaux_journaliers} />
+                                            :
+                                            <CircularProgress size={20} style={{ color: 'rgb(0, 80, 180)' }} />}
+                                    </span> : null}
+
+                                <ButtonNormal text="Finir et envoyer" onPress={edit_marks} />
+
+                            </div>
+                            :
+                            <div style={{ color: 'red', fontWeight: 'bold', marginTop: 10 }}>
+                                Il y a {errors.length} erreur{errors.length > 1 ? "s" : ""} dans vos entrées<br />
+                                Corrigez toute erreur avant de valider
+                            </div>
+                        }
+                    </div>
+                    {/* //  : null} */}
                 </div>
                 :
                 <div className="progress-center-progress">
