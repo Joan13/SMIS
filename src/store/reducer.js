@@ -105,13 +105,16 @@ const initialState = {
     user_open: false,
     redirectToReferrer: false,
     selection_data: [],
-    month_caisse: 'null'
+    month_caisse: 'null',
+    expenses: [],
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_MODAL_PAIEMENT_CATEGORIES":
             return { ...state, modal_paiement_categories: action.payload }
+        case "SET_EXPENSES":
+            return { ...state, expenses: action.payload }
         case "SET_TIMETABLE":
             return { ...state, timetable: action.payload }
         case "SET_TIMETABLE1":

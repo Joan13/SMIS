@@ -409,9 +409,10 @@ const BulletinsSmall = () => {
                                                 <div className='text-xl'>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</div>
                                                 FICHE DE POINTS {render_periode().toUpperCase()}
                                             </div>
+                                            {autres.school_name.toUpperCase() === "C. S. LE MIRACLE"?
                                             <div style={{display: 'inline', float: 'right', marginTop: -80}}>
-                                                <img src={logo_miracle} height="100" width="100" />
-                                            </div>
+                                            <img alt="Logo school" src={logo_miracle} height="100" width="100" />
+                                        </div>:null}
                                         </caption>
                                         <thead>
                                             <tr>

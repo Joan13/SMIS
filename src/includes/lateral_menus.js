@@ -20,7 +20,7 @@ const LateralMenus = () => {
         dispatch({ type: "SET_LOADING_MIDDLE", payload: true });
         dispatch({ type: "SET_LOADING_HOME", payload: true });
         dispatch({ type: "SET_COURSE_TIMETABLE_CONFIG", payload: null });
-        dispatch({ type: "SET_EMPLOYEE_TIMETABLE_CONFIG", payload: null })
+        dispatch({ type: "SET_EMPLOYEE_TIMETABLE_CONFIG", payload: null });
         dispatch({ type: "SET_USER_CONNECTED", payload: user });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU", payload: false });
         dispatch({ type: "SET_ALLOW_RIGHT_MENU_PUPILS", payload: false });

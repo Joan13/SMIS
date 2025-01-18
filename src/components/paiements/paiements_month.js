@@ -375,7 +375,7 @@ const PaiementsMonth = () => {
                         <br /><br /><br /><br />
 
                         <div style={{ marginTop: 70, marginBottom: 70, textAlign: 'center', fontWeight: 'bold', fontSize: 17 }}>
-                            Montant total perçu pendant le mois (de/d') {generateMonth(month)}<br />
+                            Montant total perçu pendant le mois de {generateMonth(month)}<br />
                             <strong className='text-3xl text-text-50'>{makuta_day} dollars Américains</strong><br />
 
                             {loading_stats_day ?

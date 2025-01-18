@@ -8,6 +8,7 @@ import GeneralStatsCaisse from './general_stats';
 import PaiementsDay from './paiements_day';
 import Calendar from 'react-calendar';
 import PaiementsMonth from './paiements_month';
+import Expenses from '../caisse/expenses';
 
 const StatistiquesCaisse = () => {
 
@@ -168,11 +169,18 @@ const StatistiquesCaisse = () => {
                     style={{ fontWeight: 'bold' }} className="flex text-text-50 ml-10">
                     <span className={`${stats_tab === 1 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3 cursor-pointer`}> État général de caisse</span>
                 </div>
+
+                <div
+                    onClick={() => setStats_tab(3)}
+                    style={{ fontWeight: 'bold' }} className="flex text-text-50 ml-10">
+                    <span className={`${stats_tab === 3 ? "border-b-2" : "border-b-2 border-background-100 dark:border-background-20"} pb-3 cursor-pointer`}>  Dépenses</span>
+                </div>
             </div>
 
             {stats_tab === 0 ? <PaiementsDay /> : null}
             {stats_tab === 1 ? <GeneralStatsCaisse tab={tab} /> : null}
             {stats_tab === 2 ? <PaiementsMonth /> : null}
+            {stats_tab === 3 ? <Expenses /> : null}
         </div>
     )
 }

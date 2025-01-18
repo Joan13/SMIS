@@ -269,6 +269,10 @@ h5 {
   box-shadow:1px 0px 10px 5px rgba(0, 0, 0, 0.3);
 } */
 
+.rightT {
+  float:right;
+}
+
 .top-bar-app {
   position: fixed;
   left: 25%;

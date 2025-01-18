@@ -1,4 +1,4 @@
-export const home_redirect = "/miracle";
+export const home_redirect = "/wima";
 export const year = "2018 - 2024";
 export const http = "http://";
 // export const url_online = "gestion.collegeafajiri.net";

@@ -100,6 +100,7 @@ export const mapStateToProps = (state) => {
         redirectToReferrer: state.redirectToReferrer,
         selection_data: state.selection_data,
         month_caisse: state.month_caisse,
+        expenses: state.expenses,
     }
 }
 

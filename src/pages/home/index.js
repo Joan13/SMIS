@@ -189,6 +189,7 @@ const Home = () => {
                     dispatch({ type: "SET_SELECTIONS", payload: response.selections });
                     dispatch({ type: "SET_PAIEMENT_CATEGORIES", payload: response.paiement_categories });
                     dispatch({ type: "SET_MODAL_SELECTIONS", payload: false });
+                    dispatch({ type: "SET_EXPENSES", payload: response.depenses });
                     dispatch({ type: "SET_CLASSES_SELECTED", payload: [] });
                     resolve();
                 }).then(() => { });

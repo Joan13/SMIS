@@ -2,6 +2,7 @@ import { FaArrowDown, FaChevronDown, FaPrint } from 'react-icons/fa';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { find_date, home_redirect, http } from '../../global_vars';
 import PrintDocument from '../includes/print';
+import logo_miracle from './../../assets/logo_miracle.png';
 
 const AllPupilPaiements = () => {
 
@@ -134,7 +135,14 @@ const AllPupilPaiements = () => {
                                         <table style={{ width: "100%", padding: 10, paddingTop: 0, paddingBottom: 0 }}>
                                             <tbody>
                                                 <tr>
-                                                    <td className="border-r border-b border-gray-50 dark:border-gray-20 pb-5" style={{ width: "50%", fontSize: 12 }}>
+                                                    <td style={{width:'20%'}} className="border-b border-gray-50 dark:border-gray-20 pb-5">
+                                                        {autres.school_name.toUpperCase() === "C. S. LE MIRACLE" ?
+                                                        <div style={{ marginTop: -30}}>
+                                                                <img alt="Logo" src={logo_miracle} height="150" width="150" />
+                                                                </div>
+                                                            : null}
+                                                    </td>
+                                                    <td className="border-r border-b border-gray-50 dark:border-gray-20 pb-5" style={{ width: "40%", fontSize: 12 }}>
                                                         <strong className="div-title-recu border-b border-gray-50 dark:border-gray-20">{(autres.school_name).toUpperCase()}</strong><br />
                                                         <strong className="sub-title-div-recu">{autres.school_bp}</strong>
                                                         <table>
@@ -154,7 +162,7 @@ const AllPupilPaiements = () => {
                                                             </tbody>
                                                         </table>
                                                     </td>
-                                                    <td style={{ width: "50%", fontSize: 12, }} className='border-b pl-8 border-gray-50 dark:border-gray-20 pb-5'>
+                                                    <td style={{ width: "40%", fontSize: 12, }} className='border-b pl-8 border-gray-50 dark:border-gray-20 pb-5'>
                                                         <table>
                                                             <tbody>
                                                                 <tr>
@@ -184,7 +192,7 @@ const AllPupilPaiements = () => {
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td className="td-border-right-top" colSpan={2}>
+                                                    <td className="td-border-right-top" colSpan={3}>
                                                         <table style={{ width: "100%" }}>
                                                             <tbody>
                                                                 <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
@@ -221,7 +229,7 @@ const AllPupilPaiements = () => {
                                                     </td>
                                                 </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
                                                 <tr>
-                                                    <td style={{ width: "100%", textAlign: 'center' }} colSpan={2}>
+                                                    <td style={{ width: "100%", textAlign: 'center' }} colSpan={3}>
                                                         Signature et sceau de l'école
                                                     </td>
                                                 </tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
