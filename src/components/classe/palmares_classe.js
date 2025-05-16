@@ -193,14 +193,30 @@ class PalmaresPupils extends Component {
             this.setState({ periode_full: "DE LA 3e PÉRIODE" });
         } else if (periode == "4") {
             this.setState({ periode_full: "DE LA 4e PÉRIODE" });
+        } else if (periode == "5") {
+            this.setState({ periode_full: "DE LA 5e PÉRIODE" });
+        } else if (periode == "6") {
+            this.setState({ periode_full: "DE LA 6e PÉRIODE" });
         } else if (periode == "10") {
             this.setState({ periode_full: "DES EXAMENS DU 1er SEMESTRE" });
         } else if (periode == "11") {
             this.setState({ periode_full: "DES EXAMENS DU 2e SEMESTRE" });
+        } else if (periode == "12") {
+            this.setState({ periode_full: "DES EXAMENS DU 3e TRIMESTRE" });
+        } else if (periode == "10" && this.props.autres.is_primaire) {
+            this.setState({ periode_full: "DES EXAMENS DU 1er TRIMESTRE" });
+        } else if (periode == "11" && this.props.autres.is_primaire) {
+            this.setState({ periode_full: "DES EXAMENS DU 2e TRIMESTRE" });
         } else if (periode == "40") {
             this.setState({ periode_full: "DU PREMIER SEMESTRE" });
         } else if (periode == "50") {
-            this.setState({ periode_full: "DU SECOND SEMESTRE" });
+            this.setState({ periode_full: "DU DEUXIEME SEMESTRE" });
+        } else if (periode == "40" && this.props.autres.is_primaire) {
+            this.setState({ periode_full: "DU PREMIER TRIMESTRE" });
+        } else if (periode == "50" && this.props.autres.is_primaire) {
+            this.setState({ periode_full: "DU DEUXIEME TRIMESTRE" });
+        } else if (periode == "60") {
+            this.setState({ periode_full: "DU TROISIEME TRIMESTRE" });
         } else {
             this.setState({ periode_full: "DE FIN D'ANNÉE" });
         }
@@ -217,6 +233,14 @@ class PalmaresPupils extends Component {
             }
         }
 
+        if (parseInt(this.state.periode) === 60) {
+            for (let i in marks) {
+                if (parseInt(marks[i].school_period) === 5 || parseInt(marks[i].school_period) === 6 || parseInt(marks[i].school_period) === 12) {
+                    return_value = return_value + parseInt(marks[i].main_marks);
+                }
+            }
+        }
+
         if (parseInt(this.state.periode) === 50) {
             for (let i in marks) {
                 if (parseInt(marks[i].school_period) === 3 || parseInt(marks[i].school_period) === 4 || parseInt(marks[i].school_period) === 11) {
@@ -227,7 +251,7 @@ class PalmaresPupils extends Component {
 
         if (parseInt(this.state.periode) === 100) {
             for (let i in marks) {
-                if (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10 || parseInt(marks[i].school_period) === 3 || parseInt(marks[i].school_period) === 4 || parseInt(marks[i].school_period) === 11) {
+                if (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10 || parseInt(marks[i].school_period) === 3 || parseInt(marks[i].school_period) === 4 || parseInt(marks[i].school_period) === 11 || parseInt(marks[i].school_period) === 5 || parseInt(marks[i].school_period) === 6 || parseInt(marks[i].school_period) === 12) {
                     return_value = return_value + parseInt(marks[i].main_marks);
                 }
             }
@@ -258,7 +282,7 @@ class PalmaresPupils extends Component {
             }
         }
 
-        if (parseInt(period) === 40 || parseInt(period) === 50) {
+        if (parseInt(period) === 40 || parseInt(period) === 50 || parseInt(period) === 60) {
             if (considered === 5) {
                 total = (total * 4) - moins;
             } else {
@@ -266,7 +290,7 @@ class PalmaresPupils extends Component {
             }
         }
 
-        if (parseInt(period) === 10 || parseInt(period) === 11) {
+        if (parseInt(period) === 10 || parseInt(period) === 11 || parseInt(period) === 12) {
             if (considered === 5) {
                 total = (total * 2) - moins;
             } else {
@@ -283,11 +307,11 @@ class PalmaresPupils extends Component {
             total = total + parseInt(this.props.classe.data.courses[i].total_marks);
         }
 
-        if (parseInt(this.state.periode) === 40 || parseInt(this.state.periode) === 50) {
+        if (parseInt(this.state.periode) === 40 || parseInt(this.state.periode) === 50 || parseInt(this.state.periode) === 60) {
             total = (total * 4) - moins;
         }
 
-        if (parseInt(this.state.periode) === 10 || parseInt(this.state.periode) === 11) {
+        if (parseInt(this.state.periode) === 10 || parseInt(this.state.periode) === 11 || parseInt(this.state.periode) === 12) {
             total = (total * 2) - moins;
         }
 
@@ -308,14 +332,23 @@ class PalmaresPupils extends Component {
                                 <option value="2">Deuxième période</option>
                                 <option value="3">Troisième période</option>
                                 <option value="4">Quatrième période</option>
+                                {this.props.autres.is_primaire ?
+                                    <>
+                                        <option value="5">Cinquième période</option>
+                                        <option value="6">Sixième période</option>
+                                    </> : null}
                                 <option>- - - - - - - - - - - -</option>
-                                <option value="10">Examen premier semestre</option>
-                                <option value="11">Examen deuxième semestre</option>
+                                <option value="10">Examen premier {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option>
+                                <option value="11">Examen deuxième {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option>
+                                {this.props.autres.is_primaire ?
+                                    <option value="12">Examen troisième {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option> : null}
                                 <option>- - - - - - - - - - - -</option>
-                                <option value="40">Premier semestre</option>
-                                <option value="50">Deuxième semestre</option>
+                                <option value="40">Premier {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option>
+                                <option value="50">Deuxième {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option>
+                                {this.props.autres.is_primaire ?
+                                    <option value="60">Troisième {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option> : null}
                                 <option>- - - - - - - - - - - -</option>
-                                <option value="100">Palmarès annuel</option>
+                                <option value="100">Fin d'année</option>
                             </select>
                         </div>
 
@@ -359,7 +392,22 @@ class PalmaresPupils extends Component {
                                         {this.state.periode === "50" ?
                                             <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' colSpan="2" style={{ textAlign: 'center' }}>S2</th> : null}
 
-                                        {this.state.periode === "12" ?
+                                        {this.props.autres.is_primaire ?
+                                            <>
+                                                {this.state.periode === "5" ?
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' colSpan="2" style={{ textAlign: 'center' }}>P5</th> : null}
+
+                                                {this.state.periode === "6" ?
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' colSpan="2" style={{ textAlign: 'center' }}>P6</th> : null}
+
+                                                {this.state.periode === "12" ?
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' colSpan="2" style={{ textAlign: 'center' }}>EX3</th> : null}
+
+                                                {this.state.periode === "60" ?
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' colSpan="2" style={{ textAlign: 'center' }}>S3</th> : null}
+                                            </> : null}
+
+                                        {this.state.periode === "100" ?
                                             <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' colSpan="2" style={{ textAlign: 'center' }}>TOTAL</th> : null}
                                     </tr>
                                     <tr>
@@ -578,7 +626,7 @@ class PalmaresPupils extends Component {
 
 
                                 {this.state.periode === "50" ?
-                                    this.props.classe.data.array_places_11.map((place, index_p) => (
+                                    this.props.classe.data.array_places_tot2.map((place, index_p) => (
                                         this.props.classe.data.pupils.map((pupil, index) => {
                                             if (place.pupil_id === pupil.pupil.pupil_id) {
                                                 return (
@@ -588,6 +636,90 @@ class PalmaresPupils extends Component {
                                                             <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
                                                             <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
                                                                 {((parseInt(this.render_period_main_marks(pupil.marks) * 100) / this.maxima(50)).toString().substr(0, 4))}
+                                                            </td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                )
+                                            }
+                                        })
+                                    ))
+                                    : null}
+
+                                {this.state.periode === "5" ?
+                                    this.props.classe.data.array_places_5.map((place, index_p) => (
+                                        this.props.classe.data.pupils.map((pupil, index) => {
+                                            if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                return (
+                                                    <tbody key={index}>
+                                                        <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
+                                                                {((this.render_pupil_marks(pupil.pupil.pupil_id, 5) * 100) / this.maxima(4)).toString().substr(0, 4)}
+                                                            </td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                )
+                                            }
+                                        })
+                                    ))
+                                    : null}
+
+                                {this.state.periode === "6" ?
+                                    this.props.classe.data.array_places_6.map((place, index_p) => (
+                                        this.props.classe.data.pupils.map((pupil, index) => {
+                                            if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                return (
+                                                    <tbody key={index}>
+                                                        <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
+                                                                {((this.render_pupil_marks(pupil.pupil.pupil_id, 6) * 100) / this.maxima(4)).toString().substr(0, 4)}
+                                                            </td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                )
+                                            }
+                                        })
+                                    ))
+                                    : null}
+
+                                {this.state.periode === "12" ?
+                                    this.props.classe.data.array_places_12.map((place, index_p) => (
+                                        this.props.classe.data.pupils.map((pupil, index) => {
+                                            if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                return (    
+                                                    <tbody key={index}>
+                                                        <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
+                                                                {((this.render_pupil_marks(pupil.pupil.pupil_id, 12) * 100) / this.maxima(12)).toString().substr(0, 4)}
+                                                            </td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                )
+                                            }
+                                        })
+                                    ))
+                                    : null}
+
+                                {this.state.periode === "60" ?
+                                    this.props.classe.data.array_places_tot3.map((place, index_p) => (
+                                        this.props.classe.data.pupils.map((pupil, index) => {
+                                            if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                return (
+                                                    <tbody key={index}>
+                                                        <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
+                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
+                                                                {((parseInt(this.render_period_main_marks(pupil.marks) * 100) / this.maxima(60)).toString().substr(0, 4))}
                                                             </td>
                                                             <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                         </tr>
@@ -608,7 +740,7 @@ class PalmaresPupils extends Component {
                                                             <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
                                                             <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
                                                             <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
-                                                                {((parseInt(this.render_period_main_marks(pupil.marks) * 100) / (this.maxima(40) + this.maxima(50))).toString().substr(0, 4))}
+                                                                {((parseInt(this.render_period_main_marks(pupil.marks) * 100) / (this.maxima(40) + this.maxima(60) + this.maxima(50))).toString().substr(0, 4))}
                                                             </td>
                                                             <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                         </tr>

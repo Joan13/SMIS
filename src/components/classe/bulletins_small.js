@@ -298,17 +298,38 @@ const BulletinsSmall = () => {
         if (parseInt(periode) === 1) {
             return "de la 1 ère période";
         }
+        else if (parseInt(periode) === 50 && autres.is_primaire) {
+            return "du deuxième trimestre";
+        }
+        else if (parseInt(periode) === 40 && autres.is_primaire) {
+            return "du premier trimestre";
+        }
+        else if (parseInt(periode) === 11 && autres.is_primaire) {
+            return "de l'examen du deuxième trimestre";
+        }
+        else if (parseInt(periode) === 10 && autres.is_primaire) {
+            return "de l'examen du premier trimestre";
+        }
         else if (parseInt(periode) === 10) {
             return "de l'examen du premier semestre";
         }
         else if (parseInt(periode) === 11) {
             return "de l'examen du deuxième semestre";
         }
+        else if (parseInt(periode) === 12) {
+            return "de l'examen du troisième trimestre";
+        }
         else if (parseInt(periode) === 40) {
             return "du premier semestre";
         }
         else if (parseInt(periode) === 50) {
             return "du deuxième semestre";
+        }
+        else if (parseInt(periode) === 60) {
+            return "du troisième trimestre";
+        }
+        else if (parseInt(periode) === 100) {
+            return "de fin d'année";
         }
         else {
             return "de la " + periode + "e période";
@@ -375,12 +396,12 @@ const BulletinsSmall = () => {
                             className="select-no-border-select border-none bg-background-100 dark:bg-background-20 ">
                             {/* <option value="100">Toute l'année</option> */}
                             {/* <option>- - - - - - - - - - - -</option> */}
-                            <option value="1">Première période</option>
+                            {/* <option value="1">Première période</option>
                             <option value="2">Deuxième période</option>
                             <option value="3">Troisième période</option>
                             <option value="4">Quatrième période</option>
-                            <option value="4">Cinquième période</option>
-                            <option value="4">Sixième période</option>
+                            <option value="5">Cinquième période</option>
+                            <option value="6">Sixième période</option>
                             <option>- - - - - - - - - - - -</option>
                             <option value="10">Examen premier semestre</option>
                             <option value="11">Examen deuxième semestre</option>
@@ -388,8 +409,28 @@ const BulletinsSmall = () => {
                             <option value="40">Premier semestre</option>
                             <option value="50">Deuxième semestre</option>
                             <option>- - - - - - - - - - - -</option>
-                            <option value="41">S1 combiné</option>
+                            <option value="41">S1 combiné</option> */}
                             {/* <option value="51">S2 combiné</option> */}
+
+                            <option value="1">Première période</option>
+                                <option value="2">Deuxième période</option>
+                                <option value="3">Troisième période</option>
+                                <option value="4">Quatrième période</option>
+                                {autres.is_primaire ?
+                                    <>
+                                        <option value="5">Cinquième période</option>
+                                        <option value="6">Sixième période</option>
+                                    </> : null}
+                                <option>- - - - - - - - - - - -</option>
+                                <option value="10">Examen premier {autres.is_primaire ? "trimestre" : "semestre"}</option>
+                                <option value="11">Examen deuxième {autres.is_primaire ? "trimestre" : "semestre"}</option>
+                                {autres.is_primaire ?
+                                    <option value="12">Examen troisième {autres.is_primaire ? "trimestre" : "semestre"}</option> : null}
+                                {/* <option>- - - - - - - - - - - -</option>
+                                <option value="40">Premier {autres.is_primaire ? "trimestre" : "semestre"}</option>
+                                <option value="50">Deuxième {autres.is_primaire ? "trimestre" : "semestre"}</option>
+                                {autres.is_primaire ?
+                                    <option value="60">Troisième {autres.is_primaire ? "trimestre" : "semestre"}</option> : null} */}
                         </select>
                     </div><br /><br />
 

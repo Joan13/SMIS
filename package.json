@@ -2,7 +2,7 @@
   "homepage": ".",
   "name": "yambi-smis",
   "description": "School Management Information System",
-  "version": "8.5.2",
+  "version": "8.6.2",
   "private": true,
   "author": {
     "name": "Yambi",

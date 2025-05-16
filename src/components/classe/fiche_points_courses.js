@@ -14,6 +14,7 @@ const FichesPointsCourses = () => {
     const middle_func = useSelector(state => state.middle_func);
     const loading_footer = useSelector(state => state.loading_footer);
     const url_server = useSelector(state => state.url_server);
+    const autres = useSelector(state => state.autres);
     const [marks_edit, setMarks_edit] = useState([]);
     const [errors, setErrors] = useState([]);
     const [loadingTravauxJournaliers, setLoadingTravauxJournaliers] = useState(false);
@@ -268,12 +269,26 @@ const FichesPointsCourses = () => {
                                             <option value="P2">Deuxième période</option>
                                             <option value="P3">Troisième période</option>
                                             <option value="P4">Quatrième période</option>
+
+                                            {autres.is_primaire ?
+                                                <>
+                                                    <option value="P5">Cinquième période</option>
+                                                    <option value="P6">Sixième période</option>
+                                                </> : null}
+
                                             <option>- - - - - - - - - - - -</option>
-                                            <option value="EX1">Examen premier semestre</option>
-                                            <option value="EX2">Examen deuxième semestre</option>
+                                            <option value="EX1">Examen premier {autres.is_primaire ? "trimestre" : "semestre"}</option>
+                                            <option value="EX2">Examen deuxième {autres.is_primaire ? "trimestre" : "semestre"}</option>
+                                            {autres.is_primaire ?
+                                                <option value="EX3">Examen troisième {autres.is_primaire ? "trimestre" : "semestre"}</option> : null}
                                             <option>- - - - - - - - - - - -</option>
-                                            <option value="S1">Premier semestre</option>
-                                            <option value="S2">Deuxième semestre</option>
+                                            <option value="S1">Premier {autres.is_primaire ? "trimestre" : "semestre"}</option>
+                                            <option value="S2">Deuxième {autres.is_primaire ? "trimestre" : "semestre"}</option>
+                                            {autres.is_primaire ?
+                                                <option value="S3">Troisième {autres.is_primaire ? "trimestre" : "semestre"}</option> : null}
+
+                                            {/* <option>- - - - - - - - - - - -</option>
+                                            <option value="REP">Examen de repechage</option> */}
                                         </select>
 
                                     </div>
@@ -293,7 +308,7 @@ const FichesPointsCourses = () => {
                                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>EX1</th> : null}
 
                                                 {show_periode("S1", "S1") ?
-                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>S1</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>{autres.is_primaire?"T1":"S1"}</th> : null}
 
                                                 {show_periode("P3", "S2") ?
                                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P3</th> : null}
@@ -305,7 +320,22 @@ const FichesPointsCourses = () => {
                                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>EX2</th> : null}
 
                                                 {show_periode("S2", "S2") ?
-                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>S2</th> : null}
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>{autres.is_primaire?"T2":"S2"}</th> : null}
+
+                                                {autres.is_primaire ?
+                                                    <>
+                                                        {show_periode("P5", "S3") ?
+                                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P5</th> : null}
+
+                                                        {show_periode("P6", "S3") ?
+                                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P6</th> : null}
+
+                                                        {show_periode("EX3", "S3") ?
+                                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>EX3</th> : null}
+
+                                                        {show_periode("S3", "S3") ?
+                                                            <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>{autres.is_primaire?"T3":"S3"}</th> : null}
+                                                    </> : null}
 
                                                 {show_periode("*", "*") ?
                                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>TOTAL</th> : null}
@@ -383,9 +413,44 @@ const FichesPointsCourses = () => {
                                                                 {parseInt(render_period_marks(pupil.marks, course_id, 3)) + parseInt(render_period_marks(pupil.marks, course_id, 4)) + parseInt(render_period_marks(pupil.marks, course_id, 11))}
                                                             </td> : null}
 
+                                                        {autres.is_primaire ?
+                                                            <>
+                                                                {show_periode("P5", "S3") ?
+                                                                    <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
+                                                                        <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 5)) === undefined ? "input-red" : "red-input"}`}
+                                                                            type="number"
+                                                                            placeholder={render_period_marks(pupil.marks, course_id, 5)}
+                                                                            onChange={(text) => handle_change(pupil, course_id, 5, text.target.value, true)}
+                                                                        />
+                                                                    </td> : null}
+
+                                                                {show_periode("P6", "S3") ?
+                                                                    <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
+                                                                        <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 6)) === undefined ? "input-red" : "red-input"}`}
+                                                                            type="number"
+                                                                            placeholder={render_period_marks(pupil.marks, course_id, 6)}
+                                                                            onChange={(text) => handle_change(pupil, course_id, 6, text.target.value, true)}
+                                                                        />
+                                                                    </td> : null}
+
+                                                                {show_periode("EX3", "S3") ?
+                                                                    <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
+                                                                        <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course_id + 12)) === undefined ? "input-red" : "red-input"}`}
+                                                                            type="number"
+                                                                            placeholder={render_period_marks(pupil.marks, course_id, 12)}
+                                                                            onChange={(text) => handle_change(pupil, course_id, 12, text.target.value, true)}
+                                                                        />
+                                                                    </td> : null}
+
+                                                                {show_periode("S3", "S3") ?
+                                                                    <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }}>
+                                                                        {parseInt(render_period_marks(pupil.marks, course_id, 5)) + parseInt(render_period_marks(pupil.marks, course_id, 6)) + parseInt(render_period_marks(pupil.marks, course_id, 12))}
+                                                                    </td> : null}
+                                                            </> : null}
+
                                                         {show_periode("*", "*") ?
                                                             <td className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }}>
-                                                                {parseInt(render_period_marks(pupil.marks, course_id, 3)) + parseInt(render_period_marks(pupil.marks, course_id, 4)) + parseInt(render_period_marks(pupil.marks, course_id, 11)) + parseInt(render_period_marks(pupil.marks, course_id, 1)) + parseInt(render_period_marks(pupil.marks, course_id, 2)) + parseInt(render_period_marks(pupil.marks, course_id, 10))}
+                                                                {parseInt(render_period_marks(pupil.marks, course_id, 3)) + parseInt(render_period_marks(pupil.marks, course_id, 4)) + parseInt(render_period_marks(pupil.marks, course_id, 11)) + parseInt(render_period_marks(pupil.marks, course_id, 1)) + parseInt(render_period_marks(pupil.marks, course_id, 2)) + parseInt(render_period_marks(pupil.marks, course_id, 10))+ parseInt(render_period_marks(pupil.marks, course_id, 5))+ parseInt(render_period_marks(pupil.marks, course_id, 6))+ parseInt(render_period_marks(pupil.marks, course_id, 12))}
                                                             </td> : null}
                                                     </tr>
                                                 </tbody>

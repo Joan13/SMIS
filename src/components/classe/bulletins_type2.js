@@ -276,7 +276,7 @@ class BulletinsType2 extends React.Component {
             }
         }
 
-        if (period === 40 || period === 50) {
+        if (period === 40 || period === 50 || period === 60) {
             if (considered === 5) {
                 total = (total * 4) - moins;
             } else {
@@ -284,7 +284,7 @@ class BulletinsType2 extends React.Component {
             }
         }
 
-        if (parseInt(period) === 10 || parseInt(period) === 11) {
+        if (parseInt(period) === 10 || parseInt(period) === 11 || parseInt(period) === 12) {
             if (considered === 5) {
                 total = (total * 2) - moins;
             } else {
@@ -298,7 +298,7 @@ class BulletinsType2 extends React.Component {
     render_total_pourcentage(pupil_id) {
         let pourcentage = 0;
         let main_marks = 0;
-        let total_marks = parseInt(this.maxima_generaux(pupil_id, 1)) + parseInt(this.maxima_generaux(pupil_id, 2)) + parseInt(this.maxima_generaux(pupil_id, 10)) + parseInt(this.maxima_generaux(pupil_id, 3)) + parseInt(this.maxima_generaux(pupil_id, 4)) + parseInt(this.maxima_generaux(pupil_id, 11))+ parseInt(this.maxima_generaux(pupil_id, 3)) + parseInt(this.maxima_generaux(pupil_id, 4)) + parseInt(this.maxima_generaux(pupil_id, 11));
+        let total_marks = parseInt(this.maxima_generaux(pupil_id, 1)) + parseInt(this.maxima_generaux(pupil_id, 2)) + parseInt(this.maxima_generaux(pupil_id, 10)) + parseInt(this.maxima_generaux(pupil_id, 3)) + parseInt(this.maxima_generaux(pupil_id, 4)) + parseInt(this.maxima_generaux(pupil_id, 11)) + parseInt(this.maxima_generaux(pupil_id, 5)) + parseInt(this.maxima_generaux(pupil_id, 6)) + parseInt(this.maxima_generaux(pupil_id, 12));
 
         for (let i in this.props.classe.data.pupils_marks) {
             if (this.props.classe.data.pupils_marks[i].pupil === pupil_id && parseInt(this.props.classe.data.pupils_marks[i].school_period) !== 15) {
@@ -397,7 +397,7 @@ class BulletinsType2 extends React.Component {
             }
         }
 
-        if (parseInt(periode) === 40 || parseInt(periode) === 50) {
+        if (parseInt(periode) === 40 || parseInt(periode) === 50 || parseInt(periode) === 60) {
             if (considered === 5) {
                 total = (total * 4) - moins;
             } else {
@@ -405,7 +405,7 @@ class BulletinsType2 extends React.Component {
             }
         }
 
-        if (parseInt(periode) === 10 || parseInt(periode) === 11) {
+        if (parseInt(periode) === 10 || parseInt(periode) === 11 || parseInt(periode) === 12) {
             if (considered === 5) {
                 total = (total * 2) - moins;
             } else {
@@ -931,7 +931,7 @@ class BulletinsType2 extends React.Component {
                                             return [
                                                 show_domain ?
                                                     <tr key={index_domain + 1}>
-                                                        <td className='td-border' style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 11, backgroundColor: 'rgba(0,0,0,0.15)' }} colSpan={this.is_primaire()?24:20}>{domain.domain_name.toUpperCase()}</td>
+                                                        <td className='td-border' style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 11, backgroundColor: 'rgba(0,0,0,0.15)' }} colSpan={this.is_primaire() ? 24 : 20}>{domain.domain_name.toUpperCase()}</td>
                                                     </tr> : null,
                                                 this.props.classe.data.sub_domains.map((sub_domain, index_sub_domain) => {
 
@@ -995,10 +995,15 @@ class BulletinsType2 extends React.Component {
                                                             show_sous_total = true;
                                                         }
 
+                                                        // if (sub_domain.course_1 !== "" && sub_domain.course_2 === "" && sub_domain.course_3 === "" && sub_domain.course_4 === "" && sub_domain.course_5 === "" && sub_domain.course_6 === "" && sub_domain.course_7 === "" && sub_domain.course_8 === "" && sub_domain.course_9 === "" && sub_domain.course_10 === "") {
+                                                        if (sub_domain.course_1 !== "" && sub_domain.course_2 === "" && sub_domain.course_3 === "" && sub_domain.course_4 === "" && sub_domain.course_5 === "" && sub_domain.course_6 === "" && sub_domain.course_7 === "" && sub_domain.course_8 === "" && sub_domain.course_9 === "" && sub_domain.course_10 === "") {
+                                                            show_sous_total = false;
+                                                        }
+
                                                         return [
                                                             show_sub_domain && sub_domain.sub_domain_name != "" ?
                                                                 <tr key={index_sub_domain + 1}>
-                                                                    <td className='td-border' style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 11, backgroundColor: 'rgba(0,0,0,0.15)' }} colSpan={this.is_primaire()?24:20}>{sub_domain.sub_domain_name}</td>
+                                                                    <td className='td-border' style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 11, backgroundColor: 'rgba(0,0,0,0.15)' }} colSpan={this.is_primaire() ? 24 : 20}>{sub_domain.sub_domain_name}</td>
                                                                 </tr> : null,
                                                             this.props.classe.courses.map((course, index) => {
 
@@ -1045,41 +1050,55 @@ class BulletinsType2 extends React.Component {
                                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "3", "4", 11)}</strong></td>
 
 
-{this.is_primaire()?
-<>
-<td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks)}</strong></td>
-                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "3")}</span></td>
-                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><span>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "4")}</span></td>
-                                                                            {
-                                                                                course.considered !== "5" ?
-                                                                                    <>
-                                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 2}</strong></td>
-                                                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "11")}</strong></td>
-                                                                                    </>
+                                                                            {this.is_primaire() ?
+                                                                                <>
+                                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>
+                                                                                        {parseInt(course.total_marks)}
+                                                                                    </strong></td>
+                                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}>
+                                                                                        <span>
+                                                                                            {this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "5")}
+                                                                                        </span></td>
+                                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}>
+                                                                                        <span>
+                                                                                            {this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "6")}
+                                                                                        </span></td>
+                                                                                    {
+                                                                                        course.considered !== "5" ?
+                                                                                            <>
+                                                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 2}</strong></td>
+                                                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>
+                                                                                                    {this.render_period_marks(pupil.pupil.pupil_id, course.course_id, "12")}
+                                                                                                </strong></td>
+                                                                                            </>
 
-                                                                                    : <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                                        <span style={{  color: 'transparent' }}>00</span>
-                                                                                    </td>
-                                                                            }
+                                                                                            : <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                                                                <span style={{ color: 'transparent' }}>00</span>
+                                                                                            </td>
+                                                                                    }
 
-                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(course.total_marks) * 4}</strong></td>
-                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "3", "4", 11)}</strong></td>
-</>:null}
+                                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>
+                                                                                        {parseInt(course.total_marks) * 4}
+                                                                                    </strong></td>
+                                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "5", "6", 12)}</strong></td>
+                                                                                </> : null}
 
 
-                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.is_primaire?parseInt(course.total_marks) *12:parseInt(course.total_marks) *8}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>
+                                                                                {this.is_primaire ? parseInt(course.total_marks) * 12 : parseInt(course.total_marks) * 8}
+                                                                            </strong></td>
                                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseFloat(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "3", "4", 11)) + parseFloat(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "1", "2", 10))}</strong></td>
-                                                                            
-                                                                            {this.is_secondaire()?
-                                                                            <>
-                                                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                                                <span style={{ color: 'transparent' }}>00</span>
-                                                                            </td>
-                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center', width: 20 }}><span>{this.render_period_marks_rep(pupil.pupil.pupil_id, course.course_id, "15")}</span></td>
-                                                                            <td style={{ textAlign: 'center', fontWeight: 'bold', backgroundColor: 'transparent' }} className="td-border">
-                                                                                <span style={{ color: 'transparent' }}>00</span>
-                                                                            </td>
-                                                                            </>:null}
+
+                                                                            {this.is_secondaire() ?
+                                                                                <>
+                                                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                                                        <span style={{ color: 'transparent' }}>00</span>
+                                                                                    </td>
+                                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center', width: 20 }}><span>{this.render_period_marks_rep(pupil.pupil.pupil_id, course.course_id, "15")}</span></td>
+                                                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', backgroundColor: 'transparent' }} className="td-border">
+                                                                                        <span style={{ color: 'transparent' }}>00</span>
+                                                                                    </td>
+                                                                                </> : null}
                                                                         </tr>
 
                                                                     ]
@@ -1104,27 +1123,27 @@ class BulletinsType2 extends React.Component {
                                                                     <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "11")}</strong></td>
                                                                     <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 4}</strong></td>
                                                                     <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_semester_marks(pupil.pupil.pupil_id, sub_domain, "3", "4", "11")}</strong></td>
-                                                                
-                                                                {this.is_primaire()?
-                                                                    <>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{sub_domain.total_marks}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "3")}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "4")}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 2}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "11")}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 4}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_semester_marks(pupil.pupil.pupil_id, sub_domain, "3", "4", "11")}</strong></td>
-                                                                    </>:null}
+
+                                                                    {this.is_primaire() ?
+                                                                        <>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{sub_domain.total_marks}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "5")}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "6")}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 2}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "12")}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 4}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_semester_marks(pupil.pupil.pupil_id, sub_domain, "5", "6", "12")}</strong></td>
+                                                                        </> : null}
 
                                                                     <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 8}</strong></td>
                                                                     <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseFloat(this.render_sub_domain_semester_marks(pupil.pupil.pupil_id, sub_domain, "3", "4", "11") + this.render_sub_domain_semester_marks(pupil.pupil.pupil_id, sub_domain, "1", "2", "10"))}</strong></td>
-                                                                    
-                                                                    {this.is_secondaire()?
-                                                                    <>
-                                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
-                                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
-                                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
-                                                                    </>:null}
+
+                                                                    {this.is_secondaire() ?
+                                                                        <>
+                                                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
+                                                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
+                                                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
+                                                                        </> : null}
                                                                 </tr>
                                                                 : null
                                                         ]
@@ -1149,22 +1168,22 @@ class BulletinsType2 extends React.Component {
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_generaux(pupil.pupil.pupil_id, 11)}</strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
-<td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
-                                            
-                                            {this.is_primaire()?
-                                            <>
-                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_generaux(pupil.pupil.pupil_id, 3)}</strong></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_generaux(pupil.pupil.pupil_id, 4)}</strong></td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_generaux(pupil.pupil.pupil_id, 11)}</strong></td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
-                                            </>:null}
-                                            
-                                            
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 1)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 2)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 10)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 11)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
+
+                                            {this.is_primaire() ?
+                                                <>
+                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_generaux(pupil.pupil.pupil_id, 5)}</strong></td>
+                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_generaux(pupil.pupil.pupil_id, 6)}</strong></td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
+                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_generaux(pupil.pupil.pupil_id, 12)}</strong></td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
+                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 5)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 6)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 12))}</strong></td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
+                                                </> : null}
+
+
+                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 1)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 2)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 10)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 11)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 5)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 6)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 12))}</strong></td>
 
                                             {/* <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(1)}</strong></td>
                                                 <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(1)}</strong></td>
@@ -1175,11 +1194,11 @@ class BulletinsType2 extends React.Component {
                                                 <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(2)}</strong></td>
                                                 <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(4)}</strong></td>
                                                 <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(8)}</strong></td> */}
-                                            
-                                            {this.is_secondaire()?
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                            <span style={{ color: 'transparent' }}>00</span>
-                                        </td>:null}
+
+                                            {this.is_secondaire() ?
+                                                <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                    <span style={{ color: 'transparent' }}>00</span>
+                                                </td> : null}
 
                                             {this.is_secondaire() ?
                                                 <td rowSpan="7" colSpan="2">
@@ -1225,22 +1244,22 @@ class BulletinsType2 extends React.Component {
                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 3)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 4)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
 
-                                            {this.is_primaire()?
-                                            <>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.totaux_generaux(pupil.pupil.pupil_id, 3)}</strong></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.totaux_generaux(pupil.pupil.pupil_id, 4)}</strong></td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.totaux_generaux(pupil.pupil.pupil_id, 11)}</strong></td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 3)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 4)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
-                                            </>:null}
-                                            
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 1)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 2)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 10)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 3)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 4)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
-                                            {this.is_secondaire()?
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                            <span style={{ color: 'transparent' }}>00</span>
-                                        </td>:null}
+                                            {this.is_primaire() ?
+                                                <>
+                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.totaux_generaux(pupil.pupil.pupil_id, 5)}</strong></td>
+                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.totaux_generaux(pupil.pupil.pupil_id, 6)}</strong></td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
+                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.totaux_generaux(pupil.pupil.pupil_id, 12)}</strong></td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
+                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 5)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 6)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 12))}</strong></td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
+                                                </> : null}
+
+                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 1)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 2)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 10)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 3)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 4)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 11)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 5)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 6)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 12))}</strong></td>
+                                            {this.is_secondaire() ?
+                                                <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                    <span style={{ color: 'transparent' }}>00</span>
+                                                </td> : null}
                                         </tr>
 
                                         <tr>
@@ -1263,22 +1282,22 @@ class BulletinsType2 extends React.Component {
                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_semester_pourcentage(pupil.pupil.pupil_id, 3, 4, 11)}</strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
 
-                                            {this.is_primaire()?
-                                            <>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_pourcentage(pupil.pupil.pupil_id, 3)}</strong></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_pourcentage(pupil.pupil.pupil_id, 4)}</strong></td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_pourcentage(pupil.pupil.pupil_id, 11)}</strong></td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_semester_pourcentage(pupil.pupil.pupil_id, 3, 4, 11)}</strong></td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
-                                            </>:null}
+                                            {this.is_primaire() ?
+                                                <>
+                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_pourcentage(pupil.pupil.pupil_id, 5)}</strong></td>
+                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_pourcentage(pupil.pupil.pupil_id, 6)}</strong></td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
+                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_pourcentage(pupil.pupil.pupil_id, 12)}</strong></td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
+                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_semester_pourcentage(pupil.pupil.pupil_id, 5, 6, 12)}</strong></td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
+                                                </> : null}
 
                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_total_pourcentage(pupil.pupil.pupil_id)}</strong></td>
-                                            {this.is_secondaire()?
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                            <span style={{ color: 'transparent' }}>00</span>
-                                        </td>:null}
+                                            {this.is_secondaire() ?
+                                                <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                    <span style={{ color: 'transparent' }}>00</span>
+                                                </td> : null}
                                         </tr>
                                         <tr>
                                             <td className="td-border" style={{ fontSize: 11, paddingLeft: 10 }}><strong>PLACE/NBR D'ÉLÈVES</strong></td>
@@ -1354,45 +1373,53 @@ class BulletinsType2 extends React.Component {
                                                 }
                                             })}
 
-                                            {this.is_primaire()?
-                                            <>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
-                                            {this.props.classe.data.array_places_3.map((place, index_p) => {
-                                                if (place.pupil_id == pupil.pupil.pupil_id) {
-                                                    return (
-                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{index_p + 1}/{this.props.classe.data.pupils_count}</strong></td>
-                                                    )
-                                                }
-                                            })}
+                                            {this.is_primaire() ?
+                                                <>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
+                                                    {this.props.classe.data.array_places_5.map((place, index_p) => {
+                                                        if (place.pupil_id == pupil.pupil.pupil_id) {
+                                                            return (
+                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>
+                                                                    {index_p + 1}/{this.props.classe.data.pupils_count}
+                                                                </strong></td>
+                                                            )
+                                                        }
+                                                    })}
 
-                                            {this.props.classe.data.array_places_4.map((place, index_p) => {
-                                                if (place.pupil_id == pupil.pupil.pupil_id) {
-                                                    return (
-                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{index_p + 1}/{this.props.classe.data.pupils_count}</strong></td>
-                                                    )
-                                                }
-                                            })}
+                                                    {this.props.classe.data.array_places_6.map((place, index_p) => {
+                                                        if (place.pupil_id == pupil.pupil.pupil_id) {
+                                                            return (
+                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>
+                                                                    {index_p + 1}/{this.props.classe.data.pupils_count}
+                                                                </strong></td>
+                                                            )
+                                                        }
+                                                    })}
 
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
 
-                                            {this.props.classe.data.array_places_11.map((place, index_p) => {
-                                                if (place.pupil_id == pupil.pupil.pupil_id) {
-                                                    return (
-                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{index_p + 1}/{this.props.classe.data.pupils_count}</strong></td>
-                                                    )
-                                                }
-                                            })}
+                                                    {this.props.classe.data.array_places_12.map((place, index_p) => {
+                                                        if (place.pupil_id == pupil.pupil.pupil_id) {
+                                                            return (
+                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>
+                                                                    {index_p + 1}/{this.props.classe.data.pupils_count}
+                                                                </strong></td>
+                                                            )
+                                                        }
+                                                    })}
 
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
 
-                                            {this.props.classe.data.array_places_tot2.map((place, index_p) => {
-                                                if (place.pupil_id == pupil.pupil.pupil_id) {
-                                                    return (
-                                                        <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{index_p + 1}/{this.props.classe.data.pupils_count}</strong></td>
-                                                    )
-                                                }
-                                            })}
-                                            </>:null}
+                                                    {this.props.classe.data.array_places_tot3.map((place, index_p) => {
+                                                        if (place.pupil_id == pupil.pupil.pupil_id) {
+                                                            return (
+                                                                <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>
+                                                                    {index_p + 1}/{this.props.classe.data.pupils_count}
+                                                                </strong></td>
+                                                            )
+                                                        }
+                                                    })}
+                                                </> : null}
 
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
                                             {this.props.classe.data.array_places_tott.map((place, index_p) => {
@@ -1403,10 +1430,10 @@ class BulletinsType2 extends React.Component {
                                                 }
                                             })}
 
-                                           {this.is_secondaire()?
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                            <span style={{ color: 'transparent' }}>00</span>
-                                        </td>:null}
+                                            {this.is_secondaire() ?
+                                                <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                    <span style={{ color: 'transparent' }}>00</span>
+                                                </td> : null}
                                         </tr>
 
                                         <tr>
@@ -1426,23 +1453,23 @@ class BulletinsType2 extends React.Component {
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
-                                            {this.is_primaire()?
-                                            <>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_application_periode(pupil.pupil.pupil_id, 3)}</strong></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_application_periode(pupil.pupil.pupil_id, 4)}</strong></td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                <span style={{ color: 'transparent' }}>00</span>
-                                            </td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                <span style={{ color: 'transparent' }}>00</span>
-                                            </td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                <span style={{ color: 'transparent' }}>00</span>
-                                            </td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                <span style={{ color: 'transparent' }}>00</span>
-                                            </td>
-                                            </>:null}
+                                            {this.is_primaire() ?
+                                                <>
+                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_application_periode(pupil.pupil.pupil_id, 5)}</strong></td>
+                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_application_periode(pupil.pupil.pupil_id, 6)}</strong></td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                        <span style={{ color: 'transparent' }}>00</span>
+                                                    </td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                        <span style={{ color: 'transparent' }}>00</span>
+                                                    </td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                        <span style={{ color: 'transparent' }}>00</span>
+                                                    </td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                        <span style={{ color: 'transparent' }}>00</span>
+                                                    </td>
+                                                </> : null}
                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
                                                 <span style={{ color: 'transparent' }}>00</span>
@@ -1466,23 +1493,23 @@ class BulletinsType2 extends React.Component {
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
-                                            {this.is_primaire()?
-                                            <>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_conduite(pupil.pupil.pupil_id, 3)}</strong></td>
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_conduite(pupil.pupil.pupil_id, 4)}</strong></td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                <span style={{ color: 'transparent' }}>00</span>
-                                            </td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                <span style={{ color: 'transparent' }}>00</span>
-                                            </td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                <span style={{ color: 'transparent' }}>00</span>
-                                            </td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                                <span style={{ color: 'transparent' }}>00</span>
-                                            </td>
-                                            </>:null}
+                                            {this.is_primaire() ?
+                                                <>
+                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_conduite(pupil.pupil.pupil_id, 5)}</strong></td>
+                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_period_conduite(pupil.pupil.pupil_id, 6)}</strong></td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                        <span style={{ color: 'transparent' }}>00</span>
+                                                    </td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                        <span style={{ color: 'transparent' }}>00</span>
+                                                    </td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                        <span style={{ color: 'transparent' }}>00</span>
+                                                    </td>
+                                                    <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                        <span style={{ color: 'transparent' }}>00</span>
+                                                    </td>
+                                                </> : null}
                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center', backgroundColor: 'black' }}><strong><span style={{ color: 'transparent' }}>okok</span></strong></td>
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
                                                 <span style={{ color: 'transparent' }}>00</span>
@@ -1504,17 +1531,17 @@ class BulletinsType2 extends React.Component {
                                             <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
                                             <td colSpan="2" className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td> */}
 
-{this.is_primaire()?
-<>
-<td colSpan="7" className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
-</>:null}
+                                            {this.is_primaire() ?
+                                                <>
+                                                    <td colSpan="7" className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
+                                                </> : null}
 
                                             <td colSpan="7" className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
                                             <td colSpan="9" className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong></strong></td>
-                                            {this.is_secondaire()?
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
-                                            <span style={{ color: 'transparent' }}>00</span>
-                                        </td>:null}
+                                            {this.is_secondaire() ?
+                                                <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
+                                                    <span style={{ color: 'transparent' }}>00</span>
+                                                </td> : null}
                                         </tr>
 
                                     </table>

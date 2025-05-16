@@ -134,9 +134,17 @@ const FichesPoints = () => {
             }
         }
 
+        if (parseInt(periode) === 60) {
+            for (let i in marks) {
+                if (parseInt(marks[i].school_period) === 5 || parseInt(marks[i].school_period) === 6 || parseInt(marks[i].school_period) === 12) {
+                    return_value = return_value + parseInt(marks[i].main_marks);
+                }
+            }
+        }
+
         if (parseInt(periode) === 100) {
             for (let i in marks) {
-                if (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10 || parseInt(marks[i].school_period) === 3 || parseInt(marks[i].school_period) === 4 || parseInt(marks[i].school_period) === 11) {
+                if (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10 || parseInt(marks[i].school_period) === 3 || parseInt(marks[i].school_period) === 4 || parseInt(marks[i].school_period) === 11 || parseInt(marks[i].school_period) === 5 || parseInt(marks[i].school_period) === 6 || parseInt(marks[i].school_period) === 12) {
                     return_value = return_value + parseInt(marks[i].main_marks);
                 }
             }
@@ -159,11 +167,11 @@ const FichesPoints = () => {
             total = total + parseInt(classe.data.courses[i].total_marks);
         }
 
-        if (parseInt(periode) === 40 || parseInt(periode) === 50) {
+        if (parseInt(periode) === 40 || parseInt(periode) === 50 || parseInt(periode) === 60) {
             total = total * 4;
         }
 
-        if (parseInt(periode) === 10 || parseInt(periode) === 11) {
+        if (parseInt(periode) === 10 || parseInt(periode) === 11 || parseInt(periode) === 12) {
             total = total * 2;
         }
 
@@ -257,17 +265,35 @@ const FichesPoints = () => {
         if (parseInt(periode) === 1) {
             return "de la 1 ère période";
         }
+        else if (parseInt(periode) === 50 && autres.is_primaire) {
+            return "du deuxième trimestre";
+        }
+        else if (parseInt(periode) === 40 && autres.is_primaire) {
+            return "du premier trimestre";
+        }
+        else if (parseInt(periode) === 11 && autres.is_primaire) {
+            return "de l'examen du deuxième trimestre";
+        }
+        else if (parseInt(periode) === 10 && autres.is_primaire) {
+            return "de l'examen du premier trimestre";
+        }
         else if (parseInt(periode) === 10) {
             return "de l'examen du premier semestre";
         }
         else if (parseInt(periode) === 11) {
             return "de l'examen du deuxième semestre";
         }
+        else if (parseInt(periode) === 12) {
+            return "de l'examen du troisième trimestre";
+        }
         else if (parseInt(periode) === 40) {
             return "du premier semestre";
         }
         else if (parseInt(periode) === 50) {
             return "du deuxième semestre";
+        }
+        else if (parseInt(periode) === 60) {
+            return "du troisième trimestre";
         }
         else if (parseInt(periode) === 100) {
             return "de fin d'année";
@@ -365,17 +391,17 @@ const FichesPoints = () => {
         // }
     }, []);
 
-    const can_render=(considered)=> {
-        if((parseInt(periode) === 10 || parseInt(periode) === 11) && parseInt(considered) === 5) {
-return false;
+    const can_render = (considered) => {
+        if ((parseInt(periode) === 10 || parseInt(periode) === 11) && parseInt(considered) === 5) {
+            return false;
         }
-            return true;
+        return true;
     }
 
     const echecs_pupil = (marks) => {
 
         let markss = [];
-        
+
 
         // if (parseInt(periode) === 50 || parseInt(periode) === 40) {
         //     if (parseInt(find_coursee(course).considered) === 5) {
@@ -393,7 +419,7 @@ return false;
 
         // let total = (parseInt(find_coursee(course).total_marks) * 8) - moins;
 
-        if(parseInt(periode) === 40 || parseInt(periode) === 50) {
+        if (parseInt(periode) === 40 || parseInt(periode) === 50) {
             for (let i in marks) {
                 let minus = 0;
                 if (parseInt(find_coursee(marks[i].course).considered) === 5) {
@@ -401,7 +427,7 @@ return false;
                 }
                 let tot = parseInt(find_coursee(marks[i].course).total_marks) - minus;
 
-                if ((parseInt(marks[i].main_marks) < parseInt(tot/2)) && (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10)) {
+                if ((parseInt(marks[i].main_marks) < parseInt(tot / 2)) && (parseInt(marks[i].school_period) === 1 || parseInt(marks[i].school_period) === 2 || parseInt(marks[i].school_period) === 10)) {
                     markss.push(marks[i].course);
                 }
             }
@@ -445,12 +471,21 @@ return false;
                             <option value="2">Deuxième période</option>
                             <option value="3">Troisième période</option>
                             <option value="4">Quatrième période</option>
+                            {autres.is_primaire ?
+                                <>
+                                    <option value="5">Cinquième période</option>
+                                    <option value="6">Sixième période</option>
+                                </> : null}
                             <option>- - - - - - - - - - - -</option>
-                            <option value="10">Examen premier semestre</option>
-                            <option value="11">Examen deuxième semestre</option>
+                            <option value="10">Examen premier {autres.is_primaire ? "trimestre" : "semestre"}</option>
+                            <option value="11">Examen deuxième {autres.is_primaire ? "trimestre" : "semestre"}</option>
+                            {autres.is_primaire ?
+                                <option value="12">Examen troisième {autres.is_primaire ? "trimestre" : "semestre"}</option> : null}
                             <option>- - - - - - - - - - - -</option>
-                            <option value="40">Premier semestre</option>
-                            <option value="50">Deuxième semestre</option>
+                            <option value="40">Premier {autres.is_primaire ? "trimestre" : "semestre"}</option>
+                            <option value="50">Deuxième {autres.is_primaire ? "trimestre" : "semestre"}</option>
+                            {autres.is_primaire ?
+                                <option value="60">Troisième {autres.is_primaire ? "trimestre" : "semestre"}</option> : null}
                             <option>- - - - - - - - - - - -</option>
                             <option value="100">Fin d'année</option>
                         </select>
@@ -490,7 +525,7 @@ return false;
                                             <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
 
                                             {classe.data.courses.map((course, index) => (
-                                                <td className={`border border-gray-50 dark:border-gray-20 ${can_render(course.considered) ? render_period_marks(pupil.marks, course.course_id) < (total_cours(course.total_marks, course.considered) / 2) ? "font-bold underline text-errror" : "":""}`} key={index} style={{ textAlign: 'center', minWidth: 32 }}>
+                                                <td className={`border border-gray-50 dark:border-gray-20 ${can_render(course.considered) ? render_period_marks(pupil.marks, course.course_id) < (total_cours(course.total_marks, course.considered) / 2) ? "font-bold underline text-errror" : "" : ""}`} key={index} style={{ textAlign: 'center', minWidth: 32 }}>
                                                     {can_render(course.considered) ? render_period_marks(pupil.marks, course.course_id) : "-"}
                                                 </td>
                                             ))}
