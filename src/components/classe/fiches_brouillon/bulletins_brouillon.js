@@ -486,8 +486,8 @@ class BulletinsBrouillons extends React.Component {
                                                                 <img src={logo_rdc} height="60" width="100" />
                                                             </td>
                                                             <td style={{ textAlign: 'center', fontSize: 17 }} className="td-no-border">
-                                                                <strong>REPUBLIQUE DEMOCRATIQUE DU CONGO</strong><br />
-                                                                <strong>MINISTERE DE L'ENSEIGNEMENT PRIMAIRE, SECONDAIRE ET TECHNIQUE</strong>
+                                                                <strong>RÉPUBLIQUE DÉMOCRATIQUE DU CONGO</strong><br />
+                                                <strong>MINISTÈRE DE L'ÉDUCATION NATIONALE ET NOUVELLE CITOYENNETÉ</strong>
                                                             </td>
                                                             <td style={{ textAlign: 'right' }} className="td-no-border-l">
                                                                 <img src={logo_armoiries} height="60" width="80" />

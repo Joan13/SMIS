@@ -413,20 +413,20 @@ const BulletinsSmall = () => {
                             {/* <option value="51">S2 combiné</option> */}
 
                             <option value="1">Première période</option>
-                                <option value="2">Deuxième période</option>
-                                <option value="3">Troisième période</option>
-                                <option value="4">Quatrième période</option>
-                                {autres.is_primaire ?
-                                    <>
-                                        <option value="5">Cinquième période</option>
-                                        <option value="6">Sixième période</option>
-                                    </> : null}
-                                <option>- - - - - - - - - - - -</option>
-                                <option value="10">Examen premier {autres.is_primaire ? "trimestre" : "semestre"}</option>
-                                <option value="11">Examen deuxième {autres.is_primaire ? "trimestre" : "semestre"}</option>
-                                {autres.is_primaire ?
-                                    <option value="12">Examen troisième {autres.is_primaire ? "trimestre" : "semestre"}</option> : null}
-                                {/* <option>- - - - - - - - - - - -</option>
+                            <option value="2">Deuxième période</option>
+                            <option value="3">Troisième période</option>
+                            <option value="4">Quatrième période</option>
+                            {autres.is_primaire ?
+                                <>
+                                    <option value="5">Cinquième période</option>
+                                    <option value="6">Sixième période</option>
+                                </> : null}
+                            <option>- - - - - - - - - - - -</option>
+                            <option value="10">Examen premier {autres.is_primaire ? "trimestre" : "semestre"}</option>
+                            <option value="11">Examen deuxième {autres.is_primaire ? "trimestre" : "semestre"}</option>
+                            {autres.is_primaire ?
+                                <option value="12">Examen troisième {autres.is_primaire ? "trimestre" : "semestre"}</option> : null}
+                            {/* <option>- - - - - - - - - - - -</option>
                                 <option value="40">Premier {autres.is_primaire ? "trimestre" : "semestre"}</option>
                                 <option value="50">Deuxième {autres.is_primaire ? "trimestre" : "semestre"}</option>
                                 {autres.is_primaire ?
@@ -450,10 +450,10 @@ const BulletinsSmall = () => {
                                                 <div className='text-xl'>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</div>
                                                 FICHE DE POINTS {render_periode().toUpperCase()}
                                             </div>
-                                            {autres.school_name.toUpperCase() === "C. S. LE MIRACLE"?
-                                            <div style={{display: 'inline', float: 'right', marginTop: -80}}>
-                                            <img alt="Logo school" src={logo_miracle} height="100" width="100" />
-                                        </div>:null}
+                                            {autres.school_name.toUpperCase() === "C. S. LE MIRACLE" ?
+                                                <div style={{ display: 'inline', float: 'right', marginTop: -80 }}>
+                                                    <img alt="Logo school" src={logo_miracle} height="100" width="100" />
+                                                </div> : null}
                                         </caption>
                                         <thead>
                                             <tr>
@@ -678,6 +678,39 @@ const BulletinsSmall = () => {
 
                                                                         {periode === "3" ?
                                                                             classe.data.array_places_3.map((place, index_p) => {
+                                                                                if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                                    return (
+                                                                                        <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
+                                                                                    )
+                                                                                }
+                                                                            }
+                                                                            )
+                                                                            : null}
+
+                                                                        {periode === "5" ?
+                                                                            classe.data.array_places_5.map((place, index_p) => {
+                                                                                if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                                    return (
+                                                                                        <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
+                                                                                    )
+                                                                                }
+                                                                            }
+                                                                            )
+                                                                            : null}
+
+                                                                        {periode === "6" ?
+                                                                            classe.data.array_places_6.map((place, index_p) => {
+                                                                                if (place.pupil_id === pupil.pupil.pupil_id) {
+                                                                                    return (
+                                                                                        <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>
+                                                                                    )
+                                                                                }
+                                                                            }
+                                                                            )
+                                                                            : null}
+
+                                                                        {periode === "12" ?
+                                                                            classe.data.array_places_12.map((place, index_p) => {
                                                                                 if (place.pupil_id === pupil.pupil.pupil_id) {
                                                                                     return (
                                                                                         <div key={index_p}>{index_p + 1} / {classe.data.pupils.length}</div>

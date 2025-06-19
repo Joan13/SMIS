@@ -332,7 +332,7 @@ export default class FicheE80 extends Component {
 
                                     <div style={{ textAlign: 'center', fontWeight: 'bold' }} className="border-bottom">
                                         EXAMEN D'ETAT EDITION {this.state.autres.annee}<br />
-                                        MINISTERE DE L'ENSEIGNEMENT PRIMAIRE, SECONDAIRE ET PROFESSIONNEL<br /><br />
+                                        MINISTÈRE DE L'ÉDUCATION NATIONALE ET NOUVELLE CITOYENNETÉ<br /><br />
                                         <img src={logo_armoiries} height="60" width="80" /><br /><br />
                                         PROVINCE DU SUD-KIVU<br />
                                         INSPECTION PRINCIPALE PROVINCIALE<br />

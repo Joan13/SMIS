@@ -43,6 +43,10 @@ class BulletinsType2 extends React.Component {
             conseils: [],
         }
     }
+    
+    // componentDidMount(){
+        // console.log(this.props.autres)
+    // }
 
     open_class() {
 
@@ -298,7 +302,7 @@ class BulletinsType2 extends React.Component {
     render_total_pourcentage(pupil_id) {
         let pourcentage = 0;
         let main_marks = 0;
-        let total_marks = parseInt(this.maxima_generaux(pupil_id, 1)) + parseInt(this.maxima_generaux(pupil_id, 2)) + parseInt(this.maxima_generaux(pupil_id, 10)) + parseInt(this.maxima_generaux(pupil_id, 3)) + parseInt(this.maxima_generaux(pupil_id, 4)) + parseInt(this.maxima_generaux(pupil_id, 11)) + parseInt(this.maxima_generaux(pupil_id, 5)) + parseInt(this.maxima_generaux(pupil_id, 6)) + parseInt(this.maxima_generaux(pupil_id, 12));
+        let total_marks = this.props.autres.is_primaire?parseInt(this.maxima_generaux(pupil_id, 1)) + parseInt(this.maxima_generaux(pupil_id, 2)) + parseInt(this.maxima_generaux(pupil_id, 10)) + parseInt(this.maxima_generaux(pupil_id, 3)) + parseInt(this.maxima_generaux(pupil_id, 4)) + parseInt(this.maxima_generaux(pupil_id, 11)) + parseInt(this.maxima_generaux(pupil_id, 5)) + parseInt(this.maxima_generaux(pupil_id, 6)) + parseInt(this.maxima_generaux(pupil_id, 12)):parseInt(this.maxima_generaux(pupil_id, 1)) + parseInt(this.maxima_generaux(pupil_id, 2)) + parseInt(this.maxima_generaux(pupil_id, 10)) + parseInt(this.maxima_generaux(pupil_id, 3)) + parseInt(this.maxima_generaux(pupil_id, 4)) + parseInt(this.maxima_generaux(pupil_id, 11));
 
         for (let i in this.props.classe.data.pupils_marks) {
             if (this.props.classe.data.pupils_marks[i].pupil === pupil_id && parseInt(this.props.classe.data.pupils_marks[i].school_period) !== 15) {
@@ -467,6 +471,7 @@ class BulletinsType2 extends React.Component {
         //         }
         //     }, 500);
         // }
+        // console.log(this.props.autres.is_primaire);
 
         // console.log(this.props.classe.data.sub_domains)
     }
@@ -568,7 +573,11 @@ class BulletinsType2 extends React.Component {
     }
 
     is_primaire() {
-        if (this.props.classe.cycle_id.toUpperCase() === "PRIMAIRE") {
+        // if (this.props.classe.cycle_id.toUpperCase() === "PRIMAIRE") {
+        //     return true;
+        // }
+
+        if(this.props.autres.is_primaire){
             return true;
         }
 
@@ -648,8 +657,8 @@ class BulletinsType2 extends React.Component {
                                                 <img src={logo_rdc} height="60" width="100" />
                                             </td>
                                             <td style={{ textAlign: 'center', fontSize: 17 }} className="td-no-border">
-                                                <strong>REPUBLIQUE DEMOCRATIQUE DU CONGO</strong><br />
-                                                <strong>MINISTERE DE L'ENSEIGNEMENT PRIMAIRE, SECONDAIRE ET TECHNIQUE</strong>
+                                                <strong>RÉPUBLIQUE DÉMOCRATIQUE DU CONGO</strong><br />
+                                                <strong>MINISTÈRE DE L'ÉDUCATION NATIONALE ET NOUVELLE CITOYENNETÉ</strong>
                                             </td>
                                             <td style={{ textAlign: 'right' }} className="td-no-border-l">
                                                 <img src={logo_armoiries} height="60" width="80" />
@@ -944,6 +953,7 @@ class BulletinsType2 extends React.Component {
 
                                                         let dd = "";
                                                         let show_sous_total = false;
+                                                        let show_sous_total_technologie = false;
 
                                                         if (sub_domain.course_2 === "") {
                                                             dd = sub_domain.course_1;
@@ -1008,6 +1018,17 @@ class BulletinsType2 extends React.Component {
                                                             this.props.classe.courses.map((course, index) => {
 
                                                                 if (sub_domain.course_1 == course.course_id || sub_domain.course_2 == course.course_id || sub_domain.course_3 == course.course_id || sub_domain.course_4 == course.course_id || sub_domain.course_5 == course.course_id || sub_domain.course_6 == course.course_id) {
+
+                                                                    // if(course.course_name == "Technologie"){
+                                                                    //     show_sous_total = true;
+                                                                    //     show_sous_total_technologie = false;
+                                                                    // } 
+
+                                                                    // if(sub_domain.sub_domain_name == "MATHÉMATIQUES"){
+                                                                    //     show_sous_total = false;
+                                                                    //     // console.log(sub_domain.sub_domain_name)
+                                                                    // }
+
                                                                     return [
                                                                         <tr key={index}>
                                                                             <td className="td-border" style={{ fontSize: 11, paddingLeft: 10 }}>{course.course_name}</td>
@@ -1085,7 +1106,7 @@ class BulletinsType2 extends React.Component {
 
 
                                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>
-                                                                                {this.is_primaire ? parseInt(course.total_marks) * 12 : parseInt(course.total_marks) * 8}
+                                                                                {this.is_primaire() ? parseInt(course.total_marks) * 12 : parseInt(course.total_marks) * 8}
                                                                             </strong></td>
                                                                             <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseFloat(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "3", "4", 11)) + parseFloat(this.render_semester_marks(pupil.pupil.pupil_id, course.course_id, "1", "2", 10))}</strong></td>
 
@@ -1107,36 +1128,71 @@ class BulletinsType2 extends React.Component {
                                                             ,
                                                             show_sous_total ?
                                                                 <tr key={index}>
-                                                                    <td className='td-border' style={{ fontWeight: 'bold', fontSize: 11, backgroundColor: 'rgba(0,0,0,0.15)', paddingLeft: 10 }}>Sous-total</td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{sub_domain.total_marks}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "1")}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "2")}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 2}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "10")}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 4}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_semester_marks(pupil.pupil.pupil_id, sub_domain, "1", "2", "10")}</strong></td>
 
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{sub_domain.total_marks}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "3")}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "4")}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 2}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "11")}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 4}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_semester_marks(pupil.pupil.pupil_id, sub_domain, "3", "4", "11")}</strong></td>
-
-                                                                    {this.is_primaire() ?
+                                                                    {show_sous_total_technologie ?
                                                                         <>
-                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{sub_domain.total_marks}</strong></td>
-                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "5")}</strong></td>
-                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "6")}</strong></td>
-                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 2}</strong></td>
-                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "12")}</strong></td>
-                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 4}</strong></td>
-                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_semester_marks(pupil.pupil.pupil_id, sub_domain, "5", "6", "12")}</strong></td>
-                                                                        </> : null}
+                                                                            <td className='td-border' style={{ fontWeight: 'bold', fontSize: 11, backgroundColor: 'rgba(0,0,0,0.15)', paddingLeft: 10 }}>Sous-total</td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>90</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>180</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>360</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}></td>
 
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 8}</strong></td>
-                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseFloat(this.render_sub_domain_semester_marks(pupil.pupil.pupil_id, sub_domain, "3", "4", "11") + this.render_sub_domain_semester_marks(pupil.pupil.pupil_id, sub_domain, "1", "2", "10"))}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>30</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>180</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>360</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}></td>
+
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>90</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>180</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>360</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>1080</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}></td>
+                                                                        </> :
+                                                                        <>
+                                                                            <td className='td-border' style={{ fontWeight: 'bold', fontSize: 11, backgroundColor: 'rgba(0,0,0,0.15)', paddingLeft: 10 }}>Sous-total</td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{sub_domain.total_marks}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "1")}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "2")}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 2}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "10")}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 4}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_semester_marks(pupil.pupil.pupil_id, sub_domain, "1", "2", "10")}</strong></td>
+
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{sub_domain.total_marks}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "3")}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "4")}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 2}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "11")}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 4}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_semester_marks(pupil.pupil.pupil_id, sub_domain, "3", "4", "11")}</strong></td>
+
+                                                                            {this.is_primaire() ?
+                                                                                <>
+                                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{sub_domain.total_marks}</strong></td>
+                                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "5")}</strong></td>
+                                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "6")}</strong></td>
+                                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 2}</strong></td>
+                                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_period_marks(pupil.pupil.pupil_id, sub_domain, "12")}</strong></td>
+                                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 4}</strong></td>
+                                                                                    <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.render_sub_domain_semester_marks(pupil.pupil.pupil_id, sub_domain, "5", "6", "12")}</strong></td>
+                                                                                </> : null}
+
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(sub_domain.total_marks) * 8}</strong></td>
+                                                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseFloat(this.render_sub_domain_semester_marks(pupil.pupil.pupil_id, sub_domain, "3", "4", "11") + this.render_sub_domain_semester_marks(pupil.pupil.pupil_id, sub_domain, "1", "2", "10"))}</strong></td>
+                                                                        </>
+                                                                    }
+
+
 
                                                                     {this.is_secondaire() ?
                                                                         <>
@@ -1183,7 +1239,9 @@ class BulletinsType2 extends React.Component {
                                                 </> : null}
 
 
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 1)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 2)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 10)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 11)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 5)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 6)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 12))}</strong></td>
+                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.props.autres.is_primaire ? parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 1)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 2)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 10)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 11)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 5)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 6)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 12))
+                                                :
+                                                parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 1)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 2)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 10)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 3)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 4)) + parseInt(this.maxima_generaux(pupil.pupil.pupil_id, 11))}</strong></td>
 
                                             {/* <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(1)}</strong></td>
                                                 <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{this.maxima_gen(1)}</strong></td>
@@ -1255,7 +1313,10 @@ class BulletinsType2 extends React.Component {
                                                     <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}><span style={{ color: 'transparent' }}>00</span></td>
                                                 </> : null}
 
-                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}><strong>{parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 1)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 2)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 10)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 3)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 4)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 11)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 5)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 6)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 12))}</strong></td>
+                                            <td className="td-border" style={{ fontSize: 11, textAlign: 'center' }}>
+                                                <strong>
+                                                    {parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 1)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 2)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 10)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 3)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 4)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 11)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 5)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 6)) + parseFloat(this.totaux_generaux(pupil.pupil.pupil_id, 12))}
+                                                </strong></td>
                                             {this.is_secondaire() ?
                                                 <td style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
                                                     <span style={{ color: 'transparent' }}>00</span>
