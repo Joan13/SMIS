@@ -152,7 +152,7 @@ const FichesPointsCourses = () => {
 
         let totall = findCourse(course).total_marks;
 
-        if (period === 10 || period === 11)
+        if (period === 10 || period === 11 || period === 12)
             totall = parseInt(findCourse(course).total_marks * 2);
 
         const main_marks = global_marks.filter(marks => marks.id === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + pupil.pupil.pupil_id + (course + period));
