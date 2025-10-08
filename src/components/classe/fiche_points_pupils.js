@@ -231,8 +231,8 @@ const FichesPointsPupils = () => {
     const show_periode = (period, semester) => {
         if ((periode === period || semester === periode || periode === "*") && pupil !== null) {
             return true;
-        } 
-        
+        }
+
         // if (periode === "REP") {
         //     return true;
         // }
@@ -346,7 +346,7 @@ const FichesPointsPupils = () => {
                                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>{autres.is_primaire ? "T1" : "S1"}</th> : null}
 
                                                 {show_periode("P3", "S2") ?
-                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P3</th> : null}    
+                                                    <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P3</th> : null}
 
                                                 {show_periode("P4", "S2") ?
                                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>P4</th> : null}
@@ -372,7 +372,7 @@ const FichesPointsPupils = () => {
                                                             <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>T3</th> : null}
                                                     </> : null}
 
-                                                {periode ==="REP" ?
+                                                {periode === "REP" && pupil !== null  ?
                                                     <th className='border border-gray-50 dark:border-gray-20  bg-background-50 dark:bg-background-20' style={{ width: 50, textAlign: 'center' }}>REPECHAGE</th> : null}
 
                                                 {show_periode("*", "*") ?
@@ -485,7 +485,7 @@ const FichesPointsPupils = () => {
                                                                     </td> : null}
                                                             </> : null}
 
-                                                        {periode ==="REP"  ?
+                                                        {periode === "REP" && pupil !== null ?
                                                             <td className='border border-gray-50 dark:border-gray-20' style={{ width: 50, textAlign: 'center' }}>
                                                                 <input className={`input-marks ${errors.find(error => error === pupil.pupil.first_name + pupil.pupil.second_name + pupil.pupil.last_name + (parseInt(pupil.pupil.pupil_id) + course.course_id + 'EX2')) === undefined ? "input-red" : "red-input"}`}
                                                                     type="number"

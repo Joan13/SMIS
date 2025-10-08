@@ -137,11 +137,6 @@ const Signin = () => {
                                 </div>
                                 <h2 className="font-bold text-2xl text-text-100 mt-10 mb-10">Connectez-vous</h2>
 
-                                {/* <div style={{ marginBottom: 40 }}>
-                        <span onClick={() => setConnection_type(0)} className="header-signin" style={{ fontWeight: connection_type === 0 ? 'bold' : '450' }}>Principal</span>
-                        <span onClick={() => setConnection_type(1)} className="header-signin" style={{ fontWeight: connection_type === 1 ? 'bold' : '450' }}>Parent (élève)</span>
-                    </div> */}
-
                                 <div className='flex flex-col gap-4 border-b border-gray-50 mb-5 pb-5'>
                                     {!online ?
                                         <div className='nodrag flex items-center bg-background-100 w-full align-center p-3 pl-5 rounded-xl border border-gray-50'>

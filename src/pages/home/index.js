@@ -318,6 +318,7 @@ const Home = () => {
     }
 
     const request_synthese_change = (periode) => {
+        dispatch({ type: "SET_PERIODE_SYNTHESE", payload: periode });
         dispatch({ type: "SET_PERIODE_FULL", payload: periode });
         dispatch({ type: "SET_TITLE", payload: "Fiche synthèse des résultats / " });
 
@@ -354,6 +355,7 @@ const Home = () => {
                         onChange={(val) => request_synthese_change(val.target.value)}
                         // value={periode_synthese}
                         className="bg-background-100 dark:bg-background-20">
+                        <option value="">Sélectionner la période</option>
                         <option value="12">Synthèse des résultats de fin d'année</option>
                         <option>- - - - - - - - - - - -</option>
                         <option value="1">Première période</option>
@@ -452,7 +454,7 @@ const Home = () => {
                                             {classe.pourcentage_plus}
                                         </td>
                                         <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>
-                                            {classe.pourcentage_min}
+                                            {classe.pourcentage_min === "0" ? "" : classe.pourcentage_min}
                                         </td>
                                         <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center" }}>
                                             {(
@@ -479,7 +481,7 @@ const Home = () => {
                                 <td className="border border-gray-50 dark:border-gray-20"
                                     rowSpan="2"
                                     style={{ textAlign: "center", fontWeight: "bold" }}>
-                                    {all_pupils}
+                                    {pupils.length}
                                 </td>
                                 <td className="border border-gray-50 dark:border-gray-20" style={{ textAlign: "center", fontWeight: "bold" }}>
                                     {nbr_ee}
@@ -512,55 +514,55 @@ const Home = () => {
                             <tr style={{ backgroundColor: "rgba(0,0,0,0.1)" }}>
                                 <td className="border border-gray-50 dark:border-gray-20"
                                     style={{ textAlign: "center", fontWeight: "bold" }}>
-                                    {((parseInt(nbr_ee) * 100) / all_pupils).toString().substr(0, 4)}
+                                    {((parseInt(nbr_ee) * 100) / pupils.length).toString().substr(0, 4)}
                                 </td>
                                 <td className="border border-gray-50 dark:border-gray-20"
                                     style={{ textAlign: "center", fontWeight: "bold" }}>
-                                    {((parseInt(nbr_tb) * 100) / all_pupils).toString().substr(0, 4)}
+                                    {((parseInt(nbr_tb) * 100) / pupils.length).toString().substr(0, 4)}
                                 </td>
                                 <td className="border border-gray-50 dark:border-gray-20"
                                     style={{ textAlign: "center", fontWeight: "bold" }}>
-                                    {((parseInt(nbr_bb1) * 100) / all_pupils).toString().substr(0, 4)}
+                                    {((parseInt(nbr_bb1) * 100) / pupils.length).toString().substr(0, 4)}
                                 </td>
                                 <td className="border border-gray-50 dark:border-gray-20"
                                     style={{ textAlign: "center", fontWeight: "bold" }}>
-                                    {((parseInt(nbr_bb2) * 100) / all_pupils).toString().substr(0, 4)}
+                                    {((parseInt(nbr_bb2) * 100) / pupils.length).toString().substr(0, 4)}
                                 </td>
                                 <td className="border border-gray-50 dark:border-gray-20"
                                     style={{ textAlign: "center", fontWeight: "bold" }}>
-                                    {((parseInt(nbr_me) * 100) / all_pupils).toString().substr(0, 4)}
+                                    {((parseInt(nbr_me) * 100) / pupils.length).toString().substr(0, 4)}
                                 </td>
                                 <td className="border border-gray-50 dark:border-gray-20"
                                     style={{ textAlign: "center", fontWeight: "bold" }}>
-                                    {((parseInt(nbr_ma) * 100) / all_pupils).toString().substr(0, 4)}
+                                    {((parseInt(nbr_ma) * 100) / pupils.length).toString().substr(0, 4)}
                                 </td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
 
-                {periode_synthese === "12" ? (
+                {/* {periode_synthese === "12" ? 
                     <>
                         <h3>Application</h3>
                         <div style={{ paddingLeft: 25 }}>
                             <FaCheck /> Le taux de réussite est de {reussites}/
-                            {all_pupils}, soit{" "}
-                            {((parseInt(reussites) * 100) / all_pupils).toString().substr(0, 4)}
+                            {pupils.length}, soit{" "}
+                            {((parseInt(reussites) * 100) / pupils.length).toString().substr(0, 4)}
                             <br />
                             <FaCheck /> Le taux de redoublement est de {doubles}/
-                            {all_pupils}, soit{" "}
-                            {((parseInt(doubles) * 100) / all_pupils).toString().substr(0, 4)}
+                            {pupils.length}, soit{" "}
+                            {((parseInt(doubles) * 100) / pupils.length).toString().substr(0, 4)}
                             <br />
                             <FaCheck /> Le taux d'échec est de {echecs}/
-                            {all_pupils}, soit{" "}
-                            {((parseInt(echecs) * 100) / all_pupils).toString().substr(0, 4)}
+                            {pupils.length}, soit{" "}
+                            {((parseInt(echecs) * 100) / pupils.length).toString().substr(0, 4)}
                             <br />
                             <FaCheck /> La déperdition est de {abandon}/
-                            {all_pupils}, soit{" "}
-                            {((parseInt(abandon) * 100) / all_pupils).toString().substr(0, 4)}
+                            {pupils.length}, soit{" "}
+                            {((parseInt(abandon) * 100) / pupils.length).toString().substr(0, 4)}
                         </div>
                     </>
-                ) : null}
+                 : null} */}
             </div>
         );
     }

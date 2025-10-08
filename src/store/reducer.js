@@ -334,7 +334,7 @@ const reducer = (state = initialState, action) => {
         case "SET_PERIODE_FULL":
             return { ...state, periode_full: action.payload }
         case "SET_PERIODE_SYNTHESE":
-            return { ...state, periode_full: action.payload }
+            return { ...state, periode_synthese: action.payload }
         case "SET_EDIT_PUPIL":
             return { ...state, edit_pupil: action.payload }
         default:

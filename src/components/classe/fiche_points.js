@@ -178,6 +178,18 @@ const FichesPoints = () => {
         return total;
     }
 
+    const is_primaire = () => {
+        // if (this.props.classe.cycle_id.toUpperCase() === "PRIMAIRE") {
+        //     return true;
+        // }
+
+        if (autres.is_primaire) {
+            return true;
+        }
+
+        return false;
+    }
+
     const maxima = (period) => {
         let total = 0;
         let considered = 0;
@@ -201,7 +213,7 @@ const FichesPoints = () => {
             }
         }
 
-        if (parseInt(period) === 40 || parseInt(period) === 50) {
+        if (parseInt(period) === 40 || parseInt(period) === 50 || parseInt(period) === 60) {
             if (considered === 5) {
                 total = (total * 4) - moins;
             } else {
@@ -210,14 +222,30 @@ const FichesPoints = () => {
         }
 
         if (parseInt(period) === 100) {
-            if (considered === 5) {
-                total = (total * 8) - moins;
+            if (classe.cycle_id.toUpperCase() === "MATERNELLE") {
+                if (considered === 5) {
+                    total = (total * 3) - moins;
+                } else {
+                    total = (total * 3) - moins;
+                }
             } else {
-                total = (total * 8) - moins;
+                if (is_primaire()) {
+                    if (considered === 5) {
+                        total = (total * 12) - moins;
+                    } else {
+                        total = (total * 12) - moins;
+                    }
+                } else {
+                    if (considered === 5) {
+                        total = (total * 8) - moins;
+                    } else {
+                        total = (total * 8) - moins;
+                    }
+                }
             }
         }
 
-        if (parseInt(period) === 10 || parseInt(period) === 11) {
+        if (parseInt(period) === 10 || parseInt(period) === 11|| parseInt(period) === 12) {
             if (considered === 5) {
                 total = (total * 2) - moins;
             } else {
@@ -252,7 +280,7 @@ const FichesPoints = () => {
     const total_marks = (marks) => {
         if (parseInt(periode) === 10 || parseInt(periode) === 11) {
             return marks * 2;
-        } else if (parseInt(periode) === 40 || parseInt(periode) === 50) {
+        } else if (parseInt(periode) === 40 || parseInt(periode) === 50 || parseInt(periode) === 60) {
             return marks * 4;
         } else if (parseInt(periode) === 100) {
             return marks * 8;
@@ -271,11 +299,17 @@ const FichesPoints = () => {
         else if (parseInt(periode) === 40 && autres.is_primaire) {
             return "du premier trimestre";
         }
+        else if (parseInt(periode) === 60 && autres.is_primaire) {
+            return "du troisième trimestre";
+        }
         else if (parseInt(periode) === 11 && autres.is_primaire) {
             return "de l'examen du deuxième trimestre";
         }
         else if (parseInt(periode) === 10 && autres.is_primaire) {
             return "de l'examen du premier trimestre";
+        }
+        else if (parseInt(periode) === 12 && autres.is_primaire) {
+            return "de l'examen du troisième trimestre";
         }
         else if (parseInt(periode) === 10) {
             return "de l'examen du premier semestre";

@@ -541,7 +541,7 @@ class Bulletins extends React.Component {
                 {/* {this.props.classe.class} */}
                 {!this.props.loading_footer ?
                     <div style={{ marginBottom: 50, paddingTop: 10, marginRight: 3 }}>
-                        {parseInt(this.props.classe.class) === 6 ?
+                        {parseInt(this.props.classe.class) === 6&&this.props.classe.data.domains.length === 0 ?
                             <>
 
                                 {/* <div>
@@ -727,7 +727,7 @@ class Bulletins extends React.Component {
                                                             <td rowSpan="2" style={{ textAlign: 'center', fontWeight: 'bold', width: 20, backgroundColor: 'black' }}>
                                                                 <span style={{ color: 'transparent' }}>00</span>
                                                             </td>
-                                                            {this.state.classe.class == 6 ?
+                                                            {parseInt(this.props.classe.class) === 6 ?
                                                                 <td style={{ textAlign: 'center', fontWeight: 'bold' }} colSpan="3" className="standard-td-top">
                                                                     EXAMEN D'ÉTAT
                                                                 </td>

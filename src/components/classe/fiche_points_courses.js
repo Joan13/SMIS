@@ -228,7 +228,7 @@ const FichesPointsCourses = () => {
             axios.post(BaseURL, data)
                 .then((response) => {
 
-                    console.log(response.data)
+                    // console.log(response.data)
 
                     if (response.data.success === '1' || response.data.success === '2') {
 

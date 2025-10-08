@@ -268,6 +268,18 @@ class PalmaresPupils extends Component {
         return return_value;
     }
 
+    is_primaire() {
+        // if (this.props.classe.cycle_id.toUpperCase() === "PRIMAIRE") {
+        //     return true;
+        // }
+
+        if (this.props.autres.is_primaire) {
+            return true;
+        }
+
+        return false;
+    }
+
     maxima = (period) => {
         let total = 0;
         let considered = 0;
@@ -328,25 +340,28 @@ class PalmaresPupils extends Component {
                                 onChange={(val) => this.assign_periode(val.target.value)}
                                 value={this.state.periode}
                                 className="select-no-border-select border-none dark:bg-background-20 bg-background-100">
-                                <option value="1">Première période</option>
-                                <option value="2">Deuxième période</option>
-                                <option value="3">Troisième période</option>
-                                <option value="4">Quatrième période</option>
-                                {this.props.autres.is_primaire ?
+                                <option value="1">{this.props.classe.cycle_id.toUpperCase()==="MATERNELLE" ? "Premier trimestre" : "Première période"}</option>
+                                <option value="2">Deuxième {this.props.classe.cycle_id.toUpperCase()==="MATERNELLE" ? "trimestre" : "période"}</option>
+                                <option value="3">Troisième {this.props.classe.cycle_id.toUpperCase()==="MATERNELLE" ? "trimestre" : "période"}</option>
+                                {this.props.classe.cycle_id.toUpperCase() !== "MATERNELLE" ?
                                     <>
-                                        <option value="5">Cinquième période</option>
-                                        <option value="6">Sixième période</option>
+                                        <option value="4">Quatrième période</option>
+                                        {this.props.autres.is_primaire ?
+                                            <>
+                                                <option value="5">Cinquième période</option>
+                                                <option value="6">Sixième période</option>
+                                            </> : null}
+                                        <option>- - - - - - - - - - - -</option>
+                                        <option value="10">Examen premier {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option>
+                                        <option value="11">Examen deuxième {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option>
+                                        {this.props.autres.is_primaire ?
+                                            <option value="12">Examen troisième {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option> : null}
+                                        <option>- - - - - - - - - - - -</option>
+                                        <option value="40">Premier {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option>
+                                        <option value="50">Deuxième {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option>
+                                        {this.props.autres.is_primaire ?
+                                            <option value="60">Troisième {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option> : null}
                                     </> : null}
-                                <option>- - - - - - - - - - - -</option>
-                                <option value="10">Examen premier {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option>
-                                <option value="11">Examen deuxième {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option>
-                                {this.props.autres.is_primaire ?
-                                    <option value="12">Examen troisième {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option> : null}
-                                <option>- - - - - - - - - - - -</option>
-                                <option value="40">Premier {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option>
-                                <option value="50">Deuxième {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option>
-                                {this.props.autres.is_primaire ?
-                                    <option value="60">Troisième {this.props.autres.is_primaire ? "trimestre" : "semestre"}</option> : null}
                                 <option>- - - - - - - - - - - -</option>
                                 <option value="100">Fin d'année</option>
                             </select>
@@ -692,7 +707,7 @@ class PalmaresPupils extends Component {
                                     this.props.classe.data.array_places_12.map((place, index_p) => (
                                         this.props.classe.data.pupils.map((pupil, index) => {
                                             if (place.pupil_id === pupil.pupil.pupil_id) {
-                                                return (    
+                                                return (
                                                     <tbody key={index}>
                                                         <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
                                                             <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
@@ -739,9 +754,17 @@ class PalmaresPupils extends Component {
                                                         <tr style={{ backgroundColor: index_p % 2 === 0 ? "rgba(0,0,0,0.020)" : "rgba(0,0,0,0.080)" }}>
                                                             <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index + 1}</td>
                                                             <td className='border border-gray-50 dark:border-gray-20' style={{ paddingLeft: 10 }}>{pupil.pupil.first_name + " " + pupil.pupil.second_name + " " + pupil.pupil.last_name}</td>
-                                                            <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
-                                                                {((parseInt(this.render_period_main_marks(pupil.marks) * 100) / (this.maxima(40) + this.maxima(60) + this.maxima(50))).toString().substr(0, 4))}
-                                                            </td>
+                                                            {this.props.classe.cycle_id.toUpperCase() === "MATERNELLE" ?
+                                                                <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
+                                                                    {((parseInt(this.render_period_main_marks(pupil.marks) * 100) / (this.maxima(1) * 3)).toString().substr(0, 4))}
+                                                                </td>
+                                                                :
+                                                                this.is_primaire() ? <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
+                                                                    {((parseInt(this.render_period_main_marks(pupil.marks) * 100) / (this.maxima(40) + this.maxima(50) + this.maxima(60))).toString().substr(0, 4))}
+                                                                </td> :
+                                                                    <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>
+                                                                        {((parseInt(this.render_period_main_marks(pupil.marks) * 100) / (this.maxima(40) + this.maxima(50))).toString().substr(0, 4))}
+                                                                    </td>}
                                                             <td className='border border-gray-50 dark:border-gray-20' style={{ textAlign: 'center' }}>{index_p + 1}</td>
                                                         </tr>
                                                     </tbody>
